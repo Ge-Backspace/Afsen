@@ -1,0 +1,38 @@
+{
+  "Logo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "LazyLogo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "Menu": {
+    "description": "Auto imported from components/Menu.js"
+  },
+  "LazyMenu": {
+    "description": "Auto imported from components/Menu.js"
+  },
+  "Sidebar": {
+    "description": "Auto imported from components/Sidebar.vue"
+  },
+  "LazySidebar": {
+    "description": "Auto imported from components/Sidebar.vue"
+  },
+  "ChartBar": {
+    "description": "Auto imported from components/chart/chart-bar.vue"
+  },
+  "LazyChartBar": {
+    "description": "Auto imported from components/chart/chart-bar.vue"
+  },
+  "ChartDoughnut": {
+    "description": "Auto imported from components/chart/chart-doughnut.vue"
+  },
+  "LazyChartDoughnut": {
+    "description": "Auto imported from components/chart/chart-doughnut.vue"
+  },
+  "ChartLine": {
+    "description": "Auto imported from components/chart/chart-line.vue"
+  },
+  "LazyChartLine": {
+    "description": "Auto imported from components/chart/chart-line.vue"
+  }
+}

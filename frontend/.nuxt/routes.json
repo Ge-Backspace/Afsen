@@ -1,0 +1,121 @@
+[
+  {
+    "name": "company_check",
+    "path": "/company_check",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\company_check.vue",
+    "chunkName": "pages/company_check",
+    "_name": "_2593858c"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\login.vue",
+    "chunkName": "pages/login",
+    "_name": "_0db7f2a2"
+  },
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\profile.vue",
+    "chunkName": "pages/profile",
+    "_name": "_3b69ed6f"
+  },
+  {
+    "name": "register_account",
+    "path": "/register_account",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\register_account.vue",
+    "chunkName": "pages/register_account",
+    "_name": "_a46c368a"
+  },
+  {
+    "name": "register_company",
+    "path": "/register_company",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\register_company.vue",
+    "chunkName": "pages/register_company",
+    "_name": "_5bdbef0b"
+  },
+  {
+    "name": "reset-password",
+    "path": "/reset-password",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\reset-password.vue",
+    "chunkName": "pages/reset-password",
+    "_name": "_291b8bfa"
+  },
+  {
+    "name": "test",
+    "path": "/test",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\test.vue",
+    "chunkName": "pages/test",
+    "_name": "_19813f3c"
+  },
+  {
+    "name": "admin-beranda",
+    "path": "/admin/beranda",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\beranda.vue",
+    "chunkName": "pages/admin/beranda",
+    "_name": "_0b398e98"
+  },
+  {
+    "name": "admin-berita",
+    "path": "/admin/berita",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\berita.vue",
+    "chunkName": "pages/admin/berita",
+    "_name": "_5e6b883c"
+  },
+  {
+    "name": "admin-informasi",
+    "path": "/admin/informasi",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\informasi.vue",
+    "chunkName": "pages/admin/informasi",
+    "_name": "_f1099d2e"
+  },
+  {
+    "name": "admin-kegiatan",
+    "path": "/admin/kegiatan",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\kegiatan.vue",
+    "chunkName": "pages/admin/kegiatan",
+    "_name": "_74d03b9e"
+  },
+  {
+    "name": "admin-lapor",
+    "path": "/admin/lapor",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\index.vue",
+    "chunkName": "pages/admin/lapor/index",
+    "_name": "_bfdcbdae"
+  },
+  {
+    "name": "admin-users",
+    "path": "/admin/users",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\users.vue",
+    "chunkName": "pages/admin/users",
+    "_name": "_f4d894fa"
+  },
+  {
+    "name": "admin-lapor-detail",
+    "path": "/admin/lapor/detail",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\detail.vue",
+    "chunkName": "pages/admin/lapor/detail",
+    "_name": "_0b14d8ec"
+  },
+  {
+    "name": "admin-master-pemda",
+    "path": "/admin/master/pemda",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\master\\\\pemda.vue",
+    "chunkName": "pages/admin/master/pemda",
+    "_name": "_66bea66e"
+  },
+  {
+    "name": "admin-master-setting",
+    "path": "/admin/master/setting",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\admin\\\\master\\\\setting.vue",
+    "chunkName": "pages/admin/master/setting",
+    "_name": "_0fc35b69"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\Development\\\\web-absensi\\\\frontend\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_2f7c6398"
+  }
+]

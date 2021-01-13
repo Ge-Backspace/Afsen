@@ -1,0 +1,50 @@
+<template>
+  <div>
+    <div class="header bg-primary pb-6" style="z-index:-1">
+      <div class="container-fluid">
+        <div class="header-body">
+          <!-- Card stats -->
+          <h1 class="heading">Informasi</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt--5">
+      <el-card>
+        <client-only>
+          <froala :tag="'textarea'" :config="config" v-model="model"></froala>
+        </client-only>
+      </el-card>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    layout: 'admin',
+    data() {
+      return {
+        config: {
+          events: {
+            'froalaEditor.initialized': function () {
+              console.log('initialized')
+            }
+          },
+          toolbarSticky: false,
+          toolbarButtons: ['undo', 'redo', '|', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript',
+            'superscript', 'outdent', 'indent', 'clearFormatting', 'insertTable', 'html'
+          ],
+          toolbarButtonsXS: ['undo', 'redo', '-', 'bold', 'italic', 'underline']
+        },
+      }
+    },
+  }
+
+</script>
+
+<style lang="scss" scoped>
+  .heading {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+  }
+</style>
