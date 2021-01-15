@@ -2,96 +2,80 @@
 export const  menu = () => {
     return [
         {
-            text: 'Home',
+            text: 'Dashboard',
             icon: 'ni ni-shop text-primary',
             route: '/admin/beranda',
         },
         {
-            text: 'Lapor',
+            text: 'Employees',
             icon: 'el-icon-notebook-1 text-primary',
-            route: '/admin/lapor'
+            route: '/admin/employees'
         },
         {
-            text: 'Kegiatan',
+            text: 'Time Management',
             icon: 'el-icon-baseball text-primary',
-            route: '/admin/kegiatan'
-        },
-        {
-            text: 'Berita',
-            icon: 'el-icon-tickets text-primary',
-            route: '/admin/berita'
-        },
-        {
-            text: 'Informasi',
-            icon: 'el-icon-warning-outline text-primary',
-            route: '/admin/informasi'
-        },
-        {
-            text: 'Users',
-            icon: 'el-icon-user text-primary',
-            route: '/admin/users'
-        },
-        {
-            text: 'Master',
-            icon: 'el-icon-folder text-primary',
+            // route: '/admin/kegiatan',
             children: [
                 {
-                    text: "Pemda",
+                    text: "Time Off",
                     icon: 'el-icon-postcard',
-                    route: '/admin/master/pemda'
+                    route: '/admin/time_management/timeoff'
                 },
-                // {
-                //     text: "Setting",
-                //     icon: 'el-icon-setting',
-                //     route: '/admin/master/setting'
-                // },
-                // {
-                //     text: "Bookstores",
-                //     icon: 'el-icon-notebook-1',
-                //     route: '/admin/master/bookstores'
-                // },
-                // {
-                //     text: "Claim Category",
-                //     icon: 'el-icon-tickets',
-                //     route: '/admin/master/claim_category'
-                // },
-                // {
-                //     text: "Skill",
-                //     icon: 'el-icon-medal',
-                //     route: '/admin/master/kemampuan'
-                // },
+                {
+                    text: "Attendance",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/time_management/attendance'
+                },
+                {
+                    text: "Schedule",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/time_management/schedule'
+                },
+                {
+                    text: "Calendar",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/time_management/calendar'
+                },
+                {
+                    text: "Timesheet",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/time_management/timesheet'
+                },
+                
             ]
         },
+        {
+            text: 'Finances',
+            icon: 'el-icon-tickets text-primary',
+            // route: '/admin/berita',
+            children: [
+                {
+                    text: "Reimbursement",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/finances/reimbursement'
+                },
+                {
+                    text: "Cash Advance Request",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/finances/cash'
+                },
+            ]
+        },
+        {
+            text: 'Company',
+            icon: 'el-icon-warning-outline text-primary',
+            route: '/admin/company'
+        },
+        {
+            text: 'Notifikasi',
+            icon: 'el-icon-notebook-1 text-primary',
+            route: '/admin/notifikasi'
+        },
         // {
-        //     text: 'Setting',
-        //     icon: 'el-icon-setting text-primary',
-        //     children: [
-        //         {
-        //             text: 'Point',
-        //             icon: 'el-icon-coin',
-        //             route: '/admin/settings/point'
-        //         },
-        //         {
-        //             text: "User Admin",
-        //             icon: 'el-icon-user',
-        //             route: '/admin/master/admin'
-        //         },
-        //         {
-        //             text: 'Agreement Claim Wallet',
-        //             icon: 'el-icon-wallet',
-        //             route: '/admin/settings/agreement-claim-wallet'
-        //         },
-        //         // {
-        //         //     text: 'Rewards',
-        //         //     icon: 'el-icon-trophy',
-        //         //     route: '/admin/settings/rewards'
-        //         // },
-        //         // {
-        //         //     text: 'Notification',
-        //         //     icon: 'el-icon-bell',
-        //         //     route: '/admin/settings/notification'
-        //         // }
-        //     ]
+        //     text: 'Calendar',
+        //     icon: 'el-icon-user text-primary',
+        //     route: '/admin/users'
         // },
+        
     ]
 };
