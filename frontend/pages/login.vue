@@ -2,7 +2,7 @@
   <div class="card border-0">
     <div class="card-header bg-transparent logo" style="border: none">
       <a class="navbar-brand" style="margin-bottom: 20px">
-        <img src="../assets/img/no_image.png" width="auto" height="100" />
+        <img src="../assets/img/logo-simpulkendali.png" width="auto" height="100" />
       </a>
       <div class="text-center text-muted mb-4">
         <small><b>AFSEN</b></small>

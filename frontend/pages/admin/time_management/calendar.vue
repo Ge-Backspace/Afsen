@@ -8,145 +8,28 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid mt--5">
-      <div class="row">
-        <div class="col-md-12">
-          <el-card v-loading="getLoader">
-            <div class="row" style="margin-bottom:20px">
-              <div class="col-md-3 offset-md-9">
-                <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
-                  <i slot="prefix" class="el-input__icon el-icon-search"></i>
-                </el-input>
-              </div>
-            </div>
-            <vs-table striped>
-              <template #thead>
-                <vs-tr>
-                  <vs-th>Logo</vs-th>
-                  <vs-th>Nama Pemda Prov/Kab/Kota</vs-th>
-                  <vs-th>Aktif</vs-th>
-                  <vs-th>Action</vs-th>
-                </vs-tr>
-              </template>
-              <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
-                  <vs-td class="text-center">
-                    <img :src="tr.foto_url" alt="" height="30" width="auto">
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.nama }}
-                  </vs-td>
-                  <vs-td>
-                    <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
-                  </vs-td>
-                  <vs-td>
-                    <el-tooltip content="Edit" placement="top-start" effect="dark">
-                      <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
-                    </el-tooltip>
-
-                    <el-tooltip content="Delete" placement="top-start" effect="dark">
-                      <el-button size="mini" type="primary" @click="deleteGoverment(tr.id)" icon="fa fa-trash">
-                      </el-button>
-                    </el-tooltip>
-                  </vs-td>
-                </vs-tr>
-              </template>
-              <template #footer>
-                <vs-row>
-                  <vs-col w="2">
-                    <small>Total : {{getGoverments.total}} Data</small>
-                  </vs-col>
-                  <vs-col w="10">
-                    <vs-pagination v-model="page" :length="Math.ceil(getGoverments.total / table.max)" />
-                  </vs-col>
-                </vs-row>
-              </template>
-            </vs-table>
-          </el-card>
-        </div>
-      </div>
-    </div>
-
-    <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
-      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
-        <i class="el-icon-plus my-float"></i>
-      </a>
-    </el-tooltip>
-    <!-- End floating button-->
-
-    <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
-      <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Nama Kementrian">
-          <el-input v-model="form.nama"></el-input>
-        </el-form-item>
-        <el-form-item label="Logo">
-          <el-upload action="/" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="files" :limit="1">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="Aktif">
-          <el-switch v-model="form.aktif" color="danger"></el-switch>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="tambahDialog = false">Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog> -->
-
-    <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()">
-      <template #header>
-        <h1 class="not-margin">
-          {{titleDialog}}
-        </h1>
-      </template>
-      <div class="con-form">
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Nama</label>
-            <vs-input type="text" v-model="form.nama" placeholder="Nama"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
-            <label>Logo</label>
-            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-              :file-list="files" :limit="1">
-              <i class="el-icon-plus"></i>
-            </el-upload>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <vs-row>
-              <vs-col w="2">
-                <label>Aktif</label>
-              </vs-col>
-              <vs-col w="10">
-                <vs-switch style="width:20px" v-model="form.aktif" />
-              </vs-col>
-            </vs-row>
-          </vs-col>
-        </vs-row>
-      </div>
-
-      <template #footer>
-        <div class="footer-dialog">
-          <vs-row>
-            <vs-col w="6" style="padding:5px">
-              <vs-button block :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</vs-button>
-              <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
-            </vs-col>
-            <vs-col w="6" style="padding:5px">
-              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
-            </vs-col>
-          </vs-row>
-          <div>&nbsp;</div>
+    <v-calendar
+      class="custom-calendar max-w-full"
+      :masks="masks"
+      :attributes="attributes"
+      disable-page-swipe
+      is-expanded
+    >
+      <template v-slot:day-content="{ day, attributes }">
+        <div class="flex flex-col h-full z-10 overflow-hidden">
+          <span class="day-label text-sm text-gray-900">{{ day.day }}</span>
+          <div class="flex-grow overflow-y-auto overflow-x-auto">
+            <p
+              v-for="attr in attributes"
+              class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
+              :class="attr.customData.class"
+            >
+              {{ attr.customData.title }}
+            </p>
+          </div>
         </div>
       </template>
-    </vs-dialog>
+    </v-calendar>
   </div>
 </template>
 
@@ -166,6 +49,8 @@
 
     },
     data() {
+      const month = new Date().getMonth();
+      const year = new Date().getFullYear();
       return {
         api_url: config.baseApiUrl,
         table: {
@@ -182,7 +67,84 @@
           nama: '',
           foto: null,
           aktif: true
-        }
+        },
+        masks: {
+        weekdays: 'WWW',
+      },
+      attributes: [
+        {
+          key: 1,
+          customData: {
+            title: 'Lunch with mom.',
+            class: 'bg-red-600 text-white',
+          },
+          dates: new Date(year, month, 1),
+        },
+        {
+          key: 2,
+          customData: {
+            title: 'Take Noah to basketball practice',
+            class: 'bg-blue-500 text-white',
+          },
+          dates: new Date(year, month, 2),
+        },
+        {
+          key: 3,
+          customData: {
+            title: "Noah's basketball game.",
+            class: 'bg-blue-500 text-white',
+          },
+          dates: new Date(year, month, 5),
+        },
+        {
+          key: 4,
+          customData: {
+            title: 'Take car to the shop',
+            class: 'bg-indigo-500 text-white',
+          },
+          dates: new Date(year, month, 5),
+        },
+        {
+          key: 4,
+          customData: {
+            title: 'Meeting with new client.',
+            class: 'bg-teal-500 text-white',
+          },
+          dates: new Date(year, month, 7),
+        },
+        {
+          key: 5,
+          customData: {
+            title: "Mia's gymnastics practice.",
+            class: 'bg-pink-500 text-white',
+          },
+          dates: new Date(year, month, 11),
+        },
+        {
+          key: 6,
+          customData: {
+            title: 'Cookout with friends.',
+            class: 'bg-orange-500 text-white',
+          },
+          dates: { months: 5, ordinalWeekdays: { 2: 1 } },
+        },
+        {
+          key: 7,
+          customData: {
+            title: "Mia's gymnastics recital.",
+            class: 'bg-pink-500 text-white',
+          },
+          dates: new Date(year, month, 22),
+        },
+        {
+          key: 8,
+          customData: {
+            title: 'Visit great grandma.',
+            class: 'bg-red-600 text-white',
+          },
+          dates: new Date(year, month, 25),
+        },
+      ],
       }
     },
     mounted() {
@@ -324,5 +286,56 @@
     font-size: 25px;
     font-weight: bold;
   }
-
+  ::-webkit-scrollbar {
+  width: 0px;
+}
+::-webkit-scrollbar-track {
+  display: none;
+}
+/deep/ .custom-calendar.vc-container {
+  --day-border: 1px solid #b8c2cc;
+  --day-border-highlight: 1px solid #b8c2cc;
+  --day-width: 90px;
+  --day-height: 90px;
+  --weekday-bg: #f8fafc;
+  --weekday-border: 1px solid #eaeaea;
+  border-radius: 0;
+  width: 100%;
+  & .vc-header {
+    background-color: #f1f5f8;
+    padding: 10px 0;
+  }
+  & .vc-weeks {
+    padding: 0;
+  }
+  & .vc-weekday {
+    background-color: var(--weekday-bg);
+    border-bottom: var(--weekday-border);
+    border-top: var(--weekday-border);
+    padding: 5px 0;
+  }
+  & .vc-day {
+    padding: 0 5px 3px 5px;
+    text-align: left;
+    height: var(--day-height);
+    min-width: var(--day-width);
+    background-color: white;
+    &.weekday-1,
+    &.weekday-7 {
+      background-color: #eff8ff;
+    }
+    &:not(.on-bottom) {
+      border-bottom: var(--day-border);
+      &.weekday-1 {
+        border-bottom: var(--day-border-highlight);
+      }
+    }
+    &:not(.on-right) {
+      border-right: var(--day-border);
+    }
+  }
+  & .vc-day-dots {
+    margin-bottom: 5px;
+  }
+}
 </style>

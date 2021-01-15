@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Time Off</h1>
+          <h1 class="heading">Time Sheet</h1>
         </div>
       </div>
     </div>
@@ -22,10 +22,12 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Logo</vs-th>
-                  <vs-th>Nama Pemda Prov/Kab/Kota</vs-th>
-                  <vs-th>Aktif</vs-th>
-                  <vs-th>Action</vs-th>
+                  <vs-th>Employee Name</vs-th>
+                  <vs-th>Employee ID</vs-th>
+                  <vs-th>Balance</vs-th>
+                  <vs-th>Time Off</vs-th>
+                  <vs-th>Effective Date</vs-th>
+                  <vs-th>Expired Date</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
@@ -69,8 +71,8 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
-      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
+    <el-tooltip class="item" effect="dark" content="Tambah Timeoff Baru" placement="top-start">
+      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Time Off'">
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
@@ -109,25 +111,24 @@
       <div class="con-form">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Nama</label>
+            <label>Nama Employee</label>
             <vs-input type="text" v-model="form.nama" placeholder="Nama"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
-            <label>Logo</label>
-            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-              :file-list="files" :limit="1">
-              <i class="el-icon-plus"></i>
-            </el-upload>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Time Off</label>
+            <vs-select placeholder="Time Off" v-model="form.nama">
+              <vs-option value="1" label="1">Cuti Tahunan</vs-option>
+              <vs-option value="2" label="2">Sakit</vs-option>
+              <vs-option value="3" label="3">Izin</vs-option>
+            </vs-select>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <vs-row>
-              <vs-col w="2">
-                <label>Aktif</label>
-              </vs-col>
-              <vs-col w="10">
-                <vs-switch style="width:20px" v-model="form.aktif" />
-              </vs-col>
-            </vs-row>
+            <label>Effective Date</label>
+            <vs-input type="date" v-model="form.nama" placeholder=""></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Expired Date</label>
+            <vs-input type="date" v-model="form.nama" placeholder=""></vs-input>
           </vs-col>
         </vs-row>
       </div>

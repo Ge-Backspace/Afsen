@@ -25,7 +25,7 @@ class User extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('propic_id')->references('id')->on('files');
+            $table->foreign('propic_id')->references('id')->on('files')->onDelete('CASCADE');
             $table->foreign('company_id')->references('id')->on('companies');
         });
     }

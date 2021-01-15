@@ -34,5 +34,47 @@
   },
   "LazyChartLine": {
     "description": "Auto imported from components/chart/chart-line.vue"
+  },
+  "FooterAfsen": {
+    "description": "Auto imported from components/LandingPage/FooterAfsen.vue"
+  },
+  "LazyFooterAfsen": {
+    "description": "Auto imported from components/LandingPage/FooterAfsen.vue"
+  },
+  "HeaderAfsen": {
+    "description": "Auto imported from components/LandingPage/HeaderAfsen.vue"
+  },
+  "LazyHeaderAfsen": {
+    "description": "Auto imported from components/LandingPage/HeaderAfsen.vue"
+  },
+  "HelloWorld": {
+    "description": "Auto imported from components/LandingPage/HelloWorld.vue"
+  },
+  "LazyHelloWorld": {
+    "description": "Auto imported from components/LandingPage/HelloWorld.vue"
+  },
+  "HeroAfsen": {
+    "description": "Auto imported from components/LandingPage/HeroAfsen.vue"
+  },
+  "LazyHeroAfsen": {
+    "description": "Auto imported from components/LandingPage/HeroAfsen.vue"
+  },
+  "InstaAfsen": {
+    "description": "Auto imported from components/LandingPage/InstaAfsen.vue"
+  },
+  "LazyInstaAfsen": {
+    "description": "Auto imported from components/LandingPage/InstaAfsen.vue"
+  },
+  "MidAfsen": {
+    "description": "Auto imported from components/LandingPage/MidAfsen.vue"
+  },
+  "LazyMidAfsen": {
+    "description": "Auto imported from components/LandingPage/MidAfsen.vue"
+  },
+  "PartnerAfsen": {
+    "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
+  },
+  "LazyPartnerAfsen": {
+    "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
   }
 }

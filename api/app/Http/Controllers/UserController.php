@@ -14,11 +14,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-
-        return $this->resp($users);
+        return $this->getPaginate(User::with('companies'), $request, [
+            'name'
+        ]);
     }
 
     public function user()

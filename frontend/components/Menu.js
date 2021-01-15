@@ -36,12 +36,12 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/time_management/calendar'
                 },
-                {
-                    text: "Timesheet",
-                    icon: 'el-icon-postcard',
-                    route: '/admin/time_management/timesheet'
-                },
-                
+                // {
+                //     text: "Timesheet",
+                //     icon: 'el-icon-postcard',
+                //     route: '/admin/time_management/timesheet'
+                // },
+
             ]
         },
         {
@@ -76,6 +76,6 @@ export const  menu = () => {
         //     icon: 'el-icon-user text-primary',
         //     route: '/admin/users'
         // },
-        
+
     ]
 };

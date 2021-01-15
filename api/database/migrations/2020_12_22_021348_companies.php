@@ -20,6 +20,8 @@ class Companies extends Migration
             $table->integer('logo_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_file')->references('id')->on('files');
         });
     }
 

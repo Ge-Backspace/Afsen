@@ -77,6 +77,7 @@ export default {
     {src: '@plugins/vuesax'},
     {src: '@plugins/extablecolumn'},
     {src: '@plugins/vuegeolocation'},
+    {src: '@plugins/vcalendar', mode: 'client'},
     {src: '@plugins/swal', mode: 'client'},
     {src: '@plugins/vue2editor', mode: 'client'},
     {src: "@/plugins/chart", mode: 'client' }

@@ -105,6 +105,12 @@ class AuthController extends Controller
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), Variable::FAILED_LOGIN, false, 401);
         }
 
+        // $username = User::where('username', $request->email)->first();
+        // if($username){
+        //     $request->request->email = $username->email;
+        //     dd($request->request->email);
+        // }
+
         $token = app('auth')->attempt($request->only('email', 'password'));
         if($token){
             return $this->resp([
