@@ -4,41 +4,21 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Data Employees</h1>
+          <h1 class="heading">Berita</h1>
         </div>
       </div>
     </div>
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col-md-12">
-          <vs-button warn style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/lapor/download/pdf`)">Download PDF</vs-button>
+          <vs-button warn style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/berita/download/pdf`)">Download PDF</vs-button>
           &nbsp;
-          <vs-button success style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/lapor/download/xlsx`)">Download Excel</vs-button>
+          <vs-button success style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/berita/download/xlsx`)">Download Excel</vs-button>
         </div>
       </div>
       <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom:20px">
-          <div class="col-md-4">
-            <el-date-picker size="mini" type="daterange" range-separator="-" start-placeholder="Join date"
-              end-placeholder="Resign date" style="width:100%" v-model="searchDate" value-format="yyyy-MM-dd" @change="searchData()">
-            </el-date-picker>
-          </div>
-          <div class="col-md-4">
-            <el-select size="mini" clearable filterable v-model="searchGoverment" @change="searchData()" placeholder="Pilih Job Position" style="width:100%">
-              <el-option v-for="item in getGovermentPlains" :key="'gov-'+item.id" :label="item.nama" :value="item.id"
-                style="height:60px">
-                <div class="row">
-                  <div class="col-2">
-                    <span style="float: left"><img :src="item.foto_url" height="30" width="auto" alt=""></span>
-                  </div>
-                  <div class="col-10">
-                    <span>{{ item.nama }}</span>
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
-          </div>
-          <div class="col-md-4">
+          <div class="col-md-3 offset-md-9">
             <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
@@ -47,60 +27,35 @@
         <vs-table striped>
           <template #thead>
             <vs-tr>
-              <vs-th>Fullname</vs-th>
-              <vs-th>NIP</vs-th>
-              <vs-th>Job Position</vs-th>
-              <vs-th>Status Employee</vs-th>
-              <!-- <vs-th>Organization</vs-th> -->
-              <!-- <vs-th>Job Position</vs-th>
-              <vs-th>Job Level</vs-th>
-              <vs-th>Join Date</vs-th>
-              <vs-th>Resign Date</vs-th>
-              <vs-th>Status Employee</vs-th> -->
+              <vs-th>Judul</vs-th>
+              <vs-th>Dilihat</vs-th>
+              <vs-th>Tanggal Posting</vs-th>
+              <vs-th>Aktif</vs-th>
               <vs-th>Action</vs-th>
             </vs-tr>
           </template>
           <template #tbody>
-            <vs-tr :key="i" v-for="(tr, i) in getLapors.data" :data="tr">
+            <vs-tr :key="i" v-for="(tr, i) in getBeritas.data" :data="tr">
               <vs-td>
-                  <el-link><a class="text-primary" @click="detailLaporan(tr)">{{ tr.judul }}</a></el-link>
+                  {{ truncateString(tr.judul, 70) }}
               </vs-td>
               <vs-td>
-                {{ tr.user ? (tr.user.goverment ? tr.user.goverment.nama : '-') : '-'}}
+                {{ tr.dilihat }}
               </vs-td>
               <vs-td>
-                {{ tr.pelaksana_kegiatan }}
-              </vs-td>
-              <vs-td>
-                {{ tr.tempat_kegiatan }}
-              </vs-td>
-              <vs-td>
-                {{ tr.sumber_pembiayaan }}
-              </vs-td>
-              <vs-td>
-                {{ tr.segmen_kegiatan }}
-              </vs-td>
-              <vs-td>
-                {{ tr.tgl_mulai }}
-              </vs-td>
-              <vs-td>
-                {{ tr.tgl_selesai }}
+                {{ tr.created_at }}
               </vs-td>
               <vs-td>
                 <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
                 <span class="badge badge-warning" v-else>Non Aktif</span>
               </vs-td>
               <vs-td>
-                <el-tooltip content="Download Evidence" placement="top-start" effect="dark">
-                  <el-button size="mini" @click="downloadFile(`lapor/${tr.id}/evidence/download`, true)" icon="fa fa-download"></el-button>
-                </el-tooltip>
-
                 <el-tooltip content="Edit" placement="top-start" effect="dark">
                   <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
                 </el-tooltip>
 
                 <el-tooltip content="Delete" placement="top-start" effect="dark">
-                  <el-button size="mini" type="primary" @click="deleteLaporan(tr.id)" icon="fa fa-trash"></el-button>
+                  <el-button size="mini" type="primary" @click="deleteBerita(tr.id)" icon="fa fa-trash"></el-button>
                 </el-tooltip>
               </vs-td>
             </vs-tr>
@@ -108,10 +63,10 @@
           <template #footer>
             <vs-row>
               <vs-col w="2">
-                <small>Total : {{getLapors.total}} Data</small>
+                <small>Total : {{getBeritas.total}} Data</small>
               </vs-col>
               <vs-col w="10">
-                <vs-pagination v-model="page" :length="Math.ceil(getLapors.total / table.max)" />
+                <vs-pagination v-model="page" :length="Math.ceil(getBeritas.total / table.max)" />
               </vs-col>
             </vs-row>
           </template>
@@ -120,13 +75,12 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Laporan Baru" placement="top-start">
-      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Karyawan'">
+    <el-tooltip class="item" effect="dark" content="Buat Berita Baru" placement="top-start">
+      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Berita'">
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
     <!-- End floating button-->
-
 
     <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
@@ -138,43 +92,31 @@
       <div class="con-form">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Fullname</label>
+            <label>Judul</label>
             <vs-input type="text" v-model="form.judul" placeholder="Judul"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>NIP</label>
-            <vs-input type="text" v-model="form.judul" placeholder="Judul"></vs-input>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
+            <label>Deskripsi</label>
+            <client-only>
+              <vue-editor v-model="form.deskripsi"></vue-editor>
+            </client-only>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
+            <label>Banner</label>
+            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+            :file-list="files" :limit="1">
+            <i class="el-icon-plus"></i>
+          </el-upload>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Organization</label>
-            <vs-input type="text" v-model="form.tempat_kegiatan" placeholder="Tempat Kegiatan"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Job Position</label>
-            <vs-select filter placeholder="Pelaksana Kegiatan" v-model="form.pelaksana_kegiatan">
-              <vs-option :label="test" :value="test">
-
-              </vs-option>
-            </vs-select>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Status Employee</label>
-            <vs-select filter placeholder="Sumber Pembiayaan" v-model="form.sumber_pembiayaan">
-              <vs-option :label="status" :value="status">
-              </vs-option>
-            </vs-select>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Email</label>
-            <vs-input type="text" v-model="form.tempat_kegiatan" placeholder="Tempat Kegiatan"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Unit Kerja</label>
-            <vs-input type="text" v-model="form.tempat_kegiatan" placeholder="Tempat Kegiatan"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Phone Number</label>
-            <vs-input type="text" v-model="form.judul" placeholder="Judul"></vs-input>
+            <vs-row>
+              <vs-col w="2">
+                <label>Aktif</label>
+              </vs-col>
+              <vs-col w="10">
+                <vs-switch style="width:20px" v-model="form.aktif" />
+              </vs-col>
+            </vs-row>
           </vs-col>
         </vs-row>
       </div>
@@ -183,7 +125,7 @@
         <div class="footer-dialog">
           <vs-row>
             <vs-col w="6" style="padding:5px">
-              <vs-button block :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</vs-button>
+              <vs-button block :loading="btnLoader"  @click="onSubmit('update')" v-if="isUpdate">Update</vs-button>
               <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
             </vs-col>
             <vs-col w="6" style="padding:5px">
@@ -203,123 +145,95 @@
     mapGetters
   } from 'vuex';
 
+  import {
+    config
+  } from '../../../../global.config'
+
   export default {
     layout: 'admin',
+    components: {
+
+    },
     data() {
       return {
+        api_url: config.baseApiUrl,
         table: {
           max: 10
         },
         page: 1,
-        customToolbar: [["bold", "italic", "underline"], [{ list: "ordered" }, { list: "bullet" }], [{'align': ''}, {'align': 'center'}, {'align': 'right'}, {'align': 'justify'}]],
-        titleDialog: 'Tambah Laporan',
+        titleDialog: 'Tambah Berita',
         tambahDialog: false,
         search: '',
         isUpdate: false,
         btnLoader: false,
+        files: [],
         form: {
-          judul: "",
-          deskripsi: "",
-          evidences: [],
-          tgl_mulai: "",
-          tgl_selesai: "",
-          pelaksana_kegiatan: '',
-          tautan: '',
-          kategori_kegiatan: "",
-          sumber_pembiayaan: '',
-          segmen_kegiatan: '',
-          tempat_kegiatan: '',
+          judul: '',
+          deskripsi: '',
           aktif: true,
-          kandungan_pancasila: ''
-        },
-        searchDate: ['', ''],
-        searchGoverment: ''
+          banner: null
+        }
       }
     },
     mounted() {
-      this.$store.dispatch('lapor/getAll', {
-        showall: 1
-      });
-
-      this.$store.dispatch('setting/getAll');
-      this.$store.dispatch('goverment/getPlains', {
-        showall: 0
-      });
+      this.$store.dispatch('berita/getAll', {});
     },
     methods: {
       searchData(){
-        let start_date = '';
-        let end_date = '';
-        if(this.searchDate){
-          start_date = this.searchDate[0]
-          end_date = this.searchDate[1]
-        }
-        this.$store.dispatch('lapor/getAll', {
-          search: this.search,
-          start_date: start_date,
-          end_date: end_date,
-          goverment: this.searchGoverment
+        this.$store.dispatch('berita/getAll', {
+          search: this.search
         });
       },
-      detailLaporan(data){
-        this.$store.commit('lapor/setLaporan', data)
-        this.$router.push('/admin/lapor/detail')
-      },
       edit(data) {
-        let form = JSON.parse(JSON.stringify(data))
+        this.form.judul = data.judul
+        this.form.id = data.id
+        this.form.aktif = data.aktif
+        this.form.deskripsi = data.deskripsi
+        this.files.push({
+          name: '',
+          url: data.banner_url
+        })
         this.tambahDialog = true
-        this.titleDialog = 'Edit Laporan'
+        this.titleDialog = 'Edit Berita'
         this.isUpdate = true
-
-        form.tgl_mulai =  this.$moment(form.tgl_mulai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DD'); 
-        form.tgl_selesai = this.$moment(form.tgl_selesai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DD'); 
-        // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
-        this.form = form
       },
       resetForm() {
         this.form = {
-          judul: "",
-          deskripsi: "",
-          evidences: [],
-          tgl_mulai: "",
-          tgl_selesai: "",
-          pelaksana_kegiatan: '',
-          tautan: '',
-          kategori_kegiatan: "",
-          sumber_pembiayaan: '',
-          segmen_kegiatan: '',
-          tempat_kegiatan: '',
+          judul: '',
+          banner: null,
           aktif: true,
-          kandungan_pancasila: ''
+          deskripsi: ''
         }
+        this.files = [];
+        this.isUpdate = false
       },
       handleCurrentChange(val) {
-        this.page = val;
+        this.$store.commit('berita/setPage', val)
+        this.$store.dispatch('berita/getAll', {});
       },
       onSubmit(type = 'store') {
         this.btnLoader = true
-        let url = "/lapor/store";
+        let formData = new FormData()
+        formData.append("judul", this.form.judul)
+        formData.append("deskripsi", this.form.deskripsi)
+        formData.append("aktif", this.form.aktif ? 1 : 0)
+        if (this.form.banner !== null) {
+          formData.append("banner", this.form.banner)
+        }
+        let url = "/berita/store";
         if (type == 'update') {
-          url = `/lapor/${this.form.id}/update`
+          url = `/berita/${this.form.id}/update`
         }
-        let pancasila = '';
-        if(Array.isArray(this.form.kandungan_pancasila)){
-          this.form.kandungan_pancasila.forEach(e => {
-              if(e !== ''){
-                pancasila += pancasila == '' ? e : (',' + e)
-              }
-          });
-        }
-        this.form.kandungan_pancasila = pancasila !== '' ? pancasila : this.form.kandungan_pancasila;
-        this.$axios.post(url, this.form).then(resp => {
+
+        this.$axios.post(url, formData).then(resp => {
           if (resp.data.success) {
             this.$notify.success({
               title: 'Success',
-              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Laporan`
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Berita`
             })
             this.tambahDialog = false
-            this.resetForm()
-            this.$store.dispatch('lapor/getAll', {});
+            this.$store.dispatch('berita/getAll', {});
+             this.resetForm()
           }
         }).finally(() => {
           this.btnLoader = false
@@ -335,7 +249,11 @@
           }
         })
       },
-      deleteLaporan(id) {
+      handleChangeFile(file, fileList) {
+        this.form.banner = file.raw
+      },
+      deleteBerita(id) {
+        console.log('delete')
         this.$swal({
           title: 'Perhatian!',
           text: "Apakah anda yakin ingin menghapus data ini?",
@@ -347,16 +265,14 @@
           cancelButtonText: 'Batal'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/lapor/${id}/delete`).then(resp => {
+            this.$axios.delete(`/berita/${id}/delete`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',
                   message: 'Berhasil Menghapus Data'
                 })
                 this.tambahDialog = false
-                this.$store.dispatch('lapor/getAll', {
-                  defaultPage: true
-                });
+                this.$store.dispatch('berita/getAll', {defaultPage: true});
               }
             }).finally(() => {
               //
@@ -371,32 +287,23 @@
       },
     },
     computed: {
-      ...mapGetters("lapor", [
-        'getLapors',
+      ...mapGetters("berita", [
+        'getBeritas',
         'getLoader'
-      ]),
-      ...mapGetters("setting", [
-        'getSetting'
-      ]),
-      ...mapGetters("goverment", [
-        'getGovermentPlains'
-      ]),
+      ])
     },
     watch: {
-      getLapors(newValue, oldValue) {
+      getBeritas(newValue, oldValue) {
 
       },
-      getSetting(newValue, oldValue){
-        console.log(newValue)
-      },
       search(newValue, oldValue) {
-        // this.$store.dispatch('lapor/getAll', {
+        // this.$store.dispatch('berita/getAll', {
         //   search: newValue
         // });
       },
       page(newValue, oldValue) {
-        this.$store.commit('lapor/setPage', newValue)
-        this.$store.dispatch('lapor/getAll', {});
+        this.$store.commit('berita/setPage', newValue)
+        this.$store.dispatch('berita/getAll', {});
       }
     },
   }

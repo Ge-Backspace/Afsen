@@ -68,7 +68,7 @@ export const  menu = () => {
         },
         {
             text: 'Notifikasi',
-            icon: 'el-icon-notebook-1 text-primary',
+            icon: 'ni ni-email-83 text-primary',
             route: '/admin/notifikasi'
         },
         // {

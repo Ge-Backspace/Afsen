@@ -33,6 +33,7 @@ const _73507086 = () => interopDefault(import('..\\pages\\admin\\company\\task\\
 const _29576941 = () => interopDefault(import('..\\pages\\admin\\company\\user_activity_log\\index.vue' /* webpackChunkName: "pages/admin/company/user_activity_log/index" */))
 const _e8e76fe0 = () => interopDefault(import('..\\pages\\admin\\employees\\detail.vue' /* webpackChunkName: "pages/admin/employees/detail" */))
 const _6951c982 = () => interopDefault(import('..\\pages\\admin\\finances\\cash.vue' /* webpackChunkName: "pages/admin/finances/cash" */))
+const _531e2682 = () => interopDefault(import('..\\pages\\admin\\finances\\loan.vue' /* webpackChunkName: "pages/admin/finances/loan" */))
 const _79e0f70e = () => interopDefault(import('..\\pages\\admin\\finances\\reimbursement.vue' /* webpackChunkName: "pages/admin/finances/reimbursement" */))
 const _ae1d3e6e = () => interopDefault(import('..\\pages\\admin\\lapor\\detail.vue' /* webpackChunkName: "pages/admin/lapor/detail" */))
 const _153a73ad = () => interopDefault(import('..\\pages\\admin\\master\\pemda.vue' /* webpackChunkName: "pages/admin/master/pemda" */))
@@ -40,7 +41,9 @@ const _0e80d4e8 = () => interopDefault(import('..\\pages\\admin\\master\\setting
 const _ab2259d0 = () => interopDefault(import('..\\pages\\admin\\time_management\\attendance.vue' /* webpackChunkName: "pages/admin/time_management/attendance" */))
 const _2b2552ad = () => interopDefault(import('..\\pages\\admin\\time_management\\calendar.vue' /* webpackChunkName: "pages/admin/time_management/calendar" */))
 const _f520d4f4 = () => interopDefault(import('..\\pages\\admin\\time_management\\schedule.vue' /* webpackChunkName: "pages/admin/time_management/schedule" */))
+const _5dd14e31 = () => interopDefault(import('..\\pages\\admin\\time_management\\setting.vue' /* webpackChunkName: "pages/admin/time_management/setting" */))
 const _6108bb3a = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff.vue' /* webpackChunkName: "pages/admin/time_management/timeoff" */))
+const _29955889 = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff_deduction.vue' /* webpackChunkName: "pages/admin/time_management/timeoff_deduction" */))
 const _279da039 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
@@ -180,6 +183,10 @@ export const routerOptions = {
     component: _6951c982,
     name: "admin-finances-cash"
   }, {
+    path: "/admin/finances/loan",
+    component: _531e2682,
+    name: "admin-finances-loan"
+  }, {
     path: "/admin/finances/reimbursement",
     component: _79e0f70e,
     name: "admin-finances-reimbursement"
@@ -208,9 +215,17 @@ export const routerOptions = {
     component: _f520d4f4,
     name: "admin-time_management-schedule"
   }, {
+    path: "/admin/time_management/setting",
+    component: _5dd14e31,
+    name: "admin-time_management-setting"
+  }, {
     path: "/admin/time_management/timeoff",
     component: _6108bb3a,
     name: "admin-time_management-timeoff"
+  }, {
+    path: "/admin/time_management/timeoff_deduction",
+    component: _29955889,
+    name: "admin-time_management-timeoff_deduction"
   }, {
     path: "/",
     component: _279da039,
