@@ -1,15 +1,20 @@
 <template>
   <div class="container">
-    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    mounted () {
-      this.$router.push('/admin/beranda');
-    },
-  }
+export default {
+  mounted() {
+    this.$router.push("/admin/beranda");
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -19,14 +24,14 @@
   width: 100%;
   align-items: center;
   align-content: center;
-  flex-direction: column
+  flex-direction: column;
 }
 .lds-ellipsis {
   display: inline-block;
   position: relative;
   width: 80px;
   height: 80px;
-  margin-top: 25%
+  margin-top: 25%;
 }
 .lds-ellipsis div {
   position: absolute;

@@ -1,14 +1,26 @@
 <template>
     <div>
-        <p>{{ $store.state.company.company.name }}</p>
+        <input @change="hello" type="text" v-model="nama">
+        {{nama}}
     </div>
 </template>
 
 <script>
     export default {
-        mounted () {
-          console.log(this.$store.state.company.company);
+        data() {
+            return {
+                nama: 'ada'
+            }
         },
+        methods: {
+            hello(){
+            console.log('hello, ' + this.nama);
+        }
+        },
+        mounted () {
+            console.log('hello from mounted');
+        },
+        
     }
 </script>
 
