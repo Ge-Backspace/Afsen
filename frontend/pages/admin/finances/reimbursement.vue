@@ -4,7 +4,8 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Reimbursement</h1>
+          <h1 class="heading">Reinbursement
+          </h1>
         </div>
       </div>
     </div>
@@ -22,14 +23,16 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Logo</vs-th>
-                  <vs-th>Nama Pemda Prov/Kab/Kota</vs-th>
-                  <vs-th>Aktif</vs-th>
+                  <vs-th>No</vs-th>
+                  <vs-th>Reinbursement Name</vs-th>
+                  <vs-th>Reinbursement Limit</vs-th>
+                  <vs-th>Expired In</vs-th>
+                  <vs-th>Effective Date</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
+                <!-- <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
                   <vs-td class="text-center">
                     <img :src="tr.foto_url" alt="" height="30" width="auto">
                   </vs-td>
@@ -50,7 +53,7 @@
                       </el-button>
                     </el-tooltip>
                   </vs-td>
-                </vs-tr>
+                </vs-tr> -->
               </template>
               <template #footer>
                 <vs-row>
@@ -69,7 +72,7 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
+    <el-tooltip class="item" effect="dark" content="Tambah Reinbursment" placement="top-start">
       <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
         <i class="el-icon-plus my-float"></i>
       </a>
@@ -109,25 +112,20 @@
       <div class="con-form">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Nama</label>
-            <vs-input type="text" v-model="form.nama" placeholder="Nama"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
-            <label>Logo</label>
-            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-              :file-list="files" :limit="1">
-              <i class="el-icon-plus"></i>
-            </el-upload>
+            <label>Reinbursement</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Reinburstment Name"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <vs-row>
-              <vs-col w="2">
-                <label>Aktif</label>
-              </vs-col>
-              <vs-col w="10">
-                <vs-switch style="width:20px" v-model="form.aktif" />
-              </vs-col>
-            </vs-row>
+            <label>Limit</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Reinbursement Limit"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Effective Date</label>
+            <vs-input type="date" v-model="form.nama" placeholder="Effective Date"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Expired Date</label>
+            <vs-input type="date" v-model="form.nama" placeholder="Expired Date"></vs-input>
           </vs-col>
         </vs-row>
       </div>

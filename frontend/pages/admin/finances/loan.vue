@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Cash Advance Request
+          <h1 class="heading">Loan
           </h1>
         </div>
       </div>
@@ -23,15 +23,29 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Logo</vs-th>
-                  <vs-th>Nama Pemda Prov/Kab/Kota</vs-th>
-                  <vs-th>Aktif</vs-th>
+                  <vs-th>No</vs-th>
+                  <vs-th>Transaction ID</vs-th>
+                  <vs-th>Loan Name</vs-th>
+                  <vs-th>Emloyee</vs-th>
+                  <vs-th>Loan Amount</vs-th>
+                  <vs-th>Installment</vs-th>
+                  <vs-th>Interest</vs-th>
+                  <vs-th>Effective Date</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
                 <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
-                  <vs-td class="text-center">
+                  <vs-td>1</vs-td>
+                  <vs-td>2012201221</vs-td>
+                  <vs-td>Personal Loan</vs-td>
+                  <vs-td>Udin</vs-td>
+                  <vs-td>6000000</vs-td>
+                  <vs-td>24</vs-td>
+                  <vs-td>0 %</vs-td>
+                  <vs-td>2021-11-01</vs-td>
+                  <vs-td></vs-td>
+                  <!-- <vs-td class="text-center">
                     <img :src="tr.foto_url" alt="" height="30" width="auto">
                   </vs-td>
                   <vs-td>
@@ -50,7 +64,7 @@
                       <el-button size="mini" type="primary" @click="deleteGoverment(tr.id)" icon="fa fa-trash">
                       </el-button>
                     </el-tooltip>
-                  </vs-td>
+                  </vs-td> -->
                 </vs-tr>
               </template>
               <template #footer>
@@ -70,7 +84,7 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
+    <el-tooltip class="item" effect="dark" content="Tambahkan Loan" placement="top-start">
       <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
         <i class="el-icon-plus my-float"></i>
       </a>
@@ -110,25 +124,32 @@
       <div class="con-form">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Nama</label>
-            <vs-input type="text" v-model="form.nama" placeholder="Nama"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
-            <label>Logo</label>
-            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-              :file-list="files" :limit="1">
-              <i class="el-icon-plus"></i>
-            </el-upload>
+            <label>Transaction ID</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Transaction ID"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <vs-row>
-              <vs-col w="2">
-                <label>Aktif</label>
-              </vs-col>
-              <vs-col w="10">
-                <vs-switch style="width:20px" v-model="form.aktif" />
-              </vs-col>
-            </vs-row>
+            <label>Loan Name</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Loan Name"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Employee</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Nama Employee"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Loan Amount</label>
+            <vs-input type="number" v-model="form.nama" placeholder="Loan Amount"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Installment</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Installment"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Interest</label>
+            <vs-input type="text" v-model="form.nama" placeholder="- %"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Effective Date</label>
+            <vs-input type="date" v-model="form.nama"></vs-input>
           </vs-col>
         </vs-row>
       </div>

@@ -59,6 +59,11 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/finances/cash'
                 },
+                {
+                  text: "Loan",
+                  icon: 'el-icon-postcard',
+                  route: '/admin/finances/loan'
+              },
             ]
         },
         {
