@@ -4,56 +4,15 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Schedule</h1>
+          <h1 class="heading">Calendar</h1>
         </div>
       </div>
     </div>
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
-          <vs-button
-            warn
-            style="float: right"
-            :loading="globalLoader"
-            gradient
-            @click="downloadFile(`/lapor/download/pdf`)"
-            >Download PDF</vs-button
-          >
-          &nbsp;
-          <vs-button
-            success
-            style="float: right"
-            :loading="globalLoader"
-            gradient
-            @click="downloadFile(`/lapor/download/xlsx`)"
-            >Download Excel</vs-button
-          >
-          <el-card v-loading="getLoader" style="margin-top: 40px">
+          <el-card v-loading="getLoader">
             <div class="row" style="margin-bottom:20px">
-              <div class="row col-7">
-                <vs-button 
-                  :active="active == 0" 
-                  @click="
-                  active = 0;
-                  reportDialog = true;
-                  titleDialog = 'View Report Attendance'; 
-                  ">
-                    <i class="bx bx-home-alt"></i> Add Schedule
-                </vs-button>
-
-                <vs-button
-                  danger
-                  border
-                  :active="active == 2"
-                  @click="
-                    active = 2;
-                    tambahDialog = true;
-                    titleDialog = 'Import';
-                  "
-                >
-                  <i class="bx bxs-heart"></i> Import
-                </vs-button>
-              </div>
               <div class="col-md-3 offset-md-9">
                 <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
                   <i slot="prefix" class="el-input__icon el-icon-search"></i>
@@ -63,13 +22,9 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Employee ID</vs-th>
-                  <vs-th>Full Name</vs-th>
-                  <vs-th>Job Position</vs-th>
-                  <vs-th>Organization</vs-th>
-                  <vs-th>Job Level</vs-th>
-                  <vs-th>Join Date</vs-th>
-                  <vs-th>Current Schedule</vs-th>
+                  <vs-th>Logo</vs-th>
+                  <vs-th>Nama Pemda Prov/Kab/Kota</vs-th>
+                  <vs-th>Aktif</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
@@ -113,7 +68,13 @@
       </div>
     </div>
 
-    
+    <!-- Floating Button -->
+    <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
+      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
+        <i class="el-icon-plus my-float"></i>
+      </a>
+    </el-tooltip>
+    <!-- End floating button-->
 
     <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
@@ -148,8 +109,25 @@
       <div class="con-form">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Import Method</label>
-          <vs-input<input type="file" id="file" ref="file"/>
+            <label>Nama</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Nama"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
+            <label>Logo</label>
+            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+              :file-list="files" :limit="1">
+              <i class="el-icon-plus"></i>
+            </el-upload>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <vs-row>
+              <vs-col w="2">
+                <label>Aktif</label>
+              </vs-col>
+              <vs-col w="10">
+                <vs-switch style="width:20px" v-model="form.aktif" />
+              </vs-col>
+            </vs-row>
           </vs-col>
         </vs-row>
       </div>
@@ -163,77 +141,6 @@
             </vs-col>
             <vs-col w="6" style="padding:5px">
               <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
-            </vs-col>
-          </vs-row>
-          <div>&nbsp;</div>
-        </div>
-      </template>
-    </vs-dialog>
-
-    <vs-dialog
-      v-model="reportDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
-    >
-      <template #header>
-        <h1 class="not-margin">
-          {{ titleDialog }}
-        </h1>
-      </template>
-      <div class="con-form">
-        <vs-row>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Start Date</label>
-            <vs-input type="date" v-model="form.tgl_mulai"></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Expired Date</label>
-            <vs-input type="date" v-model="form.tgl_mulai"></vs-input>
-          </vs-col>
-            </vs-row>
-      </div>
-
-      <template #footer>
-        <div class="footer-dialog">
-          <vs-row>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('update')"
-                v-if="isUpdate"
-                >Update</vs-button
-              >
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('store')"
-                v-else
-                >Simpan</vs-button
-              >
-            </vs-col>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                border
-                @click="
-                  reportDialog = false;
-                  resetForm();
-                "
-                >Batal</vs-button
-              >
             </vs-col>
           </vs-row>
           <div>&nbsp;</div>
@@ -269,7 +176,6 @@
         search: '',
         isUpdate: false,
         tambahDialog: false,
-        reportDialog: false,
         btnLoader: false,
         files: [],
         form: {
