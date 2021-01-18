@@ -69,40 +69,7 @@
               <h5 class="h3 mb-0">Laporan Per Kandungan Pancasila</h5>
             </div>
             <client-only>
-              <ChartDoughnut />
             </client-only>
-          </el-card>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12 text-center" style="margin-top:20px">
-          <label><b>Pemerintah Daerah</b></label>
-          <el-select size="mini" clearable filterable v-model="searchGoverment" @change="searchData()" placeholder="Pilih Pemda"
-            style="width:100%">
-            <el-option v-for="item in getGovermentPlains" :key="'gov-'+item.id" :label="item.nama" :value="item.id"
-              style="height:60px">
-              <div class="row">
-                <div class="col-2">
-                  <span style="float: left"><img :src="item.foto_url" height="30" width="auto" alt=""></span>
-                </div>
-                <div class="col-10">
-                  <span>{{ item.nama }}</span>
-                </div>
-              </div>
-            </el-option>
-          </el-select>
-        </div>
-        <div class="col-md-12">
-          <el-card style="margin-top:20px">
-            <div class="row">
-              <div class="col-md-6">
-                <ChartLine />
-              </div>
-              <div class="col-md-6">
-                <ChartBar />
-              </div>
-            </div>
           </el-card>
         </div>
       </div>
@@ -111,10 +78,6 @@
 </template>
 
 <script>
-  import ChartBar from "@/components/chart/chart-bar";
-  import ChartDoughnut from "@/components/chart/chart-doughnut";
-  import ChartLine from "@/components/chart/chart-line";
-
   import {
     mapMutations,
     mapGetters
@@ -122,9 +85,7 @@
 
   export default {
     components: {
-      ChartBar,
-      ChartDoughnut,
-      ChartLine
+
     },
     layout: 'admin',
     data() {

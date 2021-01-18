@@ -8,11 +8,26 @@ use App\Models\Companies;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Geocoder\Geocoder;
 
 class CheckinController extends Controller
 {
+    public function index(Request $request)
+    {
+        $checkin = DB::table('checkins')
+        ->join('users', 'checkins.user_id', '=', 'users.id')
+        ->where('company_id', $request->company_id)
+        ->orderBy('checkins.id', 'desc');
+
+        return $this->getPaginate($checkin, $request, [
+            'name',
+            'checkin_time',
+            'checkout_time',
+        ]);
+    }
+
     public function checkin(Request $request){
         $input = $request->only([
             'user_id', 'lat', 'lng'

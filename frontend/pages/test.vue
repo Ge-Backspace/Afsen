@@ -20,7 +20,7 @@
         mounted () {
             console.log('hello from mounted');
         },
-        
+
     }
 </script>
 

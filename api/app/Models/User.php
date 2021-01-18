@@ -56,10 +56,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function companies(){
-        return $this->belongsTo('App\Model\Companies');
+        return $this->belongsTo('App\Models\Companies');
     }
 
     public function checkin(){
-    	return $this->hasMany('App\Model\Checkin');
+    	return $this->hasMany('App\Models\Checkin');
     }
 }

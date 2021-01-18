@@ -20,6 +20,7 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\store\\berita.js'), 'berita.js')
+  resolveStoreModules(require('..\\store\\checkin.js'), 'checkin.js')
   resolveStoreModules(require('..\\store\\company.js'), 'company.js')
   resolveStoreModules(require('..\\store\\drawer.js'), 'drawer.js')
   resolveStoreModules(require('..\\store\\goverment.js'), 'goverment.js')
@@ -36,6 +37,7 @@ let store = {};
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '..\\store\\berita.js',
+      '..\\store\\checkin.js',
       '..\\store\\company.js',
       '..\\store\\drawer.js',
       '..\\store\\goverment.js',

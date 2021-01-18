@@ -21,6 +21,7 @@ const _5a357628 = () => interopDefault(import('..\\pages\\admin\\informasi.vue' 
 const _06328992 = () => interopDefault(import('..\\pages\\admin\\kegiatan.vue' /* webpackChunkName: "pages/admin/kegiatan" */))
 const _3a57b00a = () => interopDefault(import('..\\pages\\admin\\lapor\\index.vue' /* webpackChunkName: "pages/admin/lapor/index" */))
 const _4e184dca = () => interopDefault(import('..\\pages\\admin\\notifikasi.vue' /* webpackChunkName: "pages/admin/notifikasi" */))
+const _322afcc8 = () => interopDefault(import('..\\pages\\admin\\test.vue' /* webpackChunkName: "pages/admin/test" */))
 const _717431c2 = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages/admin/users" */))
 const _7e950af8 = () => interopDefault(import('..\\pages\\admin\\company\\announcement\\index.vue' /* webpackChunkName: "pages/admin/company/announcement/index" */))
 const _1c4799d9 = () => interopDefault(import('..\\pages\\admin\\company\\asset\\index.vue' /* webpackChunkName: "pages/admin/company/asset/index" */))
@@ -134,6 +135,10 @@ export const routerOptions = {
     path: "/admin/notifikasi",
     component: _4e184dca,
     name: "admin-notifikasi"
+  }, {
+    path: "/admin/test",
+    component: _322afcc8,
+    name: "admin-test"
   }, {
     path: "/admin/users",
     component: _717431c2,

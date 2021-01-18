@@ -126,6 +126,13 @@
     "_name": "_4e184dca"
   },
   {
+    "name": "admin-test",
+    "path": "/admin/test",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\test.vue",
+    "chunkName": "pages/admin/test",
+    "_name": "_322afcc8"
+  },
+  {
     "name": "admin-users",
     "path": "/admin/users",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\users.vue",
