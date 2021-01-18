@@ -5,51 +5,7 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row" style="padding-top:20px">
-            <div class="col-xl-4">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0"><i class="las la-book-reader"></i> Laporan
-                      </h5>
-                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.laporan.current)}}
-                      </span>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span
-                      :class="{'text-precentage': true, 'text-success': summary.laporan.type == 'up', 'text-primary': summary.laporan.type == 'down', 'mr-2': true}"><i
-                        :class="{'las': true, 'la-angle-double-up': summary.laporan.type == 'up', 'la-angle-double-down': summary.laporan.type == 'down'}"></i>
-                      <b>{{summary.laporan.precentage}}%</b></span>
-                    <span class="text-nowrap">Dari bulan lalu</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0"><i class="las la-chalkboard-teacher"></i>
-                        Kegiatan</h5>
-                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.kegiatan.current)}}
-                      </span>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span
-                      :class="{'text-precentage': true, 'text-success': summary.kegiatan.type == 'up', 'text-primary': summary.kegiatan.type == 'down', 'mr-2': true}"><i
-                        :class="{'las': true, 'la-angle-double-up': summary.kegiatan.type == 'up', 'la-angle-double-down': summary.kegiatan.type == 'down'}"></i>
-                      <b>{{summary.kegiatan.precentage}}%</b></span>
-                    <span class="text-nowrap">Dari bulan lalu</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4">
+            <div class="col-xl-12">
               <div class="card card-stats">
                 <!-- Card body -->
                 <div class="card-body">
