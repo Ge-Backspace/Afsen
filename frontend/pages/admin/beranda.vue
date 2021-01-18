@@ -77,10 +77,6 @@
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
             </div>
-<<<<<<< HEAD
-            <client-only>
-            </client-only>
-=======
             <div class="row">
               <div class="col-4">
                 <img
@@ -121,7 +117,6 @@
             <!-- <client-only>
               <ChartDoughnut />
             </client-only> -->
->>>>>>> ef14c1ccfde3646c276bfda1ea6b71d8de5015ab
           </el-card>
         </div>
       </div>
@@ -130,92 +125,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-  import {
-    mapMutations,
-    mapGetters
-  } from 'vuex';
-
-  export default {
-    components: {
-
-    },
-    layout: 'admin',
-    data() {
-      return {
-        searchGoverment: '',
-        summary: {
-          laporan: {
-            type: "up",
-            current: 0,
-            previous: 0,
-            precentage: 0
-          },
-          kegiatan: {
-            type: "up",
-            current: 0,
-            previous: 0,
-            precentage: 0
-          },
-          berita: {
-            type: "up",
-            current: 0,
-            previous: 0,
-            precentage: 0
-          },
-        },
-        beritaPopuler: [],
-        loadingBeritaPopuler: true,
-      }
-    },
-    mounted() {
-      this.getSummary()
-      this.getBeritaPopuler()
-      this.$store.dispatch('goverment/getPlains', {
-        showall: 0
-      });
-      // this.getPopularCourses()
-    },
-    methods: {
-      searchData() {
-        this.$store.dispatch('service/getChartLaporanMasuk', {
-          type: 'segmentasi',
-          goverment: this.searchGoverment
-        })
-        this.$store.dispatch('service/getChartLaporanMasuk', {
-          type: 'kategori',
-          goverment: this.searchGoverment
-        })
-        this.$store.dispatch('service/getChartLaporanMasuk', {
-          type: 'time',
-          goverment: this.searchGoverment
-        })
-      },
-      async getSummary() {
-        await this.$axios.get('/summary').then(response => {
-          if (response.data.success) {
-            this.summary = response.data.data
-          }
-        }).catch(e => {
-          console.log(e)
-        })
-      },
-      async getBeritaPopuler() {
-        await this.$axios.get('/berita-populer').then(response => {
-          if (response.data.success) {
-            this.beritaPopuler = response.data.data
-          }
-        }).finally(() => {
-          this.loadingBeritaPopuler = false
-        })
-      },
-    },
-    computed: {
-      ...mapGetters("goverment", [
-        'getGovermentPlains'
-      ]),
-    },
-=======
 import ChartBar from "@/components/chart/chart-bar";
 // import ChartDoughnut from "@/components/chart/chart-doughnut";
 import ChartLine from "@/components/chart/chart-line";
@@ -259,7 +168,6 @@ export default {
       // }
       
         
->>>>>>> ef14c1ccfde3646c276bfda1ea6b71d8de5015ab
   }
   },
   mounted() {
@@ -311,7 +219,7 @@ export default {
   //       })
   //     },
   computed: {
-    ...mapGetters("goverment", ["getGovermentPlains"]),
+    // ...mapGetters("goverment", ["getGovermentPlains"]),
   },
   
 };
