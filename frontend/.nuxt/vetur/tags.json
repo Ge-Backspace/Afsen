@@ -1,80 +1,80 @@
 {
   "Logo": {
-    "description": "Auto imported from components/Logo.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/Logo.vue"
   },
   "LazyLogo": {
-    "description": "Auto imported from components/Logo.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/Logo.vue"
   },
   "Menu": {
-    "description": "Auto imported from components/Menu.js"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/Menu.js"
   },
   "LazyMenu": {
-    "description": "Auto imported from components/Menu.js"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/Menu.js"
   },
   "Sidebar": {
-    "description": "Auto imported from components/Sidebar.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/Sidebar.vue"
   },
   "LazySidebar": {
-    "description": "Auto imported from components/Sidebar.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/Sidebar.vue"
   },
   "ChartBar": {
-    "description": "Auto imported from components/chart/chart-bar.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/chart/chart-bar.vue"
   },
   "LazyChartBar": {
-    "description": "Auto imported from components/chart/chart-bar.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/chart/chart-bar.vue"
   },
   "ChartDoughnut": {
-    "description": "Auto imported from components/chart/chart-doughnut.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/chart/chart-doughnut.vue"
   },
   "LazyChartDoughnut": {
-    "description": "Auto imported from components/chart/chart-doughnut.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/chart/chart-doughnut.vue"
   },
   "ChartLine": {
-    "description": "Auto imported from components/chart/chart-line.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/chart/chart-line.vue"
   },
   "LazyChartLine": {
-    "description": "Auto imported from components/chart/chart-line.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/chart/chart-line.vue"
   },
   "FooterAfsen": {
-    "description": "Auto imported from components/LandingPage/FooterAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/FooterAfsen.vue"
   },
   "LazyFooterAfsen": {
-    "description": "Auto imported from components/LandingPage/FooterAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/FooterAfsen.vue"
   },
   "HeaderAfsen": {
-    "description": "Auto imported from components/LandingPage/HeaderAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/HeaderAfsen.vue"
   },
   "LazyHeaderAfsen": {
-    "description": "Auto imported from components/LandingPage/HeaderAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/HeaderAfsen.vue"
   },
   "HelloWorld": {
-    "description": "Auto imported from components/LandingPage/HelloWorld.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/HelloWorld.vue"
   },
   "LazyHelloWorld": {
-    "description": "Auto imported from components/LandingPage/HelloWorld.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/HelloWorld.vue"
   },
   "HeroAfsen": {
-    "description": "Auto imported from components/LandingPage/HeroAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/HeroAfsen.vue"
   },
   "LazyHeroAfsen": {
-    "description": "Auto imported from components/LandingPage/HeroAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/HeroAfsen.vue"
   },
   "InstaAfsen": {
-    "description": "Auto imported from components/LandingPage/InstaAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/InstaAfsen.vue"
   },
   "LazyInstaAfsen": {
-    "description": "Auto imported from components/LandingPage/InstaAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/InstaAfsen.vue"
   },
   "MidAfsen": {
-    "description": "Auto imported from components/LandingPage/MidAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/MidAfsen.vue"
   },
   "LazyMidAfsen": {
-    "description": "Auto imported from components/LandingPage/MidAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/MidAfsen.vue"
   },
   "PartnerAfsen": {
-    "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/PartnerAfsen.vue"
   },
   "LazyPartnerAfsen": {
-    "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/PartnerAfsen.vue"
   }
 }
