@@ -22,14 +22,14 @@ class Controller extends BaseController
     public function resp($data = null, $message = Variable::SUCCESS, $success = true, $status_code = 200)
     {
         $result = [
-            'success' => $success, 
+            'success' => $success,
             'message' => $message,
             'code' => $status_code,
             'data' => $data
         ];
         return response()->json($result, $status_code);
     }
-    
+
     /**
      * respMerge
      *
@@ -42,14 +42,14 @@ class Controller extends BaseController
     public function respMerge($data = null, $message = Variable::SUCCESS, $success = true, $status_code = 200)
     {
         $result = collect([
-            'success' => $success, 
+            'success' => $success,
             'message' => $message,
             'code' => $status_code,
         ]);
         $result = $result->merge($data);
         return response()->json($result);
     }
-    
+
     /**
      * getData
      *
@@ -65,7 +65,7 @@ class Controller extends BaseController
                 $query->orWhereRaw("CONCAT($column, '')  LIKE ?", ['%' . $request->search . '%']);
             }
         });
-        
+
         return $this->resp($model->get());
     }
 
@@ -83,11 +83,11 @@ class Controller extends BaseController
                 $query->orWhereRaw("CONCAT($column, '')  LIKE ?", ['%' . $request->search . '%']);
             }
         });
-        
+
         $limit = $request->has('limit') ? (int) $request->limit : 10;
         return $this->respMerge($model->paginate($limit)->appends($request->except('page')));
     }
-    
+
     /**
      * storeData
      *
@@ -111,7 +111,7 @@ class Controller extends BaseController
             if($storeFile){
                 $input['id_file'] = $storeFile;
             } else {
-                return $this->resp(null, Variable::FAILED_UPLOAD, false, 400);   
+                return $this->resp(null, Variable::FAILED_UPLOAD, false, 400);
             }
         }
 
@@ -122,13 +122,13 @@ class Controller extends BaseController
                 Helper::storeFile('store', $d_file['type'], [$d_file['field'], $key], request(), $model, true);
             }
         }
-        
+
         if($model){
             return $this->resp($model);
         }
         return $this->resp(null, Variable::FAILED, false);
     }
-    
+
     /**
      * updateData
      *
@@ -154,7 +154,7 @@ class Controller extends BaseController
         if(!empty($single_file)){
             $storeFile = Helper::storeFile('update', $single_file['type'], $single_file['field'], request(), $model);
             if(!$storeFile){
-                return $this->resp(null, Variable::FAILED_UPLOAD, false, 400);   
+                return $this->resp(null, Variable::FAILED_UPLOAD, false, 400);
             }
         }
 
@@ -164,13 +164,13 @@ class Controller extends BaseController
                 Helper::storeFile('update', $d_file['type'], $d_file['field'], request(), $model, true);
             }
         }
-        
+
         if($model->update($input)){
             return $this->resp($model);
         }
         return $this->resp(null, Variable::FAILED, false);
     }
-    
+
     /**
      * showData
      *
@@ -185,7 +185,7 @@ class Controller extends BaseController
             return $this->resp(null, Variable::NOT_FOUND, false, 404);
         }
     }
-    
+
     /**
      * deleteData
      *
@@ -200,5 +200,38 @@ class Controller extends BaseController
         } else {
             return $this->resp(null, Variable::NOT_FOUND, false, 404);
         }
+    }
+
+    function distance($lat1, $lon1, $lat2, $lon2) {
+        if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+          return 0;
+        }
+        else {
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+
+            return ($miles * 1.609344);
+        }
+      }
+
+    public function vincentyGreatCircleDistance(
+    $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
+    {
+    // convert from degrees to radians
+    $latFrom = deg2rad($latitudeFrom);
+    $lonFrom = deg2rad($longitudeFrom);
+    $latTo = deg2rad($latitudeTo);
+    $lonTo = deg2rad($longitudeTo);
+
+    $lonDelta = $lonTo - $lonFrom;
+    $a = pow(cos($latTo) * sin($lonDelta), 2) +
+        pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+    $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+
+    $angle = atan2(sqrt($a), $b);
+    return $angle * $earthRadius;
     }
 }

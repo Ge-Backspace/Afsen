@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Models\Checkin;
 use App\Models\Companies;
+use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class CheckinController extends Controller
         $checkin = DB::table('checkins')
         ->join('users', 'checkins.user_id', '=', 'users.id')
         ->where('company_id', $request->company_id)
+        ->whereDate('checkin_time', '=', Carbon::today())
         ->orderBy('checkins.id', 'desc');
 
         return $this->getPaginate($checkin, $request, [
@@ -35,8 +37,8 @@ class CheckinController extends Controller
 
         $rules = [
             'user_id' => 'required|numeric',
-            'lat' => 'required|string',
-            'lng' => 'required|string'
+            'lat' => 'required',
+            'lng' => 'required'
         ];
 
         $validator = Validator::make ($input, $rules ,Helper::messageValidation());
@@ -62,23 +64,9 @@ class CheckinController extends Controller
             return $this->resp($request->all(), 'Akun tidak terdaftar', false, 406);
         }
 
-        if ($lat == 0 && $lng == 0){
-            return $this->resp($request->all(), 'Lokasi tidak masuk', false, 406);
-        } else {
-            $company_lat = $company->lat;
-            $company_lng = $company->lng;
-
-            $theta = $lng - $company_lng;
-            $dist = sin(deg2rad($lat)) * sin(deg2rad($company_lat)) +  cos(deg2rad($lat)) * cos(deg2rad($company_lat)) * cos(deg2rad($theta));
-            $dist = acos($dist);
-            $dist = rad2deg($dist);
-            $miles = $dist * 60 * 1.1515;
-
-            $distcance = $miles * 1.609344;
-
-            if($distcance >= 1){
-                return $this->resp(null, 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor', false, 406);
-            }
+        $distcance = $this->distance($lat, $lng, $company->lat, $company->lng);
+        if($distcance >= 1){
+            return $this->resp([$distcance, $request->lat, $request->lng, $company->lat, $company->lng], 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor', false, 406);
         }
 
         $check_checkins = Checkin::where('user_id', $user_id)->whereDate('checkin_time', '=', Carbon::today())->first();
@@ -105,8 +93,8 @@ class CheckinController extends Controller
 
         $rules = [
             'user_id' => 'required|numeric',
-            'lat' => 'required|string',
-            'lng' => 'required|string'
+            'lat' => 'required',
+            'lng' => 'required'
         ];
 
         $validator = Validator::make ($input, $rules ,Helper::messageValidation());
@@ -131,23 +119,9 @@ class CheckinController extends Controller
             return $this->resp(null, 'Akun Tidak Terdaftar', false, 406);
         }
 
-        if ($lat == 0 && $lng == 0){
-            return $this->resp($request->all(), 'Lokasi tidak masuk', false, 406);
-        } else {
-            $company_lat = $company->lat;
-            $company_lng = $company->lng;
-
-            $theta = $lng - $company_lng;
-            $dist = sin(deg2rad($lat)) * sin(deg2rad($company_lat)) +  cos(deg2rad($lat)) * cos(deg2rad($company_lat)) * cos(deg2rad($theta));
-            $dist = acos($dist);
-            $dist = rad2deg($dist);
-            $miles = $dist * 60 * 1.1515;
-
-            $distcance = $miles * 1.609344;
-
-            if($distcance >= 1){
-                return $this->resp(null, 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor', false, 406);
-            }
+        $distcance = $this->distance($lat, $lng, $company->lat, $company->lng);
+        if($distcance >= 1){
+            return $this->resp([$distcance, $request->lat, $request->lng, $company->lat, $company->lng], 'Jarak untuk Checkout tidak boleh Lebih dari 1 Km dari kantor', false, 406);
         }
 
         $check_checkin = Checkin::where('user_id', $user_id)->whereDate('checkin_time', '=', Carbon::today())->first();
@@ -163,22 +137,25 @@ class CheckinController extends Controller
         }
     }
 
-    public function check(Request $id){
+    public function check(Request $request){
 
+        $id = $request->user_id;
         $check_user = User::find($id);
-
+        $status = 0;
         if(!$check_user){
             return $this->resp(null, 'Akun Tidak Terdaftar', false, 406);
         }else{
-            $check_checkins = Checkin::where('user_id', $id)->whereDate('checkin', '=', Carbon::today())->first();
+            $check_checkins = Checkin::where('user_id', $id)->whereDate('checkin_time', '=', Carbon::today())->first();
             if (!$check_checkins){
-                return $this->resp(null, 'Anda Belum Check In Hari Ini');
+                return $this->resp($status, 'Anda Belum Check In Hari Ini');
             }else{
-                $check_checkout = Checkin::where('user_id', $id)->whereDate('checkout', '=', Carbon::today())->first();
+                $check_checkout = Checkin::where('user_id', $id)->whereDate('checkout_time', '=', Carbon::today())->first();
                 if(!$check_checkout){
-                    return $this->resp(null, 'Anda Sudah Check In Hari Ini');
+                    $status = 1;
+                    return $this->resp($status, 'Anda Sudah Check In Hari Ini');
                 }else {
-                    return $this->resp(null, 'Anda Sudah Check Out Hari Ini');
+                    $status = 2;
+                    return $this->resp($status, 'Anda Sudah Check Out Hari Ini');
                 }
             }
         }

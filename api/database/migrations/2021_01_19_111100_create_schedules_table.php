@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Companies extends Migration
+class CreateSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class Companies extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('address');
-            $table->integer('logo_id')->nullable();
-            $table->rememberToken();
+            $table->integer('company_id')->unsigned();
+            $table->string('hari');
+            $table->time('schedule_in')->nullable();
+            $table->time('schedule_out')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_file')->references('id')->on('files');
+            $table->foreign('company_id')->references('id')->on('companies');
         });
     }
 
@@ -32,6 +32,6 @@ class Companies extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('schedules');
     }
 }

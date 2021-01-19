@@ -41,11 +41,35 @@
             <div class="row">
               <div class="col-4">
                 <vs-button
+                  v-if="this.status == 0"
+                  :loading="showLoading"
+                  circle
+                  success
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin()"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                </vs-button>
+                <vs-button
+                  v-else-if="this.status == 1"
+                  :loading="showLoading"
+                  circle
+                  danger
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkout()"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                </vs-button>
+                <vs-button
+                  v-else
+                  :loading="showLoading"
                   circle
                   shadow
                   size="xl"
                   :active="active == 2"
-                  @click="active = 2"
+                  @click="checkoff()"
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
@@ -72,7 +96,7 @@
               <!-- Title -->
               <h2>Today Attendances</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+              <span>Schedule In : {{ schedule_in }}<br>Schedule Out : {{ schedule_out }}</span>
             </div>
 
               <div class="row" :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
@@ -90,23 +114,43 @@
                 </div>
                 <div class="col-6 d-flex">
                   <vs-button
+                    v-if="!tr.checkout_time"
                     class="align-self-center"
                     size="xl"
-                    shadow
                     :active="active == 1"
                     @click="active = 1"
                   >
                     {{ formatTime(tr.checkin_time) }}
                   </vs-button>
-
                   <vs-button
+                    v-else
                     class="align-self-center"
                     size="xl"
-                    shadow
                     :active="active == 1"
                     @click="active = 1"
+                    success
+                  >
+                    {{ formatTime(tr.checkout_time) }}
+                  </vs-button>
+                  <vs-button
+                    v-if="tr.checkin_time <= schedule_in"
+                    class="align-self-center"
+                    size="xl"
+                    :active="active == 1"
+                    @click="active = 1"
+                    success
                   >
                     Awesome
+                  </vs-button>
+                  <vs-button
+                    v-else
+                    class="align-self-center"
+                    size="xl"
+                    :active="active == 1"
+                    @click="active = 1"
+                    danger
+                  >
+                    Not Awesome
                   </vs-button>
                 </div>
               </div>
@@ -132,13 +176,23 @@ export default {
   layout: "admin",
   data() {
     return {
-      active: '',
+      active: 0,
+      status: 0,
       company_id: '',
+      today: moment().format('dddd'),
       table: {
         max: 10
       },
+      data: {
+        user_id: JSON.parse(JSON.stringify(this.$auth.user.id)),
+        lat: '',
+        lng: '',
+      },
       currentTime: null,
-  }
+      showLoading: false,
+      schedule_in: '',
+      schedule_out: '',
+    }
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
@@ -146,13 +200,99 @@ export default {
       showall: 1,
       company_id: this.company_id
     });
-    this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
-    this.$store.dispatch('checkin/getAll', {
-      showall: 1,
-      company_id: this.company_id
+    this.$getLocation({})
+    .then(coordinates => {
+      this.data.lat = coordinates.lat;
+      // this.data.lat = -6.7615122;
+      this.data.lng = coordinates.lng;
+      // this.data.lng = 108.4114873;
     });
+    this.$axios.get(`/check?user_id=${this.data.user_id}`)
+    .then( response => {
+      this.$notify.success({
+        title: 'Check',
+        message: response.data.message
+      });
+      this.status = response.data.data
+    })
+    this.$axios.get(`/getSchedule?company_id=${this.company_id}&today=${this.today}`)
+    .then(response =>{
+      this.schedule_in = response.data.data.schedule_in
+      this.schedule_out = response.data.data.schedule_out
+    })
   },
   methods: {
+    checkin() {
+      this.showLoading = true;
+      this.$axios.post('/checkin', this.data)
+      .then( response => {
+        this.$notify.success({
+          title: 'Berhasil',
+          message: response.data.message
+        });
+        // this.$router.push('/admin/beranda')
+        this.$store.dispatch('checkin/getAll', {
+          showall: 1,
+          company_id: this.company_id
+        });
+        this.$axios.get(`/check?user_id=${this.data.user_id}`)
+        .then( response => {
+          this.$notify.success({
+            title: 'Check',
+            message: response.data.message
+          });
+          this.status = response.data.data
+        })
+      })
+      .catch(e => {
+        console.log(e.response.data.message);
+        this.$notify.error({
+          title: 'Error',
+          message: e.response.data.message
+        });
+      }).finally(() => {
+        this.showLoading = false;
+      });
+    },
+    checkout() {
+      this.showLoading = true;
+      this.$axios.post('/checkout', this.data)
+      .then( response => {
+        this.$notify({
+          title: 'Berhasil',
+          message: response.data.message
+        });
+        // this.$router.push('/admin/beranda')
+        this.$store.dispatch('checkin/getAll', {
+          showall: 1,
+          company_id: this.company_id
+        });
+        this.$axios.get(`/check?user_id=${this.data.user_id}`)
+        .then( response => {
+          this.$notify.success({
+            title: 'Check',
+            message: response.data.message
+          });
+          this.status = response.data.data
+        })
+      })
+      .catch(e => {
+        console.log(e.response.data.message);
+        this.$notify.error({
+          title: 'Error',
+          message: e.response.data.message
+        });
+      }).finally(() => {
+        this.showLoading = false;
+      });
+    },
+    checkoff()
+    {
+      this.$notify.error({
+        title: 'Gagal',
+        message: 'Anda sudah checkout hari ini'
+      })
+    },
     updateCurrentTime() {
       this.currentTime = moment().format("LTS");
     },
