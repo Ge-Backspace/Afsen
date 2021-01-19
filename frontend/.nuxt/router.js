@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { normalizeURL, decode } from '@nuxt/ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-<<<<<<< HEAD
 const _947adda6 = () => interopDefault(import('..\\pages\\company_check.vue' /* webpackChunkName: "pages/company_check" */))
 const _14af2b4d = () => interopDefault(import('..\\pages\\LandingPage.vue' /* webpackChunkName: "pages/LandingPage" */))
 const _1d757960 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
@@ -48,50 +46,6 @@ const _5dd14e31 = () => interopDefault(import('..\\pages\\admin\\time_management
 const _6108bb3a = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff.vue' /* webpackChunkName: "pages/admin/time_management/timeoff" */))
 const _29955889 = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff_deduction.vue' /* webpackChunkName: "pages/admin/time_management/timeoff_deduction" */))
 const _279da039 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
-=======
-const _d1506482 = () => interopDefault(import('..\\pages\\company_check.vue' /* webpackChunkName: "pages/company_check" */))
-const _192e645f = () => interopDefault(import('..\\pages\\LandingPage.vue' /* webpackChunkName: "pages/LandingPage" */))
-const _2fa131e2 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
-const _716dd03c = () => interopDefault(import('..\\pages\\profile.vue' /* webpackChunkName: "pages/profile" */))
-const _75bd03ba = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages/register" */))
-const _535068b0 = () => interopDefault(import('..\\pages\\register_account.vue' /* webpackChunkName: "pages/register_account" */))
-const _f72c5410 = () => interopDefault(import('..\\pages\\register_company.vue' /* webpackChunkName: "pages/register_company" */))
-const _9b920fa0 = () => interopDefault(import('..\\pages\\reset-password.vue' /* webpackChunkName: "pages/reset-password" */))
-const _a02f3cae = () => interopDefault(import('..\\pages\\test.vue' /* webpackChunkName: "pages/test" */))
-const _7db0123e = () => interopDefault(import('..\\pages\\admin\\beranda.vue' /* webpackChunkName: "pages/admin/beranda" */))
-const _5fa05f22 = () => interopDefault(import('..\\pages\\admin\\berita.vue' /* webpackChunkName: "pages/admin/berita" */))
-const _03e9f406 = () => interopDefault(import('..\\pages\\admin\\company\\index.vue' /* webpackChunkName: "pages/admin/company/index" */))
-const _1a97bb9c = () => interopDefault(import('..\\pages\\admin\\company1.vue' /* webpackChunkName: "pages/admin/company1" */))
-const _db511c16 = () => interopDefault(import('..\\pages\\admin\\employees\\index.vue' /* webpackChunkName: "pages/admin/employees/index" */))
-const _9fedcf54 = () => interopDefault(import('..\\pages\\admin\\informasi.vue' /* webpackChunkName: "pages/admin/informasi" */))
-const _512a2cb8 = () => interopDefault(import('..\\pages\\admin\\kegiatan.vue' /* webpackChunkName: "pages/admin/kegiatan" */))
-const _0d4491c8 = () => interopDefault(import('..\\pages\\admin\\lapor\\index.vue' /* webpackChunkName: "pages/admin/lapor/index" */))
-const _3d947cad = () => interopDefault(import('..\\pages\\admin\\notifikasi.vue' /* webpackChunkName: "pages/admin/notifikasi" */))
-const _0647ca20 = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages/admin/users" */))
-const _04bf1d96 = () => interopDefault(import('..\\pages\\admin\\company\\announcement\\index.vue' /* webpackChunkName: "pages/admin/company/announcement/index" */))
-const _13436707 = () => interopDefault(import('..\\pages\\admin\\company\\asset\\index.vue' /* webpackChunkName: "pages/admin/company/asset/index" */))
-const _3dfaa299 = () => interopDefault(import('..\\pages\\admin\\company\\document_template\\index.vue' /* webpackChunkName: "pages/admin/company/document_template/index" */))
-const _786f25c0 = () => interopDefault(import('..\\pages\\admin\\company\\files\\index.vue' /* webpackChunkName: "pages/admin/company/files/index" */))
-const _453ca102 = () => interopDefault(import('..\\pages\\admin\\company\\onboarding\\index.vue' /* webpackChunkName: "pages/admin/company/onboarding/index" */))
-const _4c921d14 = () => interopDefault(import('..\\pages\\admin\\company\\polling\\index.vue' /* webpackChunkName: "pages/admin/company/polling/index" */))
-const _d331da4e = () => interopDefault(import('..\\pages\\admin\\company\\reprimand\\index.vue' /* webpackChunkName: "pages/admin/company/reprimand/index" */))
-const _182f4598 = () => interopDefault(import('..\\pages\\admin\\company\\task\\index.vue' /* webpackChunkName: "pages/admin/company/task/index" */))
-const _4792e16f = () => interopDefault(import('..\\pages\\admin\\company\\user_activity_log\\index.vue' /* webpackChunkName: "pages/admin/company/user_activity_log/index" */))
-const _50e9dc3e = () => interopDefault(import('..\\pages\\admin\\employees\\detail.vue' /* webpackChunkName: "pages/admin/employees/detail" */))
-const _7ef25414 = () => interopDefault(import('..\\pages\\admin\\finances\\cash.vue' /* webpackChunkName: "pages/admin/finances/cash" */))
-const _27dd115e = () => interopDefault(import('..\\pages\\admin\\finances\\loan.vue' /* webpackChunkName: "pages/admin/finances/loan" */))
-const _2b6683b2 = () => interopDefault(import('..\\pages\\admin\\finances\\reimbursement.vue' /* webpackChunkName: "pages/admin/finances/reimbursement" */))
-const _6aa78812 = () => interopDefault(import('..\\pages\\admin\\lapor\\detail.vue' /* webpackChunkName: "pages/admin/lapor/detail" */))
-const _36f54edb = () => interopDefault(import('..\\pages\\admin\\master\\pemda.vue' /* webpackChunkName: "pages/admin/master/pemda" */))
-const _a61cc6d4 = () => interopDefault(import('..\\pages\\admin\\master\\setting.vue' /* webpackChunkName: "pages/admin/master/setting" */))
-const _17fb85c6 = () => interopDefault(import('..\\pages\\admin\\time_management\\attendance.vue' /* webpackChunkName: "pages/admin/time_management/attendance" */))
-const _77fad8db = () => interopDefault(import('..\\pages\\admin\\time_management\\calendar.vue' /* webpackChunkName: "pages/admin/time_management/calendar" */))
-const _5b75c898 = () => interopDefault(import('..\\pages\\admin\\time_management\\schedule.vue' /* webpackChunkName: "pages/admin/time_management/schedule" */))
-const _1e3b4a43 = () => interopDefault(import('..\\pages\\admin\\time_management\\setting.vue' /* webpackChunkName: "pages/admin/time_management/setting" */))
-const _e034c316 = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff.vue' /* webpackChunkName: "pages/admin/time_management/timeoff" */))
-const _5a6e33ca = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff_deduction.vue' /* webpackChunkName: "pages/admin/time_management/timeoff_deduction" */))
-const _65f98ecb = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
->>>>>>> ef14c1ccfde3646c276bfda1ea6b71d8de5015ab
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -104,82 +58,82 @@ Vue.use(Router)
 
 export const routerOptions = {
   mode: 'history',
-  base: '/',
+  base: decodeURI('/'),
   linkActiveClass: 'nuxt-link-active',
   linkExactActiveClass: 'nuxt-link-exact-active',
   scrollBehavior,
 
   routes: [{
     path: "/company_check",
-    component: _d1506482,
+    component: _947adda6,
     name: "company_check"
   }, {
     path: "/LandingPage",
-    component: _192e645f,
+    component: _14af2b4d,
     name: "LandingPage"
   }, {
     path: "/login",
-    component: _2fa131e2,
+    component: _1d757960,
     name: "login"
   }, {
     path: "/profile",
-    component: _716dd03c,
+    component: _9fa2f460,
     name: "profile"
   }, {
     path: "/register",
-    component: _75bd03ba,
+    component: _acf558e8,
     name: "register"
   }, {
     path: "/register_account",
-    component: _535068b0,
+    component: _fef7ad0c,
     name: "register_account"
   }, {
     path: "/register_company",
-    component: _f72c5410,
+    component: _2e9633ca,
     name: "register_company"
   }, {
     path: "/reset-password",
-    component: _9b920fa0,
+    component: _6124a282,
     name: "reset-password"
   }, {
     path: "/test",
-    component: _a02f3cae,
+    component: _a4352b0a,
     name: "test"
   }, {
     path: "/admin/beranda",
-    component: _7db0123e,
+    component: _7015a133,
     name: "admin-beranda"
   }, {
     path: "/admin/berita",
-    component: _5fa05f22,
+    component: _22cad846,
     name: "admin-berita"
   }, {
     path: "/admin/company",
-    component: _03e9f406,
+    component: _2f2b092a,
     name: "admin-company"
   }, {
     path: "/admin/company1",
-    component: _1a97bb9c,
+    component: _495f5b8a,
     name: "admin-company1"
   }, {
     path: "/admin/employees",
-    component: _db511c16,
+    component: _62af43e3,
     name: "admin-employees"
   }, {
     path: "/admin/informasi",
-    component: _9fedcf54,
+    component: _5a357628,
     name: "admin-informasi"
   }, {
     path: "/admin/kegiatan",
-    component: _512a2cb8,
+    component: _06328992,
     name: "admin-kegiatan"
   }, {
     path: "/admin/lapor",
-    component: _0d4491c8,
+    component: _3a57b00a,
     name: "admin-lapor"
   }, {
     path: "/admin/notifikasi",
-    component: _3d947cad,
+    component: _4e184dca,
     name: "admin-notifikasi"
   }, {
     path: "/admin/test",
@@ -187,127 +141,105 @@ export const routerOptions = {
     name: "admin-test"
   }, {
     path: "/admin/users",
-    component: _0647ca20,
+    component: _717431c2,
     name: "admin-users"
   }, {
     path: "/admin/company/announcement",
-    component: _04bf1d96,
+    component: _7e950af8,
     name: "admin-company-announcement"
   }, {
     path: "/admin/company/asset",
-    component: _13436707,
+    component: _1c4799d9,
     name: "admin-company-asset"
   }, {
     path: "/admin/company/document_template",
-    component: _3dfaa299,
+    component: _1fbf2a6b,
     name: "admin-company-document_template"
   }, {
     path: "/admin/company/files",
-    component: _786f25c0,
+    component: _6666c01c,
     name: "admin-company-files"
   }, {
     path: "/admin/company/onboarding",
-    component: _453ca102,
+    component: _113d3d20,
     name: "admin-company-onboarding"
   }, {
     path: "/admin/company/polling",
-    component: _4c921d14,
+    component: _2554e366,
     name: "admin-company-polling"
   }, {
     path: "/admin/company/reprimand",
-    component: _d331da4e,
+    component: _49918cab,
     name: "admin-company-reprimand"
   }, {
     path: "/admin/company/task",
-    component: _182f4598,
+    component: _73507086,
     name: "admin-company-task"
   }, {
     path: "/admin/company/user_activity_log",
-    component: _4792e16f,
+    component: _29576941,
     name: "admin-company-user_activity_log"
   }, {
     path: "/admin/employees/detail",
-    component: _50e9dc3e,
+    component: _e8e76fe0,
     name: "admin-employees-detail"
   }, {
     path: "/admin/finances/cash",
-    component: _7ef25414,
+    component: _6951c982,
     name: "admin-finances-cash"
   }, {
     path: "/admin/finances/loan",
-    component: _27dd115e,
+    component: _531e2682,
     name: "admin-finances-loan"
   }, {
     path: "/admin/finances/reimbursement",
-    component: _2b6683b2,
+    component: _79e0f70e,
     name: "admin-finances-reimbursement"
   }, {
     path: "/admin/lapor/detail",
-    component: _6aa78812,
+    component: _ae1d3e6e,
     name: "admin-lapor-detail"
   }, {
     path: "/admin/master/pemda",
-    component: _36f54edb,
+    component: _153a73ad,
     name: "admin-master-pemda"
   }, {
     path: "/admin/master/setting",
-    component: _a61cc6d4,
+    component: _0e80d4e8,
     name: "admin-master-setting"
   }, {
     path: "/admin/time_management/attendance",
-    component: _17fb85c6,
+    component: _ab2259d0,
     name: "admin-time_management-attendance"
   }, {
     path: "/admin/time_management/calendar",
-    component: _77fad8db,
+    component: _2b2552ad,
     name: "admin-time_management-calendar"
   }, {
     path: "/admin/time_management/schedule",
-    component: _5b75c898,
+    component: _f520d4f4,
     name: "admin-time_management-schedule"
   }, {
     path: "/admin/time_management/setting",
-    component: _1e3b4a43,
+    component: _5dd14e31,
     name: "admin-time_management-setting"
   }, {
     path: "/admin/time_management/timeoff",
-    component: _e034c316,
+    component: _6108bb3a,
     name: "admin-time_management-timeoff"
   }, {
     path: "/admin/time_management/timeoff_deduction",
-    component: _5a6e33ca,
+    component: _29955889,
     name: "admin-time_management-timeoff_deduction"
   }, {
     path: "/",
-    component: _65f98ecb,
+    component: _279da039,
     name: "index"
   }],
 
   fallback: false
 }
 
-function decodeObj(obj) {
-  for (const key in obj) {
-    if (typeof obj[key] === 'string') {
-      obj[key] = decode(obj[key])
-    }
-  }
-}
-
 export function createRouter () {
-  const router = new Router(routerOptions)
-
-  const resolve = router.resolve.bind(router)
-  router.resolve = (to, current, append) => {
-    if (typeof to === 'string') {
-      to = normalizeURL(to)
-    }
-    const r = resolve(to, current, append)
-    if (r && r.resolved && r.resolved.query) {
-      decodeObj(r.resolved.query)
-    }
-    return r
-  }
-
-  return router
+  return new Router(routerOptions)
 }
