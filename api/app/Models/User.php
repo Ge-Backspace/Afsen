@@ -62,4 +62,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function checkin(){
     	return $this->hasMany('App\Models\Checkin');
     }
+
+    public function employee()
+    {
+        return $this->hasOne('App\Models\Employee');
+    }
 }

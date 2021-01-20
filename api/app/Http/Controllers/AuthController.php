@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Helpers\Variable;
 use App\Models\Companies;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -90,6 +91,10 @@ class AuthController extends Controller
                     'company_id' => $company_id,
                     'admin' => true,
                     'aktif' => true,
+                ]);
+                Employee::create([
+                    'name' => $name,
+                    'company_id' => $company_id
                 ]);
                 return $this->resp($register_account);
             }
