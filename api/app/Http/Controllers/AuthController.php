@@ -87,7 +87,9 @@ class AuthController extends Controller
                     'email' => $email,
                     'password' => $password,
                     'username' => $username,
-                    'company_id' => $company_id
+                    'company_id' => $company_id,
+                    'admin' => true,
+                    'aktif' => true,
                 ]);
                 return $this->resp($register_account);
             }

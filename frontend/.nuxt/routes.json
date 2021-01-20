@@ -3,301 +3,258 @@
     "name": "company_check",
     "path": "/company_check",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\company_check.vue",
-    "chunkName": "pages/company_check",
-    "_name": "_947adda6"
+    "chunkName": "pages/company_check"
   },
   {
     "name": "LandingPage",
     "path": "/LandingPage",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\LandingPage.vue",
-    "chunkName": "pages/LandingPage",
-    "_name": "_14af2b4d"
+    "chunkName": "pages/LandingPage"
   },
   {
     "name": "login",
     "path": "/login",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_1d757960"
+    "chunkName": "pages/login"
   },
   {
     "name": "profile",
     "path": "/profile",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\profile.vue",
-    "chunkName": "pages/profile",
-    "_name": "_9fa2f460"
+    "chunkName": "pages/profile"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\register.vue",
-    "chunkName": "pages/register",
-    "_name": "_acf558e8"
+    "chunkName": "pages/register"
   },
   {
     "name": "register_account",
     "path": "/register_account",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\register_account.vue",
-    "chunkName": "pages/register_account",
-    "_name": "_fef7ad0c"
+    "chunkName": "pages/register_account"
   },
   {
     "name": "register_company",
     "path": "/register_company",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\register_company.vue",
-    "chunkName": "pages/register_company",
-    "_name": "_2e9633ca"
+    "chunkName": "pages/register_company"
   },
   {
     "name": "reset-password",
     "path": "/reset-password",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\reset-password.vue",
-    "chunkName": "pages/reset-password",
-    "_name": "_6124a282"
+    "chunkName": "pages/reset-password"
   },
   {
     "name": "test",
     "path": "/test",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\test.vue",
-    "chunkName": "pages/test",
-    "_name": "_a4352b0a"
+    "chunkName": "pages/test"
   },
   {
     "name": "admin-beranda",
     "path": "/admin/beranda",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\beranda.vue",
-    "chunkName": "pages/admin/beranda",
-    "_name": "_7015a133"
+    "chunkName": "pages/admin/beranda"
   },
   {
     "name": "admin-berita",
     "path": "/admin/berita",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\berita.vue",
-    "chunkName": "pages/admin/berita",
-    "_name": "_22cad846"
+    "chunkName": "pages/admin/berita"
   },
   {
     "name": "admin-company",
     "path": "/admin/company",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\index.vue",
-    "chunkName": "pages/admin/company/index",
-    "_name": "_2f2b092a"
+    "chunkName": "pages/admin/company/index"
   },
   {
     "name": "admin-company1",
     "path": "/admin/company1",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company1.vue",
-    "chunkName": "pages/admin/company1",
-    "_name": "_495f5b8a"
+    "chunkName": "pages/admin/company1"
   },
   {
     "name": "admin-employees",
     "path": "/admin/employees",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\employees\\\\index.vue",
-    "chunkName": "pages/admin/employees/index",
-    "_name": "_62af43e3"
+    "chunkName": "pages/admin/employees/index"
   },
   {
     "name": "admin-informasi",
     "path": "/admin/informasi",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\informasi.vue",
-    "chunkName": "pages/admin/informasi",
-    "_name": "_5a357628"
+    "chunkName": "pages/admin/informasi"
   },
   {
     "name": "admin-kegiatan",
     "path": "/admin/kegiatan",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\kegiatan.vue",
-    "chunkName": "pages/admin/kegiatan",
-    "_name": "_06328992"
+    "chunkName": "pages/admin/kegiatan"
   },
   {
     "name": "admin-lapor",
     "path": "/admin/lapor",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\index.vue",
-    "chunkName": "pages/admin/lapor/index",
-    "_name": "_3a57b00a"
+    "chunkName": "pages/admin/lapor/index"
   },
   {
     "name": "admin-notifikasi",
     "path": "/admin/notifikasi",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\notifikasi.vue",
-    "chunkName": "pages/admin/notifikasi",
-    "_name": "_4e184dca"
+    "chunkName": "pages/admin/notifikasi"
   },
   {
     "name": "admin-test",
     "path": "/admin/test",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\test.vue",
-    "chunkName": "pages/admin/test",
-    "_name": "_322afcc8"
+    "chunkName": "pages/admin/test"
   },
   {
     "name": "admin-users",
     "path": "/admin/users",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\users.vue",
-    "chunkName": "pages/admin/users",
-    "_name": "_717431c2"
+    "chunkName": "pages/admin/users"
   },
   {
     "name": "admin-company-announcement",
     "path": "/admin/company/announcement",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\announcement\\\\index.vue",
-    "chunkName": "pages/admin/company/announcement/index",
-    "_name": "_7e950af8"
+    "chunkName": "pages/admin/company/announcement/index"
   },
   {
     "name": "admin-company-asset",
     "path": "/admin/company/asset",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\asset\\\\index.vue",
-    "chunkName": "pages/admin/company/asset/index",
-    "_name": "_1c4799d9"
+    "chunkName": "pages/admin/company/asset/index"
   },
   {
     "name": "admin-company-document_template",
     "path": "/admin/company/document_template",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\document_template\\\\index.vue",
-    "chunkName": "pages/admin/company/document_template/index",
-    "_name": "_1fbf2a6b"
+    "chunkName": "pages/admin/company/document_template/index"
   },
   {
     "name": "admin-company-files",
     "path": "/admin/company/files",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\files\\\\index.vue",
-    "chunkName": "pages/admin/company/files/index",
-    "_name": "_6666c01c"
+    "chunkName": "pages/admin/company/files/index"
   },
   {
     "name": "admin-company-onboarding",
     "path": "/admin/company/onboarding",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\onboarding\\\\index.vue",
-    "chunkName": "pages/admin/company/onboarding/index",
-    "_name": "_113d3d20"
+    "chunkName": "pages/admin/company/onboarding/index"
   },
   {
     "name": "admin-company-polling",
     "path": "/admin/company/polling",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\polling\\\\index.vue",
-    "chunkName": "pages/admin/company/polling/index",
-    "_name": "_2554e366"
+    "chunkName": "pages/admin/company/polling/index"
   },
   {
     "name": "admin-company-reprimand",
     "path": "/admin/company/reprimand",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\reprimand\\\\index.vue",
-    "chunkName": "pages/admin/company/reprimand/index",
-    "_name": "_49918cab"
+    "chunkName": "pages/admin/company/reprimand/index"
   },
   {
     "name": "admin-company-task",
     "path": "/admin/company/task",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\task\\\\index.vue",
-    "chunkName": "pages/admin/company/task/index",
-    "_name": "_73507086"
+    "chunkName": "pages/admin/company/task/index"
   },
   {
     "name": "admin-company-user_activity_log",
     "path": "/admin/company/user_activity_log",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\user_activity_log\\\\index.vue",
-    "chunkName": "pages/admin/company/user_activity_log/index",
-    "_name": "_29576941"
+    "chunkName": "pages/admin/company/user_activity_log/index"
   },
   {
     "name": "admin-employees-detail",
     "path": "/admin/employees/detail",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\employees\\\\detail.vue",
-    "chunkName": "pages/admin/employees/detail",
-    "_name": "_e8e76fe0"
+    "chunkName": "pages/admin/employees/detail"
   },
   {
     "name": "admin-finances-cash",
     "path": "/admin/finances/cash",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\finances\\\\cash.vue",
-    "chunkName": "pages/admin/finances/cash",
-    "_name": "_6951c982"
+    "chunkName": "pages/admin/finances/cash"
   },
   {
     "name": "admin-finances-loan",
     "path": "/admin/finances/loan",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\finances\\\\loan.vue",
-    "chunkName": "pages/admin/finances/loan",
-    "_name": "_531e2682"
+    "chunkName": "pages/admin/finances/loan"
   },
   {
     "name": "admin-finances-reimbursement",
     "path": "/admin/finances/reimbursement",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\finances\\\\reimbursement.vue",
-    "chunkName": "pages/admin/finances/reimbursement",
-    "_name": "_79e0f70e"
+    "chunkName": "pages/admin/finances/reimbursement"
   },
   {
     "name": "admin-lapor-detail",
     "path": "/admin/lapor/detail",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\detail.vue",
-    "chunkName": "pages/admin/lapor/detail",
-    "_name": "_ae1d3e6e"
+    "chunkName": "pages/admin/lapor/detail"
   },
   {
     "name": "admin-master-pemda",
     "path": "/admin/master/pemda",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\pemda.vue",
-    "chunkName": "pages/admin/master/pemda",
-    "_name": "_153a73ad"
+    "chunkName": "pages/admin/master/pemda"
   },
   {
     "name": "admin-master-setting",
     "path": "/admin/master/setting",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\setting.vue",
-    "chunkName": "pages/admin/master/setting",
-    "_name": "_0e80d4e8"
+    "chunkName": "pages/admin/master/setting"
   },
   {
     "name": "admin-time_management-attendance",
     "path": "/admin/time_management/attendance",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\attendance.vue",
-    "chunkName": "pages/admin/time_management/attendance",
-    "_name": "_ab2259d0"
+    "chunkName": "pages/admin/time_management/attendance"
   },
   {
     "name": "admin-time_management-calendar",
     "path": "/admin/time_management/calendar",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\calendar.vue",
-    "chunkName": "pages/admin/time_management/calendar",
-    "_name": "_2b2552ad"
+    "chunkName": "pages/admin/time_management/calendar"
   },
   {
     "name": "admin-time_management-schedule",
     "path": "/admin/time_management/schedule",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\schedule.vue",
-    "chunkName": "pages/admin/time_management/schedule",
-    "_name": "_f520d4f4"
+    "chunkName": "pages/admin/time_management/schedule"
   },
   {
     "name": "admin-time_management-setting",
     "path": "/admin/time_management/setting",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\setting.vue",
-    "chunkName": "pages/admin/time_management/setting",
-    "_name": "_5dd14e31"
+    "chunkName": "pages/admin/time_management/setting"
   },
   {
     "name": "admin-time_management-timeoff",
     "path": "/admin/time_management/timeoff",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff.vue",
-    "chunkName": "pages/admin/time_management/timeoff",
-    "_name": "_6108bb3a"
+    "chunkName": "pages/admin/time_management/timeoff"
   },
   {
     "name": "admin-time_management-timeoff_deduction",
     "path": "/admin/time_management/timeoff_deduction",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff_deduction.vue",
-    "chunkName": "pages/admin/time_management/timeoff_deduction",
-    "_name": "_29955889"
+    "chunkName": "pages/admin/time_management/timeoff_deduction"
   },
   {
     "name": "index",
     "path": "/",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_279da039"
+    "chunkName": "pages/index"
   }
 ]

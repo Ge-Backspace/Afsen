@@ -9,14 +9,14 @@
               <div class="card card-stats">
                 <!-- Card body -->
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col"></div>
-                  </div>
                   <h1 class="mt-3 mb-0 text-sm">
                     <span class="text-nowrap"
                       ><b>Good day Mr. Kafabih</b>
                     </span>
                   </h1>
+                  <!-- <div class="row">
+                    <div class="col"></div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -41,10 +41,20 @@
             <div class="row">
               <div class="col-4">
                 <vs-button
-                  v-if="this.status == 0"
+                  v-if="this.status == 0 && this.currentTime >= this.start && this.currentTime <= this.schedule_in"
                   :loading="showLoading"
                   circle
-                  success
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin()"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                </vs-button>
+                <vs-button
+                  v-if="this.status == 0 && this.currentTime >= this.start && this.currentTime > this.schedule_in"
+                  :loading="showLoading"
+                  circle
+                  warning
                   size="xl"
                   :active="active == 2"
                   @click="checkin()"
@@ -55,7 +65,7 @@
                   v-else-if="this.status == 1"
                   :loading="showLoading"
                   circle
-                  danger
+                  success
                   size="xl"
                   :active="active == 2"
                   @click="checkout()"
@@ -188,6 +198,7 @@ export default {
         lat: '',
         lng: '',
       },
+      start: '06:00:00',
       currentTime: null,
       showLoading: false,
       schedule_in: '',
@@ -220,6 +231,8 @@ export default {
       this.schedule_in = response.data.data.schedule_in
       this.schedule_out = response.data.data.schedule_out
     })
+    let e = moment.utc(moment(this.start,"HH:mm:ss").diff(moment(this.currentTime,"HH:mm:ss")))
+    console.log(e)
   },
   methods: {
     checkin() {
