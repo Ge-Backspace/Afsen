@@ -11,7 +11,7 @@
                 <div class="card-body">
                   <h1 class="mt-3 mb-0 text-sm">
                     <span class="text-nowrap"
-                      ><b>Good day Mr. Kafabih</b>
+                      ><b>Good day {{ this.name }}</b>
                     </span>
                   </h1>
                   <!-- <div class="row">
@@ -193,6 +193,7 @@ export default {
       table: {
         max: 10
       },
+      name: JSON.parse(JSON.stringify(this.$auth.user.name)),
       data: {
         user_id: JSON.parse(JSON.stringify(this.$auth.user.id)),
         lat: '',

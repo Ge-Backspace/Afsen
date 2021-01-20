@@ -20,12 +20,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-// $router->post('/login', 'AuthController@login');
-// $router->post('/register_company', 'AuthController@register_company');
-// $router->post('/register_account', 'AuthController@register_account');
-// $router->post('/register_account/check', 'AuthController@check_company');
-
-
 //migrate
 // $router->get('/migrate', function(){
 //     Artisan::call('migrate');

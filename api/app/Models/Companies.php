@@ -17,4 +17,8 @@ class Companies extends Model
     public function shcedule(){
     	return $this->hasMany('App\Model\Scedule');
     }
+
+    public function employees(){
+    	return $this->hasMany('App\Model\Employee');
+    }
 }
