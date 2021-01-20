@@ -76,6 +76,33 @@ export const  menu = () => {
             icon: 'ni ni-email-83 text-primary',
             route: '/admin/notifikasi'
         },
+        {
+            text: 'Master',
+            icon: 'el-icon-tickets text-primary',
+            // route: '/admin/berita',
+            children: [
+                {
+                    text: "Master User",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/master/masterUser'
+                },
+                {
+                    text: "Master Companies",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/master/masterCompanies'
+                },
+                {
+                  text: "Master Position",
+                  icon: 'el-icon-postcard',
+                  route: '/admin/master/masterPosition'
+                },
+                {
+                    text: "Master Schedule",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/master/masterSchedule'
+                }
+            ]
+        },
         // {
         //     text: 'Calendar',
         //     icon: 'el-icon-user text-primary',

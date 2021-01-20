@@ -23,12 +23,14 @@ let store = {};
   resolveStoreModules(require('..\\store\\checkin.js'), 'checkin.js')
   resolveStoreModules(require('..\\store\\company.js'), 'company.js')
   resolveStoreModules(require('..\\store\\drawer.js'), 'drawer.js')
+  resolveStoreModules(require('..\\store\\employee.js'), 'employee.js')
   resolveStoreModules(require('..\\store\\goverment.js'), 'goverment.js')
   resolveStoreModules(require('..\\store\\informasi.js'), 'informasi.js')
   resolveStoreModules(require('..\\store\\kegiatan.js'), 'kegiatan.js')
   resolveStoreModules(require('..\\store\\lapor.js'), 'lapor.js')
   resolveStoreModules(require('..\\store\\service.js'), 'service.js')
   resolveStoreModules(require('..\\store\\setting.js'), 'setting.js')
+  resolveStoreModules(require('..\\store\\test.js'), 'test.js')
   resolveStoreModules(require('..\\store\\user.js'), 'user.js')
 
   // If the environment supports hot reloading...
@@ -40,6 +42,7 @@ let store = {};
       '..\\store\\checkin.js',
       '..\\store\\company.js',
       '..\\store\\drawer.js',
+      '..\\store\\employee.js',
       '..\\store\\goverment.js',
       '..\\store\\index.js',
       '..\\store\\informasi.js',
@@ -47,6 +50,7 @@ let store = {};
       '..\\store\\lapor.js',
       '..\\store\\service.js',
       '..\\store\\setting.js',
+      '..\\store\\test.js',
       '..\\store\\user.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
