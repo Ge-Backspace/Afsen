@@ -105,7 +105,10 @@ class EmployeeController extends Controller
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
         }
         $editEmployee = $employee->update($input);
-
+        $user = User::find($editEmployee->user_id);
+        if($user->name != $editEmployee->name){
+            $user->update($request->name);
+        }
         return $this->resp($editEmployee);
     }
 
