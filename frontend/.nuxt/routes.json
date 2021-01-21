@@ -204,10 +204,10 @@
     "chunkName": "pages/admin/lapor/detail"
   },
   {
-    "name": "admin-master-masterCompanies",
-    "path": "/admin/master/masterCompanies",
-    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterCompanies.vue",
-    "chunkName": "pages/admin/master/masterCompanies"
+    "name": "admin-master-company",
+    "path": "/admin/master/company",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\company.vue",
+    "chunkName": "pages/admin/master/company"
   },
   {
     "name": "admin-master-masterPosition",

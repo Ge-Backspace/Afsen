@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Master Pemerintah Daerah</h1>
+          <h1 class="heading">Master Company</h1>
         </div>
       </div>
     </div>
@@ -22,31 +22,30 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Logo</vs-th>
-                  <vs-th>Nama Pemda Prov/Kab/Kota</vs-th>
-                  <vs-th>Aktif</vs-th>
+                  <vs-th>Name</vs-th>
+                  <vs-th>Address</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
-                  <vs-td class="text-center">
-                    <img :src="tr.foto_url" alt="" height="30" width="auto">
+                <vs-tr :key="i" v-for="(tr, i) in getCompany.data" :data="tr">
+                  <vs-td>
+                    {{ tr.name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.nama }}
+                    {{ tr.address }}
                   </vs-td>
-                  <vs-td>
+                  <!-- <vs-td>
                     <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
                     <span class="badge badge-warning" v-else>Non Aktif</span>
-                  </vs-td>
+                  </vs-td> -->
                   <vs-td>
                     <el-tooltip content="Edit" placement="top-start" effect="dark">
                       <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
                     </el-tooltip>
 
                     <el-tooltip content="Delete" placement="top-start" effect="dark">
-                      <el-button size="mini" type="primary" @click="deleteGoverment(tr.id)" icon="fa fa-trash">
+                      <el-button size="mini" type="primary" @click="deleteCompany(tr.id)" icon="fa fa-trash">
                       </el-button>
                     </el-tooltip>
                   </vs-td>
@@ -55,10 +54,10 @@
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{getGoverments.total}} Data</small>
+                    <small>Total : {{getCompany.total}} Data</small>
                   </vs-col>
                   <vs-col w="10">
-                    <vs-pagination v-model="page" :length="Math.ceil(getGoverments.total / table.max)" />
+                    <vs-pagination v-model="page" :length="Math.ceil(getCompany.total / table.max)" />
                   </vs-col>
                 </vs-row>
               </template>
@@ -69,24 +68,18 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
+    <!-- <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
       <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
         <i class="el-icon-plus my-float"></i>
       </a>
-    </el-tooltip>
-    <!-- End floating button-->
+    </el-tooltip> -->
+    <!-- End floating button -->
 
     <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
       <el-form label-width="auto" ref="form" :model="form" size="mini">
         <el-form-item label="Nama Kementrian">
           <el-input v-model="form.nama"></el-input>
-        </el-form-item>
-        <el-form-item label="Logo">
-          <el-upload action="/" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="files" :limit="1">
-            <i class="el-icon-plus"></i>
-          </el-upload>
         </el-form-item>
         <el-form-item label="Aktif">
           <el-switch v-model="form.aktif" color="danger"></el-switch>
@@ -110,24 +103,11 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Nama</label>
-            <vs-input type="text" v-model="form.nama" placeholder="Nama"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
-            <label>Logo</label>
-            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-              :file-list="files" :limit="1">
-              <i class="el-icon-plus"></i>
-            </el-upload>
+            <vs-input type="text" v-model="form.name" placeholder="Nama"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <vs-row>
-              <vs-col w="2">
-                <label>Aktif</label>
-              </vs-col>
-              <vs-col w="10">
-                <vs-switch style="width:20px" v-model="form.aktif" />
-              </vs-col>
-            </vs-row>
+            <label>Address</label>
+            <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
           </vs-col>
         </vs-row>
       </div>
@@ -172,75 +152,65 @@
           max: 10
         },
         page: 1,
-        titleDialog: 'Tambah Pemda',
+        titleDialog: 'Edit Company',
         search: '',
         isUpdate: false,
         tambahDialog: false,
         btnLoader: false,
-        files: [],
         form: {
-          nama: '',
-          foto: null,
-          aktif: true
+          id: '',
+          name: '',
+          address:'',
         }
       }
     },
     mounted() {
-      this.$store.dispatch('goverment/getAll', {});
+      this.$store.dispatch('company/getAll', {});
     },
     methods: {
       searchData(){
-        this.$store.dispatch('goverment/getAll', {
+        this.$store.dispatch('company/getAll', {
           search: this.search
         });
       },
       edit(data) {
-        this.form.nama = data.nama
         this.form.id = data.id
-        this.form.aktif = data.aktif
-        this.files.push({
-          name: '',
-          url: data.foto_url
-        })
+        this.form.name = data.name
+        this.form.address = data.address
         this.tambahDialog = true
-        this.titleDialog = 'Edit Pemerintah Daerah'
+        this.titleDialog = 'Edit Company'
         this.isUpdate = true
       },
       resetForm() {
         this.form = {
-          nama: '',
-          foto: null,
-          aktif: true
+          name: '',
+          address: '',
         }
-        this.files = [];
         this.isUpdate = false
       },
       handleCurrentChange(val) {
-        this.$store.commit('goverment/setPage', val)
-        this.$store.dispatch('goverment/getAll', {});
+        this.$store.commit('company/setPage', val)
+        this.$store.dispatch('company/getAll', {});
       },
       onSubmit(type = 'store') {
         this.btnLoader = true
         let formData = new FormData()
-        formData.append("nama", this.form.nama)
-        formData.append("aktif", this.form.aktif ? 1 : 0)
-        if (this.form.foto !== null) {
-          formData.append("foto", this.form.foto)
-        }
-        let url = "/goverment/store";
+        formData.append("name", this.form.name)
+        formData.append("address", this.form.address)
+        let url = "/company/store";
         if (type == 'update') {
-          url = `/goverment/${this.form.id}/update`
+          url = `/company/update/${this.form.id}`
         }
 
         this.$axios.post(url, formData).then(resp => {
           if (resp.data.success) {
             this.$notify.success({
               title: 'Success',
-              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Goverment`
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Company`
             })
             this.resetForm()
             this.tambahDialog = false
-            this.$store.dispatch('goverment/getAll', {});
+            this.$store.dispatch('company/getAll', {});
           }
         }).finally(() => {
           this.btnLoader = false
@@ -256,10 +226,7 @@
           }
         })
       },
-      handleChangeFile(file, fileList) {
-        this.form.foto = file.raw
-      },
-      deleteGoverment(id) {
+      deleteCompany(id) {
         this.$swal({
           title: 'Perhatian!',
           text: "Apakah anda yakin ingin menghapus data ini?",
@@ -271,14 +238,14 @@
           cancelButtonText: 'Batal'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/goverment/${id}/delete`).then(resp => {
+            this.$axios.delete(`/company/delete/${id}`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',
                   message: 'Berhasil Menghapus Data'
                 })
                 this.tambahDialog = false
-                this.$store.dispatch('goverment/getAll', {
+                this.$store.dispatch('company/getAll', {
                   defaultPage: true
                 });
               }
@@ -295,13 +262,13 @@
       }
     },
     computed: {
-      ...mapGetters("goverment", [
-        'getGoverments',
+      ...mapGetters("company", [
+        'getCompany',
         'getLoader'
       ])
     },
     watch: {
-      getGoverments(newValue, oldValue) {
+      getCompany(newValue, oldValue) {
 
       },
       search(newValue, oldValue) {
@@ -310,8 +277,8 @@
         // });
       },
       page(newValue, oldValue) {
-        this.$store.commit('goverment/setPage', newValue)
-        this.$store.dispatch('goverment/getAll', {});
+        this.$store.commit('company/setPage', newValue)
+        this.$store.dispatch('company/getAll', {});
       }
     },
   }

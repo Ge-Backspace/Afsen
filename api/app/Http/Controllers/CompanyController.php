@@ -15,10 +15,10 @@ class CompanyController extends Controller
 
     public function getAllCompanies(Request $request)
     {
-        return $this->getPaginate(Companies::all(), $request, ['name']);
+        return $this->getPaginate(Companies::query()->orderBy('id', 'DESC'), $request, ['name']);
     }
 
-    public function editCompany(Request $request, $id)
+    public function updateCompany(Request $request, $id)
     {
         if (!$id) {
             $id = $request->company_id;
@@ -28,8 +28,8 @@ class CompanyController extends Controller
         if (!$company) {
             return $this->resp(null, 'Company Tidak Ditemukan');
         }
-        $editCompany = $company->update($input);
-        return $this->resp($editCompany);
+        $updateCompany = $company->update($input);
+        return $this->resp($updateCompany);
     }
 
     public function deleteCompany($id){
