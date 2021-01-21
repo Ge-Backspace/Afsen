@@ -43,7 +43,7 @@ export default {
         src: config.base + 'assets/js/argon.min001.js'
       },
       {
-        src: 'https://momentjs.com/downloads/moment.min.js'
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'
       }
       // {
       //   src: 'https://cdn.trackjs.com/agent/v3/latest/t.js'

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ScheduleController extends Controller
 {
@@ -21,74 +23,53 @@ class ScheduleController extends Controller
         return $this->resp($scheduleToday);
     }
 
-    public function index()
+    public function addSchedule(Request $request)
     {
-        //
+        $input = $request->only('company_id', 'hari', 'urut', 'schedule_in', 'schedule_out');
+        $validator = Validator::make($input, [
+            'company_id' => 'required|numeric',
+            'hari' => 'required',
+            'urut' => 'required|numeric',
+            'schedule_in' => 'required',
+            'schedule_out' => 'required'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Schedule', false, 401);
+        }
+        $addSchedule = Schedule::create($input);
+        return $this->resp($addSchedule);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function editSchedule(Request $request, $id)
     {
-        //
+        $schedule = Schedule::find($id);
+        if(!$schedule)
+        {
+            return $this->resp(null, 'Schedule tidak ditemukan', false, 406);
+        }
+        $input = $request->only('company_id', 'hari', 'urut', 'schedule_in', 'schedule_out');
+        $validator = Validator::make($input, [
+            'company_id' => 'required|numeric',
+            'hari' => 'required',
+            'urut' => 'required|numeric',
+            'schedule_in' => 'required',
+            'schedule_out' => 'required'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Edit Schedule', false, 401);
+        }
+        $editSchedule = $schedule->update($input);
+        return $this->resp($editSchedule);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function deleteSchedule($id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $schedule = Schedule::find($id);
+        if(!$schedule)
+        {
+            return $this->resp(null, 'Schedule tidak ditemukan', false, 406);
+        }
+        $schedule->delete();
+        return $this->resp();
     }
 }

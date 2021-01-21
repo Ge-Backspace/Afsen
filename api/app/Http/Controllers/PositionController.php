@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PositionController extends Controller
 {
@@ -30,6 +32,13 @@ class PositionController extends Controller
     public function addPosition(Request $request)
     {
         $input = $request->only('company_id','name');
+        $validator = Validator::make($input, [
+            'company_id' => 'required|numeric',
+            'name' => 'required|string'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Position', false, 401);
+        }
         $addPosition = Position::create($input);
         return $this->resp($addPosition);
     }
@@ -43,8 +52,18 @@ class PositionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->only('company_id', 'name');
         $position = Position::find($id);
+        if (!$position) {
+            return $this->resp(null, 'Position tidak ditemukan', false, 406);
+        }
+        $input = $request->only('company_id', 'name');
+        $validator = Validator::make($input, [
+            'company_id' => 'required|numeric',
+            'name' => 'required|string'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Edit Position', false, 401);
+        }
         $editPosition = $position->update($input);
         return $this->resp($editPosition);
     }
@@ -57,7 +76,11 @@ class PositionController extends Controller
      */
     public function destroy($id)
     {
-        Position::find($id)->delete();
+        $position = Position::find($id);
+        if (!$position) {
+            return $this->resp(null, 'Position tidak ditemukan', false, 406);
+        }
+        $position->delete();
         return $this->resp();
     }
 }

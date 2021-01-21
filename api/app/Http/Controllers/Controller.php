@@ -215,7 +215,7 @@ class Controller extends BaseController
 
             return ($miles * 1.609344);
         }
-      }
+    }
 
     public function vincentyGreatCircleDistance(
     $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
