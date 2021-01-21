@@ -77,178 +77,69 @@
           </el-card>
         </div>
       </div>
-
+    </div>
+    <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
-          <vs-button
-            warn
-            style="float: right"
-            :loading="globalLoader"
-            gradient
-            @click="downloadFile(`/lapor/download/pdf`)"
-            >Download PDF</vs-button
-          >
-          &nbsp;
-          <vs-button
-            success
-            style="float: right"
-            :loading="globalLoader"
-            gradient
-            @click="downloadFile(`/lapor/download/xlsx`)"
-            >Download Excel</vs-button
-          >
+          <el-card v-loading="getLoader" style="margin-top: 80px">
+            <div class="row" style="margin-bottom:20px">
+              <div class="col-md-3 offset-md-9">
+                <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
+                  <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                </el-input>
+              </div>
+            </div>
+            <vs-table striped>
+              <template #thead>
+                <vs-tr>
+                  <vs-th>No</vs-th>
+                  <vs-th>Fullname</vs-th>
+                  <vs-th>Nip</vs-th>
+                  <vs-th>Position</vs-th>
+                  <vs-th>Status</vs-th>
+                  <vs-th>Action</vs-th>
+                </vs-tr>
+              </template>
+              <!-- <template #tbody>
+                <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
+                  <vs-td>
+                    {{ tr.name }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.nip }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.positions.name }}
+                  </vs-td>
+                  <vs-td>
+                    <span class="badge badge-success" v-if="tr.status">Aktif</span>
+                    <span class="badge badge-warning" v-else>Non Aktif</span>
+                  </vs-td>
+                  <vs-td>
+                    <el-tooltip content="Edit" placement="top-start" effect="dark">
+                      <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
+                    </el-tooltip>
+                    <el-tooltip content="Delete" placement="top-start" effect="dark">
+                      <el-button size="mini" type="primary" icon="fa fa-trash">
+                      </el-button>
+                    </el-tooltip>
+                  </vs-td>
+                </vs-tr>
+              </template>
+              <template #footer>
+                <vs-row>
+                  <vs-col w="2">
+                    <small>Total : {{getGoverments.total}} Data</small>
+                  </vs-col>
+                  <vs-col w="10">
+                    <vs-pagination v-model="page" :length="Math.ceil(getGoverments.total / table.max)" />
+                  </vs-col>
+                </vs-row>
+              </template> -->
+            </vs-table>
+          </el-card>
         </div>
       </div>
-      <el-card v-loading="getLoader">
-        <div class="row" style="margin-bottom: 20px">
-          <div class="col-md-4">
-            <el-date-picker
-              size="mini"
-              type="daterange"
-              range-separator="-"
-              start-placeholder="Join date"
-              end-placeholder="Resign date"
-              style="width: 100%"
-              v-model="searchDate"
-              value-format="yyyy-MM-dd"
-              @change="searchData()"
-            >
-            </el-date-picker>
-          </div>
-          <div class="col-md-4">
-            <el-select
-              size="mini"
-              clearable
-              filterable
-              v-model="searchGoverment"
-              @change="searchData()"
-              placeholder="Pilih Job Position"
-              style="width: 100%"
-            >
-              <el-option
-                v-for="item in getGovermentPlains"
-                :key="'gov-' + item.id"
-                :label="item.nama"
-                :value="item.id"
-                style="height: 60px"
-              >
-                <div class="row">
-                  <div class="col-2">
-                    <span style="float: left"
-                      ><img
-                        :src="item.foto_url"
-                        height="30"
-                        width="auto"
-                        alt=""
-                    /></span>
-                  </div>
-                  <div class="col-10">
-                    <span>{{ item.nama }}</span>
-                  </div>
-                </div>
-              </el-option>
-            </el-select>
-          </div>
-          <div class="col-md-4">
-            <el-input
-              placeholder="Cari"
-              v-model="search"
-              @change="searchData()"
-              size="mini"
-            >
-              <i slot="prefix" class="el-input__icon el-icon-search"></i>
-            </el-input>
-          </div>
-        </div>
-        <vs-table striped>
-          <template #thead>
-            <vs-tr>
-              <vs-th>Fullname</vs-th>
-              <vs-th>NIP</vs-th>
-              <vs-th>Job Position</vs-th>
-              <vs-th>Status Employee</vs-th>
-              <!-- <vs-th>Organization</vs-th> -->
-              <!-- <vs-th>Job Position</vs-th>
-              <vs-th>Job Level</vs-th>
-              <vs-th>Join Date</vs-th>
-              <vs-th>Resign Date</vs-th>
-              <vs-th>Status Employee</vs-th> -->
-              <vs-th>Action</vs-th>
-            </vs-tr>
-          </template>
-          <template #tbody>
-            <vs-tr :key="i" v-for="(tr, i) in getUsers.data.data" :data="tr">
-              <vs-td>
-                <!-- <el-link
-                  ><a class="text-primary" @click="detailLaporan(tr)">{{
-                    tr.judul
-                  }}</a></el-link> -->
-                  {{ tr.name }}
-              </vs-td>
-              <vs-td>
-                {{ tr.email }}
-              </vs-td>
-              <vs-td>
-                {{ tr.username }}
-              </vs-td>
-              
-              <vs-td>
-                <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
-                <span class="badge badge-warning" v-else>Non Aktif</span>
-              </vs-td>
-              <vs-td>
-                <el-tooltip
-                  content="Download Evidence"
-                  placement="top-start"
-                  effect="dark"
-                >
-                  <el-button
-                    size="mini"
-                    @click="
-                      downloadFile(`lapor/${tr.id}/evidence/download`, true)
-                    "
-                    icon="fa fa-download"
-                  ></el-button>
-                </el-tooltip>
-
-                <el-tooltip content="Edit" placement="top-start" effect="dark">
-                  <el-button
-                    size="mini"
-                    @click="edit(tr)"
-                    icon="fa fa-edit"
-                  ></el-button>
-                </el-tooltip>
-
-                <el-tooltip
-                  content="Delete"
-                  placement="top-start"
-                  effect="dark"
-                >
-                  <el-button
-                    size="mini"
-                    type="primary"
-                    @click="deleteLaporan(tr.id)"
-                    icon="fa fa-trash"
-                  ></el-button>
-                </el-tooltip>
-              </vs-td>
-            </vs-tr>
-          </template>
-          <!-- <template #footer>
-            <vs-row>
-              <vs-col w="2">
-                <small>Total : {{ getLapors.total }} Data</small>
-              </vs-col>
-              <vs-col w="10">
-                <vs-pagination
-                  v-model="page"
-                  :length="Math.ceil(getLapors.total / table.max)"
-                />
-              </vs-col>
-            </vs-row>
-          </template> -->
-        </vs-table>
-      </el-card>
     </div>
 
     <!-- Floating Button -->
@@ -262,7 +153,6 @@
         class="float"
         @click="
           tambahDialog = true;
-          titleDialog = 'Tambah Karyawan';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -337,7 +227,6 @@
               placeholder="Pelaksana Kegiatan"
               v-model="form.pelaksana_kegiatan"
             >
-              <vs-option :label="test" :value="test"> </vs-option>
             </vs-select>
           </vs-col>
           <vs-col
@@ -353,7 +242,6 @@
               placeholder="Sumber Pembiayaan"
               v-model="form.sumber_pembiayaan"
             >
-              <vs-option :label="status" :value="status"> </vs-option>
             </vs-select>
           </vs-col>
           <vs-col
@@ -449,22 +337,13 @@ export default {
       data:{
 
       },
+      company_id: '',
       table: {
         max: 10,
       },
       page: 1,
-      customToolbar: [
-        ["bold", "italic", "underline"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        [
-          { align: "" },
-          { align: "center" },
-          { align: "right" },
-          { align: "justify" },
-        ],
-      ],
       current_page: 1,
-      titleDialog: "Tambah Laporan",
+      titleDialog: 'Tambah Karyawan',
       tambahDialog: false,
       search: "",
       isUpdate: false,
@@ -484,12 +363,14 @@ export default {
         aktif: true,
         kandungan_pancasila: "",
       },
+      active:'',
       searchDate: ["", ""],
       searchGoverment: "",
     };
   },
   mounted() {
-    this.$store.dispatch('user/getAll', {showall: 1});
+    this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id))
+    this.$store.dispatch('employee/getAll', {company_id: this.company_id});
   },
   methods: {
     // searchData() {
@@ -636,8 +517,8 @@ export default {
     // ...mapGetters("lapor", ["getLapors", "getLoader"]),
     // ...mapGetters("setting", ["getSetting"]),
     // ...mapGetters("goverment", ["getGovermentPlains"]),
-    ...mapGetters("user", [
-      "getUsers"
+    ...mapGetters("employee", [
+      "getEmployees"
     ]),
   },
   watch: {

@@ -52,7 +52,7 @@
             <vs-tr>
               <vs-th>No</vs-th>
               <vs-th>Name</vs-th>
-              <vs-th>Nickname</vs-th>
+              <vs-th>Username</vs-th>
               <vs-th>Email</vs-th>
               <vs-th>Status Employee</vs-th>
               <vs-th>Action</vs-th>
@@ -61,7 +61,7 @@
           <template #tbody>
             <vs-tr :key="i" v-for="(tr, i) in getUsers.data.data" :data="tr">
               <vs-td>
-                {{ tr.id }}
+                {{ i+1 }}
               </vs-td>
               <vs-td>
                 <!-- <el-link
@@ -71,10 +71,10 @@
                 {{ tr.name }}
               </vs-td>
               <vs-td>
-                {{ tr.email }}
+                {{ tr.username }}
               </vs-td>
               <vs-td>
-                {{ tr.username }}
+                {{ tr.email }}
               </vs-td>
 
               <vs-td>
@@ -99,9 +99,7 @@
                 <el-tooltip content="Edit" placement="top-start" effect="dark">
                   <el-button
                     size="mini"
-                    @click="
-                      editDialog = true;
-                      titleDialog = 'Edit User';"
+                    @click="edit(tr)"
                     icon="fa fa-edit"
                   ></el-button>
                 </el-tooltip>
@@ -114,7 +112,7 @@
                   <el-button
                     size="mini"
                     type="primary"
-                    @click="deleteLaporan(tr.id)"
+                    @click="deleteUser(tr.id)"
                     icon="fa fa-trash"
                   ></el-button>
                 </el-tooltip>
@@ -325,7 +323,7 @@
     </vs-dialog> -->
 
     <vs-dialog
-      v-model="editDialog"
+      v-model="userDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()"
     >
@@ -347,8 +345,8 @@
             <label>Name</label>
             <vs-input
               type="text"
-              v-model="form.judul"
-              placeholder="Judul"
+              v-model="form.name"
+              placeholder="Name"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -358,11 +356,11 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Nickname</label>
+            <label>Username</label>
             <vs-input
               type="text"
-              v-model="form.judul"
-              placeholder="Judul"
+              v-model="form.username"
+              placeholder="Username"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -374,12 +372,13 @@
           >
             <label>Email</label>
             <vs-input
+              disabled
               type="text"
-              v-model="form.tempat_kegiatan"
-              placeholder="Tempat Kegiatan"
+              v-model="form.email"
+              placeholder="Email"
             ></vs-input>
           </vs-col>
-          <vs-col
+          <!-- <vs-col
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -389,10 +388,10 @@
             <label>Password</label>
             <vs-input
               type="text"
-              v-model="form.judul"
-              placeholder="Judul"
+              v-model="form.password"
+              placeholder="Password"
             ></vs-input>
-          </vs-col>
+          </vs-col> -->
         </vs-row>
       </div>
 
@@ -420,7 +419,7 @@
                 block
                 border
                 @click="
-                  editDialog = false;
+                  userDialog = false;
                   resetForm();
                 "
                 >Batal</vs-button
@@ -458,24 +457,24 @@ export default {
       ],
       current_page: 1,
       titleDialog: "Tambah Laporan",
-      editDialog: false,
+      userDialog: false,
       search: "",
       isUpdate: false,
       btnLoader: false,
       form: {
-        judul: "",
-        deskripsi: "",
-        evidences: [],
-        tgl_mulai: "",
-        tgl_selesai: "",
-        pelaksana_kegiatan: "",
-        tautan: "",
-        kategori_kegiatan: "",
-        sumber_pembiayaan: "",
-        segmen_kegiatan: "",
-        tempat_kegiatan: "",
-        aktif: true,
-        kandungan_pancasila: "",
+        name: "",
+        username: "",
+        email: "",
+        // password: "",
+        // tgl_selesai: "",
+        // pelaksana_kegiatan: "",
+        // tautan: "",
+        // kategori_kegiatan: "",
+        // sumber_pembiayaan: "",
+        // segmen_kegiatan: "",
+        // tempat_kegiatan: "",
+        // aktif: true,
+        // kandungan_pancasila: "",
       },
       searchDate: ["", ""],
       searchGoverment: "",
@@ -503,127 +502,118 @@ export default {
     //   this.$store.commit("lapor/setLaporan", data);
     //   this.$router.push("/admin/lapor/detail");
     // },
-    // edit(data) {
-    //   let form = JSON.parse(JSON.stringify(data));
-    //   this.tambahDialog = true;
-    //   this.titleDialog = "Edit Laporan";
-    //   this.isUpdate = true;
+    edit(data) {
+      let form = JSON.parse(JSON.stringify(data));
+      this.userDialog = true;
+      this.titleDialog = "Edit User";
+      this.isUpdate = true;
 
-    //   form.tgl_mulai = this.$moment(
-    //     form.tgl_mulai,
-    //     "DD-MM-YYYY hh:mm:ss"
-    //   ).format("YYYY-MM-DD");
-    //   form.tgl_selesai = this.$moment(
-    //     form.tgl_selesai,
-    //     "DD-MM-YYYY hh:mm:ss"
-    //   ).format("YYYY-MM-DD");
-    //   // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
-    //   this.form = form;
-    // },
+      // form.tgl_mulai = this.$moment(
+      //   form.tgl_mulai,
+      //   "DD-MM-YYYY hh:mm:ss"
+      // ).format("YYYY-MM-DD");
+      // form.tgl_selesai = this.$moment(
+      //   form.tgl_selesai,
+      //   "DD-MM-YYYY hh:mm:ss"
+      // ).format("YYYY-MM-DD");
+      // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
+      this.form = form;
+    },
     resetForm() {
       this.form = {
-        judul: "",
-        deskripsi: "",
-        evidences: [],
-        tgl_mulai: "",
-        tgl_selesai: "",
-        pelaksana_kegiatan: "",
-        tautan: "",
-        kategori_kegiatan: "",
-        sumber_pembiayaan: "",
-        segmen_kegiatan: "",
-        tempat_kegiatan: "",
-        aktif: true,
-        kandungan_pancasila: "",
+        name: "",
+        username: "",
+        email: "",
+        // password: "",
       };
     },
     // handleCurrentChange(val) {
     //   this.page = val;
     // },
-    // onSubmit(type = "store") {
-    //   this.btnLoader = true;
-    //   let url = "/lapor/store";
-    //   if (type == "update") {
-    //     url = `/lapor/${this.form.id}/update`;
-    //   }
-    //   let pancasila = "";
-    //   if (Array.isArray(this.form.kandungan_pancasila)) {
-    //     this.form.kandungan_pancasila.forEach((e) => {
-    //       if (e !== "") {
-    //         pancasila += pancasila == "" ? e : "," + e;
-    //       }
-    //     });
-    //   }
-    //   this.form.kandungan_pancasila =
-    //     pancasila !== "" ? pancasila : this.form.kandungan_pancasila;
-    //   this.$axios
-    //     .post(url, this.form)
-    //     .then((resp) => {
-    //       if (resp.data.success) {
-    //         this.$notify.success({
-    //           title: "Success",
-    //           message: `Berhasil ${
-    //             type == "store" ? "Menambah" : "Mengubah"
-    //           } Laporan`,
-    //         });
-    //         this.tambahDialog = false;
-    //         this.resetForm();
-    //         this.$store.dispatch("lapor/getAll", {});
-    //       }
-    //     })
-    //     .finally(() => {
-    //       this.btnLoader = false;
-    //     })
-    //     .catch((err) => {
-    //       let error = err.response.data.data;
-    //       if (error) {
-    //         this.showErrorField(error);
-    //       } else {
-    //         this.$notify.error({
-    //           title: "Error",
-    //           message: err.response.data.message,
-    //         });
-    //       }
-    //     });
-    // },
-    // deleteLaporan(id) {
-    //   this.$swal({
-    //     title: "Perhatian!",
-    //     text: "Apakah anda yakin ingin menghapus data ini?",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Ya",
-    //     cancelButtonText: "Batal",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       this.$axios
-    //         .delete(`/lapor/${id}/delete`)
-    //         .then((resp) => {
-    //           if (resp.data.success) {
-    //             this.$notify.success({
-    //               title: "Success",
-    //               message: "Berhasil Menghapus Data",
-    //             });
-    //             this.tambahDialog = false;
-    //             this.$store.dispatch("lapor/getAll", {
-    //               defaultPage: true,
-    //             });
-    //           }
-    //         })
-    //         .finally(() => {
-    //           //
-    //         })
-    //         .catch((err) => {
-    //           this.$notify.error({
-    //             title: "Error",
-    //             message: err.response.data.message,
-    //           });
-    //         });
-    //     }
-    //   });
-    // },
+    onSubmit(type = "store") {
+      this.btnLoader = true;
+      let url = "/user/store";
+      if (type == "update") {
+        url = `/user/${this.form.id}/update`;
+      }
+      // let pancasila = "";
+      // if (Array.isArray(this.form.kandungan_pancasila)) {
+      //   this.form.kandungan_pancasila.forEach((e) => {
+      //     if (e !== "") {
+      //       pancasila += pancasila == "" ? e : "," + e;
+      //     }
+      //   });
+      // }
+      // this.form.kandungan_pancasila =
+      //   pancasila !== "" ? pancasila : this.form.kandungan_pancasila;
+      this.$axios
+        .post(url, this.form)
+        .then((resp) => {
+          if (resp.data.success) {
+            this.$notify.success({
+              title: "Success",
+              message: `Berhasil ${
+                type == "store" ? "Menambah" : "Mengubah"
+              } Data`,
+            });
+            this.userDialog = false;
+            this.resetForm();
+            this.$store.dispatch("user/getAll", {});
+          }
+        })
+        .finally(() => {
+          this.btnLoader = false;
+        })
+        .catch((err) => {
+          let error = err.response.data.data;
+          if (error) {
+            this.showErrorField(error);
+          } else {
+            this.$notify.error({
+              title: "Error",
+              message: err.response.data.message,
+            });
+          }
+        });
+    },
+    deleteUser(id) {
+      this.$swal({
+        title: "Attention!",
+        text: "Are u sure u want to delete this User ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes Yes Yes",
+        cancelButtonText: "No No No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$axios
+            .delete(`/user/${id}/delete`)
+            .then((resp) => {
+              if (resp.data.success) {
+                this.$notify.success({
+                  title: "Success",
+                  message: "User Deleted",
+                });
+                this.userDialog = false;
+                this.$store.dispatch("user/getAll", {
+                  defaultPage: true,
+                });
+              }
+            })
+            .finally(() => {
+              //
+            })
+            .catch((err) => {
+              this.$notify.error({
+                title: "Error",
+                message: err.response.data.message,
+              });
+            });
+        }
+      });
+    },
   },
   computed: {
     // ...mapGetters("lapor", ["getLapors", "getLoader"]),
