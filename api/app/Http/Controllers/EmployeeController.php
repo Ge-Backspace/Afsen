@@ -18,9 +18,17 @@ class EmployeeController extends Controller
      */
     public function getEmployee(Request $request)
     {
-        return $this->getPaginate(Employee::leftJoin('positions', 'employees.position_id', '=', 'positions.id'), $request, [
-            'employees.name', 'positions.position'
-        ]);
+        return $this->getPaginate(
+            Employee::leftJoin('positions', 'employees.position_id', '=', 'positions.id')
+            ->lefJoin('users', 'employees.user_id', '=', 'users.id')
+            ->where('employees.company_id', $request->company_id), $request, [
+                'employees.name', 'positions.name'
+            ]);
+
+        // Example
+        // select * from employees left join users on employees.user_id = users.id
+        // join positions on employees.position_id = positions.id
+        // where employees.company_id = 1
     }
 
     /**
@@ -31,10 +39,11 @@ class EmployeeController extends Controller
      */
     public function addEmployee(Request $request)
     {
-        $validator = Validator::make($request->only(['company_id', 'name', 'user_id']), [
+        $validator = Validator::make($request->only(['company_id', 'name', 'user_id','status']), [
             'company_id' => 'required|numeric',
             'name' => 'required|string|min:4|max:100',
-            'user_id' => 'required|numeric'
+            'user_id' => 'required|numeric',
+            'status' => 'required|boolean'
         ], Helper::messageValidation());
 
         if ($validator->fails()) {
@@ -80,11 +89,27 @@ class EmployeeController extends Controller
      */
     public function updateEmployee(Request $request, $id)
     {
-        $input = $request->only(['name', 'nip', 'position_id']);
         $employee = Employee::find($id);
-        $update = $employee->update($input);
-
-        return $this->resp($update);
+        if (!$employee)
+        {
+            return $this->resp(null, 'Employee tidak ditemukan', false, 406);
+        }
+        $input = $request->only(['name', 'nip', 'position_id', 'status']);
+        $validator = Validator::make($input, [
+            'name' => 'required|string',
+            'nip' => 'required|string',
+            'position_id' => 'required|numeric',
+            'status' => 'required|boolean'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
+        }
+        $editEmployee = $employee->update($input);
+        $user = User::find($editEmployee->user_id);
+        if($user->name != $editEmployee->name){
+            $user->update($request->name);
+        }
+        return $this->resp($editEmployee);
     }
 
     /**
@@ -95,7 +120,12 @@ class EmployeeController extends Controller
      */
     public function deleteEmployee($id)
     {
-        Employee::find($id)->delete();
+        $employee = Employee::find($id);
+        if(!$employee)
+        {
+            return $this->resp(null, 'Employee Tidak Ditemukan', false, 406);
+        }
+        $employee->delete();
         return $this->resp();
     }
 }

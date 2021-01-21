@@ -116,7 +116,7 @@ class UserController extends Controller
         $username = $request->username;
         $check_user = User::find($id);
 
-        $check_account = User::where('username', $username);
+        $check_account = User::where('username', $username)->first();
 
         if($check_account){
             return $this->resp(null, 'Username Sudah Ada', false, 400);
