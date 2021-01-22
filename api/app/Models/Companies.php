@@ -18,6 +18,10 @@ class Companies extends Model
     	return $this->hasMany('App\Model\Scedule');
     }
 
+    public function shift(){
+    	return $this->hasMany('App\Model\Shift');
+    }
+
     public function employees(){
     	return $this->hasMany('App\Model\Employee');
     }
