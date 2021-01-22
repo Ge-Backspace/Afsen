@@ -14,15 +14,12 @@ class Companies extends Model
     	return $this->hasMany('App\Model\User');
     }
 
-    public function shcedule(){
-    	return $this->hasMany('App\Model\Scedule');
+    public function positions(){
+    	return $this->hasMany('App\Model\Position');
     }
 
     public function shift(){
     	return $this->hasMany('App\Model\Shift');
     }
 
-    public function employees(){
-    	return $this->hasMany('App\Model\Employee');
-    }
 }

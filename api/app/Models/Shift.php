@@ -13,4 +13,9 @@ class Shift extends Model
     public function companies(){
         return $this->belongsTo('App\Models\Companies');
     }
+
+    public function shift_employees()
+    {
+        return $this->hasMany('App\Models\ShiftEmployee');
+    }
 }
