@@ -148,13 +148,8 @@ export default (ctx, inject) => {
   const runtimeConfig = ctx.$config && ctx.$config.axios || {}
   // baseURL
   const baseURL = process.browser
-<<<<<<< HEAD
-    ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || 'http://cb0fc393acfc.ngrok.io')
-      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://cb0fc393acfc.ngrok.io')
-=======
-    ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || 'http://localhost:8000')
-      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://localhost:8000')
->>>>>>> 6a22b3477f57e69603934d8872e77201fab5b0f6
+    ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || 'http://f0e541a3ad2e.ngrok.io')
+      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://f0e541a3ad2e.ngrok.io')
 
   // Create fresh objects for all default header scopes
   // Axios creates only one which is shared across SSR requests!

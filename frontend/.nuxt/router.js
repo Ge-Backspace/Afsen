@@ -38,7 +38,7 @@ const _7ef25414 = () => interopDefault(import('..\\pages\\admin\\finances\\cash.
 const _27dd115e = () => interopDefault(import('..\\pages\\admin\\finances\\loan.vue' /* webpackChunkName: "pages/admin/finances/loan" */))
 const _2b6683b2 = () => interopDefault(import('..\\pages\\admin\\finances\\reimbursement.vue' /* webpackChunkName: "pages/admin/finances/reimbursement" */))
 const _6aa78812 = () => interopDefault(import('..\\pages\\admin\\lapor\\detail.vue' /* webpackChunkName: "pages/admin/lapor/detail" */))
-const _d426277a = () => interopDefault(import('..\\pages\\admin\\master\\company.vue' /* webpackChunkName: "pages/admin/master/company" */))
+const _6c40cd42 = () => interopDefault(import('..\\pages\\admin\\master\\masterCompanies.vue' /* webpackChunkName: "pages/admin/master/masterCompanies" */))
 const _73602755 = () => interopDefault(import('..\\pages\\admin\\master\\masterPosition.vue' /* webpackChunkName: "pages/admin/master/masterPosition" */))
 const _92c48c7a = () => interopDefault(import('..\\pages\\admin\\master\\masterSchedule.vue' /* webpackChunkName: "pages/admin/master/masterSchedule" */))
 const _1ae4fa12 = () => interopDefault(import('..\\pages\\admin\\master\\masterUser.vue' /* webpackChunkName: "pages/admin/master/masterUser" */))
@@ -203,9 +203,9 @@ export const routerOptions = {
     component: _6aa78812,
     name: "admin-lapor-detail"
   }, {
-    path: "/admin/master/company",
-    component: _d426277a,
-    name: "admin-master-company"
+    path: "/admin/master/masterCompanies",
+    component: _6c40cd42,
+    name: "admin-master-masterCompanies"
   }, {
     path: "/admin/master/masterPosition",
     component: _73602755,

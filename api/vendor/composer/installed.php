@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => 'e9595d3ba54e2f97b5789bfbc5db3e117ca11dc2',
+    'reference' => '98819880bc0834e00af6f228d1d1fc5567127b93',
     'name' => 'laravel/lumen',
   ),
   'versions' => 
@@ -464,14 +464,23 @@
         0 => '*',
       ),
     ),
-    'laravel/lumen' => 
+    'laravel/helpers' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => 'v1.4.0',
+      'version' => '1.4.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e9595d3ba54e2f97b5789bfbc5db3e117ca11dc2',
+      'reference' => 'cde8ea2427db4f37d67729846b70452499210a21',
+    ),
+    'laravel/lumen' => 
+    array (
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '98819880bc0834e00af6f228d1d1fc5567127b93',
     ),
     'laravel/lumen-framework' => 
     array (
@@ -502,12 +511,12 @@
     ),
     'maatwebsite/excel' => 
     array (
-      'pretty_version' => '3.1.25',
-      'version' => '3.1.25.0',
+      'pretty_version' => '3.1.26',
+      'version' => '3.1.26.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'a3e56f1a60e49f21798fd242a3b3d2f4051eeda7',
+      'reference' => '66f7c9584304ad0b6a267a5d8ffbfa2ff4272e85',
     ),
     'maennchen/zipstream-php' => 
     array (

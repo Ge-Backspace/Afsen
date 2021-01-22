@@ -238,11 +238,11 @@
     "_name": "_6aa78812"
   },
   {
-    "name": "admin-master-company",
-    "path": "/admin/master/company",
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\company.vue",
-    "chunkName": "pages/admin/master/company",
-    "_name": "_d426277a"
+    "name": "admin-master-masterCompanies",
+    "path": "/admin/master/masterCompanies",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterCompanies.vue",
+    "chunkName": "pages/admin/master/masterCompanies",
+    "_name": "_6c40cd42"
   },
   {
     "name": "admin-master-masterPosition",
