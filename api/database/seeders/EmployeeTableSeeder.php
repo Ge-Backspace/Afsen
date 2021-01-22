@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class UsersTableSeeder extends Seeder
+class EmployeeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +14,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        Employee::create([
             'company_id' => 1,
+            'user_id' => 1,
             'name' => 'test',
-            'username' => 'test',
-            'email' => 'test@gmail.com',
-            'password' => app('hash')->make('testuser')
+            'position_id' => 1,
+            'status' => true
         ]);
     }
 }

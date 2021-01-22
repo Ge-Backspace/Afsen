@@ -10,8 +10,8 @@ class Checkin extends Model
         'user_id', 'lat', 'lng','checkin_time', 'address',
     ];
 
-    public function user()
+    public function employees()
     {
-        $this->belongsTo('App\Models\User');
+        $this->belongsTo('App\Models\Employee');
     }
 }

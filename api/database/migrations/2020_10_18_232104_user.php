@@ -22,8 +22,8 @@ class User extends Migration
             $table->string('username')->unique();
             $table->integer('company_id')->unsigned();
             $table->integer('propic_id')->unsigned()->nullable();
-            $table->boolean('admin');
-            $table->boolean('aktif');
+            $table->boolean('admin')->default(false);
+            $table->boolean('aktif')->default(false);
             $table->rememberToken();
             $table->timestamps();
 
