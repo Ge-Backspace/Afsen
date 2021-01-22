@@ -10,7 +10,11 @@ class ShiftEmployee extends Model
         'employee_id', 'shift_id', 'date'
     ];
 
-    public function employess()
+    protected $casts = [
+        'date' => 'date:Y-m-d'
+    ];
+
+    public function employees()
     {
         return $this->belongsTo('App\Models\Employee');
     }
