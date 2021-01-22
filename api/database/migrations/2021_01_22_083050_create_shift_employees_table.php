@@ -14,8 +14,14 @@ class CreateShiftEmployeesTable extends Migration
     public function up()
     {
         Schema::create('shift_employees', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('employee_id');
+            $table->integer('shift_id');
+            $table->date('date');
             $table->timestamps();
+
+            $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('shift_id')->references('id')->on('shifts');
         });
     }
 
