@@ -15,7 +15,6 @@ class EmployeeTableSeeder extends Seeder
     public function run()
     {
         Employee::create([
-            'company_id' => 1,
             'user_id' => 1,
             'name' => 'test',
             'position_id' => 1,

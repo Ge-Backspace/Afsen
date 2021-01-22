@@ -11,7 +11,7 @@ class TestController extends Controller
 
     public function masukData(Request $request){
         $this->validate($request, [
-            'file' => 'required|mimes:xls, xlsx'
+            'file' => 'required'
         ]);
 
         if($request->hasFile('file')){

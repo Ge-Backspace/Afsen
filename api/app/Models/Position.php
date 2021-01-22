@@ -14,7 +14,7 @@ class Position extends Model
     	return $this->hasMany('App\Model\Employee');
     }
 
-    public function company()
+    public function companies()
     {
         return $this->belongsTo('App\Models\Company');
     }
