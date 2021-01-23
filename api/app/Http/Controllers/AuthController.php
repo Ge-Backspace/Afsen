@@ -54,6 +54,7 @@ class AuthController extends Controller
     }
 
     public function registerAccount (Request $request){
+        $input = $request->only(['name', 'username', 'email', 'password', 'company_id']);
         $rules = [
             'name' => 'required|string|min:4|max:100',
             'username' => 'required|string|min:5|max:20',
@@ -61,43 +62,26 @@ class AuthController extends Controller
             'password' => 'required',
             'company_id' => 'required'
         ];
-
-        $validator = Validator::make ($request->all(), $rules, Helper::messageValidation());
-
+        $validator = Validator::make ($input, $rules, Helper::messageValidation());
         if($validator->fails()){
-            return $this->resp($request->all(), Helper::generateErrorMsg($validator->errors()->getMessages()), false, 406);
+            return $this->resp(null, Helper::generateErrorMsg($validator->errors()->getMessages()), false, 406);
         }
-
-        $name = $request->name;
-        $username = strtolower($request->username);
-        $email = $request->email;
-        $company_id = $request->company_id;
-        $password = Hash::make($request->password);
-        $company_id_check = Companies::find($company_id);
-
-        if (!$company_id_check){
-            return $this->resp(null, 'Company Tidak Ada', false, 406);
-        }else{
-            $check_account = User::where('email', $email)->orWhere('username', $username)->first();
-
-            if($check_account){
-                return $this->resp(null, 'Username Atau Email Sudah Ada', false, 406);
-            }else{
-                $register_account = User::create([
-                    'name' => $name,
-                    'email' => $email,
-                    'password' => $password,
-                    'username' => $username,
-                    'company_id' => $company_id,
-                    'admin' => true,
-                    'aktif' => true,
-                ]);
-                Employee::create([
-                    'name' => $name,
-                    'company_id' => $company_id
-                ]);
-                return $this->resp($register_account);
-            }
+        $company = Companies::find($input['company_id']);
+        $username = User::where('username', $input['username'])->first();
+        $email = User::where('email', $input['email'])->first();
+        if (!$company) {
+            return $this->resp(null, 'Company Tidak Ditemukan', false, 406);
+        } elseif ($username) {
+            return $this->resp(null, 'Username Sudah Digunakan', false, 406);
+        } elseif($email) {
+            return $this->resp(null, 'Email Sudah Digunakan', false, 406);
+        } else {
+            $inputUser = User::create($input);
+            $inputEmployee = Employee::create([
+                'name' => $input['name'],
+                'user_id' => $inputUser->id
+            ]);
+            return $this->resp([$inputUser, $inputEmployee]);
         }
     }
 

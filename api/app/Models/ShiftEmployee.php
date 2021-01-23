@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShiftEmployee extends Model
 {
     protected $fillable = [
-        'employee_id', 'shift_id', 'date'
+        'company_id', 'employee_id', 'shift_id', 'shift_id', 'date'
     ];
 
     protected $casts = [
@@ -22,5 +22,10 @@ class ShiftEmployee extends Model
     public function shifts()
     {
         return $this->belongsTo('App\Models\Shift');
+    }
+
+    public function companies()
+    {
+        return $this->belongsTo('App\Models\Companies');
     }
 }

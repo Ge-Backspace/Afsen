@@ -24,7 +24,7 @@ class ShiftEmployeeController extends Controller
     public function getShiftEmployee(Request $request)
     {
         return $this->getPaginate(ShiftEmployee::join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
-        ->where('user_id', $request->user_id), $request,['shifts.code']);
+        ->where('employee_id', $request->employee_id), $request,['shifts.code']);
     }
 
     public function getCompanyShiftEmployee(Request $request)
@@ -36,10 +36,10 @@ class ShiftEmployeeController extends Controller
 
     public function addShiftEmployee(Request $request)
     {
-        $input = $request->only(['company_id', 'user_id', 'shift_id', 'date']);
+        $input = $request->only(['company_id', 'employee_id', 'shift_id', 'date']);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
+            'employee_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
             'date' => 'required|date'
         ], Helper::messageValidation());
@@ -56,10 +56,10 @@ class ShiftEmployeeController extends Controller
         if (!$shiftEmployee) {
             return $this->resp(null, 'Shift Employee Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['company_id', 'user_id', 'shift_id', 'date']);
+        $input = $request->only(['company_id', 'employee_id', 'shift_id', 'date']);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
+            'employee_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
             'date' => 'required|date'
         ], Helper::messageValidation());

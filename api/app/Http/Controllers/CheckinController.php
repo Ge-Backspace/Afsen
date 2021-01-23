@@ -65,11 +65,11 @@ class CheckinController extends Controller
         }
 
         $distcance = $this->distance($lat, $lng, $company->lat, $company->lng);
-        if($distcance >= 1){
-            return $this->resp([$distcance, $request->lat, $request->lng, $company->lat, $company->lng], 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor', false, 406);
-        }
+        // if($distcance >= 1){
+        //     return $this->resp([$distcance, $request->lat, $request->lng, $company->lat, $company->lng], 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor', false, 406);
+        // }
 
-        $check_checkins = Checkin::where('user_id', $user_id)->whereDate('checkin_time', '=', Carbon::today())->first();
+        $check_checkins = Checkin::where('employee_id', $request->employee_id)->whereDate('checkin_time', '=', Carbon::today())->first();
 
         if($check_checkins){
             return $this->resp(null, 'Anda Sudah Check In Hari Ini', false, 406);
