@@ -189,16 +189,17 @@ export default {
       active: 0,
       status: 0,
       company_id: '',
-      today: moment().format('dddd'),
       table: {
         max: 10
       },
-      name: JSON.parse(JSON.stringify(this.$auth.user.name)),
+      name: '',
       data: {
-        user_id: JSON.parse(JSON.stringify(this.$auth.user.id)),
+        user_id: '',
         lat: '',
         lng: '',
+        request: '',
       },
+      employee_id: '',
       start: '06:00:00',
       currentTime: null,
       showLoading: false,
@@ -208,6 +209,11 @@ export default {
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
+    this.data.user_id = JSON.parse(JSON.stringify(this.$auth.user.id));
+    this.$axios.get(`/getName?user_id=${this.data.user_id}`).then(resp => {
+      this.name = resp.data.data
+      console.log(this.name)
+    })
     this.$store.dispatch('checkin/getAll', {
       showall: 1,
       company_id: this.company_id
@@ -227,17 +233,18 @@ export default {
       });
       this.status = response.data.data
     })
-    this.$axios.get(`/getSchedule?company_id=${this.company_id}&today=${this.today}`)
+    this.$axios.get(`/todayShiftEmployee?user_id=${this.data.user_id}`)
     .then(response =>{
       this.schedule_in = response.data.data.schedule_in
       this.schedule_out = response.data.data.schedule_out
     })
-    let e = moment.utc(moment(this.start,"HH:mm:ss").diff(moment(this.currentTime,"HH:mm:ss")))
-    console.log(e)
+    // let e = moment.utc(moment(this.start,"HH:mm:ss").diff(moment(this.currentTime,"HH:mm:ss")))
+    // console.log(e)
   },
   methods: {
     checkin() {
-      this.showLoading = true;
+      this.showLoading = true
+      this.data.request = 1
       this.$axios.post('/checkin', this.data)
       .then( response => {
         this.$notify.success({
@@ -249,7 +256,7 @@ export default {
           showall: 1,
           company_id: this.company_id
         });
-        this.$axios.get(`/check?user_id=${this.data.user_id}`)
+        this.$axios.get(`/check?employee_id=${this.employee_id}`)
         .then( response => {
           this.$notify.success({
             title: 'Check',
@@ -269,7 +276,8 @@ export default {
       });
     },
     checkout() {
-      this.showLoading = true;
+      this.showLoading = true
+      this.data.request = 2
       this.$axios.post('/checkout', this.data)
       .then( response => {
         this.$notify({
