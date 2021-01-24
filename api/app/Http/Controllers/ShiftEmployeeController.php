@@ -13,11 +13,15 @@ class ShiftEmployeeController extends Controller
 {
     public function getTodayShiftEmployee(Request $request)
     {
-        $shiftEmployee = ShiftEmployee::where('employee_id', $request->employee_id)
+        $employee = $this->getEmployeeByUser($request->user_id);
+        $shiftEmployee = ShiftEmployee::where('employee_id', $employee->id)
         ->whereDate('date', '=', Carbon::today())
         ->first();
-        $shiftId = $shiftEmployee->shift_id;
-        $getTodayShiftEmployee = Shift::find($shiftId);
+        $getTodayShiftEmployee = null;
+        if ($shiftEmployee) {
+            $shiftId = $shiftEmployee->shift_id;
+            $getTodayShiftEmployee = Shift::find($shiftId);
+        }
         return $this->resp($getTodayShiftEmployee);
     }
 

@@ -1,6 +1,5 @@
 <?php
 
-$router->get('/todayShiftEmployee', 'ShiftEmployeeController@getTodayShiftEmployee');
 $router->get('/shiftEmployees', 'ShiftEmployeeController@getShiftEmployee');
 $router->get('/companyShiftEmployee', 'ShiftEmployeeController@getCompanyShiftEmployee');
 $router->post('/shiftEmployee', 'ShiftEmployeeController@addShiftEmployee');

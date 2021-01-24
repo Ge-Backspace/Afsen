@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Checkin extends Model
 {
     protected $fillable = [
-        'user_id', 'lat', 'lng','checkin_time', 'address',
+        'employee_id', 'lat', 'lng', 'checkin_time','checkout_time', 'address',
     ];
 
     public function employees()

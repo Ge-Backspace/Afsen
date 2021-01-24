@@ -11,11 +11,12 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getName (Request $request)
+    {
+        $name = Employee::where('user_id', $request->user_id)->first();
+        return $this->resp($name->name);
+    }
+
     public function getEmployee(Request $request)
     {
         return $this->getPaginate(

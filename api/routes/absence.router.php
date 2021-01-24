@@ -1,6 +1,5 @@
 <?php
 
-$router->get('/checkins', 'CheckinController@index');
+$router->get('/todayCheckin', 'CheckinController@todayCheckin');
 $router->post('/checkin', 'CheckinController@checkin');
-$router->post('/checkout', 'CheckinController@checkout');
 $router->get('/check', 'CheckinController@check');

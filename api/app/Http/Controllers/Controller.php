@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Helpers\Variable;
+use App\Models\Checkin;
+use App\Models\Companies;
+use App\Models\Employee;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Lumen\Routing\Controller as BaseController;
+use Spatie\Geocoder\Geocoder;
 
 class Controller extends BaseController
 {
@@ -202,7 +208,7 @@ class Controller extends BaseController
         }
     }
 
-    function distance($lat1, $lon1, $lat2, $lon2) {
+    public function distance($lat1, $lon1, $lat2, $lon2) {
         if (($lat1 == $lat2) && ($lon1 == $lon2)) {
           return 0;
         }
@@ -217,21 +223,39 @@ class Controller extends BaseController
         }
     }
 
-    public function vincentyGreatCircleDistance(
-    $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
+    public function getCompanyByEmployee($employee_id){
+        $employee = Employee::find($employee_id);
+        $user = User::find($employee->user_id);
+        $company = Companies::find($user->company_id);
+        return $company;
+    }
+
+    public function getEmployeeByUser($user_id)
     {
-    // convert from degrees to radians
-    $latFrom = deg2rad($latitudeFrom);
-    $lonFrom = deg2rad($longitudeFrom);
-    $latTo = deg2rad($latitudeTo);
-    $lonTo = deg2rad($longitudeTo);
+        $employee = Employee::where('user_id', $user_id)->first();
+        return $employee;
+    }
 
-    $lonDelta = $lonTo - $lonFrom;
-    $a = pow(cos($latTo) * sin($lonDelta), 2) +
-        pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
-    $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+    public function checkCheckin($employee_id)
+    {
+        $checkChekinToday = Checkin::where('employee_id', $employee_id)
+        ->whereDate('checkin_time', '=', Carbon::today())->first();
+        return $checkChekinToday;
+    }
 
-    $angle = atan2(sqrt($a), $b);
-    return $angle * $earthRadius;
+    public function checkCheckout($employee_id)
+    {
+        $checkChekoutToday = Checkin::where('employee_id', $employee_id)
+        ->whereDate('checkout_time', '=', Carbon::today())->first();
+        return $checkChekoutToday;
+    }
+
+    public function getAddress($lat, $lng){
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new Geocoder($client);
+        $geocoder->setApiKey(config('geocoder.key'));
+        $geocoder->setCountry(config('geocoder.country', 'IN'));
+        $address = $geocoder->getAddressForCoordinates($lat, $lng);
+        return $address;
     }
 }
