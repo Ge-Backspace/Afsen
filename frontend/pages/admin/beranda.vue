@@ -41,23 +41,45 @@
             <div class="row">
               <div class="col-4">
                 <vs-button
-                  v-if="this.status == 0 && this.currentTime >= this.start && this.currentTime <= this.schedule_in"
+                  v-if="this.status == 0 && this.startDay && this.startCheckin && !this.startCheckout"
                   :loading="showLoading"
                   circle
                   size="xl"
                   :active="active == 2"
-                  @click="checkin()"
+                  @click="checkin('checkin')"
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
                 <vs-button
-                  v-if="this.status == 0 && this.currentTime >= this.start && this.currentTime > this.schedule_in"
+                  v-else-if="this.status == 0 && this.startDay && !this.startCheckin && !this.startCheckout"
                   :loading="showLoading"
                   circle
-                  warning
+                  waning
                   size="xl"
                   :active="active == 2"
-                  @click="checkin()"
+                  @click="checkin('checkin')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                </vs-button>
+                <vs-button
+                  v-else-if="this.status == 0 && this.startDay && !this.startCheckin && this.startCheckout"
+                  :loading="showLoading"
+                  circle
+                  danger
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkin')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                </vs-button>
+                <vs-button
+                  v-else-if="this.status == 1 && this.startCheckout"
+                  :loading="showLoading"
+                  circle
+                  waning
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkout')"
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
@@ -68,7 +90,7 @@
                   success
                   size="xl"
                   :active="active == 2"
-                  @click="checkout()"
+                  @click="checkin('checkout')"
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
@@ -79,7 +101,7 @@
                   shadow
                   size="xl"
                   :active="active == 2"
-                  @click="checkoff()"
+                  @click="checkout('dayoff')"
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
@@ -192,6 +214,9 @@ export default {
       table: {
         max: 10
       },
+      startDay: false,
+      startCheckin: false,
+      startCheckout: false,
       name: '',
       data: {
         user_id: '',
@@ -212,7 +237,6 @@ export default {
     this.data.user_id = JSON.parse(JSON.stringify(this.$auth.user.id));
     this.$axios.get(`/getName?user_id=${this.data.user_id}`).then(resp => {
       this.name = resp.data.data
-      console.log(this.name)
     })
     this.$store.dispatch('checkin/getAll', {
       showall: 1,
@@ -231,56 +255,32 @@ export default {
         title: 'Check',
         message: response.data.message
       });
-      this.status = response.data.data
+      this.status = response.data.data.status
     })
     this.$axios.get(`/todayShiftEmployee?user_id=${this.data.user_id}`)
     .then(response =>{
       this.schedule_in = response.data.data.schedule_in
       this.schedule_out = response.data.data.schedule_out
     })
-    // let e = moment.utc(moment(this.start,"HH:mm:ss").diff(moment(this.currentTime,"HH:mm:ss")))
-    // console.log(e)
+    let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss")
+    if (moment(this.start, "HH:mm:ss") <= moment(now, "HH:mm:ss")) {
+      this.startDay = true
+    } else if (moment(this.schedule_in, "HH:mm:ss") <= moment(now, "HH:mm:ss")){
+      this.startCheckin = true
+    } else if (moment(this.schedule_out, "HH:mm:ss")  <= moment(now, "HH:mm:ss")){
+      this.startCheckout = true
+    }
   },
   methods: {
-    checkin() {
+    checkin(type = 'checkin') {
       this.showLoading = true
       this.data.request = 1
+      if(type == 'checkout'){
+        this.data.request = 2
+      }
       this.$axios.post('/checkin', this.data)
       .then( response => {
         this.$notify.success({
-          title: 'Berhasil',
-          message: response.data.message
-        });
-        // this.$router.push('/admin/beranda')
-        this.$store.dispatch('checkin/getAll', {
-          showall: 1,
-          company_id: this.company_id
-        });
-        this.$axios.get(`/check?employee_id=${this.employee_id}`)
-        .then( response => {
-          this.$notify.success({
-            title: 'Check',
-            message: response.data.message
-          });
-          this.status = response.data.data
-        })
-      })
-      .catch(e => {
-        console.log(e.response.data.message);
-        this.$notify.error({
-          title: 'Error',
-          message: e.response.data.message
-        });
-      }).finally(() => {
-        this.showLoading = false;
-      });
-    },
-    checkout() {
-      this.showLoading = true
-      this.data.request = 2
-      this.$axios.post('/checkout', this.data)
-      .then( response => {
-        this.$notify({
           title: 'Berhasil',
           message: response.data.message
         });
@@ -308,18 +308,18 @@ export default {
         this.showLoading = false;
       });
     },
-    checkoff()
+    checkout(type = 'checkout')
     {
       this.$notify.error({
         title: 'Gagal',
-        message: 'Anda sudah checkout hari ini'
+        message: `Anda ${type == 'dayoff' ? 'Tidak ada Schedule' : 'Sudah Checkout'} Hari Ini`
       })
     },
     updateCurrentTime() {
       this.currentTime = moment().format("LTS");
     },
     formatTime(time){
-      return moment(String(time)).format('hh:mm');
+      return moment(String(time)).format('HH:mm');
     }
   },
   created() {
