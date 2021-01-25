@@ -100,42 +100,38 @@
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
-              <!-- <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
+              <template #tbody>
+                <vs-tr :key="i" v-for="(tr, i) in getEmployees.data" :data="tr">
+                  <vs-td>
+                    {{ i }}
+                  </vs-td>
                   <vs-td>
                     {{ tr.name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.nip }}
+                    {{  }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.positions.name }}
+                    {{  }}
                   </vs-td>
                   <vs-td>
-                    <span class="badge badge-success" v-if="tr.status">Aktif</span>
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
+                    {{  }}
                   </vs-td>
                   <vs-td>
-                    <el-tooltip content="Edit" placement="top-start" effect="dark">
-                      <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
-                    </el-tooltip>
-                    <el-tooltip content="Delete" placement="top-start" effect="dark">
-                      <el-button size="mini" type="primary" icon="fa fa-trash">
-                      </el-button>
-                    </el-tooltip>
+                    {{  }}
                   </vs-td>
                 </vs-tr>
               </template>
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{getGoverments.total}} Data</small>
+                    <small>Total : {{getEmployees.total}} Data</small>
                   </vs-col>
                   <vs-col w="10">
-                    <vs-pagination v-model="page" :length="Math.ceil(getGoverments.total / table.max)" />
+                    <vs-pagination v-model="page" :length="Math.ceil(getEmployees.total / table.max)" />
                   </vs-col>
                 </vs-row>
-              </template> -->
+              </template>
             </vs-table>
           </el-card>
         </div>
@@ -370,7 +366,10 @@ export default {
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id))
-    this.$store.dispatch('employee/getAll', {company_id: this.company_id});
+    this.$store.dispatch('employee/getAll', {company_id: this.company_id})
+    this.$axios.get(`/employees?company_id=${this.company_id}`).then(resp =>{
+      console.log(resp)
+    })
   },
   methods: {
     // searchData() {
@@ -408,23 +407,23 @@ export default {
     //   // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
     //   this.form = form;
     // },
-    resetForm() {
-      this.form = {
-        judul: "",
-        deskripsi: "",
-        evidences: [],
-        tgl_mulai: "",
-        tgl_selesai: "",
-        pelaksana_kegiatan: "",
-        tautan: "",
-        kategori_kegiatan: "",
-        sumber_pembiayaan: "",
-        segmen_kegiatan: "",
-        tempat_kegiatan: "",
-        aktif: true,
-        kandungan_pancasila: "",
-      };
-    },
+    // resetForm() {
+    //   this.form = {
+    //     judul: "",
+    //     deskripsi: "",
+    //     evidences: [],
+    //     tgl_mulai: "",
+    //     tgl_selesai: "",
+    //     pelaksana_kegiatan: "",
+    //     tautan: "",
+    //     kategori_kegiatan: "",
+    //     sumber_pembiayaan: "",
+    //     segmen_kegiatan: "",
+    //     tempat_kegiatan: "",
+    //     aktif: true,
+    //     kandungan_pancasila: "",
+    //   };
+    // },
     // handleCurrentChange(val) {
     //   this.page = val;
     // },
@@ -518,7 +517,8 @@ export default {
     // ...mapGetters("setting", ["getSetting"]),
     // ...mapGetters("goverment", ["getGovermentPlains"]),
     ...mapGetters("employee", [
-      "getEmployees"
+      "getEmployees",
+      "getLoader"
     ]),
   },
   watch: {

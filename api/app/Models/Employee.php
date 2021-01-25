@@ -12,12 +12,12 @@ class Employee extends Model
 
     public function positions()
     {
-        return $this->belongsTo('App\Models\Positions');
+        return $this->belongsTo('App\Models\Position', 'position_id');
     }
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function checkins()

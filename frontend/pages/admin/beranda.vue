@@ -295,7 +295,7 @@ export default {
             title: 'Check',
             message: response.data.message
           });
-          this.status = response.data.data
+          this.status = response.data.data.status
         })
       })
       .catch(e => {

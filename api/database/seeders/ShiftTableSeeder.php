@@ -16,7 +16,7 @@ class ShiftTableSeeder extends Seeder
     {
         Shift::create([
             'company_id' => 1,
-            'name' => 'Weekday',
+            'shift_name' => 'Weekday',
             'code' => 'WD',
             'schedule_in' => '08:00:00',
             'schedule_out' => '16:00:00'
@@ -24,7 +24,7 @@ class ShiftTableSeeder extends Seeder
 
         Shift::create([
             'company_id' => 1,
-            'name' => 'Day Off',
+            'shift_name' => 'Day Off',
             'code' => 'DO',
             'schedule_in' => '00:00:00',
             'schedule_out' => '00:00:00'

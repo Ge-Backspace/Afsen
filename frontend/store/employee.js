@@ -2,23 +2,23 @@ export const state = () => ({
     employees: {
       email: '',
       data: [],
-      // total: 0,
-      // current_page: 1
+      total: 0,
+      current_page: 1
     },
-    // userLoader: false,
+    employeeLoader: false,
     // summary: {
     //     aktif: 0,
     //     non_aktif: 0
     // }
   })
-  
+
   export const mutations = {
     setEmployees(state, data) {
       state.employees.data = data
     },
-    // setLoader(state){
-    //     state.userLoader = !state.userLoader
-    // },
+    setLoader(state){
+        state.employeeLoader = !state.employeeLoader
+    },
     // setPage(state, data){
     //     state.users.current_page = data
     // },
@@ -26,28 +26,28 @@ export const state = () => ({
     //     state.summary = data
     // }
   }
-  
+
   export const getters = {
     getEmployees(state) {
          return state.employees
     },
-    // getLoader(state){
-    //     return state.userLoader
-    // },
+    getLoader(state){
+        return state.employeeLoader
+    },
     // getSummary(state){
     //     return state.summary
     // }
   };
-  
+
   export const actions = {
-    getAll(context, {company_id}){
-        // let page = defaultPage ? 1 : context.state.users.current_page
-        this.$axios.get(`/employees?company_id=${company_id}`).then(resp => {
-            context.commit('setEmployees', resp)
+    getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
+        let page = defaultPage ? 1 : context.state.employees.current_page
+        this.$axios.get(`/employees?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
+            context.commit('setEmployees', resp.data.data)
         }).catch(e => {
             console.log(e)
         }).finally(() => {
-            // context.commit("setLoader")
+            context.commit("setLoader")
         })
     },
     // getUserSummary(context){
@@ -60,4 +60,3 @@ export const state = () => ({
     //     })
     // }
   }
-  

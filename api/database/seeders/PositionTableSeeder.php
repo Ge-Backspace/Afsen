@@ -16,7 +16,7 @@ class PositionTableSeeder extends Seeder
     {
         Position::create([
             'company_id' => 1,
-            'name' => 'Position Test',
+            'position_name' => 'Position Test',
             'group' => 'Test'
         ]);
     }
