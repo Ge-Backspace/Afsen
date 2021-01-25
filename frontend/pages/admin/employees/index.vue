@@ -103,13 +103,13 @@
               <template #tbody>
                 <vs-tr :key="i" v-for="(tr, i) in getEmployees.data" :data="tr">
                   <vs-td>
-                    {{ i }}
+                    {{ i+1 }}
                   </vs-td>
                   <vs-td>
                     {{ tr.name }}
                   </vs-td>
                   <vs-td>
-                    {{  }}
+                    {{ tr.nip }}
                   </vs-td>
                   <vs-td>
                     {{  }}
@@ -518,7 +518,7 @@ export default {
     // ...mapGetters("goverment", ["getGovermentPlains"]),
     ...mapGetters("employee", [
       "getEmployees",
-      "getLoader"
+      // "getLoader"
     ]),
   },
   watch: {

@@ -97,7 +97,7 @@ export const  menu = () => {
                   route: '/admin/master/masterPosition'
                 },
                 {
-                    text: "Master Schedule",
+                    text: "Master Shift",
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterSchedule'
                 }

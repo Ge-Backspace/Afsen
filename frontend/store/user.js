@@ -2,8 +2,8 @@ export const state = () => ({
   user: {
     email: '',
     data: [],
-    // total: 0,
-    // current_page: 1
+    total: 0,
+    current_page: 1
   },
   // userLoader: false,
   // summary: {

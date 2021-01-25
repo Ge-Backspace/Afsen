@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Master Schedule</h1>
+          <h1 class="heading">Master Shift</h1>
         </div>
       </div>
     </div>
@@ -22,22 +22,26 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Hari</vs-th>
+                  <vs-th>Name</vs-th>
+                  <vs-th>Code</vs-th>
                   <vs-th>Schedule In</vs-th>
                   <vs-th>Schedule Out</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getSchedule.data" :data="tr">
+                <vs-tr :key="i" v-for="(tr, i) in getShifts.data" :data="tr">
                   <vs-td>
-                    {{ tr.hari }}
+                    {{ tr.shift_name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.schedule_in }}
+                    {{ tr.code }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.schedule_out }}
+                    {{ formatTime(tr.schedule_in) }}
+                  </vs-td>
+                  <vs-td>
+                    {{ formatTime(tr.schedule_out) }}
                   </vs-td>
                   <vs-td>
                     <el-tooltip content="Edit" placement="top-start" effect="dark">
@@ -54,10 +58,10 @@
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{getSchedule.total}} Data</small>
+                    <small>Total : {{getShifts.total}} Data</small>
                   </vs-col>
                   <vs-col w="10">
-                    <vs-pagination v-model="page" :length="Math.ceil(getSchedule.total / table.max)" />
+                    <vs-pagination v-model="page" :length="Math.ceil(getShifts.total / table.max)" />
                   </vs-col>
                 </vs-row>
               </template>
@@ -69,30 +73,30 @@
 
     <!-- Floating Button -->
     <el-tooltip class="item" effect="dark" content="Buat Schedule Baru" placement="top-start">
-      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Schedule'">
+      <a class="float" @click="shiftDialog = true; titleDialog = 'Tambah Shift'">
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
     <!-- End floating button -->
 
-    <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
+    <!-- <el-dialog :title="titleDialog" :visible.sync="shiftDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
       <el-form label-width="auto" ref="form" :model="form" size="mini">
         <el-form-item label="Hari">
           <el-input v-model="form.hari"></el-input>
         </el-form-item>
         <el-form-item label="Schedule In">
-          <el-time-picker v-model="form.schedule_in"></el-time-picker>
+          <el-time-picker v-model="form.schedule_out"></el-time-picker>
         </el-form-item>
         <el-form-item size="large">
           <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
           <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="tambahDialog = false">Batal</el-button>
+          <el-button @click="shiftDialog = false">Batal</el-button>
         </el-form-item>
       </el-form>
-    </el-dialog>
+    </el-dialog> -->
 
-    <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+    <vs-dialog v-model="shiftDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
       <template #header>
         <h1 class="not-margin">
@@ -103,15 +107,20 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Nama</label>
-            <vs-input type="text" v-model="form.name" placeholder="Nama"></vs-input>
+            <vs-input type="text" v-model="form.shift_name" placeholder="Nama"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Address</label>
-            <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
+            <label>Code</label>
+            <vs-input type="text" v-model="form.code" placeholder="Code"></vs-input>
           </vs-col>
-          <el-form-item label="Schedule In" >
-          <el-time-picker v-model="form.schedule_in"></el-time-picker>
-        </el-form-item>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Schedule_in</label>
+            <vs-input type="time" v-model="form.schedule_in" placeholder="Schedule_in"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Schedule_out</label>
+            <vs-input type="time" v-model="form.schedule_out" placeholder="Schedule_out"></vs-input>
+          </vs-col>
         </vs-row>
       </div>
 
@@ -123,7 +132,7 @@
               <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
             </vs-col>
             <vs-col w="6" style="padding:5px">
-              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
+              <vs-button block border @click="shiftDialog = false; resetForm()">Batal</vs-button>
             </vs-col>
           </vs-row>
           <div>&nbsp;</div>
@@ -151,75 +160,89 @@
     data() {
       return {
         api_url: config.baseApiUrl,
+        company_id: '',
         table: {
           max: 10
         },
         page: 1,
-        titleDialog: '',
+        titleDialog: 'Edit Company',
         search: '',
         company_id : JSON.parse(JSON.stringify(this.$auth.user.company_id)),
         isUpdate: false,
-        tambahDialog: false,
+        shiftDialog: false,
         btnLoader: false,
         form: {
           id: '',
-          hari: '',
-          urut: '',
+          shift_name: '',
+          code: '',
           schedule_in: '',
           schedule_out: '',
         }
       }
     },
     mounted() {
-      this.$store.dispatch('schedule/getAll', {
+      this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
+      this.$store.dispatch('shift/getAll', {
         company_id: this.company_id
       });
     },
     methods: {
-      searchData(){
-        this.$store.dispatch('schedule/getAll', {
-          search: this.search,
-          company_id: this.company_id
-        });
-      },
+      // searchData(){
+      //   this.$store.dispatch('schedule/getAll', {
+      //     search: this.search,
+      //     company_id: this.company_id
+      //   });
+      // },
       edit(data) {
+        // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
         this.form.id = data.id
-        this.tambahDialog = true
-        this.titleDialog = 'Edit Schedule'
+        this.form.shift_name = data.shift_name
+        this.form.code = data.code
+        this.form.schedule_in = data.schedule_in
+        this.form.schedule_out = data.schedule_out
+        this.shiftDialog = true
+        this.titleDialog = 'Edit Shift Data'
         this.isUpdate = true
       },
       resetForm() {
         this.form = {
-          name: '',
-          address: '',
+          id: '',
+          shift_name: '',
+          code: '',
+          schedule_in: '',
+          schedule_out: ''
         }
         this.isUpdate = false
       },
       handleCurrentChange(val) {
-        this.$store.commit('schedule/setPage', val)
-        this.$store.dispatch('schedule/getAll', {
+        this.$store.commit('shift/setPage', val)
+        this.$store.dispatch('shift/getAll', {
           company_id: this.company_id
         });
       },
       onSubmit(type = 'store') {
         this.btnLoader = true
         let formData = new FormData()
-        formData.append("name", this.form.name)
-        formData.append("address", this.form.address)
-        let url = "/schedule/store";
+        formData.append("id", this.form.id)
+        formData.append("company_id", this.company_id)
+        formData.append("shift_name", this.form.shift_name)
+        formData.append("code", this.form.code)
+        formData.append("schedule_in", this.form.schedule_in)
+        formData.append("schedule_out", this.form.schedule_out)
+        let url = "/shift";
         if (type == 'update') {
-          url = `/schedule/update/${this.form.id}`
+          url = `/shift/update/${this.form.id}`
         }
 
         this.$axios.post(url, formData).then(resp => {
           if (resp.data.success) {
             this.$notify.success({
               title: 'Success',
-              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Schedule`
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Shift`
             })
             this.resetForm()
-            this.tambahDialog = false
-            this.$store.dispatch('schedule/getAll', {
+            this.shiftDialog = false
+            this.$store.dispatch('shift/getAll', {
               company_id: this.company_id
             });
           }
@@ -239,24 +262,24 @@
       },
       deleteSchedule(id) {
         this.$swal({
-          title: 'Perhatian!',
-          text: "Apakah anda yakin ingin menghapus data ini?",
+          title: 'HEY WAIT!, HEY HOLD ON!',
+          text: "Are you serious to delete this cutie data ?",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya',
-          cancelButtonText: 'Batal'
+          confirmButtonText: 'Yes Yes Yes',
+          cancelButtonText: 'Yes but actually NO!'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/schedule/delete/${id}`).then(resp => {
+            this.$axios.delete(`/shift/delete/${id}`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',
                   message: 'Berhasil Menghapus Data'
                 })
-                this.tambahDialog = false
-                this.$store.dispatch('schedule/getAll', {
+                this.shiftDialog = false
+                this.$store.dispatch('shift/getAll', {
                   defaultPage: true,
                   company_id: this.company_id
                 });
@@ -271,29 +294,32 @@
             })
           }
         })
+      },
+      formatTime(time){
+        return moment(time, "HH:mm:ss").format('HH:mm');
       }
     },
     computed: {
-      ...mapGetters("schedule", [
-        'getSchedule',
+      ...mapGetters("shift", [
+        'getShifts',
         'getLoader'
       ])
     },
     watch: {
-      getSchedule(newValue, oldValue) {
+      // getSchedule(newValue, oldValue) {
 
-      },
-      search(newValue, oldValue) {
+      // },
+      // search(newValue, oldValue) {
         // this.$store.dispatch('goverment/getAll', {
         //   search: newValue
         // });
-      },
-      page(newValue, oldValue) {
-        this.$store.commit('schedule/setPage', newValue)
-        this.$store.dispatch('schedule/getAll', {
-          company_id: this.company_id
-        });
-      }
+      // },
+      // page(newValue, oldValue) {
+      //   this.$store.commit('schedule/setPage', newValue)
+      //   this.$store.dispatch('schedule/getAll', {
+      //     company_id: this.company_id
+      //   });
+      // }
     },
   }
 
