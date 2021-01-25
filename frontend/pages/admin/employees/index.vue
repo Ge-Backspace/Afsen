@@ -103,22 +103,29 @@
               <template #tbody>
                 <vs-tr :key="i" v-for="(tr, i) in getEmployees.data" :data="tr">
                   <vs-td>
-                    {{ i }}
+                    {{ i+1 }}
                   </vs-td>
                   <vs-td>
                     {{ tr.name }}
                   </vs-td>
                   <vs-td>
-                    {{  }}
+                    {{ tr.nip }}
                   </vs-td>
                   <vs-td>
-                    {{  }}
+                    {{ tr.positions_name }}
                   </vs-td>
                   <vs-td>
-                    {{  }}
+                    {{ tr.status }}
                   </vs-td>
                   <vs-td>
-                    {{  }}
+                    <el-tooltip content="Edit" placement="top-start" effect="dark">
+                      <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
+                    </el-tooltip>
+
+                    <el-tooltip content="Delete" placement="top-start" effect="dark">
+                      <el-button size="mini" type="primary" @click="deleteCompany(tr.id)" icon="fa fa-trash">
+                      </el-button>
+                    </el-tooltip>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -156,164 +163,40 @@
     </el-tooltip>
     <!-- End floating button-->
 
-    <vs-dialog
-      v-model="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
-    >
+    <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()">
       <template #header>
         <h1 class="not-margin">
-          {{ titleDialog }}
+          {{titleDialog}}
         </h1>
       </template>
       <div class="con-form">
         <vs-row>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Fullname</label>
-            <vs-input
-              type="text"
-              v-model="form.judul"
-              placeholder="Judul"
-            ></vs-input>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Nama</label>
+            <vs-input type="text" v-model="form.name" placeholder="Nama"></vs-input>
           </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>NIP</label>
-            <vs-input
-              type="text"
-              v-model="form.judul"
-              placeholder="Judul"
-            ></vs-input>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Nip</label>
+            <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
           </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Organization</label>
-            <vs-input
-              type="text"
-              v-model="form.tempat_kegiatan"
-              placeholder="Tempat Kegiatan"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Job Position</label>
-            <vs-select
-              filter
-              placeholder="Pelaksana Kegiatan"
-              v-model="form.pelaksana_kegiatan"
-            >
-            </vs-select>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Status Employee</label>
-            <vs-select
-              filter
-              placeholder="Sumber Pembiayaan"
-              v-model="form.sumber_pembiayaan"
-            >
-            </vs-select>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Email</label>
-            <vs-input
-              type="text"
-              v-model="form.tempat_kegiatan"
-              placeholder="Tempat Kegiatan"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Unit Kerja</label>
-            <vs-input
-              type="text"
-              v-model="form.tempat_kegiatan"
-              placeholder="Tempat Kegiatan"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Phone Number</label>
-            <vs-input
-              type="text"
-              v-model="form.judul"
-              placeholder="Judul"
-            ></vs-input>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Nip</label>
+            <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
           </vs-col>
         </vs-row>
       </div>
 
+
       <template #footer>
         <div class="footer-dialog">
           <vs-row>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('update')"
-                v-if="isUpdate"
-                >Update</vs-button
-              >
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('store')"
-                v-else
-                >Simpan</vs-button
-              >
+            <vs-col w="6" style="padding:5px">
+              <vs-button block :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</vs-button>
+              <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
             </vs-col>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                border
-                @click="
-                  tambahDialog = false;
-                  resetForm();
-                "
-                >Batal</vs-button
-              >
+            <vs-col w="6" style="padding:5px">
+              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
             </vs-col>
           </vs-row>
           <div>&nbsp;</div>
@@ -345,19 +228,10 @@ export default {
       isUpdate: false,
       btnLoader: false,
       form: {
-        judul: "",
-        deskripsi: "",
-        evidences: [],
-        tgl_mulai: "",
-        tgl_selesai: "",
-        pelaksana_kegiatan: "",
-        tautan: "",
-        kategori_kegiatan: "",
-        sumber_pembiayaan: "",
-        segmen_kegiatan: "",
-        tempat_kegiatan: "",
-        aktif: true,
-        kandungan_pancasila: "",
+        name: '',
+        nip: '',
+        position_name: '',
+        status: '',
       },
       active:'',
       searchDate: ["", ""],
@@ -372,145 +246,97 @@ export default {
     })
   },
   methods: {
-    // searchData() {
-    //   let start_date = "";
-    //   let end_date = "";
-    //   if (this.searchDate) {
-    //     start_date = this.searchDate[0];
-    //     end_date = this.searchDate[1];
-    //   }
-    //   this.$store.dispatch("lapor/getAll", {
-    //     search: this.search,
-    //     start_date: start_date,
-    //     end_date: end_date,
-    //     goverment: this.searchGoverment,
-    //   });
-    // },
-    // detailLaporan(data) {
-    //   this.$store.commit("lapor/setLaporan", data);
-    //   this.$router.push("/admin/lapor/detail");
-    // },
-    // edit(data) {
-    //   let form = JSON.parse(JSON.stringify(data));
-    //   this.tambahDialog = true;
-    //   this.titleDialog = "Edit Laporan";
-    //   this.isUpdate = true;
-
-    //   form.tgl_mulai = this.$moment(
-    //     form.tgl_mulai,
-    //     "DD-MM-YYYY hh:mm:ss"
-    //   ).format("YYYY-MM-DD");
-    //   form.tgl_selesai = this.$moment(
-    //     form.tgl_selesai,
-    //     "DD-MM-YYYY hh:mm:ss"
-    //   ).format("YYYY-MM-DD");
-    //   // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
-    //   this.form = form;
-    // },
-    // resetForm() {
-    //   this.form = {
-    //     judul: "",
-    //     deskripsi: "",
-    //     evidences: [],
-    //     tgl_mulai: "",
-    //     tgl_selesai: "",
-    //     pelaksana_kegiatan: "",
-    //     tautan: "",
-    //     kategori_kegiatan: "",
-    //     sumber_pembiayaan: "",
-    //     segmen_kegiatan: "",
-    //     tempat_kegiatan: "",
-    //     aktif: true,
-    //     kandungan_pancasila: "",
-    //   };
-    // },
-    // handleCurrentChange(val) {
-    //   this.page = val;
-    // },
-    // onSubmit(type = "store") {
-    //   this.btnLoader = true;
-    //   let url = "/lapor/store";
-    //   if (type == "update") {
-    //     url = `/lapor/${this.form.id}/update`;
-    //   }
-    //   let pancasila = "";
-    //   if (Array.isArray(this.form.kandungan_pancasila)) {
-    //     this.form.kandungan_pancasila.forEach((e) => {
-    //       if (e !== "") {
-    //         pancasila += pancasila == "" ? e : "," + e;
-    //       }
-    //     });
-    //   }
-    //   this.form.kandungan_pancasila =
-    //     pancasila !== "" ? pancasila : this.form.kandungan_pancasila;
-    //   this.$axios
-    //     .post(url, this.form)
-    //     .then((resp) => {
-    //       if (resp.data.success) {
-    //         this.$notify.success({
-    //           title: "Success",
-    //           message: `Berhasil ${
-    //             type == "store" ? "Menambah" : "Mengubah"
-    //           } Laporan`,
-    //         });
-    //         this.tambahDialog = false;
-    //         this.resetForm();
-    //         this.$store.dispatch("lapor/getAll", {});
-    //       }
-    //     })
-    //     .finally(() => {
-    //       this.btnLoader = false;
-    //     })
-    //     .catch((err) => {
-    //       let error = err.response.data.data;
-    //       if (error) {
-    //         this.showErrorField(error);
-    //       } else {
-    //         this.$notify.error({
-    //           title: "Error",
-    //           message: err.response.data.message,
-    //         });
-    //       }
-    //     });
-    // },
-    // deleteLaporan(id) {
-    //   this.$swal({
-    //     title: "Perhatian!",
-    //     text: "Apakah anda yakin ingin menghapus data ini?",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Ya",
-    //     cancelButtonText: "Batal",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       this.$axios
-    //         .delete(`/lapor/${id}/delete`)
-    //         .then((resp) => {
-    //           if (resp.data.success) {
-    //             this.$notify.success({
-    //               title: "Success",
-    //               message: "Berhasil Menghapus Data",
-    //             });
-    //             this.tambahDialog = false;
-    //             this.$store.dispatch("lapor/getAll", {
-    //               defaultPage: true,
-    //             });
-    //           }
-    //         })
-    //         .finally(() => {
-    //           //
-    //         })
-    //         .catch((err) => {
-    //           this.$notify.error({
-    //             title: "Error",
-    //             message: err.response.data.message,
-    //           });
-    //         });
-    //     }
-    //   });
-    // },
+    searchData(){
+        this.$store.dispatch('employee/getAll', {
+          search: this.search
+        });
+      },
+      edit(data) {
+        this.form.id = data.id
+        this.form.name = data.name
+        this.form.address = data.address
+        this.tambahDialog = true
+        this.titleDialog = 'Edit Employee'
+        this.isUpdate = true
+      },
+      resetForm() {
+        this.form = {
+          name: '',
+          address: '',
+        }
+        this.isUpdate = false
+      },
+      handleCurrentChange(val) {
+        this.$store.commit('company/setPage', val)
+        this.$store.dispatch('company/getAll', {});
+      },
+      onSubmit(type = 'store') {
+        this.btnLoader = true
+        let formData = new FormData()
+        formData.append("name", this.form.name)
+        formData.append("address", this.form.address)
+        let url = "/company/store";
+        if (type == 'update') {
+          url = `/company/update/${this.form.id}`
+        }
+        this.$axios.post(url, formData).then(resp => {
+          if (resp.data.success) {
+            this.$notify.success({
+              title: 'Success',
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Company`
+            })
+            this.resetForm()
+            this.tambahDialog = false
+            this.$store.dispatch('company/getAll', {});
+          }
+        }).finally(() => {
+          this.btnLoader = false
+        }).catch(err => {
+          let error = err.response.data.data
+          if (error) {
+            this.showErrorField(error)
+          } else {
+            this.$notify.error({
+              title: 'Error',
+              message: err.response.data.message
+            })
+          }
+        })
+      },
+      deleteCompany(id) {
+        this.$swal({
+          title: 'Perhatian!',
+          text: "Apakah anda yakin ingin menghapus data ini?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.$axios.delete(`/company/delete/${id}`).then(resp => {
+              if (resp.data.success) {
+                this.$notify.success({
+                  title: 'Success',
+                  message: 'Berhasil Menghapus Data'
+                })
+                this.tambahDialog = false
+                this.$store.dispatch('company/getAll', {
+                  defaultPage: true
+                });
+              }
+            }).finally(() => {
+              //
+            }).catch(err => {
+              this.$notify.error({
+                title: 'Error',
+                message: err.response.data.message
+              })
+            })
+          }
+        })
+      }
   },
   computed: {
     // ...mapGetters("lapor", ["getLapors", "getLoader"]),
