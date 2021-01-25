@@ -5,8 +5,9 @@ namespace App\Imports;
 use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ProductsImport implements ToModel
+class ProductsImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -17,11 +18,11 @@ class ProductsImport implements ToModel
     {
         return new Product([
             //
-            'title' => $row[0],
-            'slug' => Str::slug($row[0]),
-            'description' => $row[1],
-            'price' => $row[2],
-            'stock' => $row[3]
+            'title' => $row['title'],
+            'slug' => str::slug($row['title']),
+            'description' => $row['description'],
+            'price' => $row['price'],
+            'stock' => $row['stock']
         ]);
     }
 }

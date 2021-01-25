@@ -139,4 +139,5 @@ foreach($routers as $requiredRouter){
 
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
+
 return $app;
