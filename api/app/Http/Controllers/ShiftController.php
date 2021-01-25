@@ -11,7 +11,7 @@ class ShiftController extends Controller
 {
     public function getCompanyShift(Request $request)
     {
-        return $this->getPaginate(Shift::query()->where('company_id', $request->company_id), $request,['name', 'code']);
+        return $this->getPaginate(Shift::query()->where('company_id', $request->company_id), $request,['shift_name', 'code']);
     }
 
     public function addShift(Request $request)

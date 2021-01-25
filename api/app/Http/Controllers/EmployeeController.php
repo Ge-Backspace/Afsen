@@ -24,7 +24,7 @@ class EmployeeController extends Controller
             ->join('positions AS p', 'employees.user_id', '=', 'p.id')
             ->where('u.company_id', $request->company_id)
             , $request, [
-                'employees.name'
+                'employees.name', 'p.position_name'
             ]);
 
         // Example
