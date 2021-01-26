@@ -178,11 +178,15 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Nip</label>
-            <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
+            <vs-input type="text" v-model="form.nip" placeholder="Address"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Nip</label>
-            <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
+            <label>Position</label>
+            <vs-input type="text" v-model="form.position_id" placeholder="Address"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Status</label>
+            <vs-input type="text" v-model="form.status" placeholder="Address"></vs-input>
           </vs-col>
         </vs-row>
       </div>
