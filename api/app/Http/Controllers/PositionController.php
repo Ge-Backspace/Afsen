@@ -18,7 +18,7 @@ class PositionController extends Controller
     {
         $position = Position::where('company_id', $request->company_id);
         return $this->getPaginate($position,$request,[
-            'name'
+            'position_name'
         ]);
         return $this->resp($position);
     }
@@ -31,10 +31,11 @@ class PositionController extends Controller
      */
     public function addPosition(Request $request)
     {
-        $input = $request->only('company_id','name');
+        $input = $request->only('company_id', 'position_name', 'group');
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'name' => 'required|string'
+            'position_name' => 'required|string',
+            'group' => 'required|string'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Position', false, 401);
@@ -50,21 +51,26 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updatePosition(Request $request, $id)
     {
         $position = Position::find($id);
         if (!$position) {
             return $this->resp(null, 'Position tidak ditemukan', false, 406);
         }
-        $input = $request->only('company_id', 'name');
+        $input = $request->only(['company_id', 'position_name', 'group']);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'name' => 'required|string'
+            'position_name' => 'required|string',
+            'group' => 'required|string'
         ], Helper::messageValidation());
         if ($validator->fails()) {
-            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Edit Position', false, 401);
+            return $this->resp([$input, Helper::generateErrorMsg($validator->errors()->getMessages())], 'Failed Edit Position', false, 406);
         }
-        $editPosition = $position->update($input);
+        $update = [
+            'position_name' => $input['position_name'],
+            'group' => $input['group']
+        ];
+        $editPosition = $position->update($update);
         return $this->resp($editPosition);
     }
 
@@ -74,7 +80,7 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deletePosition($id)
     {
         $position = Position::find($id);
         if (!$position) {

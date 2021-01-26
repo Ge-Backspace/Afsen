@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
@@ -16,8 +20,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->getPaginate(User::with('companies'), $request, [
-            'name'
+        return $this->getPaginate(User::join('companies', 'users.company_id', '=', 'companies.id')
+        ->join('employees', 'users.id', '=', 'employees.user_id')
+        ->where('companies.id', $request->company_id)
+        , $request, [
+            'username', 'email', 'employees.name'
         ]);
     }
 
@@ -45,32 +52,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $username = $request->username;
-        $email = $request->email;
-        $password = Hash::make($request->password);
-        $company_id = $request->company_id;
-
-        $check_account = User::where('email', $email)->orWhere('username', $username)->first();
-
-        if($check_account){
-            return $this->resp(null, 'Username Atau Email Sudah Ada', false, 406);
-        }else{
-            $user = User::create([
-                'name' => $name,
-                'username' => $username,
-                'email' => $email,
-                'password' => $password,
-                'company_id' => $company_id
-            ]);
-
-            if(!$user){
-                return $this->resp(null, 'Gagal Menambahkan Akun', false, 406);
-            }else{
-                return $this->resp($user);
-            }
+        $input = $request->only([
+            'name', 'username', 'email', 'password', 'company_id'
+        ]);
+        $validator = Validator::make($input, [
+            'name' => 'required|string',
+            'username' => 'required|string|min:5',
+            'email' => 'required|string',
+            'password' => 'required',
+            'company_id' => 'required'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
         }
-
+        $password = Hash::make($input['password']);
+        Arr::set($input, 'password', $password);
+        $emailCheck = User::where('email', $input['email'])->first();
+        $usernameCheck = User::where('username', $input['username'])->first();
+        if($emailCheck) {
+            return $this->resp(null, 'Email Sudah Digunakan', false, 406);
+        } else if($usernameCheck) {
+            return $this->resp(null, 'Username Sudah Digunakan', false, 406);
+        } else {
+            $user = User::create($input);
+            $employee = Employee::create([
+                'user_id' => $user->id,
+                'name' => $input['name']
+            ]);
+            return $this->resp([$user, $employee]);
+        }
     }
 
     /**
@@ -112,21 +122,24 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $name = $request->name;
-        $username = $request->username;
-        $check_user = User::find($id);
-
-        $check_account = User::where('username', $username)->first();
-
-        if($check_account){
-            return $this->resp(null, 'Username Sudah Ada', false, 400);
-        }else{
-            $check_user->update([
-                'name' => $name,
-                'username' => $username
-            ]);
-            return $this->resp($check_user);
+        $user = User::find($id);
+        if (!$user) {
+            return $this->resp(null, 'User Tidak Ditemukan', false, 406);
         }
+        $input = $request->only([
+            'username', 'email', 'admin', 'aktif'
+        ]);
+        $validator = Validator::make($input, [
+            'username' => 'required|string',
+            'email' => 'required|string',
+            'admin' => 'required|numeric',
+            'aktif' => 'required|numeric'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
+        }
+        $update = $user->update($input);
+        return $this->resp($update);
     }
 
     /**
@@ -137,13 +150,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $delete_user = User::find($id);
-
-        if(!$delete_user){
-            return $this->resp(null, 'User Gagal Dihapus', false, 400);
-        }else{
-            $delete_user->delete();
-            return $this->resp(null, 'User Berhasil Dihapus');
+        $user = User::find($id);
+        if (!$user) {
+            return $this->resp(null, 'User Tidak Ditemukan', false, 406);
         }
+        $delete = $user->delete();
+        return $this->resp($delete);
     }
 }
