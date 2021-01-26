@@ -11,15 +11,18 @@ class ShiftController extends Controller
 {
     public function getCompanyShift(Request $request)
     {
-        return $this->getPaginate(Shift::query()->where('company_id', $request->company_id), $request,['shift_name', 'code']);
+        return $this->getPaginate(Shift::query()->where('company_id', $request->company_id), $request,['shift_name', 'code'],
+        $request,[
+            'shift_name'
+        ]);
     }
 
     public function addShift(Request $request)
     {
-        $input = $request->only('company_id', 'name', 'code', 'schedule_in', 'schedule_out');
+        $input = $request->only('company_id', 'shift_name', 'code', 'schedule_in', 'schedule_out');
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'name' => 'required',
+            'shift_name' => 'required',
             'code' => 'required',
             'schedule_in' => 'required',
             'schedule_out' => 'required'
@@ -31,17 +34,17 @@ class ShiftController extends Controller
         return $this->resp($addShift);
     }
 
-    public function editShift(Request $request, $id)
+    public function updateShift(Request $request, $id)
     {
         $shift = Shift::find($id);
         if(!$shift)
         {
             return $this->resp(null, 'Shift Tidak Ditemukan', false, 406);
         }
-        $input = $request->only('company_id', 'name', 'code', 'schedule_in', 'schedule_out');
+        $input = $request->only('company_id', 'shift_name', 'code', 'schedule_in', 'schedule_out');
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'name' => 'required',
+            'shift_name' => 'required',
             'code' => 'required',
             'schedule_in' => 'required',
             'schedule_out' => 'required'

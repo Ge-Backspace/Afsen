@@ -20,11 +20,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->getPaginate(User::join('companies', 'users.company_id', '=', 'companies.id')
-        ->join('employees', 'users.id', '=', 'employees.user_id')
-        ->where('companies.id', $request->company_id)
+        return $this->getPaginate(Employee::rightJoin('users', 'employees.user_id', '=', 'users.id')
+        ->orderBy('users.id', 'DESC')
         , $request, [
-            'username', 'email', 'employees.name'
+            'users.username', 'users.email', 'employees.name'
         ]);
     }
 
@@ -50,16 +49,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeUserEmployee(Request $request)
     {
         $input = $request->only([
-            'name', 'username', 'email', 'password', 'company_id'
+            'username', 'email', 'password', 'company_id', 'aktif', 'admin',
+            'name', 'nip', 'position_id', 'status', 'kontak',
         ]);
         $validator = Validator::make($input, [
-            'name' => 'required|string',
+            'name' => 'required|string|min:4|max:100',
             'username' => 'required|string|min:5',
             'email' => 'required|string',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'company_id' => 'required'
         ], Helper::messageValidation());
         if ($validator->fails()) {
@@ -74,12 +74,17 @@ class UserController extends Controller
         } else if($usernameCheck) {
             return $this->resp(null, 'Username Sudah Digunakan', false, 406);
         } else {
-            $user = User::create($input);
-            $employee = Employee::create([
-                'user_id' => $user->id,
-                'name' => $input['name']
+            $inputUser = $request->only([
+                'username', 'email', 'password', 'company_id', 'aktif', 'admin'
             ]);
-            return $this->resp([$user, $employee]);
+            $user = User::create($inputUser);
+            $inputEmployee = [
+                'user_id' => $user->id,
+                'name' => $input['name'],
+            ];
+            Arr::add($inputEmployee, 'user_id', $user->id);
+            $employee = Employee::create($inputEmployee);
+            return $this->resp([$inputEmployee, $employee]);
         }
     }
 
@@ -151,10 +156,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+        $employee = Employee::where('user_id', $user->id)->first();
         if (!$user) {
             return $this->resp(null, 'User Tidak Ditemukan', false, 406);
         }
-        $delete = $user->delete();
-        return $this->resp($delete);
+        $employee->delete();
+        $user->delete();
+        return $this->resp();
     }
 }
