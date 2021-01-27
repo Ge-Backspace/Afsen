@@ -52,8 +52,7 @@ class UserController extends Controller
     public function storeUserEmployee(Request $request)
     {
         $input = $request->only([
-            'username', 'email', 'password', 'company_id', 'aktif', 'admin',
-            'name', 'nip', 'position_id', 'status', 'kontak',
+            'username', 'email', 'password', 'company_id', 'aktif', 'admin', 'name'
         ]);
         $validator = Validator::make($input, [
             'name' => 'required|string|min:4|max:100',
@@ -65,8 +64,6 @@ class UserController extends Controller
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
         }
-        $password = Hash::make($input['password']);
-        Arr::set($input, 'password', $password);
         $emailCheck = User::where('email', $input['email'])->first();
         $usernameCheck = User::where('username', $input['username'])->first();
         if($emailCheck) {
@@ -77,6 +74,8 @@ class UserController extends Controller
             $inputUser = $request->only([
                 'username', 'email', 'password', 'company_id', 'aktif', 'admin'
             ]);
+            $password = Hash::make($input['password']);
+            Arr::set($inputUser, 'password', $password);
             $user = User::create($inputUser);
             $inputEmployee = [
                 'user_id' => $user->id,
@@ -84,7 +83,7 @@ class UserController extends Controller
             ];
             Arr::add($inputEmployee, 'user_id', $user->id);
             $employee = Employee::create($inputEmployee);
-            return $this->resp([$inputEmployee, $employee]);
+            return $this->resp([$input, $employee, $user]);
         }
     }
 

@@ -21,11 +21,11 @@ class EmployeeController extends Controller
     public function getEmployee(Request $request)
     {
         return $this->getPaginate(
-            Employee::join('users AS u', 'employees.user_id', '=', 'u.id')
-            ->join('positions AS p', 'employees.user_id', '=', 'p.id')
-            ->where('u.company_id', $request->company_id)
+            Employee::join('positions', 'employees.position_id', '=', 'positions.id')
+            ->join('users', 'employees.user_id', '=', 'users.id')
+            ->where('users.company_id', $request->company_id)
             , $request, [
-                'employees.name', 'p.position_name'
+                'employees.name', 'positions.position_name'
             ]);
 
         // Example
@@ -34,16 +34,10 @@ class EmployeeController extends Controller
         // where employees.company_id = 1
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function addEmployee(Request $request)
     {
         $input = $request->only([
-            'company_id', 'name', 'username', 'email', 'password', 'status'
+            'company_id', 'name', 'username', 'email', 'password', 'status', 'position_id', 'kontak',
         ]);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
@@ -69,18 +63,13 @@ class EmployeeController extends Controller
         $employee = Employee::create([
             'user_id' => $user->id,
             'name' => $input['name'],
-            'status' => $input['status']
+            'position_id' => $input['position_id'],
+            'status' => $input['status'],
+            'kontak' => $input['kontak']
         ]);
         return $this->resp([$user, $employee]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateEmployee(Request $request, $id)
     {
         $employee = Employee::find($id);
@@ -88,12 +77,13 @@ class EmployeeController extends Controller
         {
             return $this->resp(null, 'Employee Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['name', 'nip', 'position_id', 'status']);
+        $input = $request->only(['name', 'nip', 'position_id', 'kontak', 'status']);
         $validator = Validator::make($input, [
             'name' => 'required|string',
             'nip' => 'required|string',
             'position_id' => 'required|numeric',
-            'status' => 'required|boolean'
+            'status' => 'required|boolean',
+            'kontak' => 'required'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Update Employee', false, 401);
@@ -102,12 +92,6 @@ class EmployeeController extends Controller
         return $this->resp($editEmployee);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function deleteEmployee($id)
     {
         $employee = Employee::find($id);

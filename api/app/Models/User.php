@@ -12,11 +12,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject, CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, HasFactory, Notifiable, CanResetPassword;
-
+    use Authenticatable, Authorizable, HasFactory, Notifiable, CanResetPassword, SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
