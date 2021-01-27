@@ -4,8 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Reinbursement
-          </h1>
+          <h1 class="heading">Master Position</h1>
         </div>
       </div>
     </div>
@@ -23,25 +22,18 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>No</vs-th>
-                  <vs-th>Reinbursement Name</vs-th>
-                  <vs-th>Reinbursement Limit</vs-th>
-                  <vs-th>Expired In</vs-th>
-                  <vs-th>Effective Date</vs-th>
+                  <vs-th>Positions Name</vs-th>
+                  <vs-th>Group</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
-                <!-- <vs-tr :key="i" v-for="(tr, i) in getGoverments.data" :data="tr">
-                  <vs-td class="text-center">
-                    <img :src="tr.foto_url" alt="" height="30" width="auto">
+                <vs-tr :key="i" v-for="(tr, i) in getPositions.data" :data="tr">
+                  <vs-td>
+                    {{ tr.position_name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.nama }}
-                  </vs-td>
-                  <vs-td>
-                    <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
+                    {{ tr.group }}
                   </vs-td>
                   <vs-td>
                     <el-tooltip content="Edit" placement="top-start" effect="dark">
@@ -49,19 +41,19 @@
                     </el-tooltip>
 
                     <el-tooltip content="Delete" placement="top-start" effect="dark">
-                      <el-button size="mini" type="primary" @click="deleteGoverment(tr.id)" icon="fa fa-trash">
+                      <el-button size="mini" type="primary" @click="deletePosition(tr.id)" icon="fa fa-trash">
                       </el-button>
                     </el-tooltip>
                   </vs-td>
-                </vs-tr> -->
+                </vs-tr>
               </template>
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{getGoverments.total}} Data</small>
+                    <small>Total : {{getPositions.total}} Data</small>
                   </vs-col>
                   <vs-col w="10">
-                    <vs-pagination v-model="page" :length="Math.ceil(getGoverments.total / table.max)" />
+                    <vs-pagination v-model="page" :length="Math.ceil(getPositions.total / table.max)" />
                   </vs-col>
                 </vs-row>
               </template>
@@ -72,37 +64,31 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Tambah Reinbursment" placement="top-start">
-      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
+    <el-tooltip class="item" effect="dark" content="Add New Position" placement="top-start">
+      <a class="float" @click="positionDialog = true; titleDialog = 'Add Position'">
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
-    <!-- End floating button-->
+    <!-- End floating button -->
 
-    <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
+    <!-- <el-dialog :title="titleDialog" :visible.sync="shiftDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
       <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Nama Kementrian">
-          <el-input v-model="form.nama"></el-input>
+        <el-form-item label="Hari">
+          <el-input v-model="form.hari"></el-input>
         </el-form-item>
-        <el-form-item label="Logo">
-          <el-upload action="/" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="files" :limit="1">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="Aktif">
-          <el-switch v-model="form.aktif" color="danger"></el-switch>
+        <el-form-item label="Schedule In">
+          <el-time-picker v-model="form.schedule_out"></el-time-picker>
         </el-form-item>
         <el-form-item size="large">
           <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
           <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="tambahDialog = false">Batal</el-button>
+          <el-button @click="shiftDialog = false">Batal</el-button>
         </el-form-item>
       </el-form>
     </el-dialog> -->
 
-    <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+    <vs-dialog v-model="positionDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
       <template #header>
         <h1 class="not-margin">
@@ -112,20 +98,12 @@
       <div class="con-form">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Reinbursement</label>
-            <vs-input type="text" v-model="form.nama" placeholder="Reinburstment Name"></vs-input>
+            <label>Nama</label>
+            <vs-input type="text" v-model="form.position_name" placeholder="Position Name"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Limit</label>
-            <vs-input type="text" v-model="form.nama" placeholder="Reinbursement Limit"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Effective Date</label>
-            <vs-input type="date" v-model="form.nama" placeholder="Effective Date"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Expired Date</label>
-            <vs-input type="date" v-model="form.nama" placeholder="Expired Date"></vs-input>
+            <label>Code</label>
+            <vs-input type="text" v-model="form.group" placeholder="Group"></vs-input>
           </vs-col>
         </vs-row>
       </div>
@@ -138,7 +116,7 @@
               <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
             </vs-col>
             <vs-col w="6" style="padding:5px">
-              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
+              <vs-button block border @click="positionDialog = false; resetForm()">Batal</vs-button>
             </vs-col>
           </vs-row>
           <div>&nbsp;</div>
@@ -166,79 +144,83 @@
     data() {
       return {
         api_url: config.baseApiUrl,
+        company_id: '',
         table: {
           max: 10
         },
         page: 1,
-        titleDialog: 'Tambah Pemda',
+        titleDialog: 'Edit Position',
         search: '',
+        company_id : JSON.parse(JSON.stringify(this.$auth.user.company_id)),
         isUpdate: false,
-        tambahDialog: false,
+        positionDialog: false,
         btnLoader: false,
-        files: [],
         form: {
-          nama: '',
-          foto: null,
-          aktif: true
+          id: '',
+          position_name: '',
+          group: '',
         }
       }
     },
     mounted() {
-      this.$store.dispatch('goverment/getAll', {});
+      this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
+      this.$store.dispatch('position/getAll', {
+        company_id: this.company_id
+      });
     },
     methods: {
-      searchData(){
-        this.$store.dispatch('goverment/getAll', {
-          search: this.search
-        });
-      },
+      // searchData(){
+      //   this.$store.dispatch('schedule/getAll', {
+      //     search: this.search,
+      //     company_id: this.company_id
+      //   });
+      // },
       edit(data) {
-        this.form.nama = data.nama
+        // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
         this.form.id = data.id
-        this.form.aktif = data.aktif
-        this.files.push({
-          name: '',
-          url: data.foto_url
-        })
-        this.tambahDialog = true
-        this.titleDialog = 'Edit Pemerintah Daerah'
+        this.form.position_name = data.position_name
+        this.form.group = data.group
+        this.positionDialog = true
+        this.titleDialog = 'Edit Position Data'
         this.isUpdate = true
       },
       resetForm() {
         this.form = {
-          nama: '',
-          foto: null,
-          aktif: true
+          id: '',
+          position_name: '',
+          group: '',
         }
-        this.files = [];
         this.isUpdate = false
       },
       handleCurrentChange(val) {
-        this.$store.commit('goverment/setPage', val)
-        this.$store.dispatch('goverment/getAll', {});
+        this.$store.commit('position/setPage', val)
+        this.$store.dispatch('position/getAll', {
+          company_id: this.company_id
+        });
       },
       onSubmit(type = 'store') {
         this.btnLoader = true
         let formData = new FormData()
-        formData.append("nama", this.form.nama)
-        formData.append("aktif", this.form.aktif ? 1 : 0)
-        if (this.form.foto !== null) {
-          formData.append("foto", this.form.foto)
-        }
-        let url = "/goverment/store";
+        // formData.append("id", this.form.id)
+        formData.append("company_id", this.company_id)
+        formData.append("position_name", this.form.position_name)
+        formData.append("group", this.form.group)
+        let url = "/position";
         if (type == 'update') {
-          url = `/goverment/${this.form.id}/update`
+          url = `/position/${this.form.id}`
         }
 
         this.$axios.post(url, formData).then(resp => {
           if (resp.data.success) {
             this.$notify.success({
               title: 'Success',
-              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Goverment`
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Position`
             })
             this.resetForm()
-            this.tambahDialog = false
-            this.$store.dispatch('goverment/getAll', {});
+            this.positionDialog = false
+            this.$store.dispatch('position/getAll', {
+              company_id: this.company_id
+            });
           }
         }).finally(() => {
           this.btnLoader = false
@@ -254,30 +236,28 @@
           }
         })
       },
-      handleChangeFile(file, fileList) {
-        this.form.foto = file.raw
-      },
-      deleteGoverment(id) {
+      deletePosition(id) {
         this.$swal({
-          title: 'Perhatian!',
-          text: "Apakah anda yakin ingin menghapus data ini?",
+          title: 'HEY WAIT!, HEY HOLD ON!',
+          text: "Are you serious to delete this cutie data ?",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Ya',
-          cancelButtonText: 'Batal'
+          confirmButtonText: 'Yes Yes Yes',
+          cancelButtonText: 'Yes but actually NO!'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/goverment/${id}/delete`).then(resp => {
+            this.$axios.delete(`/position/${id}`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',
                   message: 'Berhasil Menghapus Data'
                 })
-                this.tambahDialog = false
-                this.$store.dispatch('goverment/getAll', {
-                  defaultPage: true
+                this.shiftDialog = false
+                this.$store.dispatch('position/getAll', {
+                  defaultPage: true,
+                  company_id: this.company_id
                 });
               }
             }).finally(() => {
@@ -290,27 +270,32 @@
             })
           }
         })
-      }
+      },
+      // formatTime(time){
+      //   return moment(time, "HH:mm:ss").format('HH:mm');
+      // }
     },
     computed: {
-      ...mapGetters("goverment", [
-        'getGoverments',
+      ...mapGetters("position", [
+        'getPositions',
         'getLoader'
       ])
     },
     watch: {
-      getGoverments(newValue, oldValue) {
+      // getSchedule(newValue, oldValue) {
 
-      },
-      search(newValue, oldValue) {
+      // },
+      // search(newValue, oldValue) {
         // this.$store.dispatch('goverment/getAll', {
         //   search: newValue
         // });
-      },
-      page(newValue, oldValue) {
-        this.$store.commit('goverment/setPage', newValue)
-        this.$store.dispatch('goverment/getAll', {});
-      }
+      // },
+      // page(newValue, oldValue) {
+      //   this.$store.commit('schedule/setPage', newValue)
+      //   this.$store.dispatch('schedule/getAll', {
+      //     company_id: this.company_id
+      //   });
+      // }
     },
   }
 
