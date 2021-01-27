@@ -2,18 +2,18 @@
 export const  menu = () => {
     return [
         {
-            text: 'Dashboard',
+            text: 'Home',
             icon: 'ni ni-shop text-primary',
             route: '/admin/beranda',
         },
-        {
-            text: 'Employees',
-            icon: 'el-icon-notebook-1 text-primary',
-            route: '/admin/employees'
-        },
+        // {
+        //     text: 'Employees',
+        //     icon: 'el-icon-notebook-1 text-primary',
+        //     route: '/admin/employees'
+        // },
         {
             text: 'Time Management',
-            icon: 'el-icon-baseball text-primary',
+            icon: 'el-icon-time text-primary',
             // route: '/admin/kegiatan',
             children: [
                 {
@@ -25,11 +25,6 @@ export const  menu = () => {
                     text: "Attendance",
                     icon: 'el-icon-postcard',
                     route: '/admin/time_management/attendance'
-                },
-                {
-                    text: "Schedule",
-                    icon: 'el-icon-postcard',
-                    route: '/admin/time_management/schedule'
                 },
                 {
                     text: "Calendar",
@@ -44,63 +39,85 @@ export const  menu = () => {
 
             ]
         },
+        // {
+        //     text: 'Finances',
+        //     icon: 'el-icon-tickets text-primary',
+        //     // route: '/admin/berita',
+        //     children: [
+        //         {
+        //             text: "Reimbursement",
+        //             icon: 'el-icon-postcard',
+        //             route: '/admin/finances/reimbursement'
+        //         },
+        //         {
+        //             text: "Cash Advance Request",
+        //             icon: 'el-icon-postcard',
+        //             route: '/admin/finances/cash'
+        //         },
+        //         {
+        //           text: "Loan",
+        //           icon: 'el-icon-postcard',
+        //           route: '/admin/finances/loan'
+        //       },
+        //     ]
+        // },
+        // {
+        //     text: 'Company',
+        //     icon: 'el-icon-warning-outline text-primary',
+        //     route: '/admin/company'
+        // },
         {
-            text: 'Finances',
-            icon: 'el-icon-tickets text-primary',
-            // route: '/admin/berita',
-            children: [
-                {
-                    text: "Reimbursement",
-                    icon: 'el-icon-postcard',
-                    route: '/admin/finances/reimbursement'
-                },
-                {
-                    text: "Cash Advance Request",
-                    icon: 'el-icon-postcard',
-                    route: '/admin/finances/cash'
-                },
-                {
-                  text: "Loan",
-                  icon: 'el-icon-postcard',
-                  route: '/admin/finances/loan'
-              },
-            ]
+            text: 'Shift',
+            icon: 'bx bx-shuffle text-primary',
+            route: '/admin/shift'
         },
         {
-            text: 'Company',
-            icon: 'el-icon-warning-outline text-primary',
-            route: '/admin/company'
+            text: 'Permission',
+            icon: 'bx bx-question-mark text-primary',
+            route: '/admin/permission'
         },
         {
-            text: 'Notifikasi',
-            icon: 'ni ni-email-83 text-primary',
-            route: '/admin/notifikasi'
+            text: 'Salary',
+            icon: 'bx bx-money text-primary',
+            route: '/admin/salary'
+        },
+        {
+            text: 'Report',
+            icon: 'el-icon-document text-primary',
+            route: '/admin/report'
         },
         {
             text: 'Master',
-            icon: 'el-icon-tickets text-primary',
+            icon: 'bx bx-data',
             // route: '/admin/berita',
             children: [
-                {
-                    text: "Master User",
-                    icon: 'el-icon-postcard',
-                    route: '/admin/master/masterUser'
-                },
                 {
                     text: "Master Companies",
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterCompanies'
                 },
                 {
-                  text: "Master Position",
-                  icon: 'el-icon-postcard',
-                  route: '/admin/master/masterPosition'
+                    text: "Master Employee",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/master/masterEmployee'
+                },
+                {
+                    text: "Master Position",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/master/masterPosition'
                 },
                 {
                     text: "Master Shift",
                     icon: 'el-icon-postcard',
-                    route: '/admin/master/masterSchedule'
-                }
+                    route: '/admin/master/masterShift'
+                },
+                {
+                    text: "Master User",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/master/masterUser'
+                },
+                
+
             ]
         },
         // {

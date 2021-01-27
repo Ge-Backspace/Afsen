@@ -21,7 +21,10 @@ const _db511c16 = () => interopDefault(import('..\\pages\\admin\\employees\\inde
 const _9fedcf54 = () => interopDefault(import('..\\pages\\admin\\informasi.vue' /* webpackChunkName: "pages/admin/informasi" */))
 const _512a2cb8 = () => interopDefault(import('..\\pages\\admin\\kegiatan.vue' /* webpackChunkName: "pages/admin/kegiatan" */))
 const _0d4491c8 = () => interopDefault(import('..\\pages\\admin\\lapor\\index.vue' /* webpackChunkName: "pages/admin/lapor/index" */))
-const _3d947cad = () => interopDefault(import('..\\pages\\admin\\notifikasi.vue' /* webpackChunkName: "pages/admin/notifikasi" */))
+const _7b984c97 = () => interopDefault(import('..\\pages\\admin\\permission.vue' /* webpackChunkName: "pages/admin/permission" */))
+const _ffe80d08 = () => interopDefault(import('..\\pages\\admin\\report.vue' /* webpackChunkName: "pages/admin/report" */))
+const _c12399dc = () => interopDefault(import('..\\pages\\admin\\salary.vue' /* webpackChunkName: "pages/admin/salary" */))
+const _1cd32c6a = () => interopDefault(import('..\\pages\\admin\\shift.vue' /* webpackChunkName: "pages/admin/shift" */))
 const _36aa35da = () => interopDefault(import('..\\pages\\admin\\test.vue' /* webpackChunkName: "pages/admin/test" */))
 const _0647ca20 = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages/admin/users" */))
 const _04bf1d96 = () => interopDefault(import('..\\pages\\admin\\company\\announcement\\index.vue' /* webpackChunkName: "pages/admin/company/announcement/index" */))
@@ -39,8 +42,9 @@ const _27dd115e = () => interopDefault(import('..\\pages\\admin\\finances\\loan.
 const _2b6683b2 = () => interopDefault(import('..\\pages\\admin\\finances\\reimbursement.vue' /* webpackChunkName: "pages/admin/finances/reimbursement" */))
 const _6aa78812 = () => interopDefault(import('..\\pages\\admin\\lapor\\detail.vue' /* webpackChunkName: "pages/admin/lapor/detail" */))
 const _6c40cd42 = () => interopDefault(import('..\\pages\\admin\\master\\masterCompanies.vue' /* webpackChunkName: "pages/admin/master/masterCompanies" */))
+const _0a542a5a = () => interopDefault(import('..\\pages\\admin\\master\\masterEmployee.vue' /* webpackChunkName: "pages/admin/master/masterEmployee" */))
 const _73602755 = () => interopDefault(import('..\\pages\\admin\\master\\masterPosition.vue' /* webpackChunkName: "pages/admin/master/masterPosition" */))
-const _92c48c7a = () => interopDefault(import('..\\pages\\admin\\master\\masterSchedule.vue' /* webpackChunkName: "pages/admin/master/masterSchedule" */))
+const _fa74e2f4 = () => interopDefault(import('..\\pages\\admin\\master\\masterShift.vue' /* webpackChunkName: "pages/admin/master/masterShift" */))
 const _1ae4fa12 = () => interopDefault(import('..\\pages\\admin\\master\\masterUser.vue' /* webpackChunkName: "pages/admin/master/masterUser" */))
 const _17fb85c6 = () => interopDefault(import('..\\pages\\admin\\time_management\\attendance.vue' /* webpackChunkName: "pages/admin/time_management/attendance" */))
 const _77fad8db = () => interopDefault(import('..\\pages\\admin\\time_management\\calendar.vue' /* webpackChunkName: "pages/admin/time_management/calendar" */))
@@ -135,9 +139,21 @@ export const routerOptions = {
     component: _0d4491c8,
     name: "admin-lapor"
   }, {
-    path: "/admin/notifikasi",
-    component: _3d947cad,
-    name: "admin-notifikasi"
+    path: "/admin/permission",
+    component: _7b984c97,
+    name: "admin-permission"
+  }, {
+    path: "/admin/report",
+    component: _ffe80d08,
+    name: "admin-report"
+  }, {
+    path: "/admin/salary",
+    component: _c12399dc,
+    name: "admin-salary"
+  }, {
+    path: "/admin/shift",
+    component: _1cd32c6a,
+    name: "admin-shift"
   }, {
     path: "/admin/test",
     component: _36aa35da,
@@ -207,13 +223,17 @@ export const routerOptions = {
     component: _6c40cd42,
     name: "admin-master-masterCompanies"
   }, {
+    path: "/admin/master/masterEmployee",
+    component: _0a542a5a,
+    name: "admin-master-masterEmployee"
+  }, {
     path: "/admin/master/masterPosition",
     component: _73602755,
     name: "admin-master-masterPosition"
   }, {
-    path: "/admin/master/masterSchedule",
-    component: _92c48c7a,
-    name: "admin-master-masterSchedule"
+    path: "/admin/master/masterShift",
+    component: _fa74e2f4,
+    name: "admin-master-masterShift"
   }, {
     path: "/admin/master/masterUser",
     component: _1ae4fa12,

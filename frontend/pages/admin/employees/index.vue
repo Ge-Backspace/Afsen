@@ -18,7 +18,11 @@
                   color="rgb(59,222,200)"
                   gradient
                   :active="active == 6"
-                  @click="active = 6"
+                  @click="
+                    tambahDialog = true;
+                    titleDialog = 'Add Employee';
+                    active = 6;
+                  "
                 >
                   <i class="bx bxs-purchase-tag"></i> Add Employee
                 </vs-button>
@@ -28,7 +32,11 @@
                   color="rgb(59,222,200)"
                   gradient
                   :active="active == 6"
-                  @click="active = 6"
+                  @click="
+                    active = 6;
+                    importDialog = true;
+                    titleDialog = 'Bulk Add Employees';
+                  "
                 >
                   <i class="bx bxs-purchase-tag"></i> Bulk Add Employee
                 </vs-button>
@@ -40,37 +48,7 @@
                   :active="active == 6"
                   @click="active = 6"
                 >
-                  <i class="bx bxs-purchase-tag"></i> Update Employee
-                </vs-button>
-              </div>
-              <div class="col-4">
-                <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="active = 6"
-                >
-                  <i class="bx bxs-purchase-tag"></i> Transfer History
-                </vs-button>
-              </div>
-              <div class="col-4">
-                <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="active = 6"
-                >
-                  <i class="bx bxs-purchase-tag"></i> PTKP Status
-                </vs-button>
-              </div>
-              <div class="col-4">
-                <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="active = 6"
-                >
-                  <i class="bx bxs-purchase-tag"></i> Other Import
+                  <i class="bx bxs-purchase-tag"></i> History
                 </vs-button>
               </div>
             </div>
@@ -192,7 +170,14 @@
       content="Buat Laporan Baru"
       placement="top-start"
     >
-      <a class="float" @click="tambahDialog = true">
+      <a
+        class="float"
+        @click="
+          request = true;
+          tambahDialog = true;
+          titleDialog = 'Add Employee';
+        "
+      >
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
@@ -211,6 +196,7 @@
       <div class="con-form">
         <vs-row>
           <vs-col
+            v-if="this.request"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -225,6 +211,21 @@
             ></vs-input>
           </vs-col>
           <vs-col
+            v-if="this.request"
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Email</label>
+            <vs-input
+              type="text"
+              v-model="form.email"
+              placeholder="Nama"
+            ></vs-input>
+          </vs-col>
+          <vs-col
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -233,7 +234,7 @@
           >
             <label>Nip</label>
             <vs-input
-              type="text"
+              type="number"
               v-model="form.nip"
               placeholder="Address"
             ></vs-input>
@@ -246,13 +247,22 @@
             style="padding: 5px"
           >
             <label>Position</label>
-            <vs-input
-              type="text"
-              v-model="form.position_name"
-              placeholder="Address"
-            ></vs-input>
+            <vs-select
+              filter
+              placeholder="Positions"
+              v-model="form.position_id"
+            >
+              <vs-option
+                v-for="op in option"
+                :key="op.id"
+                :label="op.position_name"
+                :value="op.id"
+              >
+                {{ op.position_name }}
+              </vs-option>
+            </vs-select>
           </vs-col>
-          <vs-col
+          <!-- <vs-col
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -260,12 +270,12 @@
             style="padding: 5px"
           >
             <label>Group</label>
-            <vs-select filter placeholder="Kategori Kegiatan" v-model="form.group">
+            <vs-select filter placeholder="Group" v-model="form.position_name">
               <vs-option v-for="op in option" :key="op.id" :label="op.position_name" :value="op.id">
                 {{op.position_name}}
               </vs-option>
             </vs-select>
-          </vs-col>
+          </vs-col> -->
           <vs-col
             vs-type="flex"
             vs-justify="center"
@@ -275,7 +285,7 @@
           >
             <label>Kontak</label>
             <vs-input
-              type="text"
+              type="number"
               v-model="form.kontak"
               placeholder="Address"
             ></vs-input>
@@ -292,6 +302,21 @@
               type="text"
               v-model="form.username"
               placeholder="Address"
+            ></vs-input>
+          </vs-col>
+          <vs-col
+            v-if="this.request"
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Password</label>
+            <vs-input
+              type="password"
+              v-model="form.password"
+              placeholder="Nama"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -344,7 +369,81 @@
         </div>
       </template>
     </vs-dialog>
-  {{option}}
+
+    <vs-dialog
+      v-model="importDialog"
+      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()"
+    >
+      <template #header>
+        <h1 class="not-margin">
+          {{ titleDialog }}
+        </h1>
+      </template>
+      <div class="con-form">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label>Import Employee</label>
+          <vs-input<input type="file" id="file" ref="file" />
+        </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <vs-button
+            color="primary"
+            gradient
+            :active="active == 6"
+            @click="active = 6"
+          >
+            <i class="bx bx-file-blank"></i> download templates
+          </vs-button>
+        </vs-col>
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                :loading="btnLoader"
+                @click="onSubmit('update')"
+                v-if="isUpdate"
+                >Update</vs-button
+              >
+              <vs-button
+                block
+                :loading="btnLoader"
+                @click="onSubmit('store')"
+                v-else
+                >Simpan</vs-button
+              >
+            </vs-col>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                border
+                @click="
+                  importDialog = false;
+                  resetForm();
+                "
+                >Batal</vs-button
+              >
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -360,23 +459,29 @@ export default {
       table: {
         max: 10,
       },
-      active:'',
-      option:[],
+      
+      request: false,
+      active: "",
+      option: [],
       page: 1,
       current_page: 1,
       titleDialog: "Tambah Karyawan",
       tambahDialog: false,
+      importDialog: false,
       search: "",
+      company_id: JSON.parse(JSON.stringify(this.$auth.user.company_id)),
       isUpdate: false,
       btnLoader: false,
       form: {
         name: "",
+        email: "",
         nip: "",
-        position_name: "",
+        position_id: "",
         group: "",
         kontak: "",
         status: "true",
         username: "",
+        password: "",
       },
       // active: "",
       // searchDate: ["", ""],
@@ -386,11 +491,14 @@ export default {
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
     this.$store.dispatch("employee/getAll", { company_id: this.company_id });
-    this.$axios.get(`/employees?company_id=${this.company_id}`).then((resp) => {
-    });
-    this.$axios.get(`/optionPosition?company_id=${this.company_id}`).then(resp => {
-      this.option = resp.data.data
-    })
+    this.$axios
+      .get(`/employees?company_id=${this.company_id}`)
+      .then((resp) => {});
+    this.$axios
+      .get(`/optionPosition?company_id=${this.company_id}`)
+      .then((resp) => {
+        this.option = resp.data.data;
+      });
   },
   methods: {
     searchData() {
@@ -400,12 +508,10 @@ export default {
     },
     edit(data) {
       this.form.id = data.id;
-      this.form.name = data.name;
-      this.form.position_name = data.position_name;
-      this.form.group = data.group;
+      this.form.nip = data.nip;
+      this.form.position_id = data.position_id;
       this.form.kontak = data.kontak;
       this.form.status = data.status;
-      this.form.username = data.username;
       this.tambahDialog = true;
       this.titleDialog = "Edit Employee";
       this.isUpdate = true;
@@ -413,8 +519,8 @@ export default {
     resetForm() {
       this.form = {
         name: "",
-        position_name: "",
-        group: "",
+        email: "",
+        position_id: "",
         kontak: "",
         status: "",
         username: "",
@@ -422,22 +528,24 @@ export default {
       this.isUpdate = false;
     },
     handleCurrentChange(val) {
-      this.$store.commit("company/setPage", val);
-      this.$store.dispatch("company/getAll", {});
+      this.$store.commit("employee/setPage", val);
+      this.$store.dispatch("employee/getAll", {});
     },
     onSubmit(type = "store") {
       this.btnLoader = true;
       let formData = new FormData();
       formData.append("company_id", this.company_id);
       formData.append("name", this.form.name);
-      formData.append("position_name", this.form.position_name);
-      formData.append("group", this.form.group);
+      formData.append("email", this.form.email);
+      formData.append("nip", this.form.nip);
+      formData.append("position_id", this.form.position_id);
       formData.append("kontak", this.form.kontak);
-      formData.append("status", this.form.status);
+      formData.append("status", this.form.status ? 1 : 0);
+      formData.append("password", this.form.passowrd);
       formData.append("username", this.form.username);
-      let url = "/company/store";
+      let url = "/employee";
       if (type == "update") {
-        url = `/company/update/${this.form.id}`;
+        url = `/employee/update/${this.form.id}`;
       }
       this.$axios
         .post(url, formData)
@@ -451,7 +559,9 @@ export default {
             });
             this.resetForm();
             this.tambahDialog = false;
-            this.$store.dispatch("company/getAll", {});
+            this.$store.dispatch("employee/getAll", {
+              company_id: this.company_id,
+            });
           }
         })
         .finally(() => {
@@ -482,7 +592,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`/company/delete/${id}`)
+            .delete(`/employee/delete/${id}`)
             .then((resp) => {
               if (resp.data.success) {
                 this.$notify.success({
@@ -490,7 +600,7 @@ export default {
                   message: "Berhasil Menghapus Data",
                 });
                 this.tambahDialog = false;
-                this.$store.dispatch("company/getAll", {
+                this.$store.dispatch("employee/getAll", {
                   defaultPage: true,
                 });
               }
@@ -516,12 +626,8 @@ export default {
       "getEmployees",
       // "getLoader"
     ]),
-    ...mapGetters("option", [
-        "getOption",
-      ]),
-    ...mapGetters("position", [
-      "getPosition",
-    ])
+    ...mapGetters("option", ["getOption"]),
+    ...mapGetters("position", ["getPosition"]),
   },
   watch: {
     // getLapors(newValue, oldValue) {},
