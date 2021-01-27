@@ -34,6 +34,7 @@ let store = {};
   resolveStoreModules(require('..\\store\\service.js'), 'service.js')
   resolveStoreModules(require('..\\store\\setting.js'), 'setting.js')
   resolveStoreModules(require('..\\store\\shift.js'), 'shift.js')
+  resolveStoreModules(require('..\\store\\shiftemployee.js'), 'shiftemployee.js')
   resolveStoreModules(require('..\\store\\test.js'), 'test.js')
   resolveStoreModules(require('..\\store\\user.js'), 'user.js')
 
@@ -58,6 +59,7 @@ let store = {};
       '..\\store\\service.js',
       '..\\store\\setting.js',
       '..\\store\\shift.js',
+      '..\\store\\shiftemployee.js',
       '..\\store\\test.js',
       '..\\store\\user.js',
     ], () => {

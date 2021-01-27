@@ -38,7 +38,8 @@ class ShiftEmployeeController extends Controller
     public function getCompanyShiftEmployee(Request $request)
     {
         return $this->getPaginate(ShiftEmployee::join('employees', 'shift_employees.employee_id', '=', 'employees.id')
-        ->where('company_id', $request->company_id)
+        ->join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
+        ->where('shifts.company_id', $request->company_id)
         , $request, ['employees.name']);
     }
 
