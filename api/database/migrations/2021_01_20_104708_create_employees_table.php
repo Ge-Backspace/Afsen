@@ -21,6 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('position_id')->unsigned()->default(1);
             $table->boolean('status')->default(false);
             $table->string('kontak')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('position_id')->references('id')->on('positions');

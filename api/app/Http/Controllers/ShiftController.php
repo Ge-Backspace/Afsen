@@ -6,6 +6,10 @@ use App\Helpers\Helper;
 use App\Models\Shift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Imports\ShiftImport;
+use App\Exports\ShiftExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 
 class ShiftController extends Controller
 {
@@ -65,5 +69,37 @@ class ShiftController extends Controller
         }
         $shift->delete();
         return $this->resp();
+    }
+
+    public function importShift(Request $request)
+    {
+        $validator = Validator::make($request->only(['file']), [
+            'file' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Import Excel', false, 401);
+        }
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $import = Excel::import(new ShiftImport, $file);
+            return $this->resp($import);
+        }
+    }
+
+    public function exportShift(Request $request)
+    {
+        $validator = Validator::make($request->only(['company_id']), [
+            'company_id' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
+        }
+        $as = \Maatwebsite\Excel\Excel::XLSX;
+        $type = 'xlsx';
+        if($request->as == 'pdf'){
+            $type = 'pdf';
+            $as = \Maatwebsite\Excel\Excel::DOMPDF;
+        }
+        return Excel::download(new ShiftExport($request->company_id), 'shifts.' . $type, $as);
     }
 }

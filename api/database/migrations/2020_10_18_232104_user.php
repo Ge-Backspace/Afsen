@@ -24,6 +24,7 @@ class User extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('aktif')->default(false);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('propic_id')->references('id')->on('files')->onDelete('CASCADE');

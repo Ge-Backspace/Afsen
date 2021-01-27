@@ -6,6 +6,9 @@ use App\Helpers\Helper;
 use App\Models\Companies;
 use App\Models\Employee;
 use App\Models\User;
+use App\Imports\EmployeeImport;
+use App\Exports\EmployeeExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,11 +24,11 @@ class EmployeeController extends Controller
     public function getEmployee(Request $request)
     {
         return $this->getPaginate(
-            Employee::join('users AS u', 'employees.user_id', '=', 'u.id')
-            ->join('positions AS p', 'employees.user_id', '=', 'p.id')
-            ->where('u.company_id', $request->company_id)
+            Employee::join('positions', 'employees.position_id', '=', 'positions.id')
+            ->join('users', 'employees.user_id', '=', 'users.id')
+            ->where('users.company_id', $request->company_id)
             , $request, [
-                'employees.name', 'p.position_name'
+                'employees.name', 'positions.position_name'
             ]);
 
         // Example
@@ -34,16 +37,10 @@ class EmployeeController extends Controller
         // where employees.company_id = 1
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function addEmployee(Request $request)
     {
         $input = $request->only([
-            'company_id', 'name', 'username', 'email', 'password', 'status'
+            'company_id', 'name', 'username', 'email', 'password', 'nip', 'status', 'position_id', 'kontak',
         ]);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
@@ -51,7 +48,9 @@ class EmployeeController extends Controller
             'username' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'status' => 'required|boolean'
+            'status' => 'required|boolean',
+            'nip' => 'string',
+            'kontak' => 'numeric',
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
@@ -60,6 +59,7 @@ class EmployeeController extends Controller
         if(!$companyCheck){
             return $this->resp($request->input(), 'Company Tidak Ditemukan', false, 406);
         }
+        $inputEmployee = $request->only(['name', 'position_id', 'status', 'kontak', 'nip']);
         $user = User::Create([
             'company_id' => $input['company_id'],
             'username' => $input['username'],
@@ -68,19 +68,15 @@ class EmployeeController extends Controller
         ]);
         $employee = Employee::create([
             'user_id' => $user->id,
-            'name' => $input['name'],
-            'status' => $input['status']
+            'name' => $inputEmployee['name'],
+            'position_id' => $inputEmployee['position_id'],
+            'status' => $inputEmployee['status'],
+            'nip' => $inputEmployee['nip'],
+            'kontak' => $inputEmployee['kontak'],
         ]);
-        return $this->resp([$user, $employee]);
+        return $this->resp([$input, $user, $employee]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateEmployee(Request $request, $id)
     {
         $employee = Employee::find($id);
@@ -88,12 +84,13 @@ class EmployeeController extends Controller
         {
             return $this->resp(null, 'Employee Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['name', 'nip', 'position_id', 'status']);
+        $input = $request->only(['name', 'nip', 'position_id', 'kontak', 'status']);
         $validator = Validator::make($input, [
             'name' => 'required|string',
             'nip' => 'required|string',
             'position_id' => 'required|numeric',
-            'status' => 'required|boolean'
+            'status' => 'required|boolean',
+            'kontak' => 'required'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Update Employee', false, 401);
@@ -102,12 +99,6 @@ class EmployeeController extends Controller
         return $this->resp($editEmployee);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function deleteEmployee($id)
     {
         $employee = Employee::find($id);
@@ -117,5 +108,38 @@ class EmployeeController extends Controller
         }
         $employee->delete();
         return $this->resp();
+    }
+
+    public function importEmployee(Request $request)
+    {
+        $validator = Validator::make($request->only(['file']), [
+            'company_id' => 'required',
+            'file' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Import Excel', false, 401);
+        }
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $import = Excel::import(new EmployeeImport($request->company_id), $file);
+            return $this->resp($import);
+        }
+    }
+
+    public function exportEmployee(Request $request)
+    {
+        $validator = Validator::make($request->only(['company_id']), [
+            'company_id' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
+        }
+        $as = \Maatwebsite\Excel\Excel::XLSX;
+        $type = 'xlsx';
+        if($request->as == 'pdf'){
+            $type = 'pdf';
+            $as = \Maatwebsite\Excel\Excel::DOMPDF;
+        }
+        return Excel::download(new EmployeeExport($request->company_id), 'employees.' . $type, $as);
     }
 }

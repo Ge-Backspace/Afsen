@@ -18,7 +18,9 @@ class UsersTableSeeder extends Seeder
             'company_id' => 1,
             'username' => 'test',
             'email' => 'test@gmail.com',
-            'password' => app('hash')->make('testuser')
+            'password' => app('hash')->make('testuser'),
+            'admin' => true,
+            'aktif' => true,
         ]);
     }
 }

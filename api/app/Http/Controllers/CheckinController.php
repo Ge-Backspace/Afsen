@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Models\Checkin;
 use Carbon\Carbon;
+use App\Exports\CheckinExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -82,5 +84,22 @@ class CheckinController extends Controller
             $checkout = $checkCheckin->update(['checkout_time' => Carbon::now()]);
             return $this->resp($checkout);
         }
+    }
+
+    public function exportCheckin(Request $request)
+    {
+        $validator = Validator::make($request->only(['user_id']), [
+            'user_id' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
+        }
+        $as = \Maatwebsite\Excel\Excel::XLSX;
+        $type = 'xlsx';
+        if($request->as == 'pdf'){
+            $type = 'pdf';
+            $as = \Maatwebsite\Excel\Excel::DOMPDF;
+        }
+        return Excel::download(new CheckinExport($request->user_id), 'attendance.' . $type, $as);
     }
 }
