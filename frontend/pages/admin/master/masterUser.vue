@@ -67,7 +67,8 @@
                     >
                       <el-button
                         size="mini"
-                        @click="edit(tr)"
+                        @click="
+                        edit(tr)"
                         icon="fa fa-edit"
                       ></el-button>
                     </el-tooltip>
@@ -145,6 +146,7 @@
     </el-dialog> -->
 
     <vs-dialog
+    prevent-close
       v-model="userDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()"
@@ -278,6 +280,7 @@ export default {
   layout: "admin",
   components: {},
   data() {
+    
     return {
       api_url: config.baseApiUrl,
       company_id: "",
@@ -298,8 +301,8 @@ export default {
         email: "",
         name: "",
         password: "",
-        admin: "true",
-        aktif: "true",
+        admin: "false",
+        aktif: "false",
       },
     };
   },

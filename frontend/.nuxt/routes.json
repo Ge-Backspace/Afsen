@@ -119,6 +119,34 @@
     "_name": "_3a57b00a"
   },
   {
+<<<<<<< HEAD
+    "name": "admin-permission",
+    "path": "/admin/permission",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permission.vue",
+    "chunkName": "pages/admin/permission",
+    "_name": "_7b984c97"
+  },
+  {
+    "name": "admin-report",
+    "path": "/admin/report",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\report.vue",
+    "chunkName": "pages/admin/report",
+    "_name": "_ffe80d08"
+  },
+  {
+    "name": "admin-salary",
+    "path": "/admin/salary",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\salary.vue",
+    "chunkName": "pages/admin/salary",
+    "_name": "_c12399dc"
+  },
+  {
+    "name": "admin-shift",
+    "path": "/admin/shift",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\shift.vue",
+    "chunkName": "pages/admin/shift",
+    "_name": "_1cd32c6a"
+=======
     "name": "admin-notifikasi",
     "path": "/admin/notifikasi",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\notifikasi.vue",
@@ -131,6 +159,7 @@
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\shiftEmployee\\\\index.vue",
     "chunkName": "pages/admin/shiftEmployee/index",
     "_name": "_36712238"
+>>>>>>> 879912b561e707dbb33f8b7b1e43779630d4d555
   },
   {
     "name": "admin-test",
@@ -252,6 +281,13 @@
     "_name": "_babb409e"
   },
   {
+    "name": "admin-master-masterEmployee",
+    "path": "/admin/master/masterEmployee",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterEmployee.vue",
+    "chunkName": "pages/admin/master/masterEmployee",
+    "_name": "_0a542a5a"
+  },
+  {
     "name": "admin-master-masterPosition",
     "path": "/admin/master/masterPosition",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterPosition.vue",
@@ -259,11 +295,19 @@
     "_name": "_ea3b627a"
   },
   {
+<<<<<<< HEAD
+    "name": "admin-master-masterShift",
+    "path": "/admin/master/masterShift",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterShift.vue",
+    "chunkName": "pages/admin/master/masterShift",
+    "_name": "_fa74e2f4"
+=======
     "name": "admin-master-masterSchedule",
     "path": "/admin/master/masterSchedule",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterSchedule.vue",
     "chunkName": "pages/admin/master/masterSchedule",
     "_name": "_63c03d9e"
+>>>>>>> 879912b561e707dbb33f8b7b1e43779630d4d555
   },
   {
     "name": "admin-master-masterUser",
