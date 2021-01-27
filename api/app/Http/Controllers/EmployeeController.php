@@ -37,7 +37,7 @@ class EmployeeController extends Controller
     public function addEmployee(Request $request)
     {
         $input = $request->only([
-            'company_id', 'name', 'username', 'email', 'password', 'status', 'position_id', 'kontak',
+            'company_id', 'name', 'username', 'email', 'password', 'nip', 'status', 'position_id', 'kontak',
         ]);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
@@ -45,7 +45,9 @@ class EmployeeController extends Controller
             'username' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'status' => 'required|boolean'
+            'status' => 'required|boolean',
+            'nip' => 'string',
+            'kontak' => 'numeric',
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
@@ -54,6 +56,7 @@ class EmployeeController extends Controller
         if(!$companyCheck){
             return $this->resp($request->input(), 'Company Tidak Ditemukan', false, 406);
         }
+        $inputEmployee = $request->only(['name', 'position_id', 'status', 'kontak', 'nip']);
         $user = User::Create([
             'company_id' => $input['company_id'],
             'username' => $input['username'],
@@ -62,12 +65,13 @@ class EmployeeController extends Controller
         ]);
         $employee = Employee::create([
             'user_id' => $user->id,
-            'name' => $input['name'],
-            'position_id' => $input['position_id'],
-            'status' => $input['status'],
-            'kontak' => $input['kontak']
+            'name' => $inputEmployee['name'],
+            'position_id' => $inputEmployee['position_id'],
+            'status' => $inputEmployee['status'],
+            'nip' => $inputEmployee['nip'],
+            'kontak' => $inputEmployee['kontak'],
         ]);
-        return $this->resp([$user, $employee]);
+        return $this->resp([$input, $user, $employee]);
     }
 
     public function updateEmployee(Request $request, $id)

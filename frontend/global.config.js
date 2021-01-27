@@ -1,8 +1,8 @@
 
 const config = {
     base: '/',
-    baseUrl: 'http://bacb906d555a.ngrok.io',
-    baseApiUrl : 'http://bacb906d555a.ngrok.io'
+    baseUrl: 'http://localhost:8000',
+    baseApiUrl : 'http://localhost:8000'
 };
 
 export {config}
