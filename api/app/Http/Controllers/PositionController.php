@@ -6,6 +6,9 @@ use App\Helpers\Helper;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Imports\PositionImport;
+use App\Exports\PositionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PositionController extends Controller
 {
@@ -70,5 +73,38 @@ class PositionController extends Controller
         }
         $position->delete();
         return $this->resp();
+    }
+
+    public function importPosition(Request $request)
+    {
+        $validator = Validator::make($request->only(['file']), [
+            'company_id' => 'required',
+            'file' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Import Excel', false, 401);
+        }
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $import = Excel::import(new PositionImport($request->company_id), $file);
+            return $this->resp($import);
+        }
+    }
+
+    public function exportPosition(Request $request)
+    {
+        $validator = Validator::make($request->only(['company_id']), [
+            'company_id' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
+        }
+        $as = \Maatwebsite\Excel\Excel::XLSX;
+        $type = 'xlsx';
+        if($request->as == 'pdf'){
+            $type = 'pdf';
+            $as = \Maatwebsite\Excel\Excel::DOMPDF;
+        }
+        return Excel::download(new PositionExport($request->company_id), 'positions.' . $type, $as);
     }
 }
