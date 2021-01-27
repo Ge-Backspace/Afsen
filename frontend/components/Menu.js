@@ -69,7 +69,7 @@ export const  menu = () => {
         {
             text: 'Shift',
             icon: 'bx bx-shuffle text-primary',
-            route: '/admin/shift'
+            route: '/admin/shiftEmployee'
         },
         {
             text: 'Permission',
