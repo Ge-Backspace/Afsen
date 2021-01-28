@@ -23,6 +23,8 @@
               <template #thead>
                 <vs-tr>
                   <vs-th>Name</vs-th>
+                  <vs-th>Latitude</vs-th>
+                  <vs-th>Longitude</vs-th>
                   <vs-th>Address</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
@@ -31,6 +33,12 @@
                 <vs-tr :key="i" v-for="(tr, i) in getCompany.data" :data="tr">
                   <vs-td>
                     {{ tr.name }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.lat }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.lng }}
                   </vs-td>
                   <vs-td>
                     {{ tr.address }}
@@ -62,6 +70,27 @@
                 </vs-row>
               </template>
             </vs-table>
+          </el-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <el-card v-loading="getLoader">
+            <GmapMap
+            v-bind:center="center"
+            v-bind:zoom="7"
+            map-type-id="terrain"
+            style="height: 225px"
+            >
+            <GmapMarker
+              v-bind:key="index"
+              v-for="(m, index) in markers"
+              v-bind:position="m.position"
+              v-bind:clickable="true"
+              v-bind:draggable="true"
+              @click="center=m.position"
+            />
+            </GmapMap>
           </el-card>
         </div>
       </div>
@@ -157,22 +186,37 @@
         isUpdate: false,
         tambahDialog: false,
         btnLoader: false,
+        company_id: '',
         form: {
           id: '',
           name: '',
           address:'',
-        }
+        },
+        center: {lat: 10.0, lng: 10.0},
+        markers:[{
+          position: {lat: 10.0, lng: 10.0}
+        }]
       }
     },
     mounted() {
-      this.$store.dispatch('company/getAll', {});
+      this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
+      this.$store.dispatch('company/getCompany', {
+        company_id: this.company_id
+      });
+      this.$axios.get(`/getCoordinate?company_id=${this.company_id}`)
+      .then(resp => {
+        this.center.lat = Number(resp.data.data.lat)
+        this.center.lng = Number(resp.data.data.lng)
+        // this.markers[position.lat] = Number(resp.data.data.lat)
+        console.log(this.markers)
+      })
     },
     methods: {
-      searchData(){
-        this.$store.dispatch('company/getAll', {
-          search: this.search
-        });
-      },
+      // searchData(){
+      //   this.$store.dispatch('company/getAll', {
+      //     search: this.search
+      //   });
+      // },
       edit(data) {
         this.form.id = data.id
         this.form.name = data.name
@@ -279,7 +323,7 @@
       },
       page(newValue, oldValue) {
         this.$store.commit('company/setPage', newValue)
-        this.$store.dispatch('company/getAll', {});
+        this.$store.dispatch('company/getCompany', {});
       }
     },
   }

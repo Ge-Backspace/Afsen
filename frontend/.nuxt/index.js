@@ -21,6 +21,7 @@ import nuxt_plugin_helper_0bc87e87 from 'nuxt_plugin_helper_0bc87e87' // Source:
 import nuxt_plugin_vuesax_248aab7d from 'nuxt_plugin_vuesax_248aab7d' // Source: ..\\plugins\\vuesax (mode: 'all')
 import nuxt_plugin_extablecolumn_82eb25d0 from 'nuxt_plugin_extablecolumn_82eb25d0' // Source: ..\\plugins\\extablecolumn (mode: 'all')
 import nuxt_plugin_vuegeolocation_276efa99 from 'nuxt_plugin_vuegeolocation_276efa99' // Source: ..\\plugins\\vuegeolocation (mode: 'all')
+import nuxt_plugin_vuegooglemaps_9398d546 from 'nuxt_plugin_vuegooglemaps_9398d546' // Source: ..\\plugins\\vuegooglemaps (mode: 'all')
 import nuxt_plugin_vcalendar_37ff9c3b from 'nuxt_plugin_vcalendar_37ff9c3b' // Source: ..\\plugins\\vcalendar (mode: 'client')
 import nuxt_plugin_swal_d9d73ab0 from 'nuxt_plugin_swal_d9d73ab0' // Source: ..\\plugins\\swal (mode: 'client')
 import nuxt_plugin_vue2editor_50d6bb9c from 'nuxt_plugin_vue2editor_50d6bb9c' // Source: ..\\plugins\\vue2editor (mode: 'client')
@@ -51,6 +52,13 @@ Vue.component('NChild', NuxtChild)
 
 // Component: <Nuxt>
 Vue.component(Nuxt.name, Nuxt)
+
+Object.defineProperty(Vue.prototype, '$nuxt', {
+  get() {
+    return this.$root.$options.$nuxt
+  },
+  configurable: true
+})
 
 Vue.use(Meta, {"keyName":"head","attribute":"data-n-head","ssrAttribute":"data-n-head-ssr","tagIDKeyName":"hid"})
 
@@ -237,6 +245,10 @@ async function createApp(ssrContext, config = {}) {
 
   if (typeof nuxt_plugin_vuegeolocation_276efa99 === 'function') {
     await nuxt_plugin_vuegeolocation_276efa99(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_vuegooglemaps_9398d546 === 'function') {
+    await nuxt_plugin_vuegooglemaps_9398d546(app.context, inject)
   }
 
   if (process.client && typeof nuxt_plugin_vcalendar_37ff9c3b === 'function') {

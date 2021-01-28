@@ -9,8 +9,14 @@ class CompanyController extends Controller
 {
     public function getCompany(Request $request)
     {
-        $company = Companies::find($request->company_id);
-        return $this->resp($company->first());
+        $company = Companies::where('id', $request->company_id);
+        return $this->getPaginate($company,$request,[]);
+    }
+
+    public function getCoorditaneCompany(Request $request)
+    {
+        $coordinate = Companies::find($request->company_id);
+        return $this->resp(['lat' => $coordinate->lat, 'lng' => $coordinate->lng]);
     }
 
     public function getAllCompanies(Request $request)

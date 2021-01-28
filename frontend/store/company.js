@@ -49,4 +49,15 @@ export const actions = {
           context.commit("setLoader")
       })
   },
+  getCompany(context, {company_id = '',showall = 1, search = '', defaultPage = false}){
+    context.commit("setLoader")
+    let page = defaultPage ? 1 : context.state.company.current_page
+    this.$axios.get(`/companies?company_id=${company_id}showall=${showall}&page=${page}&search=${search}`).then(resp => {
+        context.commit('setCompany', resp.data)
+    }).catch(e => {
+        console.log(e)
+    }).finally(() => {
+        context.commit("setLoader")
+    })
+  },
 }
