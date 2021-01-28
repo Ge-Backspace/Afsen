@@ -17,24 +17,6 @@
   "LazySidebar": {
     "description": "Auto imported from components/Sidebar.vue"
   },
-  "ChartBar": {
-    "description": "Auto imported from components/chart/chart-bar.vue"
-  },
-  "LazyChartBar": {
-    "description": "Auto imported from components/chart/chart-bar.vue"
-  },
-  "ChartDoughnut": {
-    "description": "Auto imported from components/chart/chart-doughnut.vue"
-  },
-  "LazyChartDoughnut": {
-    "description": "Auto imported from components/chart/chart-doughnut.vue"
-  },
-  "ChartLine": {
-    "description": "Auto imported from components/chart/chart-line.vue"
-  },
-  "LazyChartLine": {
-    "description": "Auto imported from components/chart/chart-line.vue"
-  },
   "FooterAfsen": {
     "description": "Auto imported from components/LandingPage/FooterAfsen.vue"
   },
@@ -75,10 +57,24 @@
     "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
   },
   "LazyPartnerAfsen": {
-<<<<<<< HEAD
-    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/PartnerAfsen.vue"
-=======
     "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
->>>>>>> 09c4fba6b0fbbd44f893cb80d731ff2580e4b3ea
+  },
+  "ChartBar": {
+    "description": "Auto imported from components/chart/chart-bar.vue"
+  },
+  "LazyChartBar": {
+    "description": "Auto imported from components/chart/chart-bar.vue"
+  },
+  "ChartDoughnut": {
+    "description": "Auto imported from components/chart/chart-doughnut.vue"
+  },
+  "LazyChartDoughnut": {
+    "description": "Auto imported from components/chart/chart-doughnut.vue"
+  },
+  "ChartLine": {
+    "description": "Auto imported from components/chart/chart-line.vue"
+  },
+  "LazyChartLine": {
+    "description": "Auto imported from components/chart/chart-line.vue"
   }
 }

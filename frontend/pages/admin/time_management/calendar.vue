@@ -54,8 +54,8 @@
                 <div class="card-head text-center" style="margin-top: 20px">{{ dates(date) }}</div>
                 <div class="card-body">
                   <h5 class="card-title"></h5>
+                    <p class="card-text">Shift :</p>
                     <div v-for="item in getSE.data" :key="item.id">
-                      <p class="card-text">Shift :</p>
                       <p class="card-text">
                         {{ item.name }} : {{item.code}} {{item.schedule_in}}-{{item.schedule_out}}
                       </p>
@@ -92,7 +92,8 @@ export default {
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id))
     this.$store.dispatch('shiftemployee/getAll', {
-      company_id: this.company_id
+      company_id: this.company_id,
+      search: new Date()
     })
   },
   methods: {

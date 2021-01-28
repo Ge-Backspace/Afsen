@@ -55,6 +55,11 @@ class ShiftEmployeeController extends Controller
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Shift Employee', false, 401);
         }
+        $shiftEmployee = ShiftEmployee::where('employee_id', $input['employee_id'])
+        ->whereDate('date', $input['date'])->first();
+        if ($shiftEmployee) {
+            return $this->resp(null, 'Jadwal Shift Employee Sudah Ada Pada Tanggal Tersebut', false, 406);
+        }
         $addShiftEmployee = ShiftEmployee::create($input);
         return $this->resp($addShiftEmployee);
     }

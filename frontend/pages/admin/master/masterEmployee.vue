@@ -520,7 +520,7 @@ export default {
       table: {
         max: 10,
       },
-      
+
       request: false,
       error: {},
       active: "",

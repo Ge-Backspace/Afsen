@@ -32,7 +32,20 @@
       </div>
       <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom: 20px">
-          <div class="col-md-3 offset-md-9">
+          <div class="col-md-2">
+            <vs-button
+              success
+              style="float: right"
+              :loading="globalLoader"
+              gradient
+              @click="
+              importDialog = true
+              titleDialog = 'Import Shift Employee'
+              "
+              >Import Excel</vs-button
+            >
+          </div>
+          <div class="col-md-3 offset-md-7">
             <el-input
               placeholder="Cari"
               v-model="search"
@@ -73,7 +86,7 @@
                 {{ tr.schedule_out }}
               </vs-td>
               <vs-td>
-                {{ tr.date }}
+                {{ formatDate(tr.date) }}
               </vs-td>
               <vs-td>
                 <el-tooltip content="Edit" placement="top-start" effect="dark">
@@ -156,11 +169,11 @@
             <label>Employee</label>
             <vs-select
               filter
-              placeholder="Positions"
+              placeholder="Employee"
               v-model="form.employee_id"
             >
               <vs-option
-                v-for="op in optionEmployee"
+                v-for="op in getOptionEmployees.data"
                 :key="op.id"
                 :label="op.name"
                 :value="op.id"
@@ -179,42 +192,29 @@
             <label>Shift Name</label>
             <vs-select
               filter
-              placeholder="Positions"
+              placeholder="Shift"
               v-model="form.shift_id"
             >
               <vs-option
-                v-for="op in optionShift"
+                v-for="op in getOptionShifts.data"
                 :key="op.id"
                 :label="[op.shift_name, op.schedule_in, op. schedule_out]"
                 :value="op.id"
               >
-                {{ op.shift_name }} {{ op.schedule_in }} {{ op. schedule_out }}
+                {{ op.shift_name }},{{ op.schedule_in }}-{{ op. schedule_out }}
               </vs-option>
             </vs-select>
           </vs-col>
-          <!-- <vs-col
+          <vs-col
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
             w="6"
             style="padding: 5px"
           >
-            <label>Schedule_out</label>
-            <vs-select
-              filter
-              placeholder="Positions"
-              v-model="form.shift_id"
-            >
-              <vs-option
-                v-for="op in option"
-                :key="op.id"
-                :label="op.schedule_out"
-                :value="op.id"
-              >
-                {{ op.schedule_out }}
-              </vs-option>
-            </vs-select>
-          </vs-col> -->
+            <label>Date</label>
+            <vs-input type="date" v-model="form.date"></vs-input>
+          </vs-col>
         </vs-row>
       </div>
 
@@ -253,6 +253,72 @@
         </div>
       </template>
     </vs-dialog>
+    <vs-dialog
+      v-model="importDialog"
+      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()"
+    >
+      <template #header>
+        <h1 class="not-margin">
+          {{ titleDialog }}
+        </h1>
+      </template>
+      <div class="con-form">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label>Import Employee</label>
+          <vs-input type="file" v-model="file" ref="file" />
+        </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <vs-button
+            color="primary"
+            gradient
+            :active="active == 6"
+            @click="active = 6"
+          >
+            <i class="bx bx-file-blank"></i> download templates
+          </vs-button>
+        </vs-col>
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                :loading="btnLoader"
+                @click="onSubmit('file')"
+                >Simpan</vs-button
+              >
+            </vs-col>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                border
+                @click="
+                  importDialog = false;
+                  resetForm();
+                "
+                >Batal</vs-button
+              >
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -271,17 +337,20 @@ export default {
         max: 10,
       },
       request: false,
+      importDialog: false,
+      active: 0,
       page: 1,
       titleDialog: "Edit Shift Employee",
-      search: "",
-      company_id: "",
+      search: '',
+      company_id: '',
       isUpdate: false,
       seDialog: false,
       btnLoader: false,
+      file: '',
       form: {
-        employee_id: "",
-        shift_name: "",
-        shift_id: ""
+        employee_id: '',
+        shift_id: '',
+        date: '',
       },
     };
   },
@@ -290,41 +359,33 @@ export default {
     this.$store.dispatch("shiftemployee/getAll", {
       company_id: this.company_id,
     });
-    this.$axios
-      .get(`/employees?company_id=${this.company_id}`)
-      .then((resp) => {
-        this.optionEmployee = resp.data.data;
-        console.log(this.optionEmployee)
-      });
-      this.$axios
-      .get(`/shifts?company_id=${this.company_id}`)
-      .then((resp) => {
-        this.optionShift = resp.data.data;
-      });
-      
+    this.$store.dispatch('option/getOptionEmployees', {
+      company_id: this.company_id
+    })
+    this.$store.dispatch('option/getOptionShifts', {
+      company_id: this.company_id
+    })
   },
   methods: {
-    // searchData(){
-    //   this.$store.dispatch('schedule/getAll', {
-    //     search: this.search,
-    //     company_id: this.company_id
-    //   });
-    // },
+    searchData(){
+      this.$store.dispatch('shiftemployee/getAll', {
+        search: this.search,
+        company_id: this.company_id
+      });
+    },
     edit(data) {
-      // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
+      this.form.employee_id = data.employee_id;
       this.form.shift_id = data.shift_id;
+      this.form.date = data.date;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;
     },
     resetForm() {
       this.form = {
-        name: "",
-        code: "",
-        shift_name: "",
-        schedule_in: "",
-        schedule_out: "",
-        date: "",
+        employee_id: '',
+        shift_id: '',
+        date: ''
       };
       this.isUpdate = false;
     },
@@ -337,21 +398,48 @@ export default {
     onSubmit(type = 'store') {
       this.btnLoader = true
       let formData = new FormData()
-      // formData.append("id", this.form.id)
-      formData.append("company_id", this.company_id)
-      formData.append("employee_id", this.form.employee_id)
-      formData.append("schedule_in", this.form.schedule_in)
-      formData.append("schedule_out", this.form.schedule_out)
-      let url = "/shiftEmployee";
+      formData.append('company_id', this.company_id)
+      formData.append('employee_id', this.form.employee_id)
+      formData.append('shift_id', this.form.shift_id)
+      formData.append('date', this.form.date)
+      let url = '/shiftEmployee'
       if (type == 'update') {
         url = `shiftEmployee/update/${this.form.id}`
+      } else if (type == 'file') {
+        url = '/shiftEmployee/import'
+        let fileInput = new FormData()
+        fileInput.append('company_id', this.company_id)
+        fileInput.append('file', this.file)
+        this.$axios.post(url, fileInput).then(resp => {
+          if (resp.data.success) {
+            this.$notify.success({
+              title: 'Success',
+              message: `Berhasil Import Shift Employee`
+            })
+            this.resetForm()
+            this.seDialog = false
+            this.$store.dispatch('shiftemployee/getAll', {
+              company_id: this.company_id
+            })
+          }
+        }).catch(err => {
+          let error = err.response.data.data
+          if (error) {
+            this.showErrorField(error)
+          } else {
+            this.$notify.error({
+              title: 'Error',
+              message: err.response.data.message
+            })
+          }
+        })
       }
 
       this.$axios.post(url, formData).then(resp => {
         if (resp.data.success) {
           this.$notify.success({
             title: 'Success',
-            message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Position`
+            message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Shift Employee`
           })
           this.resetForm()
           this.seDialog = false
@@ -408,14 +496,13 @@ export default {
         }
       })
     },
-    // formatTime(time){
-    //   return moment(time, "HH:mm:ss").format('HH:mm');
-    // }
+    formatDate(date){
+      return moment(date).format('DD MMMM YYYY');
+    }
   },
   computed: {
     ...mapGetters("shiftemployee", ["getSE", "getLoader"]),
-    ...mapGetters("shift", ["getShifts", "getLoader"]),
-    ...mapGetters("employee", ["getEmployees", "getLoader"]),
+    ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees']),
   },
   watch: {},
 };
