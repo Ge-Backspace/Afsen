@@ -1,24 +1,24 @@
-import { getMatchedComponents, setScrollRestoration } from './utils'
+import { getMatchedComponents } from './utils'
 
 if (process.client) {
   if ('scrollRestoration' in window.history) {
-    setScrollRestoration('manual')
+    window.history.scrollRestoration = 'manual'
 
     // reset scrollRestoration to auto when leaving page, allowing page reload
     // and back-navigation from other pages to use the browser to restore the
     // scrolling position.
     window.addEventListener('beforeunload', () => {
-      setScrollRestoration('auto')
+      window.history.scrollRestoration = 'auto'
     })
 
     // Setting scrollRestoration to manual again when returning to this page.
     window.addEventListener('load', () => {
-      setScrollRestoration('manual')
+      window.history.scrollRestoration = 'manual'
     })
   }
 }
 
-export default function (to, from, savedPosition) {
+  export default function (to, from, savedPosition) {
   // If the returned position is falsy or an empty object, will retain current scroll position
   let position = false
 
