@@ -12,6 +12,7 @@ export { default as InstaAfsen } from '../..\\components\\LandingPage\\InstaAfse
 export { default as MidAfsen } from '../..\\components\\LandingPage\\MidAfsen.vue'
 export { default as PartnerAfsen } from '../..\\components\\LandingPage\\PartnerAfsen.vue'
 
+<<<<<<< HEAD
 export const LazyLogo = import('../..\\components\\Logo.vue' /* webpackChunkName: "components/logo" */).then(c => c.default || c)
 export const LazyMenu = import('../..\\components\\Menu.js' /* webpackChunkName: "components/menu" */).then(c => c.default || c)
 export const LazySidebar = import('../..\\components\\Sidebar.vue' /* webpackChunkName: "components/sidebar" */).then(c => c.default || c)
@@ -25,3 +26,18 @@ export const LazyHeroAfsen = import('../..\\components\\LandingPage\\HeroAfsen.v
 export const LazyInstaAfsen = import('../..\\components\\LandingPage\\InstaAfsen.vue' /* webpackChunkName: "components/insta-afsen" */).then(c => c.default || c)
 export const LazyMidAfsen = import('../..\\components\\LandingPage\\MidAfsen.vue' /* webpackChunkName: "components/mid-afsen" */).then(c => c.default || c)
 export const LazyPartnerAfsen = import('../..\\components\\LandingPage\\PartnerAfsen.vue' /* webpackChunkName: "components/partner-afsen" */).then(c => c.default || c)
+=======
+export const LazyLogo = import('../..\\components\\Logo.vue' /* webpackChunkName: "components_Logo" */).then(c => c.default || c)
+export const LazyMenu = import('../..\\components\\Menu.js' /* webpackChunkName: "components_Menu" */).then(c => c.default || c)
+export const LazySidebar = import('../..\\components\\Sidebar.vue' /* webpackChunkName: "components_Sidebar" */).then(c => c.default || c)
+export const LazyChartBar = import('../..\\components\\chart\\chart-bar.vue' /* webpackChunkName: "components_chart/chart-bar" */).then(c => c.default || c)
+export const LazyChartDoughnut = import('../..\\components\\chart\\chart-doughnut.vue' /* webpackChunkName: "components_chart/chart-doughnut" */).then(c => c.default || c)
+export const LazyChartLine = import('../..\\components\\chart\\chart-line.vue' /* webpackChunkName: "components_chart/chart-line" */).then(c => c.default || c)
+export const LazyFooterAfsen = import('../..\\components\\LandingPage\\FooterAfsen.vue' /* webpackChunkName: "components_LandingPage/FooterAfsen" */).then(c => c.default || c)
+export const LazyHeaderAfsen = import('../..\\components\\LandingPage\\HeaderAfsen.vue' /* webpackChunkName: "components_LandingPage/HeaderAfsen" */).then(c => c.default || c)
+export const LazyHelloWorld = import('../..\\components\\LandingPage\\HelloWorld.vue' /* webpackChunkName: "components_LandingPage/HelloWorld" */).then(c => c.default || c)
+export const LazyHeroAfsen = import('../..\\components\\LandingPage\\HeroAfsen.vue' /* webpackChunkName: "components_LandingPage/HeroAfsen" */).then(c => c.default || c)
+export const LazyInstaAfsen = import('../..\\components\\LandingPage\\InstaAfsen.vue' /* webpackChunkName: "components_LandingPage/InstaAfsen" */).then(c => c.default || c)
+export const LazyMidAfsen = import('../..\\components\\LandingPage\\MidAfsen.vue' /* webpackChunkName: "components_LandingPage/MidAfsen" */).then(c => c.default || c)
+export const LazyPartnerAfsen = import('../..\\components\\LandingPage\\PartnerAfsen.vue' /* webpackChunkName: "components_LandingPage/PartnerAfsen" */).then(c => c.default || c)
+>>>>>>> 09c4fba6b0fbbd44f893cb80d731ff2580e4b3ea

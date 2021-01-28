@@ -11,6 +11,7 @@ use App\Exports\EmployeeExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
@@ -27,6 +28,7 @@ class EmployeeController extends Controller
             Employee::join('positions', 'employees.position_id', '=', 'positions.id')
             ->join('users', 'employees.user_id', '=', 'users.id')
             ->where('users.company_id', $request->company_id)
+            ->orderBy('employees.id', 'DESC')
             , $request, [
                 'employees.name', 'positions.position_name'
             ]);
@@ -53,8 +55,8 @@ class EmployeeController extends Controller
             'status' => 'required|boolean',
             'nip' => 'required|string',
             'kontak' => 'required|numeric',
-            'admin' => 'boolean',
-            'aktif' => 'boolean'
+            'admin' => 'required|boolean',
+            'aktif' => 'required|boolean'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
@@ -63,15 +65,11 @@ class EmployeeController extends Controller
         if(!$companyCheck){
             return $this->resp(null, 'Company Tidak Ditemukan', false, 406);
         }
+        $inputUser = $request->only(['company_id','username', 'email', 'password', 'admin', 'aktif']);
+        $password = Hash::make($inputUser['password']);
+        Arr::set($inputUser, 'password', $password);
         $inputEmployee = $request->only(['name', 'position_id', 'status', 'nip', 'kontak']);
-        $user = User::Create([
-            'company_id' => $input['company_id'],
-            'username' => $input['username'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'admin' => $input['admin'],
-            'aktif' => $input['aktif']
-        ]);
+        $user = User::Create($inputUser);
         $employee = Employee::create([
             'user_id' => $user->id,
             'name' => $inputEmployee['name'],

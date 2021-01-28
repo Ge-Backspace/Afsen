@@ -44,19 +44,20 @@
                   <template
                     slot="dateCell"
                     slot-scope="{date, data}">
-                    <p v-on:click="clickDate(data)">
+                    <el-button v-on:click="clickDate(data)">
                       {{day(date)}}
-                    </p>
+                    </el-button>
                   </template>
                 </el-calendar>
               </div>
               <div class="col-4 card text-white bg-primary mb-3">
-                <div class="card-head text-center" style="margin-top: 20px">{{ day(date) }}</div>
+                <div class="card-head text-center" style="margin-top: 20px">{{ dates(date) }}</div>
                 <div class="card-body">
                   <h5 class="card-title"></h5>
                     <div v-for="item in getSE.data" :key="item.id">
+                      <p class="card-text">Shift :</p>
                       <p class="card-text">
-                        {{ item.name }} {{item.shift_name}} {{item.schedule_in}}-{{item.schedule_out}}
+                        {{ item.name }} : {{item.code}} {{item.schedule_in}}-{{item.schedule_out}}
                       </p>
                     </div>
                 </div>
@@ -102,12 +103,18 @@ export default {
     day(date) {
       return moment(date).format('DD')
     },
-    clickDate(data) {
-      console.log(data)
-    }
+    dates(date) {
+      return moment(date).format('DD MMMM YYYY')
+    },
+    clickDate(date) {
+      this.$store.dispatch('shiftemployee/getAll', {
+        company_id: this.company_id,
+        search: date.day
+      })
+    },
   },
   computed: {
-    ...mapGetters('shiftemployee', ["getSE", "getLoader"]),
+    ...mapGetters('shiftemployee', ['getSE', 'getLoader']),
   },
   watch: {
     // getGoverments(newValue, oldValue) {},
