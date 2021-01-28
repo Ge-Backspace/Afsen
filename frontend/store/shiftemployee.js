@@ -14,6 +14,9 @@ export const mutations = {
   setLoader(state){
     state.shiftELoader = state.shiftELoader
   },
+  setPage(state, data){
+    state.shiftE.current_page = data
+  }
 }
 
 export const getters = {

@@ -96,7 +96,7 @@ class ShiftEmployeeController extends Controller
 
     public function importShiftEmployee(Request $request)
     {
-        $validator = Validator::make($request->only(['file']), [
+        $validator = Validator::make($request->only(['company_id','file']), [
             'company_id' => 'required',
             'file' => 'required',
         ], Helper::messageValidation());
