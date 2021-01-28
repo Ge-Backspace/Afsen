@@ -15,7 +15,7 @@ class EmployeeExport implements FromCollection
     public function collection()
     {
         return Employee::join('positions', 'positions.id', '=', 'employees.position_id')
-        ->where('position.company_id', $this->company_id)
+        ->where('positions.company_id', $this->company_id)
         ->get(['name', 'nip', 'kontak', 'status', 'positions.position_name']);
     }
 }

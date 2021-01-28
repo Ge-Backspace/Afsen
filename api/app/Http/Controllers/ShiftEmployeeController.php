@@ -40,7 +40,7 @@ class ShiftEmployeeController extends Controller
         return $this->getPaginate(ShiftEmployee::join('employees', 'shift_employees.employee_id', '=', 'employees.id')
         ->join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
         ->where('shifts.company_id', $request->company_id)
-        , $request, ['employees.name']);
+        , $request, ['employees.name', 'shift_employees.date']);
     }
 
     public function addShiftEmployee(Request $request)
