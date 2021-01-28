@@ -69,7 +69,7 @@ export const  menu = () => {
         {
             text: 'Shift',
             icon: 'bx bx-shuffle text-primary',
-            route: '/admin/shift'
+            route: '/admin/shiftEmployee'
         },
         {
             text: 'Permission',
@@ -116,7 +116,7 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterUser'
                 },
-                
+
 
             ]
         },
