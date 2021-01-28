@@ -450,7 +450,7 @@
           style="padding: 5px"
         >
           <label>Import Employee</label>
-          <vs-input<input type="file" id="file" ref="file" />
+          <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
         </vs-col>
         <vs-col
           vs-type="flex"
@@ -522,6 +522,7 @@ export default {
       },
       
       request: false,
+      error: {},
       active: "",
       option: [],
       page: 1,
@@ -544,7 +545,8 @@ export default {
         username: '',
         password: '',
         admin: false,
-        aktif: false
+        aktif: false,
+        file: ''
       },
       // active: "",
       // searchDate: ["", ""],
@@ -568,6 +570,27 @@ export default {
       this.$store.dispatch("employee/getAll", {
         search: this.search,
       });
+    },
+    onFileChange(e){
+      this.file = e.target.files[0];
+    },
+    importData(){
+      let formData = new FormData();
+      formData.append("company_id", this.company_id);
+      formData.append('file', this.file);
+      axios.post('/employee/import', formData, {
+        headers: {'content-type': 'multipart/form-data' }
+      })
+      .then(response => {
+        if(response.status === 200){
+          //...
+        }
+      })
+      .catch(error => {
+        this.uploading = false
+        this.error = error.response.data
+        console.log('check error: ', this.error)
+      })
     },
     exportData(){
       this.$axios.get(`/employee/export?company_id=${this.company_id}`)

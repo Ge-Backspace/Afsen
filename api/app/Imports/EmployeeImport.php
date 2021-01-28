@@ -4,9 +4,11 @@ namespace App\Imports;
 
 use App\Models\Employee;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class EmployeeImport implements ToModel
+class EmployeeImport implements ToModel, WithHeadingRow
 {
     protected $company_id;
 
@@ -16,20 +18,21 @@ class EmployeeImport implements ToModel
 
     public function model(array $row)
     {
-        User::create([
+        $user = User::create([
             'company_id' => $this->company_id,
-            'username' => $row[1],
-            'email' => $row[2],
-            'password' => $row[3],
-            'aktif' => $row[8],
-            'admin' => $row[9]
+            'username' => $row['username'],
+            'email' => $row['email'],
+            'password' => Hash::make($row['password']),
+            'aktif' => $row['aktif'],
+            'admin' => $row['admin']
         ]);
         return Employee::create([
-            'name' => $row[0],
-            'nip' => $row[4],
-            'position_id' => $row[5],
-            'kontak' => $row[6],
-            'status' => $row[7]
+            'name' => $row['name'],
+            'user_id' => $user->id,
+            'nip' => $row['nip'],
+            'position_id' => $row['position_id'],
+            'kontak' => $row['kontak'],
+            'status' => $row['status']
         ]);
     }
 }
