@@ -14,10 +14,10 @@ export const state = () => ({
 
   export const mutations = {
     setEmployees(state, data) {
-      state.employees.data = data
+      state.employees = data
     },
     setLoader(state){
-        state.employeeLoader = !state.employeeLoader
+        state.employeeLoader = state.employeeLoader
     },
     // setPage(state, data){
     //     state.users.current_page = data
@@ -43,7 +43,7 @@ export const state = () => ({
     getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
         let page = defaultPage ? 1 : context.state.employees.current_page
         this.$axios.get(`/employees?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
-            context.commit('setEmployees', resp.data.data)
+            context.commit('setEmployees', resp.data)
         }).catch(e => {
             console.log(e)
         }).finally(() => {

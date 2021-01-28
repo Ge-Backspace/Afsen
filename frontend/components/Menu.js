@@ -111,11 +111,11 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterShift'
                 },
-                {
-                    text: "Master User",
-                    icon: 'el-icon-postcard',
-                    route: '/admin/master/masterUser'
-                },
+                // {
+                //     text: "Master User",
+                //     icon: 'el-icon-postcard',
+                //     route: '/admin/master/masterUser'
+                // },
                 
 
             ]
