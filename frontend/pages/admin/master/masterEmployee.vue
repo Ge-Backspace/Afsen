@@ -46,9 +46,36 @@
                   color="rgb(59,222,200)"
                   gradient
                   :active="active == 6"
+                  @click="
+                    active = 6;
+                    importDialog = true;
+                    titleDialog = 'Export Employees';
+                  "
+                >
+                  <i class="bx bxs-purchase-tag"></i> Export PDF
+                </vs-button>
+              </div>
+              <div class="col-4">
+                <vs-button
+                  color="rgb(59,222,200)"
+                  gradient
+                  :active="active == 6"
+                  @click="
+                    active = 6;
+                    exportData();
+                  "
+                >
+                  <i class="bx bxs-purchase-tag"></i> Export Excel
+                </vs-button>
+              </div>
+              <div class="col-4">
+                <vs-button
+                  color="rgb(59,222,200)"
+                  gradient
+                  :active="active == 6"
                   @click="active = 6"
                 >
-                  <i class="bx bxs-purchase-tag"></i> History
+                  <i class="bx bxs-purchase-tag"></i> History Employee
                 </vs-button>
               </div>
             </div>
@@ -507,17 +534,17 @@ export default {
       isUpdate: false,
       btnLoader: false,
       form: {
-        name: "",
-        email: "",
-        nip: "",
-        position_id: "",
-        group: "",
-        kontak: "",
-        status: "",
-        username: "",
-        password: "",
-        admin: "",
-        aktif: ""
+        name: '',
+        email: '',
+        nip: '',
+        position_id: '',
+        group: '',
+        kontak: '',
+        status: false,
+        username: '',
+        password: '',
+        admin: false,
+        aktif: false
       },
       // active: "",
       // searchDate: ["", ""],
@@ -541,6 +568,9 @@ export default {
       this.$store.dispatch("employee/getAll", {
         search: this.search,
       });
+    },
+    exportData(){
+      this.$axios.get(`/employee/export?company_id=${this.company_id}`)
     },
     edit(data) {
       this.form.id = data.id;
@@ -581,10 +611,11 @@ export default {
       formData.append("position_id", this.form.position_id);
       formData.append("kontak", this.form.kontak);
       formData.append("status", this.form.status ? 1 : 0);
-      formData.append("password", this.form.passowrd);
+      formData.append("password", this.form.password);
       formData.append("username", this.form.username);
       formData.append("admin", this.form.admin ? 1 : 0);
       formData.append("aktif", this.form.aktif ? 1 : 0);
+      console.log(this.form)
       let url = "/employee";
       if (type == "update") {
         url = `/employee/update/${this.form.id}`;
