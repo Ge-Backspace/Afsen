@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\ShiftEmployee;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ShiftEmployeeImport implements ToModel
+class ShiftEmployeeImport implements ToModel, WithHeadingRow
 {
     protected $company_id;
 
@@ -17,9 +18,9 @@ class ShiftEmployeeImport implements ToModel
     {
         return new ShiftEmployee([
             'company_id' => $this->company_id,
-            'employee_id' => $row[0],
-            'shift_id' => $row[1],
-            'date' => $row[2]
+            'employee_id' => $row['employee'],
+            'shift_id' => $row['shift'],
+            'date' => $row['date']
         ]);
     }
 }

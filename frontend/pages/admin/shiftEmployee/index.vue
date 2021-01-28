@@ -120,8 +120,7 @@
               </vs-col>
               <vs-col w="10">
                 <vs-pagination
-                  v-model="page"
-                  :length="Math.ceil(getSE.total / table.max)"
+                  v-model="page" :length="Math.ceil(getSE.total / table.max)"
                 />
               </vs-col>
             </vs-row>
@@ -272,7 +271,7 @@
           style="padding: 5px"
         >
           <label>Import Employee</label>
-          <vs-input type="file" v-model="file" ref="file" />
+          <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
         </vs-col>
         <vs-col
           vs-type="flex"
@@ -299,7 +298,7 @@
               <vs-button
                 block
                 :loading="btnLoader"
-                @click="onSubmit('file')"
+                @click="importData()"
                 >Simpan</vs-button
               >
             </vs-col>
@@ -389,12 +388,44 @@ export default {
       };
       this.isUpdate = false;
     },
-    // handleCurrentChange(val) {
-    //   this.$store.commit('position/setPage', val)
-    //   this.$store.dispatch('position/getAll', {
-    //     company_id: this.company_id
-    //   });
-    // },
+    handleCurrentChange(val) {
+      this.$store.commit('shiftemployee/setPage', val)
+      this.$store.dispatch('shiftemployee/getAll', {
+        company_id: this.company_id
+      });
+    },
+    onFileChange(e){
+      this.file = e.target.files[0];
+    },
+    importData(){
+      let formData = new FormData();
+      formData.append('company_id', this.company_id);
+      formData.append('file', this.file);
+      this.$axios.post('/shiftEmployee/import', formData, {
+        headers: {'content-type': 'multipart/form-data' }
+      })
+      .then(resp => {
+        if(resp.data.success){
+          this.$notify.success({
+            title: 'Success',
+            message: 'Berhasil Import Shift Employee'
+          })
+          this.resetForm()
+          this.importDialog = false
+          this.$store.dispatch('shiftemployee/getAll', {
+            company_id: this.company_id
+          });
+        }
+      })
+      .catch(error => {
+        this.uploading = false
+        this.error = error.resp.data
+        console.log('check error: ', this.error)
+      })
+      .finally(() => {
+        this.btnLoader = false
+      })
+    },
     onSubmit(type = 'store') {
       this.btnLoader = true
       let formData = new FormData()
@@ -405,34 +436,6 @@ export default {
       let url = '/shiftEmployee'
       if (type == 'update') {
         url = `shiftEmployee/update/${this.form.id}`
-      } else if (type == 'file') {
-        url = '/shiftEmployee/import'
-        let fileInput = new FormData()
-        fileInput.append('company_id', this.company_id)
-        fileInput.append('file', this.file)
-        this.$axios.post(url, fileInput).then(resp => {
-          if (resp.data.success) {
-            this.$notify.success({
-              title: 'Success',
-              message: `Berhasil Import Shift Employee`
-            })
-            this.resetForm()
-            this.seDialog = false
-            this.$store.dispatch('shiftemployee/getAll', {
-              company_id: this.company_id
-            })
-          }
-        }).catch(err => {
-          let error = err.response.data.data
-          if (error) {
-            this.showErrorField(error)
-          } else {
-            this.$notify.error({
-              title: 'Error',
-              message: err.response.data.message
-            })
-          }
-        })
       }
 
       this.$axios.post(url, formData).then(resp => {
@@ -504,7 +507,22 @@ export default {
     ...mapGetters("shiftemployee", ["getSE", "getLoader"]),
     ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees']),
   },
-  watch: {},
+  watch: {
+    getSE(newValue, oldValue) {
+
+    },
+    search(newValue, oldValue) {
+      this.$store.dispatch('shiftemployee/getAll', {
+        search: newValue
+      });
+    },
+    page(newValue, oldValue) {
+      this.$store.commit('shiftemployee/setPage', newValue)
+      this.$store.dispatch('shiftemployee/getAll', {
+        company_id: this.company_id
+      });
+    }
+  }
 };
 </script>
 
