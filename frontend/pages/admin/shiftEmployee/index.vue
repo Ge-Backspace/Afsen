@@ -73,7 +73,7 @@
                 {{ tr.schedule_out }}
               </vs-td>
               <vs-td>
-                {{ tr.date }}
+                {{ formatDate(tr.date) }}
               </vs-td>
               <vs-td>
                 <el-tooltip content="Edit" placement="top-start" effect="dark">
@@ -156,11 +156,11 @@
             <label>Employee</label>
             <vs-select
               filter
-              placeholder="Positions"
+              placeholder="Employee"
               v-model="form.employee_id"
             >
               <vs-option
-                v-for="op in optionEmployee"
+                v-for="op in getOptionEmployees.data"
                 :key="op.id"
                 :label="op.name"
                 :value="op.id"
@@ -179,42 +179,29 @@
             <label>Shift Name</label>
             <vs-select
               filter
-              placeholder="Positions"
+              placeholder="Shift"
               v-model="form.shift_id"
             >
               <vs-option
-                v-for="op in optionShift"
+                v-for="op in getOptionShifts.data"
                 :key="op.id"
                 :label="[op.shift_name, op.schedule_in, op. schedule_out]"
                 :value="op.id"
               >
-                {{ op.shift_name }} {{ op.schedule_in }} {{ op. schedule_out }}
+                {{ op.shift_name }},{{ op.schedule_in }}-{{ op. schedule_out }}
               </vs-option>
             </vs-select>
           </vs-col>
-          <!-- <vs-col
+          <vs-col
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
             w="6"
             style="padding: 5px"
           >
-            <label>Schedule_out</label>
-            <vs-select
-              filter
-              placeholder="Positions"
-              v-model="form.shift_id"
-            >
-              <vs-option
-                v-for="op in option"
-                :key="op.id"
-                :label="op.schedule_out"
-                :value="op.id"
-              >
-                {{ op.schedule_out }}
-              </vs-option>
-            </vs-select>
-          </vs-col> -->
+            <label>Date</label>
+            <vs-input type="date" v-model="form.date"></vs-input>
+          </vs-col>
         </vs-row>
       </div>
 
@@ -273,15 +260,15 @@ export default {
       request: false,
       page: 1,
       titleDialog: "Edit Shift Employee",
-      search: "",
-      company_id: "",
+      search: '',
+      company_id: '',
       isUpdate: false,
       seDialog: false,
       btnLoader: false,
       form: {
-        employee_id: "",
-        shift_name: "",
-        shift_id: ""
+        employee_id: '',
+        shift_id: '',
+        date: '',
       },
     };
   },
@@ -290,18 +277,12 @@ export default {
     this.$store.dispatch("shiftemployee/getAll", {
       company_id: this.company_id,
     });
-    this.$axios
-      .get(`/employees?company_id=${this.company_id}`)
-      .then((resp) => {
-        this.optionEmployee = resp.data.data;
-        console.log(this.optionEmployee)
-      });
-      this.$axios
-      .get(`/shifts?company_id=${this.company_id}`)
-      .then((resp) => {
-        this.optionShift = resp.data.data;
-      });
-      
+    this.$store.dispatch('option/getOptionEmployees', {
+      company_id: this.company_id
+    })
+    this.$store.dispatch('option/getOptionShifts', {
+      company_id: this.company_id
+    })
   },
   methods: {
     // searchData(){
@@ -312,7 +293,9 @@ export default {
     // },
     edit(data) {
       // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
+      this.form.employee_id = data.employee_id;
       this.form.shift_id = data.shift_id;
+      this.form.date = data.date;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;
@@ -337,11 +320,9 @@ export default {
     onSubmit(type = 'store') {
       this.btnLoader = true
       let formData = new FormData()
-      // formData.append("id", this.form.id)
-      formData.append("company_id", this.company_id)
       formData.append("employee_id", this.form.employee_id)
-      formData.append("schedule_in", this.form.schedule_in)
-      formData.append("schedule_out", this.form.schedule_out)
+      formData.append("shift_id", this.form.shift_id)
+      formData.append("date", this.form.date)
       let url = "/shiftEmployee";
       if (type == 'update') {
         url = `shiftEmployee/update/${this.form.id}`
@@ -408,14 +389,13 @@ export default {
         }
       })
     },
-    // formatTime(time){
-    //   return moment(time, "HH:mm:ss").format('HH:mm');
-    // }
+    formatDate(date){
+      return moment(date).format('DD MMMM YYYY');
+    }
   },
   computed: {
     ...mapGetters("shiftemployee", ["getSE", "getLoader"]),
-    ...mapGetters("shift", ["getShifts", "getLoader"]),
-    ...mapGetters("employee", ["getEmployees", "getLoader"]),
+    ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees']),
   },
   watch: {},
 };

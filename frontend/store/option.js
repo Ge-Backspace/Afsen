@@ -1,69 +1,70 @@
 export const state = () => ({
-    option: {
-        position: [],
-        employee: [],
-        shift: []
+    positions: {
+      data: [],
+    },
+    employees: {
+      data:[],
+    },
+    shifts: {
+      data:[],
     },
 })
-  
+
 export const mutations = {
-    setOption(state, data) {
-      state.option[data.type] = data.value
+    setOptionPositions(state, data) {
+      state.positions = data
+    },
+    setOptionEmployees(state, data) {
+      state.employees = data
+    },
+    setOptionShifts(state, data) {
+      state.shifts = data
     },
 }
 
 export const getters = {
-    getOption(state) {
-         return state.option
+    getOptionPositions(state) {
+         return state.positions
+    },
+    getOptionEmployees(state) {
+      return state.employees
+    },
+    getOptionShifts(state) {
+      return state.shifts
     }
 };
 
 export const actions = {
-    getPosition(context, {company_id = ''}){
-        let option = context.state.option
-        Object.keys(option).forEach((key) => {
-            this.$axios.get(`/positions/company_id=${company_id}`).then(resp => {
-                context.commit('setOption', {
-                    type: key,
-                    value: resp.data.data
-                })
-            }).catch(e => {
-                console.log(e)
-            }).finally(() => {
-                //
-            })
-        });
+    getOptionPositions(context, {company_id = ''}){
+      this.$axios.get(`/optionPosition?company_id=${company_id}`)
+      .then(resp => {
+          context.commit('setOptionPositions', resp.data)
+      }).catch(e => {
+          console.log(e)
+      }).finally(() => {
+          // context.commit("setLoader")
+      })
     },
 
-    getEmployee(context, {company_id = ''}){
-        let option = context.state.option
-        Object.keys(option).forEach((key) => {
-            this.$axios.get(`/employees/company_id=${company_id}`).then(resp => {
-                context.commit('setOption', {
-                    type: key,
-                    value: resp.data.data
-                })
-            }).catch(e => {
-                console.log(e)
-            }).finally(() => {
-                //
-            })
-        });
+    getOptionEmployees(context, {company_id = ''}){
+      this.$axios.get(`/optionEmployee?company_id=${company_id}`)
+      .then(resp => {
+          context.commit('setOptionEmployees', resp.data)
+      }).catch(e => {
+          console.log(e)
+      }).finally(() => {
+          // context.commit("setLoader")
+      })
     },
 
-    getShift(context, {company_id = ''}){
-        let option = context.state.option
-        Object.keys(option).forEach((key) => {
-            this.$axios.get(`/shifts/company_id=${company_id}`).then(resp => {
-                context.commit('setOption', {
-                    type: key,
-                    value: resp.data.data
-                })
-            }).catch(e => {
-                console.log(e)
-            }).finally(() => {
-
-            })
-        });
+    getOptionShifts(context, {company_id = ''}){
+      this.$axios.get(`/optionShift?company_id=${company_id}`)
+      .then(resp => {
+          context.commit('setOptionShifts', resp.data)
+      }).catch(e => {
+          console.log(e)
+      }).finally(() => {
+          // context.commit("setLoader")
+      })
     },
 }
