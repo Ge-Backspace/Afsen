@@ -75,6 +75,10 @@
     "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
   },
   "LazyPartnerAfsen": {
+<<<<<<< HEAD
+    "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/PartnerAfsen.vue"
+=======
     "description": "Auto imported from components/LandingPage/PartnerAfsen.vue"
+>>>>>>> 09c4fba6b0fbbd44f893cb80d731ff2580e4b3ea
   }
 }

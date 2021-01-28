@@ -111,6 +111,7 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterShift'
                 },
+                
 
             ]
         },
