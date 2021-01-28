@@ -48,8 +48,6 @@
                   :active="active == 6"
                   @click="
                     active = 6;
-                    importDialog = true;
-                    titleDialog = 'Export Employees';
                   "
                 >
                   <i class="bx bxs-purchase-tag"></i> Export PDF
@@ -73,7 +71,10 @@
                   color="rgb(59,222,200)"
                   gradient
                   :active="active == 6"
-                  @click="active = 6"
+                  @click="
+                  active = 6
+                  exportData()
+                  "
                 >
                   <i class="bx bxs-purchase-tag"></i> History Employee
                 </vs-button>
@@ -484,7 +485,7 @@
               <vs-button
                 block
                 :loading="btnLoader"
-                @click="onSubmit('store')"
+                @click="importData()"
                 v-else
                 >Simpan</vs-button
               >
@@ -578,7 +579,7 @@ export default {
       let formData = new FormData();
       formData.append("company_id", this.company_id);
       formData.append('file', this.file);
-      axios.post('/employee/import', formData, {
+      this.$axios.post('/employee/import', formData, {
         headers: {'content-type': 'multipart/form-data' }
       })
       .then(response => {
@@ -593,7 +594,30 @@ export default {
       })
     },
     exportData(){
-      this.$axios.get(`/employee/export?company_id=${this.company_id}`)
+      this.$axios.get(`/employee/export?company_id=${this.company_id}`, {
+        //if u forgot this, your download will be corrupt
+        responseType: 'blob'
+      }).then((response) => {
+        //create a link in the document that we'll
+        //programmatically 'click'
+        const link = document.createElement('a');
+
+        //tell the browser to associate the response data
+        //to the URL of the link we created above.
+        link.href = window.URL.createObjectURL(
+          new Blob([response.data])
+        );
+      
+
+      //tell the browset to download, not render
+      link.setAttribute('download','employee.xlsx');
+
+      //place the link in the DOM.
+      document.body.appendChild(link);
+
+      //make the magic happen!
+      link.click();
+      }); //please catch me baby!
     },
     edit(data) {
       this.form.id = data.id;
