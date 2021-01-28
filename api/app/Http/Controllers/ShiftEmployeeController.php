@@ -112,8 +112,8 @@ class ShiftEmployeeController extends Controller
 
     public function exportShiftEmployee(Request $request)
     {
-        $validator = Validator::make($request->only(['user_id']), [
-            'user_id' => 'required',
+        $validator = Validator::make($request->only(['company_id']), [
+            'company_id' => 'required',
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
@@ -121,9 +121,9 @@ class ShiftEmployeeController extends Controller
         $as = \Maatwebsite\Excel\Excel::XLSX;
         $type = 'xlsx';
         if($request->as == 'pdf'){
-            $type = 'pdf';
             $as = \Maatwebsite\Excel\Excel::DOMPDF;
+            $type = 'pdf';
         }
-        return Excel::download(new ShiftEmployeeExport($request->user_id), 'shift_employee.' . $type, $as);
+        return Excel::download(new ShiftEmployeeExport($request->company_id), 'shift_employee.' . $type, $as);
     }
 }
