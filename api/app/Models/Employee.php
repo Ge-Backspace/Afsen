@@ -9,7 +9,7 @@ class Employee extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'name', 'user_id', 'nip', 'position_id', 'status', ''
+        'name', 'user_id', 'nip', 'position_id', 'status', 'kontak',
     ];
 
     public function positions()

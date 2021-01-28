@@ -40,7 +40,8 @@ class EmployeeController extends Controller
     public function addEmployee(Request $request)
     {
         $input = $request->only([
-            'company_id', 'name', 'username', 'email', 'password', 'nip', 'status', 'position_id', 'kontak',
+            'company_id', 'name', 'username', 'email', 'password', 'nip', 'position_id', 'kontak',
+            'status', 'admin', 'aktif'
         ]);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
@@ -48,23 +49,28 @@ class EmployeeController extends Controller
             'username' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'position_id' => 'required|numeric',
             'status' => 'required|boolean',
-            'nip' => 'string',
-            'kontak' => 'numeric',
+            'nip' => 'required|string',
+            'kontak' => 'required|numeric',
+            'admin' => 'boolean',
+            'aktif' => 'boolean'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
         }
         $companyCheck = Companies::find($input['company_id']);
         if(!$companyCheck){
-            return $this->resp($request->input(), 'Company Tidak Ditemukan', false, 406);
+            return $this->resp(null, 'Company Tidak Ditemukan', false, 406);
         }
-        $inputEmployee = $request->only(['name', 'position_id', 'status', 'kontak', 'nip']);
+        $inputEmployee = $request->only(['name', 'position_id', 'status', 'nip', 'kontak']);
         $user = User::Create([
             'company_id' => $input['company_id'],
             'username' => $input['username'],
             'email' => $input['email'],
-            'password' => Hash::make($input['password'])
+            'password' => Hash::make($input['password']),
+            'admin' => $input['admin'],
+            'aktif' => $input['aktif']
         ]);
         $employee = Employee::create([
             'user_id' => $user->id,
@@ -84,13 +90,18 @@ class EmployeeController extends Controller
         {
             return $this->resp(null, 'Employee Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['name', 'nip', 'position_id', 'kontak', 'status']);
+        $input = $request->only(['name', 'username', 'email', 'nip', 'position_id', 'kontak', 'status', 'admin', 'aktif']);
         $validator = Validator::make($input, [
-            'name' => 'required|string',
-            'nip' => 'required|string',
+            'company_id' => 'required|numeric',
+            'name' => 'required|string|min:4|max:100',
+            'username' => 'required',
+            'email' => 'required',
+            'nip' => 'required|strxing',
             'position_id' => 'required|numeric',
+            'kontak' => 'required|numeric',
             'status' => 'required|boolean',
-            'kontak' => 'required'
+            'admin' => 'boolean',
+            'aktif' => 'boolean'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Update Employee', false, 401);
@@ -102,10 +113,12 @@ class EmployeeController extends Controller
     public function deleteEmployee($id)
     {
         $employee = Employee::find($id);
-        if(!$employee)
+        $user = User::find($employee->id);
+        if(!$employee && !$user)
         {
             return $this->resp(null, 'Employee Tidak Ditemukan', false, 406);
         }
+        $user->delete();
         $employee->delete();
         return $this->resp();
     }
