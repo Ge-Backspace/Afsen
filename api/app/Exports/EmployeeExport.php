@@ -5,6 +5,7 @@ namespace App\Exports;
 use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Events\AfterSheet;
 
 class EmployeeExport implements FromCollection, WithHeadings
 {
@@ -18,6 +19,25 @@ class EmployeeExport implements FromCollection, WithHeadings
         return Employee::join('positions', 'positions.id', '=', 'employees.position_id')
         ->where('positions.company_id', $this->company_id)
         ->get(['name', 'nip', 'kontak', 'status', 'positions.position_name']);
+    }
+
+    public function registerEvents(): array
+    {
+        $styleArray = [
+            'font' => [
+                'bold' => true,
+            ]
+        ];
+
+        return [
+            // Handle by a closure.
+            AfterSheet::class => function (AfterSheet $event) use ($styleArray) {
+                // $event->sheet->insertNewRowBefore(7, 2);
+                // $event->sheet->insertNewColumnBefore('A', 2);
+                $event->sheet->getStyle('A1:G1')->applyFromArray($styleArray);
+                $event->sheet->setCellValue('E27', '=SUM(E2:E26)');
+            },
+        ];
     }
 
     public function headings(): array
