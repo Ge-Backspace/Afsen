@@ -81,8 +81,10 @@
                   <vs-th>Position</vs-th>
                   <vs-th>Group</vs-th>
                   <vs-th>Kontak</vs-th>
-                  <vs-th>Status</vs-th>
+                  <vs-th>Status Employee</vs-th>
                   <vs-th>Username</vs-th>
+                  <vs-th>Admin</vs-th>
+                  <vs-th>Status User</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
@@ -114,6 +116,18 @@
                   </vs-td>
                   <vs-td>
                     {{ tr.username }}
+                  </vs-td>
+                  <vs-td>
+                    <span class="badge badge-success" v-if="tr.admin"
+                      >Aktif</span
+                    >
+                    <span class="badge badge-warning" v-else>Non Aktif</span>
+                  </vs-td>
+                  <vs-td>
+                    <span class="badge badge-success" v-if="tr.aktif"
+                      >Aktif</span
+                    >
+                    <span class="badge badge-warning" v-else>Non Aktif</span>
                   </vs-td>
                   <vs-td>
                     <el-tooltip
@@ -319,7 +333,7 @@
               placeholder="Nama"
             ></vs-input>
           </vs-col>
-          <vs-col
+          <!-- <vs-col
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -330,7 +344,27 @@
             <vs-col w="10">
               <vs-switch style="width: 20px" v-model="form.status" />
             </vs-col>
-          </vs-col>
+          </vs-col> -->
+          <vs-row>
+            <vs-col w="2">
+              <label>Status Employee</label>
+            </vs-col>
+            <vs-col w="10">
+              <vs-switch style="width: 20px" v-model="form.status" />
+            </vs-col>
+            <vs-col w="2">
+              <label>Admin</label>
+            </vs-col>
+            <vs-col w="10">
+              <vs-switch style="width: 20px" v-model="form.admin" />
+            </vs-col>
+            <vs-col w="2">
+              <label>Status User</label>
+            </vs-col>
+            <vs-col w="10">
+              <vs-switch style="width: 20px" v-model="form.aktif" />
+            </vs-col>
+          </vs-row>
         </vs-row>
       </div>
 
@@ -479,9 +513,11 @@ export default {
         position_id: "",
         group: "",
         kontak: "",
-        status: "true",
+        status: "",
         username: "",
         password: "",
+        admin: "",
+        aktif: ""
       },
       // active: "",
       // searchDate: ["", ""],
@@ -512,6 +548,8 @@ export default {
       this.form.position_id = data.position_id;
       this.form.kontak = data.kontak;
       this.form.status = data.status;
+      this.form.admin = data.admin;
+      this.form.aktif = data.aktif;
       this.tambahDialog = true;
       this.titleDialog = "Edit Employee";
       this.isUpdate = true;
@@ -524,6 +562,8 @@ export default {
         kontak: "",
         status: "",
         username: "",
+        admin: "",
+        aktif: ""
       };
       this.isUpdate = false;
     },
@@ -543,6 +583,8 @@ export default {
       formData.append("status", this.form.status ? 1 : 0);
       formData.append("password", this.form.passowrd);
       formData.append("username", this.form.username);
+      formData.append("admin", this.form.admin ? 1 : 0);
+      formData.append("aktif", this.form.aktif ? 1 : 0);
       let url = "/employee";
       if (type == "update") {
         url = `/employee/update/${this.form.id}`;

@@ -111,12 +111,21 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterShift'
                 },
+<<<<<<< HEAD
+                // {
+                //     text: "Master User",
+                //     icon: 'el-icon-postcard',
+                //     route: '/admin/master/masterUser'
+                // },
+                
+=======
                 {
                     text: "Master User",
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterUser'
                 },
 
+>>>>>>> 0628ddf0f900f5707b6dfe8004eb3fc93eba1579
 
             ]
         },
