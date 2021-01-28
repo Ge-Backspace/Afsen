@@ -1,9 +1,8 @@
 export const state = () => ({
     setting: {
-        pelaksana_kegiatan: [],
-        sumber_pembiayaan: [],
-        segmen_kegiatan: [],
-        kategori_kegiatan: []
+        position: [],
+        employee: [],
+        shift: [],
     },
 })
   
@@ -20,10 +19,10 @@ export const getters = {
 };
 
 export const actions = {
-    getAll(context){
+    getAll(context, {company_id = ''}){
         let setting = context.state.setting
         Object.keys(setting).forEach((key) => {
-            this.$axios.get(`/settings/${key}`).then(resp => {
+            this.$axios.get(`//${key}`).then(resp => {
                 context.commit('setSetting', {
                     type: key,
                     value: resp.data.data
