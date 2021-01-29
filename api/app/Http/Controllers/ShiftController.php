@@ -73,7 +73,8 @@ class ShiftController extends Controller
 
     public function importShift(Request $request)
     {
-        $validator = Validator::make($request->only(['file']), [
+        $validator = Validator::make($request->only(['company_id', 'file']), [
+            'company_id' => 'required',
             'file' => 'required',
         ], Helper::messageValidation());
         if ($validator->fails()) {
@@ -81,7 +82,7 @@ class ShiftController extends Controller
         }
         if($request->hasFile('file')){
             $file = $request->file('file');
-            $import = Excel::import(new ShiftImport, $file);
+            $import = Excel::import(new ShiftImport($request->company_id), $file);
             return $this->resp($import);
         }
     }

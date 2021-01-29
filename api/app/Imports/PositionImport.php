@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\Position;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class PositionImport implements ToModel
+class PositionImport implements ToModel, WithHeadingRow
 {
     protected $company_id;
 
@@ -17,8 +18,8 @@ class PositionImport implements ToModel
     {
         return new Position([
             'company_id' => $this->company_id,
-            'position_name' => $row[0],
-            'group' => $row[1],
+            'position_name' => $row['position_name'],
+            'group' => $row['group'],
         ]);
     }
 }

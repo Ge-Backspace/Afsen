@@ -11,10 +11,49 @@
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <vs-button
+                warn
+                style="float: right"
+                :loading="globalLoader"
+                gradient
+                @click="exportData('pdf')"
+                >Download PDF</vs-button
+              >
+              &nbsp;
+              <vs-button
+                success
+                style="float: right"
+                :loading="globalLoader"
+                gradient
+                @click="exportData('excel')"
+                >Download Excel</vs-button
+              >
+            </div>
+          </div>
           <el-card v-loading="getLoader">
-            <div class="row" style="margin-bottom:20px">
-              <div class="col-md-3 offset-md-9">
-                <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
+            <div class="row" style="margin-bottom: 20px">
+              <div class="col-md-2">
+                <vs-button
+                  success
+                  style="float: right"
+                  :loading="globalLoader"
+                  gradient
+                  @click="
+                  importDialog = true
+                  titleDialog = 'Import Master Shift'
+                  "
+                  >Import Excel</vs-button
+                >
+              </div>
+              <div class="col-md-3 offset-md-7">
+                <el-input
+                  placeholder="Cari"
+                  v-model="search"
+                  @change="searchData()"
+                  size="mini"
+                >
                   <i slot="prefix" class="el-input__icon el-icon-search"></i>
                 </el-input>
               </div>
@@ -139,6 +178,72 @@
         </div>
       </template>
     </vs-dialog>
+    <vs-dialog
+      v-model="importDialog"
+      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()"
+    >
+      <template #header>
+        <h1 class="not-margin">
+          {{ titleDialog }}
+        </h1>
+      </template>
+      <div class="con-form">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label>Import Employee</label>
+          <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
+        </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <vs-button
+            color="primary"
+            gradient
+            :active="active == 6"
+            @click="active = 6"
+          >
+            <i class="bx bx-file-blank"></i> download templates
+          </vs-button>
+        </vs-col>
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                :loading="btnLoader"
+                @click="importData()"
+                >Simpan</vs-button
+              >
+            </vs-col>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                border
+                @click="
+                  importDialog = false;
+                  resetForm();
+                "
+                >Batal</vs-button
+              >
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -165,7 +270,8 @@
           max: 10
         },
         page: 1,
-        titleDialog: 'Edit Company',
+        titleDialog: 'Edit Shift',
+        importDialog: false,
         search: '',
         company_id : JSON.parse(JSON.stringify(this.$auth.user.company_id)),
         isUpdate: false,
@@ -218,6 +324,58 @@
         this.$store.commit('shift/setPage', val)
         this.$store.dispatch('shift/getAll', {
           company_id: this.company_id
+        });
+      },
+      onFileChange(e){
+        this.file = e.target.files[0];
+      },
+      importData(){
+        let formData = new FormData();
+        formData.append('company_id', this.company_id);
+        formData.append('file', this.file);
+        this.$axios.post('/shift/import', formData, {
+          headers: {'content-type': 'multipart/form-data' }
+        })
+        .then(resp => {
+          if(resp.data.success){
+            this.$notify.success({
+              title: 'Success',
+              message: 'Berhasil Import Shift Employee'
+            })
+            this.resetForm()
+            this.importDialog = false
+            this.$store.dispatch('shift/getAll', {
+              company_id: this.company_id
+            });
+          }
+        })
+        .catch(error => {
+          this.uploading = false
+          this.error = error.resp.data
+          console.log('check error: ', this.error)
+        })
+        .finally(() => {
+          this.btnLoader = false
+        })
+      },
+      exportData(type = 'excel'){
+        if (type == 'pdf') {
+          this.export_as = 'pdf'
+        }
+        this.$axios.get(`/shift/export?company_id=${this.company_id}&as=${this.export_as}`, {
+          responseType: 'blob'
+        }).then((response) => {
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          if (type == 'pdf') {
+            link.setAttribute('download','shift.pdf');
+          } else {
+            link.setAttribute('download','shift.xlsx');
+          }
+          document.body.appendChild(link);
+          link.click();
         });
       },
       onSubmit(type = 'store') {
@@ -310,7 +468,7 @@
 
       },
       search(newValue, oldValue) {
-        this.$store.dispatch('goverment/getAll', {
+        this.$store.dispatch('shift/getAll', {
           search: newValue
         });
       },

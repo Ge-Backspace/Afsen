@@ -162,7 +162,6 @@
         </div>
       </template>
     </vs-dialog>
-
     <vs-dialog
       v-model="importDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
@@ -453,7 +452,7 @@
 
       },
       search(newValue, oldValue) {
-        this.$store.dispatch('goverment/getAll', {
+        this.$store.dispatch('position/getAll', {
           search: newValue
         });
       },
