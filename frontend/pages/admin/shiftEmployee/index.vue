@@ -16,7 +16,7 @@
             style="float: right"
             :loading="globalLoader"
             gradient
-            @click="downloadFile(`/information/download/pdf`)"
+            @click="exportData('pdf')"
             >Download PDF</vs-button
           >
           &nbsp;
@@ -25,7 +25,7 @@
             style="float: right"
             :loading="globalLoader"
             gradient
-            @click="downloadFile(`/information/download/xlsx`)"
+            @click="exportData('excel')"
             >Download Excel</vs-button
           >
         </div>
@@ -351,6 +351,7 @@ export default {
         shift_id: '',
         date: '',
       },
+      export_as: 'excel',
     };
   },
   mounted() {
@@ -425,6 +426,26 @@ export default {
       .finally(() => {
         this.btnLoader = false
       })
+    },
+    exportData(type = 'excel'){
+      if (type == 'pdf') {
+        this.export_as = 'pdf'
+      }
+      this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.as}`, {
+        responseType: 'blob'
+      }).then((response) => {
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(
+          new Blob([response.data])
+        );
+        if (type == 'pdf') {
+          link.setAttribute('download','shift_employee.pdf');
+        } else {
+          link.setAttribute('download','shift_employee.xlsx');
+        }
+        document.body.appendChild(link);
+        link.click();
+      });
     },
     onSubmit(type = 'store') {
       this.btnLoader = true
@@ -509,7 +530,7 @@ export default {
   },
   watch: {
     getSE(newValue, oldValue) {
-
+      //
     },
     search(newValue, oldValue) {
       this.$store.dispatch('shiftemployee/getAll', {

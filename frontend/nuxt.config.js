@@ -77,6 +77,7 @@ export default {
     {src: '@plugins/vuesax'},
     {src: '@plugins/extablecolumn'},
     {src: '@plugins/vuegeolocation'},
+    {src: '@plugins/vuegooglemaps'},
     {src: '@plugins/vcalendar', mode: 'client'},
     {src: '@plugins/swal', mode: 'client'},
     {src: '@plugins/vue2editor', mode: 'client'},
@@ -97,6 +98,7 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/moment',
   ],
+
 
   module: {
     rules: [
@@ -121,7 +123,7 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-
+    transpile: [/^vue2-google-maps($|\/)/],
   },
   /*
   ** Customize the progress bar color

@@ -593,8 +593,12 @@ export default {
         console.log('check error: ', this.error)
       })
     },
-    exportData(){
-      this.$axios.get(`/employee/export?company_id=${this.company_id}`, {
+    exportData(type = 'excel'){
+      let as = 'excel'
+      if (type == 'pdf') {
+        as = 'pdf'
+      }
+      this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${as}`, {
         //if u forgot this, your download will be corrupt
         responseType: 'blob'
       }).then((response) => {
@@ -607,7 +611,7 @@ export default {
         link.href = window.URL.createObjectURL(
           new Blob([response.data])
         );
-      
+
 
       //tell the browset to download, not render
       link.setAttribute('download','employee.xlsx');
