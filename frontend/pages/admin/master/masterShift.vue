@@ -389,7 +389,7 @@
         formData.append("schedule_out", this.form.schedule_out)
         let url = "/shift";
         if (type == 'update') {
-          url = `/shift/update/${this.form.id}`
+          url = `/shift/${this.form.id}/update`
         }
 
         this.$axios.post(url, formData).then(resp => {
@@ -430,7 +430,7 @@
           cancelButtonText: 'Yes but actually NO!'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/shift/delete/${id}`).then(resp => {
+            this.$axios.delete(`/shift/${id}/delete`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',

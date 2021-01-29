@@ -71,19 +71,19 @@
           <template #tbody>
             <vs-tr :key="i" v-for="(tr, i) in getSE.data" :data="tr">
               <vs-td>
-                {{ tr.name }}
+                {{ tr.employees.name }}
               </vs-td>
               <vs-td>
-                {{ tr.code }}
+                {{ tr.shifts.code }}
               </vs-td>
               <vs-td>
-                {{ tr.shift_name }}
+                {{ tr.shifts.shift_name }}
               </vs-td>
               <vs-td>
-                {{ tr.schedule_in }}
+                {{ tr.shifts.schedule_in }}
               </vs-td>
               <vs-td>
-                {{ tr.schedule_out }}
+                {{ tr.shifts.schedule_out }}
               </vs-td>
               <vs-td>
                 {{ formatDate(tr.date) }}
@@ -347,11 +347,11 @@ export default {
       btnLoader: false,
       file: '',
       form: {
+        id:'',
         employee_id: '',
         shift_id: '',
         date: '',
       },
-      export_as: 'excel',
     };
   },
   mounted() {
@@ -374,6 +374,8 @@ export default {
       });
     },
     edit(data) {
+      this.form.id = data.id;
+      console.log(this.form.id)
       this.form.employee_id = data.employee_id;
       this.form.shift_id = data.shift_id;
       this.form.date = data.date;
@@ -383,6 +385,7 @@ export default {
     },
     resetForm() {
       this.form = {
+        id: '',
         employee_id: '',
         shift_id: '',
         date: ''
@@ -428,25 +431,25 @@ export default {
       })
     },
     exportData(type = 'excel'){
-      if (type == 'pdf') {
-        this.export_as = 'pdf'
-      }
-      this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`, {
-        responseType: 'blob'
-      }).then((response) => {
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(
-          new Blob([response.data])
-        );
         if (type == 'pdf') {
-          link.setAttribute('download','shift_employee.pdf');
-        } else {
-          link.setAttribute('download','shift_employee.xlsx');
+          this.export_as = 'pdf'
         }
-        document.body.appendChild(link);
-        link.click();
-      });
-    },
+        this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`, {
+          responseType: 'blob'
+        }).then((response) => {
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          if (type == 'pdf') {
+            link.setAttribute('download','shift.pdf');
+          } else {
+            link.setAttribute('download','shift.xlsx');
+          }
+          document.body.appendChild(link);
+          link.click();
+        });
+      },
     onSubmit(type = 'store') {
       this.btnLoader = true
       let formData = new FormData()
@@ -456,7 +459,7 @@ export default {
       formData.append('date', this.form.date)
       let url = '/shiftEmployee'
       if (type == 'update') {
-        url = `shiftEmployee/update/${this.form.id}`
+        url = `shiftEmployee/${this.form.id}/update`
       }
 
       this.$axios.post(url, formData).then(resp => {
@@ -497,7 +500,7 @@ export default {
         cancelButtonText: 'Yes but actually NO!'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$axios.delete(`/shiftEmployee/delete/${id}`).then(resp => {
+          this.$axios.delete(`/shiftEmployee/${id}/delete`).then(resp => {
             if (resp.data.success) {
               this.$notify.success({
                 title: 'Success',
@@ -505,7 +508,6 @@ export default {
               })
               this.shiftDialog = false
               this.$store.dispatch('shiftemployee/getAll', {
-                defaultPage: true,
                 company_id: this.company_id
               });
             }

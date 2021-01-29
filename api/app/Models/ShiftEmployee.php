@@ -16,12 +16,12 @@ class ShiftEmployee extends Model
 
     public function employees()
     {
-        return $this->belongsTo('App\Models\Employee');
+        return $this->belongsTo('App\Models\Employee', 'employee_id');
     }
 
     public function shifts()
     {
-        return $this->belongsTo('App\Models\Shift');
+        return $this->belongsTo('App\Models\Shift', 'shift_id');
     }
 
     public function companies()
