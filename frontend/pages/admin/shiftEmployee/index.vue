@@ -431,7 +431,7 @@ export default {
       if (type == 'pdf') {
         this.export_as = 'pdf'
       }
-      this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.as}`, {
+      this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`, {
         responseType: 'blob'
       }).then((response) => {
         const link = document.createElement('a');
