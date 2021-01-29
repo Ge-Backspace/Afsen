@@ -42,7 +42,7 @@
                   gradient
                   @click="
                   importDialog = true
-                  titleDialog = 'Import Shift Employee'
+                  titleDialog = 'Import Master Shift'
                   "
                   >Import Excel</vs-button
                 >
@@ -162,6 +162,72 @@
         </div>
       </template>
     </vs-dialog>
+    <vs-dialog
+      v-model="importDialog"
+      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()"
+    >
+      <template #header>
+        <h1 class="not-margin">
+          {{ titleDialog }}
+        </h1>
+      </template>
+      <div class="con-form">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label>Import Employee</label>
+          <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
+        </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <vs-button
+            color="primary"
+            gradient
+            :active="active == 6"
+            @click="active = 6"
+          >
+            <i class="bx bx-file-blank"></i> download templates
+          </vs-button>
+        </vs-col>
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                :loading="btnLoader"
+                @click="importData()"
+                >Simpan</vs-button
+              >
+            </vs-col>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                border
+                @click="
+                  importDialog = false;
+                  resetForm();
+                "
+                >Batal</vs-button
+              >
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -193,6 +259,7 @@
         company_id : JSON.parse(JSON.stringify(this.$auth.user.company_id)),
         isUpdate: false,
         positionDialog: false,
+        importDialog: false,
         btnLoader: false,
         form: {
           id: '',
@@ -208,12 +275,44 @@
       });
     },
     methods: {
-      // searchData(){
-      //   this.$store.dispatch('schedule/getAll', {
-      //     search: this.search,
-      //     company_id: this.company_id
-      //   });
-      // },
+      searchData(){
+        this.$store.dispatch('shift/getAll', {
+          search: this.search,
+          company_id: this.company_id
+        });
+      },
+    onFileChange(e){
+    this.file = e.target.files[0];
+    },
+    importData(){
+      let formData = new FormData();
+      formData.append('company_id', this.company_id);
+      formData.append('file', this.file);
+      this.$axios.post('/shift/import', formData, {
+        headers: {'content-type': 'multipart/form-data' }
+      })
+      .then(resp => {
+        if(resp.data.success){
+          this.$notify.success({
+            title: 'Success',
+            message: 'Berhasil Import Shift Employee'
+          })
+          this.resetForm()
+          this.importDialog = false
+          this.$store.dispatch('shift/getAll', {
+            company_id: this.company_id
+          });
+        }
+      })
+      .catch(error => {
+        this.uploading = false
+        this.error = error.resp.data
+        console.log('check error: ', this.error)
+      })
+      .finally(() => {
+        this.btnLoader = false
+      })
+    },
       edit(data) {
         // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
         this.form.id = data.id
@@ -325,7 +424,7 @@
 
       },
       search(newValue, oldValue) {
-        this.$store.dispatch('goverment/getAll', {
+        this.$store.dispatch('position/getAll', {
           search: newValue
         });
       },

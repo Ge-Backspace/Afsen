@@ -310,7 +310,7 @@
 
       },
       search(newValue, oldValue) {
-        this.$store.dispatch('goverment/getAll', {
+        this.$store.dispatch('shift/getAll', {
           search: newValue
         });
       },
