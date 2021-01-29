@@ -11,10 +11,49 @@
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
+          <vs-button
+            warn
+            style="float: right"
+            :loading="globalLoader"
+            gradient
+            @click="exportData('pdf')"
+            >Download PDF</vs-button
+          >
+          &nbsp;
+          <vs-button
+            success
+            style="float: right"
+            :loading="globalLoader"
+            gradient
+            @click="exportData('excel')"
+            >Download Excel</vs-button
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <el-card v-loading="getLoader">
             <div class="row" style="margin-bottom:20px">
-              <div class="col-md-3 offset-md-9">
-                <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
+              <div class="col-md-2">
+                <vs-button
+                  success
+                  style="float: right"
+                  :loading="globalLoader"
+                  gradient
+                  @click="
+                  importDialog = true
+                  titleDialog = 'Import Shift Employee'
+                  "
+                  >Import Excel</vs-button
+                >
+              </div>
+              <div class="col-md-3 offset-md-7">
+                <el-input
+                  placeholder="Cari"
+                  v-model="search"
+                  @change="searchData()"
+                  size="mini"
+                >
                   <i slot="prefix" class="el-input__icon el-icon-search"></i>
                 </el-input>
               </div>
@@ -276,26 +315,26 @@
       // }
     },
     computed: {
-      ...mapGetters("position", [
+      ...mapGetters('position', [
         'getPositions',
         'getLoader'
       ])
     },
     watch: {
-      // getSchedule(newValue, oldValue) {
+      getPositions(newValue, oldValue) {
 
-      // },
-      // search(newValue, oldValue) {
-        // this.$store.dispatch('goverment/getAll', {
-        //   search: newValue
-        // });
-      // },
-      // page(newValue, oldValue) {
-      //   this.$store.commit('schedule/setPage', newValue)
-      //   this.$store.dispatch('schedule/getAll', {
-      //     company_id: this.company_id
-      //   });
-      // }
+      },
+      search(newValue, oldValue) {
+        this.$store.dispatch('goverment/getAll', {
+          search: newValue
+        });
+      },
+      page(newValue, oldValue) {
+        this.$store.commit('position/setPage', newValue)
+        this.$store.dispatch('position/getAll', {
+          company_id: this.company_id
+        });
+      }
     },
   }
 
