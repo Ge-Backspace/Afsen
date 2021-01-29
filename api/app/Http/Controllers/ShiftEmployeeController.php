@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Imports\ShiftEmployeeImport;
 use App\Exports\ShiftEmployeeExport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -38,10 +39,12 @@ class ShiftEmployeeController extends Controller
     public function getCompanyShiftEmployee(Request $request)
     {
         return $this->getPaginate(
-            ShiftEmployee::with(['employees', 'shifts'])
-            ->where('company_id', $request->company_id)
-            ->orderBy('id', 'ASC')
-        , $request,);
+            ShiftEmployee::join('employees', 'employees.id', '=', 'shift_employees.employee_id')
+            ->join('shifts', 'shifts.id', '=', 'shift_employees.shift_id')
+            ->where('shift_employees.company_id', $request->company_id)
+            ->select(DB::raw('shift_employees.*, employees.*, shifts.*, shift_employees.id as id'))
+            ->orderBy('shift_employees.id', 'ASC')
+        , $request,['employees.name', 'shifts.shift_name', 'shifts.code']);
     }
 
     public function addShiftEmployee(Request $request)

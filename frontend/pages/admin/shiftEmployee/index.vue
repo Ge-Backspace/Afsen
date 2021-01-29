@@ -71,19 +71,19 @@
           <template #tbody>
             <vs-tr :key="i" v-for="(tr, i) in getSE.data" :data="tr">
               <vs-td>
-                {{ tr.employees.name }}
+                {{ tr.name }}
               </vs-td>
               <vs-td>
-                {{ tr.shifts.code }}
+                {{ tr.code }}
               </vs-td>
               <vs-td>
-                {{ tr.shifts.shift_name }}
+                {{ tr.shift_name }}
               </vs-td>
               <vs-td>
-                {{ tr.shifts.schedule_in }}
+                {{ tr.schedule_in }}
               </vs-td>
               <vs-td>
-                {{ tr.shifts.schedule_out }}
+                {{ tr.schedule_out }}
               </vs-td>
               <vs-td>
                 {{ formatDate(tr.date) }}
