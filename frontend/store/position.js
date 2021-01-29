@@ -11,10 +11,10 @@ export const state = () => ({
     //     non_aktif: 0
     // }
   })
-  
+
   export const mutations = {
     setPositions(state, data) {
-      state.position.data = data
+      state.position = data
     },
     setLoader(state){
         state.positionLoader = state.positionLoader
@@ -26,7 +26,7 @@ export const state = () => ({
     //     state.summary = data
     // }
   }
-  
+
   export const getters = {
     getPositions(state) {
          return state.position
@@ -38,17 +38,17 @@ export const state = () => ({
     //     return state.summary
     // }
   };
-  
+
   export const actions = {
     getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
-        context.commit("setLoader")
+        context.commit('setLoader')
         let page = defaultPage ? 1 : context.state.position.current_page
         this.$axios.get(`/positions?company_id=${company_id}&$showall=${showall}&page=${page}&search=${search}`).then(resp => {
-            context.commit('setPositions', resp.data.data)
+            context.commit('setPositions', resp.data)
         }).catch(e => {
             console.log(e)
         }).finally(() => {
-            context.commit("setLoader")
+            context.commit('setLoader')
         })
     },
     // getUserSummary(context){
@@ -61,4 +61,3 @@ export const state = () => ({
     //     })
     // }
   }
-  

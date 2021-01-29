@@ -78,7 +78,7 @@
           <el-card v-loading="getLoader">
             <GmapMap
             v-bind:center="center"
-            v-bind:zoom="7"
+            v-bind:zoom="zoom"
             map-type-id="terrain"
             style="height: 225px"
             >
@@ -192,10 +192,12 @@
           name: '',
           address:'',
         },
-        center: {lat: 10.0, lng: 10.0},
-        markers:[{
-          position: {lat: 10.0, lng: 10.0}
-        }]
+        center: {lat: 0, lng: 0},
+        zoom: 15,
+        markers:[],
+        positions: {
+          position: {lat: '', lng: ''}
+        }
       }
     },
     mounted() {
@@ -207,8 +209,8 @@
       .then(resp => {
         this.center.lat = Number(resp.data.data.lat)
         this.center.lng = Number(resp.data.data.lng)
-        // this.markers[position.lat] = Number(resp.data.data.lat)
-        console.log(this.markers)
+        this.positions.position = this.center
+        this.markers.push(this.positions)
       })
     },
     methods: {
@@ -235,7 +237,9 @@
       },
       handleCurrentChange(val) {
         this.$store.commit('company/setPage', val)
-        this.$store.dispatch('company/getAll', {});
+        this.$store.dispatch('company/getCompany', {
+          company_id: this.company_id
+        });
       },
       onSubmit(type = 'store') {
         this.btnLoader = true
@@ -244,7 +248,7 @@
         formData.append("address", this.form.address)
         let url = "/company/store";
         if (type == 'update') {
-          url = `/company/update/${this.form.id}`
+          url = `/company/${this.form.id}/update`
         }
 
         this.$axios.post(url, formData).then(resp => {
@@ -283,7 +287,7 @@
           cancelButtonText: 'Batal'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/company/delete/${id}`).then(resp => {
+            this.$axios.delete(`/company/${id}/delete`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',

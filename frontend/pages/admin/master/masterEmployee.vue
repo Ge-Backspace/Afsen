@@ -48,6 +48,7 @@
                   :active="active == 6"
                   @click="
                     active = 6;
+                    exportData('pdf');
                   "
                 >
                   <i class="bx bxs-purchase-tag"></i> Export PDF
@@ -60,7 +61,7 @@
                   :active="active == 6"
                   @click="
                     active = 6;
-                    exportData();
+                    exportData('excel');
                   "
                 >
                   <i class="bx bxs-purchase-tag"></i> Export Excel
@@ -598,7 +599,7 @@ export default {
       if (type == 'pdf') {
         as = 'pdf'
       }
-      this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${as}`, {
+      this.$axios.get(`/employee/export?company_id=${this.company_id}&as=${as}`, {
         //if u forgot this, your download will be corrupt
         responseType: 'blob'
       }).then((response) => {
@@ -669,7 +670,7 @@ export default {
       console.log(this.form)
       let url = "/employee";
       if (type == "update") {
-        url = `/employee/update/${this.form.id}`;
+        url = `/employee/${this.form.id}/update`;
       }
       this.$axios
         .post(url, formData)
@@ -716,7 +717,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`/employee/delete/${id}`)
+            .delete(`/employee/${id}/delete`)
             .then((resp) => {
               if (resp.data.success) {
                 this.$notify.success({

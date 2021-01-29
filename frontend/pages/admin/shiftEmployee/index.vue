@@ -375,6 +375,8 @@ export default {
     },
     edit(data) {
       this.form.employee_id = data.employee_id;
+      console.log(this.form.employee_id);
+      console.log(this.form.shift_id);
       this.form.shift_id = data.shift_id;
       this.form.date = data.date;
       this.seDialog = true;
@@ -456,7 +458,7 @@ export default {
       formData.append('date', this.form.date)
       let url = '/shiftEmployee'
       if (type == 'update') {
-        url = `shiftEmployee/update/${this.form.id}`
+        url = `shiftEmployee/${this.form.id}/update`
       }
 
       this.$axios.post(url, formData).then(resp => {
@@ -497,7 +499,7 @@ export default {
         cancelButtonText: 'Yes but actually NO!'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$axios.delete(`/shiftEmployee/delete/${id}`).then(resp => {
+          this.$axios.delete(`/shiftEmployee/${id}/delete`).then(resp => {
             if (resp.data.success) {
               this.$notify.success({
                 title: 'Success',

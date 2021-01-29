@@ -187,12 +187,12 @@
       });
     },
     methods: {
-      // searchData(){
-      //   this.$store.dispatch('schedule/getAll', {
-      //     search: this.search,
-      //     company_id: this.company_id
-      //   });
-      // },
+      searchData(){
+        this.$store.dispatch('shift/getAll', {
+          search: this.search,
+          company_id: this.company_id
+        });
+      },
       edit(data) {
         // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
         this.form.id = data.id
@@ -231,7 +231,7 @@
         formData.append("schedule_out", this.form.schedule_out)
         let url = "/shift";
         if (type == 'update') {
-          url = `/shift/update/${this.form.id}`
+          url = `/shift/${this.form.id}/update`
         }
 
         this.$axios.post(url, formData).then(resp => {
@@ -272,7 +272,7 @@
           cancelButtonText: 'Yes but actually NO!'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/shift/delete/${id}`).then(resp => {
+            this.$axios.delete(`/shift/${id}/delete`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',
@@ -300,26 +300,26 @@
       }
     },
     computed: {
-      ...mapGetters("shift", [
+      ...mapGetters('shift', [
         'getShifts',
         'getLoader'
       ])
     },
     watch: {
-      // getSchedule(newValue, oldValue) {
+      getShifts(newValue, oldValue) {
 
-      // },
-      // search(newValue, oldValue) {
-        // this.$store.dispatch('goverment/getAll', {
-        //   search: newValue
-        // });
-      // },
-      // page(newValue, oldValue) {
-      //   this.$store.commit('schedule/setPage', newValue)
-      //   this.$store.dispatch('schedule/getAll', {
-      //     company_id: this.company_id
-      //   });
-      // }
+      },
+      search(newValue, oldValue) {
+        this.$store.dispatch('goverment/getAll', {
+          search: newValue
+        });
+      },
+      page(newValue, oldValue) {
+        this.$store.commit('shift/setPage', newValue)
+        this.$store.dispatch('shift/getAll', {
+          company_id: this.company_id
+        });
+      }
     },
   }
 

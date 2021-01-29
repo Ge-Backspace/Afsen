@@ -11,10 +11,49 @@
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
+          <vs-button
+            warn
+            style="float: right"
+            :loading="globalLoader"
+            gradient
+            @click="exportData('pdf')"
+            >Download PDF</vs-button
+          >
+          &nbsp;
+          <vs-button
+            success
+            style="float: right"
+            :loading="globalLoader"
+            gradient
+            @click="exportData('excel')"
+            >Download Excel</vs-button
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <el-card v-loading="getLoader">
             <div class="row" style="margin-bottom:20px">
-              <div class="col-md-3 offset-md-9">
-                <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
+              <div class="col-md-2">
+                <vs-button
+                  success
+                  style="float: right"
+                  :loading="globalLoader"
+                  gradient
+                  @click="
+                  importDialog = true
+                  titleDialog = 'Import Position'
+                  "
+                  >Import Excel</vs-button
+                >
+              </div>
+              <div class="col-md-3 offset-md-7">
+                <el-input
+                  placeholder="Cari"
+                  v-model="search"
+                  @change="searchData()"
+                  size="mini"
+                >
                   <i slot="prefix" class="el-input__icon el-icon-search"></i>
                 </el-input>
               </div>
@@ -123,6 +162,81 @@
         </div>
       </template>
     </vs-dialog>
+
+    <vs-dialog
+      v-model="importDialog"
+      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()"
+    >
+      <template #header>
+        <h1 class="not-margin">
+          {{ titleDialog }}
+        </h1>
+      </template>
+      <div class="con-form">
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label>Import Position</label>
+          <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
+        </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <vs-button
+            color="primary"
+            gradient
+            :active="active == 6"
+            @click="active = 6"
+          >
+            <i class="bx bx-file-blank"></i> download templates
+          </vs-button>
+        </vs-col>
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                :loading="btnLoader"
+                @click="onSubmit('update')"
+                v-if="isUpdate"
+                >Update</vs-button
+              >
+              <vs-button
+                block
+                :loading="btnLoader"
+                @click="importData()"
+                v-else
+                >Simpan</vs-button
+              >
+            </vs-col>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                border
+                @click="
+                  importDialog = false;
+                  resetForm();
+                "
+                >Batal</vs-button
+              >
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -148,12 +262,14 @@
         table: {
           max: 10
         },
+        active: '',
         page: 1,
         titleDialog: 'Edit Position',
         search: '',
         company_id : JSON.parse(JSON.stringify(this.$auth.user.company_id)),
         isUpdate: false,
         positionDialog: false,
+        importDialog: false,
         btnLoader: false,
         form: {
           id: '',
@@ -175,6 +291,57 @@
       //     company_id: this.company_id
       //   });
       // },
+      onFileChange(e){
+      this.file = e.target.files[0];
+    },
+    importData(){
+      let formData = new FormData();
+      formData.append("company_id", this.company_id);
+      formData.append('file', this.file);
+      this.$axios.post('/position/import', formData, {
+        headers: {'content-type': 'multipart/form-data' }
+      })
+      .then(response => {
+        if(response.status === 200){
+          //...
+        }
+      })
+      .catch(error => {
+        this.uploading = false
+        this.error = error.response.data
+        console.log('check error: ', this.error)
+      })
+    },
+    exportData(type = 'excel'){
+      let as = 'excel'
+      if (type == 'pdf') {
+        as = 'pdf'
+      }
+      this.$axios.get(`/position/export?company_id=${this.company_id}&as=${as}`, {
+        //if u forgot this, your download will be corrupt
+        responseType: 'blob'
+      }).then((response) => {
+        //create a link in the document that we'll
+        //programmatically 'click'
+        const link = document.createElement('a');
+
+        //tell the browser to associate the response data
+        //to the URL of the link we created above.
+        link.href = window.URL.createObjectURL(
+          new Blob([response.data])
+        );
+
+
+      //tell the browset to download, not render
+      link.setAttribute('download','position.xlsx');
+
+      //place the link in the DOM.
+      document.body.appendChild(link);
+
+      //make the magic happen!
+      link.click();
+      }); //please catch me baby!
+    },
       edit(data) {
         // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
         this.form.id = data.id
@@ -207,7 +374,7 @@
         formData.append("group", this.form.group)
         let url = "/position";
         if (type == 'update') {
-          url = `/position/${this.form.id}`
+          url = `/position/${this.form.id}/update`
         }
 
         this.$axios.post(url, formData).then(resp => {
@@ -248,7 +415,7 @@
           cancelButtonText: 'Yes but actually NO!'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/position/${id}`).then(resp => {
+            this.$axios.delete(`/position/${id}/delete`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',
@@ -276,26 +443,26 @@
       // }
     },
     computed: {
-      ...mapGetters("position", [
+      ...mapGetters('position', [
         'getPositions',
         'getLoader'
       ])
     },
     watch: {
-      // getSchedule(newValue, oldValue) {
+      getPositions(newValue, oldValue) {
 
-      // },
-      // search(newValue, oldValue) {
-        // this.$store.dispatch('goverment/getAll', {
-        //   search: newValue
-        // });
-      // },
-      // page(newValue, oldValue) {
-      //   this.$store.commit('schedule/setPage', newValue)
-      //   this.$store.dispatch('schedule/getAll', {
-      //     company_id: this.company_id
-      //   });
-      // }
+      },
+      search(newValue, oldValue) {
+        this.$store.dispatch('goverment/getAll', {
+          search: newValue
+        });
+      },
+      page(newValue, oldValue) {
+        this.$store.commit('position/setPage', newValue)
+        this.$store.dispatch('position/getAll', {
+          company_id: this.company_id
+        });
+      }
     },
   }
 
