@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Helpers\Helper;
+use App\Models\CutiPermission;
+use App\Models\StatusPermission;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
+class CutiPermissionController extends Controller
+{
+    public function getCutiPermission(Request $request)
+    {
+        return $this->getPaginate(
+            CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employess.id')
+            ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id')
+            ->select(DB::raw('cuti_permissions.*, employees.*, cutis.*, cuti_permissions.id as id'))
+            ->orderBy('id', 'DESC'), $request, ['employees.name', 'cutis.cuti_name', 'cutis.code']);
+    }
+
+    public function addCutiPermission(Request $request)
+    {
+        $input = $request->only('employee_id', 'cuti_id', 'start_date', 'expired_date');
+        $validator = Validator::make($input, [
+            'employee_id' => 'required|numeric',
+            'cuti_id' => 'required|numeric',
+            'status_id' => 'required|numeric',
+            'start_date' => 'required|date',
+            'expired_date' => 'required|date'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Cuti Permission', false, 401);
+        }
+        $add = CutiPermission::create($input);
+        return $this->resp($add);
+    }
+
+    public function updateCutiPermission(Request $request, $id)
+    {
+        $table = CutiPermission::find($id);
+        if (!$table) {
+            return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
+        }
+        $input = $request->only(['employee_id', 'cuti_id', 'start_date', 'expired_date']);
+        $validator = Validator::make($input, [
+            'employee_id' => 'required|numeric',
+            'cuti_id' => 'required|numeric',
+            'start_date' => 'required|date',
+            'expired_date' => 'required|date'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp([$input, Helper::generateErrorMsg($validator->errors()->getMessages())], 'Failed Edit Position', false, 406);
+        }
+        $inputUpdate = [
+            'employee_id' => $input['employee_id'],
+            'cuti_id' => $input['cuti_id'],
+            'start_date' => $input['start_date'],
+            'expired_date' => $input['expired_date'],
+        ];
+        $update = $table->update($inputUpdate);
+        return $this->resp($update);
+    }
+
+    public function deleteCutiPermission($id)
+    {
+        $table = CutiPermission::find($id);
+        if (!$table) {
+            return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
+        }
+        $table->delete();
+        return $this->resp();
+    }
+
+    public function changeStatusCutiPermission(Request $request, $id)
+    {
+        $table = CutiPermission::find($id);
+        if (!$table) {
+            $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
+        }
+        $status = StatusPermission::where('company_id', $request->company_id)
+        ->where('code', $request->code)->first();
+        if($status->accepted == true) {
+            return $this->resp($status);
+        }
+        return $this->resp($table);
+    }
+}

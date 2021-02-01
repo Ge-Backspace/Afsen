@@ -46,7 +46,7 @@ class PositionController extends Controller
     {
         $position = Position::find($id);
         if (!$position) {
-            return $this->resp(null, 'Position tidak ditemukan', false, 406);
+            return $this->resp(null, 'Position Tidak Ditemukan', false, 406);
         }
         $input = $request->only(['company_id', 'position_name', 'group']);
         $validator = Validator::make($input, [
@@ -69,7 +69,7 @@ class PositionController extends Controller
     {
         $position = Position::find($id);
         if (!$position) {
-            return $this->resp(null, 'Position tidak ditemukan', false, 406);
+            return $this->resp(null, 'Position Tidak Ditemukan', false, 406);
         }
         $position->delete();
         return $this->resp();

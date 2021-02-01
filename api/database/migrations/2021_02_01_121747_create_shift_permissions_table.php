@@ -19,14 +19,13 @@ class CreateShiftPermissionsTable extends Migration
             $table->integer('employee2_id')->unsigned();
             $table->integer('shift_employee1_id')->unsigned();
             $table->integer('shift_employee2_id')->unsigned();
-            $table->integer('status_id')->unsigned();
+            $table->integer('status_id')->default(0);
             $table->timestamps();
 
             $table->foreign('employee1_id')->references('id')->on('employees');
             $table->foreign('employee2_id')->references('id')->on('employees');
             $table->foreign('shift_employee1_id')->references('id')->on('shift_employees');
             $table->foreign('shift_employee2_id')->references('id')->on('shift_employees');
-            $table->foreign('status_id')->references('id')->on('status_permissions');
         });
     }
 
