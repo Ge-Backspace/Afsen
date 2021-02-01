@@ -2,128 +2,104 @@
   {
     "name": "company_check",
     "path": "/company_check",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\company_check.vue",
-    "chunkName": "pages/company_check",
-    "_name": "_947adda6"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\company_check.vue",
-    "chunkName": "pages/company_check",
-    "_name": "_d1506482"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/company_check"
   },
   {
     "name": "LandingPage",
     "path": "/LandingPage",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\LandingPage.vue",
-    "chunkName": "pages/LandingPage",
-    "_name": "_14af2b4d"
+    "chunkName": "pages/LandingPage"
   },
   {
     "name": "login",
     "path": "/login",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_1d757960"
+    "chunkName": "pages/login"
   },
   {
     "name": "profile",
     "path": "/profile",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\profile.vue",
-    "chunkName": "pages/profile",
-    "_name": "_9fa2f460"
+    "chunkName": "pages/profile"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\register.vue",
-    "chunkName": "pages/register",
-    "_name": "_acf558e8"
+    "chunkName": "pages/register"
   },
   {
     "name": "register_account",
     "path": "/register_account",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\register_account.vue",
-    "chunkName": "pages/register_account",
-    "_name": "_fef7ad0c"
+    "chunkName": "pages/register_account"
   },
   {
     "name": "register_company",
     "path": "/register_company",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\register_company.vue",
-    "chunkName": "pages/register_company",
-    "_name": "_2e9633ca"
+    "chunkName": "pages/register_company"
   },
   {
     "name": "reset-password",
     "path": "/reset-password",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\reset-password.vue",
-    "chunkName": "pages/reset-password",
-    "_name": "_6124a282"
+    "chunkName": "pages/reset-password"
   },
   {
     "name": "test",
     "path": "/test",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\test.vue",
-    "chunkName": "pages/test",
-    "_name": "_a4352b0a"
+    "chunkName": "pages/test"
   },
   {
     "name": "admin-beranda",
     "path": "/admin/beranda",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\beranda.vue",
-    "chunkName": "pages/admin/beranda",
-    "_name": "_7015a133"
+    "chunkName": "pages/admin/beranda"
   },
   {
     "name": "admin-berita",
     "path": "/admin/berita",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\berita.vue",
-    "chunkName": "pages/admin/berita",
-    "_name": "_22cad846"
+    "chunkName": "pages/admin/berita"
   },
   {
     "name": "admin-company",
     "path": "/admin/company",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\index.vue",
-    "chunkName": "pages/admin/company/index",
-    "_name": "_2f2b092a"
+    "chunkName": "pages/admin/company/index"
   },
   {
     "name": "admin-company1",
     "path": "/admin/company1",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company1.vue",
-    "chunkName": "pages/admin/company1",
-    "_name": "_495f5b8a"
+    "chunkName": "pages/admin/company1"
   },
   {
     "name": "admin-employees",
     "path": "/admin/employees",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\employees\\\\index.vue",
-    "chunkName": "pages/admin/employees/index",
-    "_name": "_62af43e3"
+    "chunkName": "pages/admin/employees/index"
   },
   {
     "name": "admin-informasi",
     "path": "/admin/informasi",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\informasi.vue",
-    "chunkName": "pages/admin/informasi",
-    "_name": "_5a357628"
+    "chunkName": "pages/admin/informasi"
   },
   {
     "name": "admin-kegiatan",
     "path": "/admin/kegiatan",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\kegiatan.vue",
-    "chunkName": "pages/admin/kegiatan",
-    "_name": "_06328992"
+    "chunkName": "pages/admin/kegiatan"
   },
   {
     "name": "admin-lapor",
     "path": "/admin/lapor",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\index.vue",
-    "chunkName": "pages/admin/lapor/index",
-    "_name": "_3a57b00a"
+    "chunkName": "pages/admin/lapor/index"
   },
   {
     "name": "admin-permission",
@@ -135,409 +111,212 @@
         "name": "admin-permission-cuti",
         "path": "cuti",
         "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\permission\\\\cuti.vue",
-        "chunkName": "pages/admin/permission/cuti",
-        "_name": "_69f229ac"
+        "chunkName": "pages/admin/permission/cuti"
       },
       {
         "name": "admin-permission-shift",
         "path": "shift",
         "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\permission\\\\shift.vue",
-        "chunkName": "pages/admin/permission/shift",
-        "_name": "_ea3d50e6"
+        "chunkName": "pages/admin/permission/shift"
       }
-    ],
-    "_name": "_16f7a905"
+    ]
   },
   {
     "name": "admin-report",
     "path": "/admin/report",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\report.vue",
-    "chunkName": "pages/admin/report",
-    "_name": "_c312862c"
+    "chunkName": "pages/admin/report"
   },
   {
     "name": "admin-salary",
     "path": "/admin/salary",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\salary.vue",
-    "chunkName": "pages/admin/salary",
-    "_name": "_844e1300"
+    "chunkName": "pages/admin/salary"
   },
   {
     "name": "admin-shift",
     "path": "/admin/shift",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\shift.vue",
-    "chunkName": "pages/admin/shift",
-    "_name": "_dd297988"
+    "chunkName": "pages/admin/shift"
   },
   {
     "name": "admin-shiftEmployee",
     "path": "/admin/shiftEmployee",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\shiftEmployee\\\\index.vue",
-    "chunkName": "pages/admin/shiftEmployee/index",
-    "_name": "_36712238"
+    "chunkName": "pages/admin/shiftEmployee/index"
   },
   {
     "name": "admin-test",
     "path": "/admin/test",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\test.vue",
-    "chunkName": "pages/admin/test",
-    "_name": "_322afcc8"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\LandingPage.vue",
-    "chunkName": "pages/LandingPage",
-    "_name": "_192e645f"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/test"
   },
   {
     "name": "admin-users",
     "path": "/admin/users",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\users.vue",
-    "chunkName": "pages/admin/users",
-    "_name": "_717431c2"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\users.vue",
-    "chunkName": "pages/admin/users",
-    "_name": "_0647ca20"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/users"
   },
   {
     "name": "admin-company-announcement",
     "path": "/admin/company/announcement",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\announcement\\\\index.vue",
-    "chunkName": "pages/admin/company/announcement/index",
-    "_name": "_7e950af8"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\announcement\\\\index.vue",
-    "chunkName": "pages/admin/company/announcement/index",
-    "_name": "_04bf1d96"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/announcement/index"
   },
   {
     "name": "admin-company-asset",
     "path": "/admin/company/asset",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\asset\\\\index.vue",
-    "chunkName": "pages/admin/company/asset/index",
-    "_name": "_1c4799d9"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\asset\\\\index.vue",
-    "chunkName": "pages/admin/company/asset/index",
-    "_name": "_13436707"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/asset/index"
   },
   {
     "name": "admin-company-document_template",
     "path": "/admin/company/document_template",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\document_template\\\\index.vue",
-    "chunkName": "pages/admin/company/document_template/index",
-    "_name": "_1fbf2a6b"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\document_template\\\\index.vue",
-    "chunkName": "pages/admin/company/document_template/index",
-    "_name": "_3dfaa299"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/document_template/index"
   },
   {
     "name": "admin-company-files",
     "path": "/admin/company/files",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\files\\\\index.vue",
-    "chunkName": "pages/admin/company/files/index",
-    "_name": "_6666c01c"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\files\\\\index.vue",
-    "chunkName": "pages/admin/company/files/index",
-    "_name": "_786f25c0"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/files/index"
   },
   {
     "name": "admin-company-onboarding",
     "path": "/admin/company/onboarding",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\onboarding\\\\index.vue",
-    "chunkName": "pages/admin/company/onboarding/index",
-    "_name": "_113d3d20"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\onboarding\\\\index.vue",
-    "chunkName": "pages/admin/company/onboarding/index",
-    "_name": "_453ca102"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/onboarding/index"
   },
   {
     "name": "admin-company-polling",
     "path": "/admin/company/polling",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\polling\\\\index.vue",
-    "chunkName": "pages/admin/company/polling/index",
-    "_name": "_2554e366"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\polling\\\\index.vue",
-    "chunkName": "pages/admin/company/polling/index",
-    "_name": "_4c921d14"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/polling/index"
   },
   {
     "name": "admin-company-reprimand",
     "path": "/admin/company/reprimand",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\reprimand\\\\index.vue",
-    "chunkName": "pages/admin/company/reprimand/index",
-    "_name": "_49918cab"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\reprimand\\\\index.vue",
-    "chunkName": "pages/admin/company/reprimand/index",
-    "_name": "_d331da4e"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/reprimand/index"
   },
   {
     "name": "admin-company-task",
     "path": "/admin/company/task",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\task\\\\index.vue",
-    "chunkName": "pages/admin/company/task/index",
-    "_name": "_73507086"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\task\\\\index.vue",
-    "chunkName": "pages/admin/company/task/index",
-    "_name": "_182f4598"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/task/index"
   },
   {
     "name": "admin-company-user_activity_log",
     "path": "/admin/company/user_activity_log",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\user_activity_log\\\\index.vue",
-    "chunkName": "pages/admin/company/user_activity_log/index",
-    "_name": "_29576941"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\user_activity_log\\\\index.vue",
-    "chunkName": "pages/admin/company/user_activity_log/index",
-    "_name": "_4792e16f"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/company/user_activity_log/index"
   },
   {
     "name": "admin-employees-detail",
     "path": "/admin/employees/detail",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\employees\\\\detail.vue",
-    "chunkName": "pages/admin/employees/detail",
-    "_name": "_e8e76fe0"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\employees\\\\detail.vue",
-    "chunkName": "pages/admin/employees/detail",
-    "_name": "_50e9dc3e"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/employees/detail"
   },
   {
     "name": "admin-finances-cash",
     "path": "/admin/finances/cash",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\finances\\\\cash.vue",
-    "chunkName": "pages/admin/finances/cash",
-    "_name": "_6951c982"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\finances\\\\cash.vue",
-    "chunkName": "pages/admin/finances/cash",
-    "_name": "_7ef25414"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/finances/cash"
   },
   {
     "name": "admin-finances-loan",
     "path": "/admin/finances/loan",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\finances\\\\loan.vue",
-    "chunkName": "pages/admin/finances/loan",
-    "_name": "_531e2682"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\finances\\\\loan.vue",
-    "chunkName": "pages/admin/finances/loan",
-    "_name": "_27dd115e"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/finances/loan"
   },
   {
     "name": "admin-finances-reimbursement",
     "path": "/admin/finances/reimbursement",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\finances\\\\reimbursement.vue",
-    "chunkName": "pages/admin/finances/reimbursement",
-    "_name": "_79e0f70e"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\finances\\\\reimbursement.vue",
-    "chunkName": "pages/admin/finances/reimbursement",
-    "_name": "_2b6683b2"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/finances/reimbursement"
   },
   {
     "name": "admin-lapor-detail",
     "path": "/admin/lapor/detail",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\detail.vue",
-    "chunkName": "pages/admin/lapor/detail",
-    "_name": "_ae1d3e6e"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\detail.vue",
-    "chunkName": "pages/admin/lapor/detail",
-    "_name": "_6aa78812"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/lapor/detail"
   },
   {
     "name": "admin-master-masterCompanies",
     "path": "/admin/master/masterCompanies",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterCompanies.vue",
-    "chunkName": "pages/admin/master/masterCompanies",
-    "_name": "_babb409e"
+    "chunkName": "pages/admin/master/masterCompanies"
   },
   {
     "name": "admin-master-MasterCuti",
     "path": "/admin/master/MasterCuti",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\MasterCuti.vue",
-    "chunkName": "pages/admin/master/MasterCuti",
-    "_name": "_05908a21"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterCompanies.vue",
-    "chunkName": "pages/admin/master/masterCompanies",
-    "_name": "_6c40cd42"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/master/MasterCuti"
   },
   {
     "name": "admin-master-masterEmployee",
     "path": "/admin/master/masterEmployee",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterEmployee.vue",
-    "chunkName": "pages/admin/master/masterEmployee",
-    "_name": "_21d651c8"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterEmployee.vue",
-    "chunkName": "pages/admin/master/masterEmployee",
-    "_name": "_0a542a5a"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/master/masterEmployee"
   },
   {
     "name": "admin-master-masterPosition",
     "path": "/admin/master/masterPosition",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterPosition.vue",
-    "chunkName": "pages/admin/master/masterPosition",
-    "_name": "_ea3b627a"
+    "chunkName": "pages/admin/master/masterPosition"
   },
   {
     "name": "admin-master-masterShift",
     "path": "/admin/master/masterShift",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterShift.vue",
-    "chunkName": "pages/admin/master/masterShift",
-    "_name": "_c3076450"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterPosition.vue",
-    "chunkName": "pages/admin/master/masterPosition",
-    "_name": "_73602755"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/master/masterShift"
   },
   {
     "name": "admin-master-masterUser",
     "path": "/admin/master/masterUser",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterUser.vue",
-    "chunkName": "pages/admin/master/masterUser",
-    "_name": "_0c389165"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterUser.vue",
-    "chunkName": "pages/admin/master/masterUser",
-    "_name": "_1ae4fa12"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/master/masterUser"
   },
   {
     "name": "admin-time_management-attendance",
     "path": "/admin/time_management/attendance",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\attendance.vue",
-    "chunkName": "pages/admin/time_management/attendance",
-    "_name": "_ab2259d0"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\attendance.vue",
-    "chunkName": "pages/admin/time_management/attendance",
-    "_name": "_17fb85c6"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/time_management/attendance"
   },
   {
     "name": "admin-time_management-calendar",
     "path": "/admin/time_management/calendar",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\calendar.vue",
-    "chunkName": "pages/admin/time_management/calendar",
-    "_name": "_2b2552ad"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\calendar.vue",
-    "chunkName": "pages/admin/time_management/calendar",
-    "_name": "_77fad8db"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/time_management/calendar"
   },
   {
     "name": "admin-time_management-schedule",
     "path": "/admin/time_management/schedule",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\schedule.vue",
-    "chunkName": "pages/admin/time_management/schedule",
-    "_name": "_f520d4f4"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\schedule.vue",
-    "chunkName": "pages/admin/time_management/schedule",
-    "_name": "_5b75c898"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/time_management/schedule"
   },
   {
     "name": "admin-time_management-setting",
     "path": "/admin/time_management/setting",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\setting.vue",
-    "chunkName": "pages/admin/time_management/setting",
-    "_name": "_5dd14e31"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\setting.vue",
-    "chunkName": "pages/admin/time_management/setting",
-    "_name": "_1e3b4a43"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/time_management/setting"
   },
   {
     "name": "admin-time_management-timeoff",
     "path": "/admin/time_management/timeoff",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff.vue",
-    "chunkName": "pages/admin/time_management/timeoff",
-    "_name": "_6108bb3a"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff.vue",
-    "chunkName": "pages/admin/time_management/timeoff",
-    "_name": "_e034c316"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/time_management/timeoff"
   },
   {
     "name": "admin-time_management-timeoff_deduction",
     "path": "/admin/time_management/timeoff_deduction",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff_deduction.vue",
-    "chunkName": "pages/admin/time_management/timeoff_deduction",
-    "_name": "_29955889"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff_deduction.vue",
-    "chunkName": "pages/admin/time_management/timeoff_deduction",
-    "_name": "_5a6e33ca"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/admin/time_management/timeoff_deduction"
   },
   {
     "name": "index",
     "path": "/",
-<<<<<<< HEAD
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_279da039"
-=======
-    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_65f98ecb"
->>>>>>> 1fc394efcb45a2e6708bb90f755613a635902345
+    "chunkName": "pages/index"
   }
 ]

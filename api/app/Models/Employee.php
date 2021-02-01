@@ -29,6 +29,11 @@ class Employee extends Model
 
     public function shift_employees()
     {
-        return $this->hasMany('App\Models\SHifEmployee');
+        return $this->hasMany('App\Models\ShiftEmployee');
+    }
+
+    public function shift_permissions()
+    {
+        return $this->hasMany('App\Models\ShiftPermission');
     }
 }

@@ -32,4 +32,8 @@ class Companies extends Model
     	return $this->hasMany('App\Model\Cuti');
     }
 
+    public function statusPermission(){
+    	return $this->hasMany('App\Model\StatusPersmission');
+    }
+
 }
