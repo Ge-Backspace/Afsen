@@ -76,7 +76,12 @@ class AuthController extends Controller
         } elseif($email) {
             return $this->resp(null, 'Email Sudah Digunakan', false, 406);
         } else {
-            $inputUser = User::create($input);
+            $inputUser = User::create([
+                'company_id' => $input['company_id'],
+                'username' => $input['username'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password'])
+            ]);
             $inputEmployee = Employee::create([
                 'name' => $input['name'],
                 'user_id' => $inputUser->id
