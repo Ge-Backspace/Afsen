@@ -11,11 +11,14 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setCompany(state, data) {
+  setAllCompany(state, data) {
     state.company = data
   },
+  setCompany(state, data) {
+    state.company.data = data
+  },
   setLoader(state){
-    state.compLoader = !state.compLoader
+    state.compLoader = state.compLoader
   },
   setPage(state, data){
       state.company.current_page = data
@@ -26,9 +29,12 @@ export const mutations = {
 }
 
 export const getters = {
-  getCompany(state) {
+  getAllCompany(state) {
        return state.company
   },
+  getCompany(state) {
+    return state.company
+},
   getLoader(state){
     return state.compLoader
   },
@@ -42,22 +48,22 @@ export const actions = {
       context.commit("setLoader")
       let page = defaultPage ? 1 : context.state.company.current_page
       this.$axios.get(`/companies?showall=${showall}&page=${page}&search=${search}`).then(resp => {
-          context.commit('setCompany', resp.data)
+          context.commit('setAllCompany', resp.data)
       }).catch(e => {
           console.log(e)
       }).finally(() => {
           context.commit("setLoader")
       })
   },
-  getCompany(context, {company_id = '',showall = 1, search = '', defaultPage = false}){
+  getCompany(context, {company_id = ''}){
     context.commit("setLoader")
-    let page = defaultPage ? 1 : context.state.company.current_page
-    this.$axios.get(`/companies?company_id=${company_id}showall=${showall}&page=${page}&search=${search}`).then(resp => {
-        context.commit('setCompany', resp.data)
+    // let page = defaultPage ? 1 : context.state.company.current_page
+    this.$axios.get(`/company?company_id=${company_id}&search=${company_id}`).then(resp => {
+        context.commit('setCompany', resp.data.data)
     }).catch(e => {
         console.log(e)
     }).finally(() => {
-        context.commit("setLoader")
+        // context.commit("setLoader")
     })
   },
 }

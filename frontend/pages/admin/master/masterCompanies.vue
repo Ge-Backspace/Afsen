@@ -12,13 +12,6 @@
       <div class="row">
         <div class="col-md-12">
           <el-card v-loading="getLoader">
-            <div class="row" style="margin-bottom:20px">
-              <div class="col-md-3 offset-md-9">
-                <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
-                  <i slot="prefix" class="el-input__icon el-icon-search"></i>
-                </el-input>
-              </div>
-            </div>
             <vs-table striped>
               <template #thead>
                 <vs-tr>
@@ -52,22 +45,12 @@
                       <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
                     </el-tooltip>
 
-                    <el-tooltip content="Delete" placement="top-start" effect="dark">
+                    <!-- <el-tooltip content="Delete" placement="top-start" effect="dark">
                       <el-button size="mini" type="primary" @click="deleteCompany(tr.id)" icon="fa fa-trash">
                       </el-button>
-                    </el-tooltip>
+                    </el-tooltip> -->
                   </vs-td>
                 </vs-tr>
-              </template>
-              <template #footer>
-                <vs-row>
-                  <vs-col w="2">
-                    <small>Total : {{getCompany.total}} Data</small>
-                  </vs-col>
-                  <vs-col w="10">
-                    <vs-pagination v-model="page" :length="Math.ceil(getCompany.total / table.max)" />
-                  </vs-col>
-                </vs-row>
               </template>
             </vs-table>
           </el-card>
@@ -86,9 +69,6 @@
               v-bind:key="index"
               v-for="(m, index) in markers"
               v-bind:position="m.position"
-              v-bind:clickable="true"
-              v-bind:draggable="true"
-              @click="center=m.position"
             />
             </GmapMap>
           </el-card>
@@ -137,6 +117,30 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Address</label>
             <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Latitude</label>
+            <vs-input type="number" v-model="form.lat" placeholder="Latitude"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Longitude</label>
+            <vs-input type="number" v-model="form.lng" placeholder="Longitude"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
+            <GmapMap
+            v-bind:center="{lat: Number(form.lat), lng: Number(form.lng)}"
+            v-bind:zoom="16"
+            map-type-id="terrain"
+            style="height: 250px"
+            >
+            <GmapMarker
+              v-bind:key="index"
+              v-bind:position="m.position"
+              v-bind:clickable="true"
+              v-bind:draggable="true"
+              @click="center=position"
+            />
+            </GmapMap>
           </vs-col>
         </vs-row>
       </div>
@@ -190,10 +194,12 @@
         form: {
           id: '',
           name: '',
+          lat:'',
+          lng:'',
           address:'',
         },
         center: {lat: 0, lng: 0},
-        zoom: 15,
+        zoom: 16,
         markers:[],
         positions: {
           position: {lat: '', lng: ''}
@@ -222,6 +228,8 @@
       edit(data) {
         this.form.id = data.id
         this.form.name = data.name
+        this.form.lat = data.lat
+        this.form.lng = data.lng
         this.form.address = data.address
         this.tambahDialog = true
         this.titleDialog = 'Edit Company'
@@ -231,6 +239,8 @@
         this.form = {
           id: '',
           name: '',
+          lat:'',
+          lng:'',
           address: '',
         }
         this.isUpdate = false
@@ -328,6 +338,12 @@
       page(newValue, oldValue) {
         this.$store.commit('company/setPage', newValue)
         this.$store.dispatch('company/getCompany', {});
+      },
+      lat(newValue, oldValue) {
+        this.form.lat = newValue
+      },
+      lng(newValue, oldValue) {
+        this.form.lng = newValue
       }
     },
   }
