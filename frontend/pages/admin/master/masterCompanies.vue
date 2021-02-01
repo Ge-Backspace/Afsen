@@ -135,10 +135,11 @@
             >
             <GmapMarker
               v-bind:key="index"
+              v-for="(m, index) in markers"
               v-bind:position="m.position"
               v-bind:clickable="true"
               v-bind:draggable="true"
-              @click="center=position"
+              @click="center=m.position"
             />
             </GmapMap>
           </vs-col>
@@ -231,6 +232,10 @@
         this.form.lat = data.lat
         this.form.lng = data.lng
         this.form.address = data.address
+        this.center.lat = Number(this.form.lat)
+        this.center.lng = Number(this.form.lng)
+        this.positions.position = this.center
+        this.markers[0] = this.positions
         this.tambahDialog = true
         this.titleDialog = 'Edit Company'
         this.isUpdate = true
@@ -256,6 +261,8 @@
         let formData = new FormData()
         formData.append("name", this.form.name)
         formData.append("address", this.form.address)
+        formData.append("lat", this.form.lat)
+        formData.append("lng", this.form.lng)
         let url = "/company/store";
         if (type == 'update') {
           url = `/company/${this.form.id}/update`
@@ -269,7 +276,9 @@
             })
             this.resetForm()
             this.tambahDialog = false
-            this.$store.dispatch('company/getAll', {});
+            this.$store.dispatch('company/getCompany', {
+              company_id: this.company_id
+            });
           }
         }).finally(() => {
           this.btnLoader = false
@@ -344,6 +353,10 @@
       },
       lng(newValue, oldValue) {
         this.form.lng = newValue
+      },
+      center(newValue, oldValue) {
+        this.positions.position = newValue
+        this.markers[0] = this.positions
       }
     },
   }

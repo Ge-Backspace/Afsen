@@ -22,6 +22,8 @@ const _5a357628 = () => interopDefault(import('..\\pages\\admin\\informasi.vue' 
 const _06328992 = () => interopDefault(import('..\\pages\\admin\\kegiatan.vue' /* webpackChunkName: "pages/admin/kegiatan" */))
 const _3a57b00a = () => interopDefault(import('..\\pages\\admin\\lapor\\index.vue' /* webpackChunkName: "pages/admin/lapor/index" */))
 const _16f7a905 = () => interopDefault(import('..\\pages\\admin\\permission.vue' /* webpackChunkName: "pages/admin/permission" */))
+const _69f229ac = () => interopDefault(import('..\\pages\\admin\\permission\\cuti.vue' /* webpackChunkName: "pages/admin/permission/cuti" */))
+const _ea3d50e6 = () => interopDefault(import('..\\pages\\admin\\permission\\shift.vue' /* webpackChunkName: "pages/admin/permission/shift" */))
 const _c312862c = () => interopDefault(import('..\\pages\\admin\\report.vue' /* webpackChunkName: "pages/admin/report" */))
 const _844e1300 = () => interopDefault(import('..\\pages\\admin\\salary.vue' /* webpackChunkName: "pages/admin/salary" */))
 const _dd297988 = () => interopDefault(import('..\\pages\\admin\\shift.vue' /* webpackChunkName: "pages/admin/shift" */))
@@ -43,6 +45,7 @@ const _531e2682 = () => interopDefault(import('..\\pages\\admin\\finances\\loan.
 const _79e0f70e = () => interopDefault(import('..\\pages\\admin\\finances\\reimbursement.vue' /* webpackChunkName: "pages/admin/finances/reimbursement" */))
 const _ae1d3e6e = () => interopDefault(import('..\\pages\\admin\\lapor\\detail.vue' /* webpackChunkName: "pages/admin/lapor/detail" */))
 const _babb409e = () => interopDefault(import('..\\pages\\admin\\master\\masterCompanies.vue' /* webpackChunkName: "pages/admin/master/masterCompanies" */))
+const _05908a21 = () => interopDefault(import('..\\pages\\admin\\master\\MasterCuti.vue' /* webpackChunkName: "pages/admin/master/MasterCuti" */))
 const _21d651c8 = () => interopDefault(import('..\\pages\\admin\\master\\masterEmployee.vue' /* webpackChunkName: "pages/admin/master/masterEmployee" */))
 const _ea3b627a = () => interopDefault(import('..\\pages\\admin\\master\\masterPosition.vue' /* webpackChunkName: "pages/admin/master/masterPosition" */))
 const _c3076450 = () => interopDefault(import('..\\pages\\admin\\master\\masterShift.vue' /* webpackChunkName: "pages/admin/master/masterShift" */))
@@ -142,7 +145,16 @@ export const routerOptions = {
   }, {
     path: "/admin/permission",
     component: _16f7a905,
-    name: "admin-permission"
+    name: "admin-permission",
+    children: [{
+      path: "cuti",
+      component: _69f229ac,
+      name: "admin-permission-cuti"
+    }, {
+      path: "shift",
+      component: _ea3d50e6,
+      name: "admin-permission-shift"
+    }]
   }, {
     path: "/admin/report",
     component: _c312862c,
@@ -227,6 +239,10 @@ export const routerOptions = {
     path: "/admin/master/masterCompanies",
     component: _babb409e,
     name: "admin-master-masterCompanies"
+  }, {
+    path: "/admin/master/MasterCuti",
+    component: _05908a21,
+    name: "admin-master-MasterCuti"
   }, {
     path: "/admin/master/masterEmployee",
     component: _21d651c8,

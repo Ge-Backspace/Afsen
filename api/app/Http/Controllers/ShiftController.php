@@ -26,7 +26,7 @@ class ShiftController extends Controller
         $input = $request->only('company_id', 'shift_name', 'code', 'schedule_in', 'schedule_out');
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'shift_name' => 'required',
+            'shift_name' => 'required|string',
             'code' => 'required',
             'schedule_in' => 'required',
             'schedule_out' => 'required'

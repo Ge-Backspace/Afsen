@@ -111,8 +111,11 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterShift'
                 },
-                
-
+                {
+                  text: "Master Cuti",
+                  icon: 'el-icon-postcard',
+                  route: '/admin/master/masterCuti'
+              },
             ]
         },
         // {

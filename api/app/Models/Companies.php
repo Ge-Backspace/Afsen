@@ -28,4 +28,8 @@ class Companies extends Model
     	return $this->hasMany('App\Model\ShiftEmployee');
     }
 
+    public function cuti(){
+    	return $this->hasMany('App\Model\Cuti');
+    }
+
 }
