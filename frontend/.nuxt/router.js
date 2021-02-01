@@ -49,6 +49,7 @@ const _05908a21 = () => interopDefault(import('..\\pages\\admin\\master\\MasterC
 const _21d651c8 = () => interopDefault(import('..\\pages\\admin\\master\\masterEmployee.vue' /* webpackChunkName: "pages/admin/master/masterEmployee" */))
 const _ea3b627a = () => interopDefault(import('..\\pages\\admin\\master\\masterPosition.vue' /* webpackChunkName: "pages/admin/master/masterPosition" */))
 const _c3076450 = () => interopDefault(import('..\\pages\\admin\\master\\masterShift.vue' /* webpackChunkName: "pages/admin/master/masterShift" */))
+const _919b01ca = () => interopDefault(import('..\\pages\\admin\\master\\MasterStatusPermission.vue' /* webpackChunkName: "pages/admin/master/MasterStatusPermission" */))
 const _0c389165 = () => interopDefault(import('..\\pages\\admin\\master\\masterUser.vue' /* webpackChunkName: "pages/admin/master/masterUser" */))
 const _ab2259d0 = () => interopDefault(import('..\\pages\\admin\\time_management\\attendance.vue' /* webpackChunkName: "pages/admin/time_management/attendance" */))
 const _2b2552ad = () => interopDefault(import('..\\pages\\admin\\time_management\\calendar.vue' /* webpackChunkName: "pages/admin/time_management/calendar" */))
@@ -255,6 +256,10 @@ export const routerOptions = {
     path: "/admin/master/masterShift",
     component: _c3076450,
     name: "admin-master-masterShift"
+  }, {
+    path: "/admin/master/MasterStatusPermission",
+    component: _919b01ca,
+    name: "admin-master-MasterStatusPermission"
   }, {
     path: "/admin/master/masterUser",
     component: _0c389165,

@@ -128,6 +128,11 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterCuti'
                 },
+                {
+                  text: "Master Status Permission",
+                  icon: 'el-icon-postcard',
+                  route: '/admin/master/masterStatusPermission'
+              },
             ]
         },
         // {

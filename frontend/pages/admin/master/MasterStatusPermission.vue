@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Master Cuti</h1>
+          <h1 class="heading">Master Status Permission</h1>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
                   gradient
                   @click="
                   importDialog = true
-                  titleDialog = 'Import Master Cuti'
+                  titleDialog = 'Import Master Status Permission'
                   "
                   >Import Excel</vs-button
                 >
@@ -67,9 +67,9 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getCutis.data" :data="tr">
+                <vs-tr :key="i" v-for="(tr, i) in getStatusPs.data" :data="tr">
                   <vs-td>
-                    {{ tr.cuti_name }}
+                    {{ tr.status_name }}
                   </vs-td>
                   <vs-td>
                     {{ tr.code }}
@@ -80,7 +80,7 @@
                     </el-tooltip>
 
                     <el-tooltip content="Delete" placement="top-start" effect="dark">
-                      <el-button size="mini" type="primary" @click="deleteCuti(tr.id)" icon="fa fa-trash">
+                      <el-button size="mini" type="primary" @click="deleteStatusP(tr.id)" icon="fa fa-trash">
                       </el-button>
                     </el-tooltip>
                   </vs-td>
@@ -89,10 +89,10 @@
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{getCutis.total}} Data</small>
+                    <small>Total : {{getStatusPs.total}} Data</small>
                   </vs-col>
                   <vs-col w="10">
-                    <vs-pagination v-model="page" :length="Math.ceil(getCutis.total / table.max)" />
+                    <vs-pagination v-model="page" :length="Math.ceil(getStatusPs.total / table.max)" />
                   </vs-col>
                 </vs-row>
               </template>
@@ -103,31 +103,31 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Cuti Baru" placement="top-start">
-      <a class="float" @click="cutiDialog = true; titleDialog = 'Tambah Cuti'">
+    <el-tooltip class="item" effect="dark" content="Buat Status Permission Baru" placement="top-start">
+      <a class="float" @click="statusPDialog = true; titleDialog = 'Tambah Status Permission'">
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
     <!-- End floating button -->
 
-    <!-- <el-dialog :title="titleDialog" :visible.sync="cutiDialog"
+    <!-- <el-dialog :title="titleDialog" :visible.sync="statusPDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
       <el-form label-width="auto" ref="form" :model="form" size="mini">
         <el-form-item label="Hari">
           <el-input v-model="form.hari"></el-input>
         </el-form-item>
-        <el-form-item label="Cuti In">
-          <el-time-picker v-model="form.Cuti_out"></el-time-picker>
+        <el-form-item label="statusP In">
+          <el-time-picker v-model="form.statusP_out"></el-time-picker>
         </el-form-item>
         <el-form-item size="large">
           <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
           <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="cutiDialog = false">Batal</el-button>
+          <el-button @click="statusPDialog = false">Batal</el-button>
         </el-form-item>
       </el-form>
     </el-dialog> -->
 
-    <vs-dialog v-model="cutiDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+    <vs-dialog v-model="statusPDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
       <template #header>
         <h1 class="not-margin">
@@ -138,7 +138,7 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Nama</label>
-            <vs-input type="text" v-model="form.cuti_name" placeholder="Nama"></vs-input>
+            <vs-input type="text" v-model="form.status_name" placeholder="Nama"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Code</label>
@@ -155,7 +155,7 @@
               <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
             </vs-col>
             <vs-col w="6" style="padding:5px">
-              <vs-button block border @click="cutiDialog = false; resetForm()">Batal</vs-button>
+              <vs-button block border @click="statusPDialog = false; resetForm()">Batal</vs-button>
             </vs-col>
           </vs-row>
           <div>&nbsp;</div>
@@ -180,7 +180,7 @@
           w="6"
           style="padding: 5px"
         >
-          <label>Import Employee</label>
+          <label>Import Status Employee</label>
           <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
         </vs-col>
         <vs-col
@@ -253,55 +253,55 @@
         table: {
           max: 10
         },
-        active: '',
+        active:'',
         page: 1,
         titleDialog: '',
         importDialog: false,
         search: '',
         company_id : JSON.parse(JSON.stringify(this.$auth.user.company_id)),
         isUpdate: false,
-        cutiDialog: false,
+        statusPDialog: false,
         btnLoader: false,
         form: {
           id: '',
-          cuti_name: '',
+          status_name: '',
           code: '',
         }
       }
     },
     mounted() {
       this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
-      this.$store.dispatch('cuti/getAll', {
+      this.$store.dispatch('statusP/getAll', {
         company_id: this.company_id
       });
     },
     methods: {
       searchData(){
-        this.$store.dispatch('cuti/getAll', {
+        this.$store.dispatch('statusP/getAll', {
           search: this.search,
           company_id: this.company_id
         });
       },
       edit(data) {
-        // console.log(moment(data.Cuti_in,"HH:mm:ss").format("HH:mm"))
+        // console.log(moment(data.statusP_in,"HH:mm:ss").format("HH:mm"))
         this.form.id = data.id
-        this.form.cuti_name = data.cuti_name
+        this.form.status_name = data.status_name
         this.form.code = data.code
-        this.cutiDialog = true
-        this.titleDialog = 'Edit Data Cuti'
+        this.statusPDialog = true
+        this.titleDialog = 'Edit Data Status Permission'
         this.isUpdate = true
       },
       resetForm() {
         this.form = {
           id: '',
-          cuti_name: '',
+          status_name: '',
           code: '',
         }
         this.isUpdate = false
       },
       handleCurrentChange(val) {
-        this.$store.commit('cuti/setPage', val)
-        this.$store.dispatch('cuti/getAll', {
+        this.$store.commit('statusP/setPage', val)
+        this.$store.dispatch('statusP/getAll', {
           company_id: this.company_id
         });
       },
@@ -312,18 +312,18 @@
         let formData = new FormData();
         formData.append('company_id', this.company_id);
         formData.append('file', this.file);
-        this.$axios.post('/cuti/import', formData, {
+        this.$axios.post('/statusPermission/import', formData, {
           headers: {'content-type': 'multipart/form-data' }
         })
         .then(resp => {
           if(resp.data.success){
             this.$notify.success({
               title: 'Success',
-              message: 'Berhasil Import Cuti'
+              message: 'Berhasil Import Status Permission'
             })
             this.resetForm()
             this.importDialog = false
-            this.$store.dispatch('cuti/getAll', {
+            this.$store.dispatch('statusP/getAll', {
               company_id: this.company_id
             });
           }
@@ -341,7 +341,7 @@
         if (type == 'pdf') {
           this.export_as = 'pdf'
         }
-        this.$axios.get(`/cuti/export?company_id=${this.company_id}&as=${this.export_as}`, {
+        this.$axios.get(`/statusPermsission/export?company_id=${this.company_id}&as=${this.export_as}`, {
           responseType: 'blob'
         }).then((response) => {
           const link = document.createElement('a');
@@ -349,9 +349,9 @@
             new Blob([response.data])
           );
           if (type == 'pdf') {
-            link.setAttribute('download','cuti.pdf');
+            link.setAttribute('download','status_permsission.pdf');
           } else {
-            link.setAttribute('download','cuti.xlsx');
+            link.setAttribute('download','status_permsission.xlsx');
           }
           document.body.appendChild(link);
           link.click();
@@ -362,22 +362,22 @@
         let formData = new FormData()
         formData.append("id", this.form.id)
         formData.append("company_id", this.company_id)
-        formData.append("cuti_name", this.form.cuti_name)
+        formData.append("status_name", this.form.status_name)
         formData.append("code", this.form.code)
-        let url = "/cuti";
+        let url = "/statusPermsission";
         if (type == 'update') {
-          url = `/cuti/${this.form.id}/update`
+          url = `/statusPermsission/${this.form.id}/update`
         }
 
         this.$axios.post(url, formData).then(resp => {
           if (resp.data.success) {
             this.$notify.success({
               title: 'Success',
-              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Cuti`
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Status Permsission`
             })
             this.resetForm()
-            this.cutiDialog = false
-            this.$store.dispatch('cuti/getAll', {
+            this.statusPDialog = false
+            this.$store.dispatch('statusP/getAll', {
               company_id: this.company_id
             });
           }
@@ -395,10 +395,10 @@
           }
         })
       },
-      deleteCuti(id) {
+      deleteStatusP(id) {
         this.$swal({
           title: 'HEY WAIT!, HEY HOLD ON!',
-          text: "Are you serious to delete this cutie data ?",
+          text: "Are you serious to delete this status Permission data ?",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -407,14 +407,14 @@
           cancelButtonText: 'Yes but actually NO!'
         }).then((result) => {
           if (result.isConfirmed) {
-            this.$axios.delete(`/cuti/${id}/delete`).then(resp => {
+            this.$axios.delete(`/statusPermsission/${id}/delete`).then(resp => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: 'Success',
                   message: 'Berhasil Menghapus Data'
                 })
-                this.cutiDialog = false
-                this.$store.dispatch('cuti/getAll', {
+                this.statusPDialog = false
+                this.$store.dispatch('statusP/getAll', {
                   defaultPage: true,
                   company_id: this.company_id
                 });
@@ -435,23 +435,23 @@
       // }
     },
     computed: {
-      ...mapGetters('cuti', [
-        'getCutis',
+      ...mapGetters('statusP', [
+        'getStatusPs',
         'getLoader'
       ])
     },
     watch: {
-      getCutis(newValue, oldValue) {
+      getStatusPs(newValue, oldValue) {
 
       },
       search(newValue, oldValue) {
-        this.$store.dispatch('cuti/getAll', {
+        this.$store.dispatch('statusP/getAll', {
           search: newValue
         });
       },
       page(newValue, oldValue) {
-        this.$store.commit('cuti/setPage', newValue)
-        this.$store.dispatch('cuti/getAll', {
+        this.$store.commit('statusP/setPage', newValue)
+        this.$store.dispatch('statusP/getAll', {
           company_id: this.company_id
         });
       }

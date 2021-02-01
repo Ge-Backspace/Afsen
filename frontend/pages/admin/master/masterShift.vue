@@ -196,7 +196,7 @@
           w="6"
           style="padding: 5px"
         >
-          <label>Import Employee</label>
+          <label>Import Excel</label>
           <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
         </vs-col>
         <vs-col
@@ -269,6 +269,7 @@
         table: {
           max: 10
         },
+        active: '',
         page: 1,
         titleDialog: 'Edit Shift',
         importDialog: false,
