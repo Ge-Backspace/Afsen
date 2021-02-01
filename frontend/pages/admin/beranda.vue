@@ -29,7 +29,8 @@
       <!-- popular couses -->
       <div class="row">
         <div class="col-xl-6">
-          <el-card style="margin-top: 20px">
+          <!-- card pre-present -->
+          <el-card style="margin-top: 20px; background-color: #0F0967;" v-if="this.status == 0 && this.startDay && this.startCheckin && !this.startCheckout">
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
@@ -41,28 +42,82 @@
             <div class="row">
               <div class="col-4">
                 <vs-button
-                  v-if="this.status == 0 && this.startDay && this.startCheckin && !this.startCheckout"
                   :loading="showLoading"
                   circle
+                  info
                   size="xl"
                   :active="active == 2"
                   @click="checkin('checkin')"
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
+                
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime"></h1>
+                    </tr>
+                    <tr>
+                      <td>Press the left-side button <br> to make an attendance</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- card after present -->
+          <el-card style="margin-top: 20px; background-color: #3B31C7;" v-else-if="this.status == 0 && this.startDay && !this.startCheckin && !this.startCheckout">
+            <!-- Card header -->
+            <div slot="header" class="clearfix d-flex justify-content-between">
+              <!-- Title -->
+              <h2>Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
                 <vs-button
-                  v-else-if="this.status == 0 && this.startDay && !this.startCheckin && !this.startCheckout"
                   :loading="showLoading"
                   circle
-                  waning
+                  warning
                   size="xl"
                   :active="active == 2"
                   @click="checkin('checkin')"
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
+                
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime"></h1>
+                    </tr>
+                    <tr>
+                      <td>Press the left-side button <br> to make an attendance</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- card present late -->
+          <el-card style="margin-top: 20px; background-color: #D01919;" v-else-if="this.status == 0 && this.startDay && !this.startCheckin && this.startCheckout">
+            <!-- Card header -->
+            <div slot="header" class="clearfix d-flex justify-content-between">
+              <!-- Title -->
+              <h2>Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
                 <vs-button
-                  v-else-if="this.status == 0 && this.startDay && !this.startCheckin && this.startCheckout"
                   :loading="showLoading"
                   circle
                   danger
@@ -72,19 +127,35 @@
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
+                
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime"></h1>
+                    </tr>
+                    <tr>
+                      <td>Press the left-side button <br> to make an attendance</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- card present absent -->
+          <el-card style="margin-top: 20px; background-color: #36BD2B" v-else-if="this.status == 1">
+            <!-- Card header -->
+            <div slot="header" class="clearfix d-flex justify-content-between" >
+              <!-- Title -->
+              <h2>Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
                 <vs-button
-                  v-else-if="this.status == 1 && this.startCheckout"
-                  :loading="showLoading"
-                  circle
-                  waning
-                  size="xl"
-                  :active="active == 2"
-                  @click="checkin('checkout')"
-                >
-                  <img src="../../assets/img/fingerprint.png" alt="yes">
-                </vs-button>
-                <vs-button
-                  v-else-if="this.status == 1"
                   :loading="showLoading"
                   circle
                   success
@@ -94,11 +165,38 @@
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
+                
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime"></h1>
+                    </tr>
+                    <tr>
+                      <td>Press the left-side button <br> to make an attendance</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- card finish -->
+          <el-card style="margin-top: 20px; background-color: #909399;" v-else>
+            <!-- Card header -->
+            <div slot="header" class="clearfix d-flex justify-content-between">
+              <!-- Title -->
+              <h2>Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
                 <vs-button
-                  v-else
                   :loading="showLoading"
                   circle
-                  shadow
+                  Info
                   size="xl"
                   :active="active == 2"
                   @click="checkout('dayoff')"
@@ -122,7 +220,8 @@
           </el-card>
         </div>
         <div class="col-xl-6">
-          <el-card class="mt-10" style="margin-top: 20px">
+          <!-- left card-->
+          <el-card class="mt-10" style="margin-top: 20px; ">
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
@@ -149,8 +248,8 @@
                     v-if="!tr.checkout_time"
                     class="align-self-center"
                     size="xl"
-                    :active="active == 1"
-                    @click="active = 1"
+                    :active="active == 0"
+                    @click="active = 0"
                   >
                     {{ formatTime(tr.checkin_time) }}
                   </vs-button>
@@ -158,8 +257,8 @@
                     v-else
                     class="align-self-center"
                     size="xl"
-                    :active="active == 1"
-                    @click="active = 1"
+                    :active="active == 0"
+                    @click="active = 0"
                     success
                   >
                     {{ formatTime(tr.checkout_time) }}
@@ -168,8 +267,8 @@
                     v-if="tr.checkin_time <= schedule_in"
                     class="align-self-center"
                     size="xl"
-                    :active="active == 1"
-                    @click="active = 1"
+                    :active="active == 0"
+                    @click="active = 0"
                     success
                   >
                     Awesome
@@ -178,8 +277,8 @@
                     v-else
                     class="align-self-center"
                     size="xl"
-                    :active="active == 1"
-                    @click="active = 1"
+                    :active="active == 0"
+                    @click="active = 0"
                     danger
                   >
                     Not Awesome
@@ -201,6 +300,7 @@ import {
     mapMutations,
     mapGetters
   } from 'vuex';
+  import * as moment from 'moment';
 
 export default {
   components: {
@@ -271,6 +371,7 @@ export default {
     } else if (moment(this.schedule_out, "HH:mm:ss")  <= moment(now, "HH:mm:ss")){
       this.startCheckout = true
     }
+    
   },
   methods: {
     checkin(type = 'checkin') {
