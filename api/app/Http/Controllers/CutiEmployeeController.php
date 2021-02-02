@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Imports\CutiEmployeeImport;
+use App\Exports\CutiEmployeeExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CutiEmployeeController extends Controller
 {
@@ -82,4 +85,37 @@ class CutiEmployeeController extends Controller
     //     $update = $table->update($s);
     //     return $this->resp($update);
     // }
+
+    public function importCutiEmployee(Request $request)
+    {
+        $validator = Validator::make($request->only(['company_id', 'file']), [
+            'company_id' => 'required',
+            'file' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Import Excel', false, 401);
+        }
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $import = Excel::import(new CutiEmployeeImport($request->company_id), $file);
+            return $this->resp($import);
+        }
+    }
+
+    public function exportCutiEmployee(Request $request)
+    {
+        $validator = Validator::make($request->only(['company_id']), [
+            'company_id' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
+        }
+        $as = \Maatwebsite\Excel\Excel::XLSX;
+        $type = 'xlsx';
+        if($request->as == 'pdf'){
+            $type = 'pdf';
+            $as = \Maatwebsite\Excel\Excel::DOMPDF;
+        }
+        return Excel::download(new CutiEmployeeExport($request->company_id), 'cuti_employees.' . $type, $as);
+    }
 }
