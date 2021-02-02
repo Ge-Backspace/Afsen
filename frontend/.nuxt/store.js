@@ -24,6 +24,7 @@ let store = {};
   resolveStoreModules(require('..\\store\\company.js'), 'company.js')
   resolveStoreModules(require('..\\store\\cuti.js'), 'cuti.js')
   resolveStoreModules(require('..\\store\\cutiemployee.js'), 'cutiemployee.js')
+  resolveStoreModules(require('..\\store\\cutipermission.js'), 'cutipermission.js')
   resolveStoreModules(require('..\\store\\drawer.js'), 'drawer.js')
   resolveStoreModules(require('..\\store\\employee.js'), 'employee.js')
   resolveStoreModules(require('..\\store\\goverment.js'), 'goverment.js')
@@ -37,6 +38,7 @@ let store = {};
   resolveStoreModules(require('..\\store\\setting.js'), 'setting.js')
   resolveStoreModules(require('..\\store\\shift.js'), 'shift.js')
   resolveStoreModules(require('..\\store\\shiftemployee.js'), 'shiftemployee.js')
+  resolveStoreModules(require('..\\store\\shiftpermission.js'), 'shiftpermission.js')
   resolveStoreModules(require('..\\store\\statusP.js'), 'statusP.js')
   resolveStoreModules(require('..\\store\\test.js'), 'test.js')
   resolveStoreModules(require('..\\store\\user.js'), 'user.js')
@@ -51,6 +53,7 @@ let store = {};
       '..\\store\\company.js',
       '..\\store\\cuti.js',
       '..\\store\\cutiemployee.js',
+      '..\\store\\cutipermission.js',
       '..\\store\\drawer.js',
       '..\\store\\employee.js',
       '..\\store\\goverment.js',
@@ -65,6 +68,7 @@ let store = {};
       '..\\store\\setting.js',
       '..\\store\\shift.js',
       '..\\store\\shiftemployee.js',
+      '..\\store\\shiftpermission.js',
       '..\\store\\statusP.js',
       '..\\store\\test.js',
       '..\\store\\user.js',

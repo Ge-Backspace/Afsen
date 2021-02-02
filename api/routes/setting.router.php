@@ -6,3 +6,4 @@ $router->get('/todayShiftEmployee', 'ShiftEmployeeController@getTodayShiftEmploy
 $router->get('/optionPosition', 'SettingController@optionPosition');
 $router->get('/optionEmployee', 'SettingController@optionEmployee');
 $router->get('/optionShift', 'SettingController@optionShift');
+$router->get('/optionCuti', 'SettingController@optionCuti');

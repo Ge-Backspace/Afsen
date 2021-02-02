@@ -59,30 +59,32 @@
         <vs-table striped>
           <template #thead>
             <vs-tr>
-              <vs-th>Employee</vs-th>
-              <vs-th>Nama Cuti</vs-th>
-              <vs-th>Code Cuti</vs-th>
-              <vs-th>Start Date</vs-th>
-              <vs-th>Expired Date</vs-th>
+              <vs-th>Pengaju</vs-th>
+              <vs-th>Pengganti</vs-th>
+              <vs-th>Shift Pengaju</vs-th>
+              <vs-th>Shift Pengganti</vs-th>
+              <vs-th>Status</vs-th>
               <vs-th>Action</vs-th>
             </vs-tr>
           </template>
           <template #tbody>
-            <vs-tr :key="i" v-for="(tr, i) in getCutiEs.data" :data="tr">
+            <vs-tr :key="i" v-for="(tr, i) in getShiftPs.data" :data="tr">
               <vs-td>
-                {{ tr.name }}
+                {{ tr.name1 }}
               </vs-td>
               <vs-td>
-                {{ tr.cuti_name }}
+                {{ tr.name2 }}
               </vs-td>
               <vs-td>
-                {{ tr.code }}
+                {{ formatDate(tr.date1) }} {{ tr.code1 }} ({{ tr.schedule_in1 }} - {{ tr.schedule_out1 }})
               </vs-td>
               <vs-td>
-                {{ formatDate(tr.start_date) }}
+                {{ formatDate(tr.date2) }} {{ tr.code2 }} ({{ tr.schedule_in2 }} - {{ tr.schedule_out2 }})
               </vs-td>
               <vs-td>
-                {{ formatDate(tr.expired_date) }}
+                <span class="badge badge-primary" v-if="tr.status_id == 0">Waiting</span>
+                <span class="badge badge-success" v-if="tr.status_id == 1">Accepted</span>
+                <span class="badge badge-warning" v-else>Rejected</span>
               </vs-td>
               <vs-td>
                 <el-tooltip content="Edit" placement="top-start" effect="dark">
@@ -112,11 +114,11 @@
           <template #footer>
             <vs-row>
               <vs-col w="2">
-                <small>Total : {{ getCutiEs.total }} Data</small>
+                <small>Total : {{ getShiftPs.total }} Data</small>
               </vs-col>
               <vs-col w="10">
                 <vs-pagination
-                  v-model="page" :length="Math.ceil(getCutiEs.total / table.max)"
+                  v-model="page" :length="Math.ceil(getShiftPs.total / table.max)"
                 />
               </vs-col>
             </vs-row>
@@ -344,16 +346,15 @@ export default {
       file: '',
       form: {
         id:'',
-        employee1_id: '',
-        employee2_id: '',
-        shift_employee1_id: '',
-        shift_employee2_id: '',
+        employee_id: '',
+        shift_id: '',
+        date: '',
       },
     };
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
-    this.$store.dispatch('cutiemployee/getAll', {
+    this.$store.dispatch('shiftpermission/getAll', {
       company_id: this.company_id,
     });
     this.$store.dispatch('option/getOptionEmployees', {
@@ -364,31 +365,30 @@ export default {
     })
   },
   methods: {
-    // searchData(){
-    //   this.$store.dispatch('shiftemployee/getAll', {
-    //     search: this.search,
-    //     company_id: this.company_id
-    //   });
-    // },
-    // edit(data) {
-    //   this.form.id = data.id;
-    //   console.log(this.form.id)
-    //   this.form.employee_id = data.employee_id;
-    //   console.log(this.form.employee_id);
-    //   console.log(this.form.shift_id);
-    //   this.form.shift_id = data.shift_id;
-    //   this.form.date = data.date;
-    //   this.seDialog = true;
-    //   this.titleDialog = "Edit";
-    //   this.isUpdate = true;
-    // },
+    searchData(){
+      this.$store.dispatch('shiftemployee/getAll', {
+        search: this.search,
+        company_id: this.company_id
+      });
+    },
+    edit(data) {
+      this.form.id = data.id;
+      console.log(this.form.id)
+      this.form.employee_id = data.employee_id;
+      console.log(this.form.employee_id);
+      console.log(this.form.shift_id);
+      this.form.shift_id = data.shift_id;
+      this.form.date = data.date;
+      this.seDialog = true;
+      this.titleDialog = "Edit";
+      this.isUpdate = true;
+    },
     resetForm() {
       this.form = {
-        id:'',
-        employee1_id: '',
-        employee2_id: '',
-        shift_employee1_id: '',
-        shift_employee2_id: '',
+        id: '',
+        employee_id: '',
+        shift_id: '',
+        date: ''
       };
       this.isUpdate = false;
     },
@@ -401,55 +401,55 @@ export default {
     onFileChange(e){
       this.file = e.target.files[0];
     },
-    // importData(){
-    //   let formData = new FormData();
-    //   formData.append('company_id', this.company_id);
-    //   formData.append('file', this.file);
-    //   this.$axios.post('/shiftEmployee/import', formData, {
-    //     headers: {'content-type': 'multipart/form-data' }
-    //   })
-    //   .then(resp => {
-    //     if(resp.data.success){
-    //       this.$notify.success({
-    //         title: 'Success',
-    //         message: 'Berhasil Import Shift Employee'
-    //       })
-    //       this.resetForm()
-    //       this.importDialog = false
-    //       this.$store.dispatch('shiftemployee/getAll', {
-    //         company_id: this.company_id
-    //       });
-    //     }
-    //   })
-    //   .catch(error => {
-    //     this.uploading = false
-    //     this.error = error.resp.data
-    //     console.log('check error: ', this.error)
-    //   })
-    //   .finally(() => {
-    //     this.btnLoader = false
-    //   })
-    // },
-    // exportData(type = 'excel'){
-    //     if (type == 'pdf') {
-    //       this.export_as = 'pdf'
-    //     }
-    //     this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`, {
-    //       responseType: 'blob'
-    //     }).then((response) => {
-    //       const link = document.createElement('a');
-    //       link.href = window.URL.createObjectURL(
-    //         new Blob([response.data])
-    //       );
-    //       if (type == 'pdf') {
-    //         link.setAttribute('download','shift.pdf');
-    //       } else {
-    //         link.setAttribute('download','shift.xlsx');
-    //       }
-    //       document.body.appendChild(link);
-    //       link.click();
-    //     });
-    //   },
+    importData(){
+      let formData = new FormData();
+      formData.append('company_id', this.company_id);
+      formData.append('file', this.file);
+      this.$axios.post('/shiftEmployee/import', formData, {
+        headers: {'content-type': 'multipart/form-data' }
+      })
+      .then(resp => {
+        if(resp.data.success){
+          this.$notify.success({
+            title: 'Success',
+            message: 'Berhasil Import Shift Employee'
+          })
+          this.resetForm()
+          this.importDialog = false
+          this.$store.dispatch('shiftemployee/getAll', {
+            company_id: this.company_id
+          });
+        }
+      })
+      .catch(error => {
+        this.uploading = false
+        this.error = error.resp.data
+        console.log('check error: ', this.error)
+      })
+      .finally(() => {
+        this.btnLoader = false
+      })
+    },
+    exportData(type = 'excel'){
+        if (type == 'pdf') {
+          this.export_as = 'pdf'
+        }
+        this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`, {
+          responseType: 'blob'
+        }).then((response) => {
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          if (type == 'pdf') {
+            link.setAttribute('download','shift.pdf');
+          } else {
+            link.setAttribute('download','shift.xlsx');
+          }
+          document.body.appendChild(link);
+          link.click();
+        });
+      },
     onSubmit(type = 'store') {
       this.btnLoader = true
       let formData = new FormData()
@@ -488,60 +488,60 @@ export default {
         }
       })
     },
-    // deleteShift(id) {
-    //   this.$swal({
-    //     title: 'HEY WAIT!, HEY HOLD ON!',
-    //     text: "Are you serious to delete this cutie data ?",
-    //     icon: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     confirmButtonText: 'Yes Yes Yes',
-    //     cancelButtonText: 'Yes but actually NO!'
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       this.$axios.delete(`/shiftEmployee/${id}/delete`).then(resp => {
-    //         if (resp.data.success) {
-    //           this.$notify.success({
-    //             title: 'Success',
-    //             message: 'Berhasil Menghapus Data'
-    //           })
-    //           this.shiftDialog = false
-    //           this.$store.dispatch('shiftemployee/getAll', {
-    //             company_id: this.company_id
-    //           });
-    //         }
-    //       }).finally(() => {
-    //         //
-    //       }).catch(err => {
-    //         this.$notify.error({
-    //           title: 'Error',
-    //           message: err.response.data.message
-    //         })
-    //       })
-    //     }
-    //   })
-    // },
+    deleteShift(id) {
+      this.$swal({
+        title: 'HEY WAIT!, HEY HOLD ON!',
+        text: "Are you serious to delete this cutie data ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes Yes Yes',
+        cancelButtonText: 'Yes but actually NO!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$axios.delete(`/shiftEmployee/${id}/delete`).then(resp => {
+            if (resp.data.success) {
+              this.$notify.success({
+                title: 'Success',
+                message: 'Berhasil Menghapus Data'
+              })
+              this.shiftDialog = false
+              this.$store.dispatch('shiftemployee/getAll', {
+                company_id: this.company_id
+              });
+            }
+          }).finally(() => {
+            //
+          }).catch(err => {
+            this.$notify.error({
+              title: 'Error',
+              message: err.response.data.message
+            })
+          })
+        }
+      })
+    },
     formatDate(date){
       return moment(date).format('DD MMMM YYYY');
     }
   },
   computed: {
-    ...mapGetters('cutiemployee', ['getCutiEs', 'getLoader']),
+    ...mapGetters('shiftpermission', ['getShiftPs', 'getLoader']),
     ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees']),
   },
   watch: {
-    getCutiEs(newValue, oldValue) {
+    getShiftPs(newValue, oldValue) {
       //
     },
     search(newValue, oldValue) {
-      this.$store.dispatch('cutiemployee/getAll', {
+      this.$store.dispatch('shiftemployee/getAll', {
         search: newValue
       });
     },
     page(newValue, oldValue) {
-      this.$store.commit('cutiemployee/setPage', newValue)
-      this.$store.dispatch('cutiemployee/getAll', {
+      this.$store.commit('shiftemployee/setPage', newValue)
+      this.$store.dispatch('shiftemployee/getAll', {
         company_id: this.company_id
       });
     }

@@ -12,7 +12,7 @@ export const mutations = {
     state.shiftE = data
   },
   setLoader(state){
-    state.shiftELoader = state.shiftELoader
+    state.shiftELoader = !state.shiftELoader
   },
   setPage(state, data){
     state.shiftE.current_page = data
@@ -30,13 +30,14 @@ export const getters = {
 
 export const actions = {
   getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
+    context.commit('setLoader')
     let page = defaultPage ? 1 : context.state.shiftE.current_page
     this.$axios.get(`/companyShiftEmployee?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
         context.commit('setSE', resp.data)
     }).catch(e => {
         console.log(e)
     }).finally(() => {
-        context.commit("setLoader")
+        context.commit('setLoader')
     })
   },
 }
