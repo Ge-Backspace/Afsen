@@ -107,15 +107,7 @@
                   </el-button>
                   
                 </el-tooltip>
-                <el-tooltip content="Validation" placement="top-start" effect="dark">
-                  <el-dropdown size="mini" split-button type="primary"  icon="el-icon-edit">
-                    <i class="el-icon-edit"></i>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item>Accept</el-dropdown-item>
-                      <el-dropdown-item>Reject</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
-                </el-tooltip>
+                
               </vs-td>
             </vs-tr>
           </template>
