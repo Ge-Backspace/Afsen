@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
@@ -28,6 +29,7 @@ class EmployeeController extends Controller
             Employee::join('positions', 'employees.position_id', '=', 'positions.id')
             ->join('users', 'employees.user_id', '=', 'users.id')
             ->where('users.company_id', $request->company_id)
+            ->select(DB::raw('employees.*, positions.*, userss.*, employees.id as id'))
             ->orderBy('employees.id', 'DESC')
             , $request, [
                 'employees.name', 'positions.position_name'
@@ -78,7 +80,7 @@ class EmployeeController extends Controller
             'nip' => $inputEmployee['nip'],
             'kontak' => $inputEmployee['kontak'],
         ]);
-        return $this->resp([$input, $user, $employee]);
+        return $this->resp([$user, $employee]);
     }
 
     public function updateEmployee(Request $request, $id)
