@@ -18,7 +18,7 @@ export const mutations = {
     state.company.data = data
   },
   setLoader(state){
-    state.compLoader = state.compLoader
+    state.compLoader = !state.compLoader
   },
   setPage(state, data){
       state.company.current_page = data
@@ -63,7 +63,7 @@ export const actions = {
     }).catch(e => {
         console.log(e)
     }).finally(() => {
-        // context.commit("setLoader")
+        context.commit("setLoader")
     })
   },
 }

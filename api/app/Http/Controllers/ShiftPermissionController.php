@@ -24,8 +24,8 @@ class ShiftPermissionController extends Controller
             ->where('s1.company_id', $request->company_id)
             ->select(
                 DB::raw('shift_permissions.*, shift_permissions.id as id,
-                e1.name as name1, s1.code as code1, s1.schedule_in as schedule_in1, s1.schedule_out as schedule_out1,
-                e2.name as name2, s2.code as code2, s2.schedule_in as schedule_in2, s2.schedule_out as schedule_out2
+                e1.name as name1, se1.date as date1, s1.code as code1, s1.schedule_in as schedule_in1, s1.schedule_out as schedule_out1,
+                e2.name as name2, se2.date as date2, s2.code as code2, s2.schedule_in as schedule_in2, s2.schedule_out as schedule_out2
                 '
             ))
         , $request,['e1.name', 'e2.name', 's1.code', 's2.code', 's1.schedule_in', 's2.schedule_in', 's1.schedule_out', 's2.schedule_out']);

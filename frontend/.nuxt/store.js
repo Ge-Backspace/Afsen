@@ -23,6 +23,7 @@ let store = {};
   resolveStoreModules(require('..\\store\\checkin.js'), 'checkin.js')
   resolveStoreModules(require('..\\store\\company.js'), 'company.js')
   resolveStoreModules(require('..\\store\\cuti.js'), 'cuti.js')
+  resolveStoreModules(require('..\\store\\cutiemployee.js'), 'cutiemployee.js')
   resolveStoreModules(require('..\\store\\drawer.js'), 'drawer.js')
   resolveStoreModules(require('..\\store\\employee.js'), 'employee.js')
   resolveStoreModules(require('..\\store\\goverment.js'), 'goverment.js')
@@ -49,6 +50,7 @@ let store = {};
       '..\\store\\checkin.js',
       '..\\store\\company.js',
       '..\\store\\cuti.js',
+      '..\\store\\cutiemployee.js',
       '..\\store\\drawer.js',
       '..\\store\\employee.js',
       '..\\store\\goverment.js',
