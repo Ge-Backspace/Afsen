@@ -80,7 +80,7 @@ class EmployeeController extends Controller
             'nip' => $inputEmployee['nip'],
             'kontak' => $inputEmployee['kontak'],
         ]);
-        return $this->resp([$input, $user, $employee]);
+        return $this->resp([$user, $employee]);
     }
 
     public function updateEmployee(Request $request, $id)

@@ -8,26 +8,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class CutiPermissionController extends Controller
+class CutiEmployeeController extends Controller
 {
-    public function getCutiPermission(Request $request)
+    public function getCutiEmployee(Request $request)
     {
         return $this->getPaginate(
             CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employees.id')
             ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id')
             ->where('cutis.company_id', $request->company_id)
+            ->where('cuti_permissions.status_id', 1)
             ->select(DB::raw('cuti_permissions.*, employees.*, cutis.*, cuti_permissions.id as id'))
             ->orderBy('cuti_permissions.id', 'DESC'), $request, ['employees.name', 'cutis.cuti_name', 'cutis.code']);
     }
 
-    public function addCutiPermission(Request $request)
+    public function addCutiEmployee(Request $request)
     {
         $input = $request->only('employee_id', 'cuti_id', 'start_date', 'expired_date');
         $validator = Validator::make($input, [
             'employee_id' => 'required|numeric',
             'cuti_id' => 'required|numeric',
             'start_date' => 'required|date',
-            'expired_date' => 'required|date'
+            'expired_date' => 'required|date',
+            'status_id' => 'required'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Cuti Permission', false, 401);
@@ -36,7 +38,7 @@ class CutiPermissionController extends Controller
         return $this->resp($add);
     }
 
-    public function updateCutiPermission(Request $request, $id)
+    public function updateCutiEmployee(Request $request, $id)
     {
         $table = CutiPermission::find($id);
         if (!$table) {
@@ -66,17 +68,17 @@ class CutiPermissionController extends Controller
         return $this->resp();
     }
 
-    public function changeStatusCutiPermission(Request $request, $id)
-    {
-        $table = CutiPermission::find($id);
-        if (!$table) {
-            return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
-        }
-        $s['status_id'] = 2;
-        if ($request->status == 1) {
-            $s['status_id'] = 1;
-        }
-        $update = $table->update($s);
-        return $this->resp($update);
-    }
+    // public function changeStatusCutiPermission(Request $request, $id)
+    // {
+    //     $table = CutiPermission::find($id);
+    //     if (!$table) {
+    //         return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
+    //     }
+    //     $s['status_id'] = 2;
+    //     if ($request->status == 1) {
+    //         $s['status_id'] = 1;
+    //     }
+    //     $update = $table->update($s);
+    //     return $this->resp($update);
+    // }
 }
