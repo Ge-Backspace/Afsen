@@ -35,24 +35,6 @@
   "LazyChartLine": {
     "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/chart/chart-line.vue"
   },
-  "ChartBar": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-bar.vue"
-  },
-  "LazyChartBar": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-bar.vue"
-  },
-  "ChartDoughnut": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-doughnut.vue"
-  },
-  "LazyChartDoughnut": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-doughnut.vue"
-  },
-  "ChartLine": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-line.vue"
-  },
-  "LazyChartLine": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-line.vue"
-  },
   "FooterAfsen": {
     "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/FooterAfsen.vue"
   },
@@ -93,10 +75,6 @@
     "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/PartnerAfsen.vue"
   },
   "LazyPartnerAfsen": {
-<<<<<<< HEAD
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/LandingPage/PartnerAfsen.vue"
-=======
     "description": "Auto imported from F:/Afedigi Coaching/nuxt-app/Backup/Afsen/frontend/components/LandingPage/PartnerAfsen.vue"
->>>>>>> b7009b60e2aaa4e0d0543eed609637367da63a1e
   }
 }
