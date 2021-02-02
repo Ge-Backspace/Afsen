@@ -70,7 +70,9 @@ class CutiPermissionController extends Controller
     {
         $table = CutiPermission::find($id);
         if (!$table) {
-            return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
+            return $this->resp(null, 'Permission Shift Tidak Ditemukan', false, 406);
+        } elseif ($table->status_id != 1) {
+            return $this->resp(null, 'Status Permission Shift Sudah Diubah', false, 406);
         }
         $s['status_id'] = 2;
         if ($request->status == 1) {

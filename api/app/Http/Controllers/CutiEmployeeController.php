@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Models\CutiPermission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,17 +24,17 @@ class CutiEmployeeController extends Controller
 
     public function addCutiEmployee(Request $request)
     {
-        $input = $request->only('employee_id', 'cuti_id', 'start_date', 'expired_date');
+        $input = $request->only('employee_id', 'cuti_id', 'start_date', 'expired_date', 'status_id');
         $validator = Validator::make($input, [
             'employee_id' => 'required|numeric',
             'cuti_id' => 'required|numeric',
             'start_date' => 'required|date',
             'expired_date' => 'required|date',
-            'status_id' => 'required'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Cuti Permission', false, 401);
         }
+        Arr::set($input, 'status_id', 1);
         $add = CutiPermission::create($input);
         return $this->resp($add);
     }
@@ -58,7 +59,7 @@ class CutiEmployeeController extends Controller
         return $this->resp($update);
     }
 
-    public function deleteCutiPermission($id)
+    public function deleteCutiEmployee($id)
     {
         $table = CutiPermission::find($id);
         if (!$table) {
