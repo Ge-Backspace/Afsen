@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\CutiPermission;
-use App\Models\StatusPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -14,10 +13,11 @@ class CutiPermissionController extends Controller
     public function getCutiPermission(Request $request)
     {
         return $this->getPaginate(
-            CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employess.id')
+            CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employees.id')
             ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id')
+            ->where('cutis.company_id', $request->company_id)
             ->select(DB::raw('cuti_permissions.*, employees.*, cutis.*, cuti_permissions.id as id'))
-            ->orderBy('id', 'DESC'), $request, ['employees.name', 'cutis.cuti_name', 'cutis.code']);
+            ->orderBy('cuti_permissions.id', 'DESC'), $request, ['employees.name', 'cutis.cuti_name', 'cutis.code']);
     }
 
     public function addCutiPermission(Request $request)
@@ -26,7 +26,6 @@ class CutiPermissionController extends Controller
         $validator = Validator::make($input, [
             'employee_id' => 'required|numeric',
             'cuti_id' => 'required|numeric',
-            'status_id' => 'required|numeric',
             'start_date' => 'required|date',
             'expired_date' => 'required|date'
         ], Helper::messageValidation());
@@ -77,13 +76,13 @@ class CutiPermissionController extends Controller
     {
         $table = CutiPermission::find($id);
         if (!$table) {
-            $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
+            return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
         }
-        $status = StatusPermission::where('company_id', $request->company_id)
-        ->where('code', $request->code)->first();
-        if($status->accepted == true) {
-            return $this->resp($status);
+        $s['status_id'] = 2;
+        if ($request->status == 1) {
+            $s['status_id'] = 1;
         }
-        return $this->resp($table);
+        // $update = $table->update($s);
+        return $this->resp($s);
     }
 }
