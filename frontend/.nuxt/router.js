@@ -22,8 +22,6 @@ const _9fedcf54 = () => interopDefault(import('..\\pages\\admin\\informasi.vue' 
 const _512a2cb8 = () => interopDefault(import('..\\pages\\admin\\kegiatan.vue' /* webpackChunkName: "pages/admin/kegiatan" */))
 const _0d4491c8 = () => interopDefault(import('..\\pages\\admin\\lapor\\index.vue' /* webpackChunkName: "pages/admin/lapor/index" */))
 const _7b984c97 = () => interopDefault(import('..\\pages\\admin\\permission.vue' /* webpackChunkName: "pages/admin/permission" */))
-const _cccb5084 = () => interopDefault(import('..\\pages\\admin\\permission\\cuti.vue' /* webpackChunkName: "pages/admin/permission/cuti" */))
-const _503eebbb = () => interopDefault(import('..\\pages\\admin\\permission\\shift.vue' /* webpackChunkName: "pages/admin/permission/shift" */))
 const _ffe80d08 = () => interopDefault(import('..\\pages\\admin\\report.vue' /* webpackChunkName: "pages/admin/report" */))
 const _c12399dc = () => interopDefault(import('..\\pages\\admin\\salary.vue' /* webpackChunkName: "pages/admin/salary" */))
 const _1cd32c6a = () => interopDefault(import('..\\pages\\admin\\shift.vue' /* webpackChunkName: "pages/admin/shift" */))
@@ -51,6 +49,8 @@ const _73602755 = () => interopDefault(import('..\\pages\\admin\\master\\masterP
 const _fa74e2f4 = () => interopDefault(import('..\\pages\\admin\\master\\masterShift.vue' /* webpackChunkName: "pages/admin/master/masterShift" */))
 const _1f5fa5ad = () => interopDefault(import('..\\pages\\admin\\master\\MasterStatusPermission.vue' /* webpackChunkName: "pages/admin/master/MasterStatusPermission" */))
 const _1ae4fa12 = () => interopDefault(import('..\\pages\\admin\\master\\masterUser.vue' /* webpackChunkName: "pages/admin/master/masterUser" */))
+const _2d5a825a = () => interopDefault(import('..\\pages\\admin\\permissions\\cuti.vue' /* webpackChunkName: "pages/admin/permissions/cuti" */))
+const _10d93174 = () => interopDefault(import('..\\pages\\admin\\permissions\\shift.vue' /* webpackChunkName: "pages/admin/permissions/shift" */))
 const _17fb85c6 = () => interopDefault(import('..\\pages\\admin\\time_management\\attendance.vue' /* webpackChunkName: "pages/admin/time_management/attendance" */))
 const _77fad8db = () => interopDefault(import('..\\pages\\admin\\time_management\\calendar.vue' /* webpackChunkName: "pages/admin/time_management/calendar" */))
 const _5b75c898 = () => interopDefault(import('..\\pages\\admin\\time_management\\schedule.vue' /* webpackChunkName: "pages/admin/time_management/schedule" */))
@@ -146,16 +146,7 @@ export const routerOptions = {
   }, {
     path: "/admin/permission",
     component: _7b984c97,
-    name: "admin-permission",
-    children: [{
-      path: "cuti",
-      component: _cccb5084,
-      name: "admin-permission-cuti"
-    }, {
-      path: "shift",
-      component: _503eebbb,
-      name: "admin-permission-shift"
-    }]
+    name: "admin-permission"
   }, {
     path: "/admin/report",
     component: _ffe80d08,
@@ -264,6 +255,14 @@ export const routerOptions = {
     path: "/admin/master/masterUser",
     component: _1ae4fa12,
     name: "admin-master-masterUser"
+  }, {
+    path: "/admin/permissions/cuti",
+    component: _2d5a825a,
+    name: "admin-permissions-cuti"
+  }, {
+    path: "/admin/permissions/shift",
+    component: _10d93174,
+    name: "admin-permissions-shift"
   }, {
     path: "/admin/time_management/attendance",
     component: _17fb85c6,

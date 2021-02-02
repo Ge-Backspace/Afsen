@@ -72,21 +72,21 @@ export const  menu = () => {
             route: '/admin/shiftEmployee'
         },
         {
-            text: 'Permission',
+            text: 'Permissions',
             icon: 'bx bx-question-mark text-primary',
             // route: '/admin/permission'
             children: [
               {
                   text: "Permission Cuti",
                   icon: 'el-icon-postcard',
-                  route: '/admin/permission/cuti'
+                  route: '/admin/permissions/cuti'
               },
               {
-                  text: "Permission Shift",
-                  icon: 'el-icon-postcard',
-                  route: '/admin/permission/shift'
-              },
-          ]
+                text: "Permission Change Shift",
+                icon: 'el-icon-postcard',
+                route: '/admin/permissions/shift'
+            },
+            ]
         },
         {
             text: 'Salary',
@@ -128,11 +128,6 @@ export const  menu = () => {
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterCuti'
                 },
-                {
-                  text: "Master Status Permission",
-                  icon: 'el-icon-postcard',
-                  route: '/admin/master/masterStatusPermission'
-              },
             ]
         },
         // {

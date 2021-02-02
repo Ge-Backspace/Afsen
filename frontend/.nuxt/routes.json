@@ -123,22 +123,6 @@
     "path": "/admin/permission",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permission.vue",
     "chunkName": "pages/admin/permission",
-    "children": [
-      {
-        "name": "admin-permission-cuti",
-        "path": "cuti",
-        "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permission\\\\cuti.vue",
-        "chunkName": "pages/admin/permission/cuti",
-        "_name": "_cccb5084"
-      },
-      {
-        "name": "admin-permission-shift",
-        "path": "shift",
-        "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permission\\\\shift.vue",
-        "chunkName": "pages/admin/permission/shift",
-        "_name": "_503eebbb"
-      }
-    ],
     "_name": "_7b984c97"
   },
   {
@@ -329,6 +313,20 @@
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterUser.vue",
     "chunkName": "pages/admin/master/masterUser",
     "_name": "_1ae4fa12"
+  },
+  {
+    "name": "admin-permissions-cuti",
+    "path": "/admin/permissions/cuti",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permissions\\\\cuti.vue",
+    "chunkName": "pages/admin/permissions/cuti",
+    "_name": "_2d5a825a"
+  },
+  {
+    "name": "admin-permissions-shift",
+    "path": "/admin/permissions/shift",
+    "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permissions\\\\shift.vue",
+    "chunkName": "pages/admin/permissions/shift",
+    "_name": "_10d93174"
   },
   {
     "name": "admin-time_management-attendance",
