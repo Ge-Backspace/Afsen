@@ -7,3 +7,4 @@ $router->get('/optionPosition', 'SettingController@optionPosition');
 $router->get('/optionEmployee', 'SettingController@optionEmployee');
 $router->get('/optionShift', 'SettingController@optionShift');
 $router->get('/optionCuti', 'SettingController@optionCuti');
+$router->get('/optionShiftEmployee', 'SettingController@optionShiftEmployee');

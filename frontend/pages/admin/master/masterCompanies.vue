@@ -134,12 +134,10 @@
             style="height: 250px"
             >
             <GmapMarker
-              v-bind:key="index"
-              v-for="(m, index) in markers"
-              v-bind:position="m.position"
+              v-bind:position="center"
               v-bind:clickable="true"
               v-bind:draggable="true"
-              @click="center=m.position"
+              @drag="updateCoordinates"
             />
             </GmapMap>
           </vs-col>
@@ -235,7 +233,6 @@
         this.center.lat = Number(this.form.lat)
         this.center.lng = Number(this.form.lng)
         this.positions.position = this.center
-        this.markers[0] = this.positions
         this.tambahDialog = true
         this.titleDialog = 'Edit Company'
         this.isUpdate = true
@@ -279,6 +276,13 @@
             this.$store.dispatch('company/getCompany', {
               company_id: this.company_id
             });
+            this.$axios.get(`/getCoordinate?company_id=${this.company_id}`)
+            .then(resp => {
+              this.center.lat = Number(resp.data.data.lat)
+              this.center.lng = Number(resp.data.data.lng)
+              this.positions.position = this.center
+              this.markers.push(this.positions)
+            })
           }
         }).finally(() => {
           this.btnLoader = false
@@ -327,11 +331,19 @@
             })
           }
         })
+      },
+      updateCoordinates(location) {
+        this.form.lat = location.latLng.lat(),
+        this.form.lng = location.latLng.lng()
       }
     },
     computed: {
       ...mapGetters("company", [
         'getCompany',
+        'getLoader'
+      ]),
+      ...mapGetters("coordinate", [
+        'getCordinate',
         'getLoader'
       ])
     },
@@ -344,20 +356,16 @@
         //   search: newValue
         // });
       },
-      page(newValue, oldValue) {
-        this.$store.commit('company/setPage', newValue)
-        this.$store.dispatch('company/getCompany', {});
-      },
+      // page(newValue, oldValue) {
+      //   this.$store.commit('company/setPage', newValue)
+      //   this.$store.dispatch('company/getCompany', {});
+      // },
       lat(newValue, oldValue) {
         this.form.lat = newValue
       },
       lng(newValue, oldValue) {
         this.form.lng = newValue
       },
-      center(newValue, oldValue) {
-        this.positions.position = newValue
-        this.markers[0] = this.positions
-      }
     },
   }
 

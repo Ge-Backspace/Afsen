@@ -29,7 +29,7 @@ class EmployeeController extends Controller
             Employee::join('positions', 'employees.position_id', '=', 'positions.id')
             ->join('users', 'employees.user_id', '=', 'users.id')
             ->where('users.company_id', $request->company_id)
-            ->select(DB::raw('employees.*, positions.*, userss.*, employees.id as id'))
+            ->select(DB::raw('employees.*, positions.*, users.*, employees.id as id'))
             ->orderBy('employees.id', 'DESC')
             , $request, [
                 'employees.name', 'positions.position_name'

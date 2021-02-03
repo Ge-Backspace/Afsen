@@ -123,7 +123,7 @@
                     {{ i + 1 }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.id }}
+                    {{ tr.name }}
                   </vs-td>
                   <vs-td>
                     {{ tr.nip }}
@@ -166,7 +166,9 @@
                     >
                       <el-button
                         size="mini"
-                        @click="edit(tr)"
+                        @click="
+                        edit(tr),
+                        request = false"
                         icon="fa fa-edit"
                       ></el-button>
                     </el-tooltip>
@@ -179,7 +181,7 @@
                       <el-button
                         size="mini"
                         type="primary"
-                        @click="deleteCompany(tr.id)"
+                        @click="deleteEmployee(tr.id)"
                         icon="fa fa-trash"
                       >
                       </el-button>
@@ -239,7 +241,7 @@
       <div class="con-form">
         <vs-row>
           <vs-col
-            v-if="this.request"
+            v-if="request"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -254,7 +256,7 @@
             ></vs-input>
           </vs-col>
           <vs-col
-            v-if="this.request"
+            v-if="request"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -265,7 +267,7 @@
             <vs-input
               type="text"
               v-model="form.email"
-              placeholder="Nama"
+              placeholder="Email"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -334,6 +336,7 @@
             ></vs-input>
           </vs-col>
           <vs-col
+            v-if="request"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -348,7 +351,7 @@
             ></vs-input>
           </vs-col>
           <vs-col
-            v-if="this.request"
+            v-if="request"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -517,8 +520,6 @@ export default {
   layout: "admin",
   data() {
     return {
-      data: {},
-      company_id: "",
       table: {
         max: 10,
       },
@@ -529,10 +530,10 @@ export default {
       option: [],
       page: 1,
       current_page: 1,
-      titleDialog: "Tambah Karyawan",
+      titleDialog: "Tambah Employee",
       tambahDialog: false,
       importDialog: false,
-      search: "",
+      search: '',
       company_id: JSON.parse(JSON.stringify(this.$auth.user.company_id)),
       isUpdate: false,
       btnLoader: false,
@@ -543,11 +544,11 @@ export default {
         position_id: '',
         group: '',
         kontak: '',
-        status: false,
+        status: '',
         username: '',
         password: '',
-        admin: false,
-        aktif: false,
+        admin: '',
+        aktif: '',
         file: ''
       },
       // active: "",
@@ -626,6 +627,7 @@ export default {
     },
     edit(data) {
       this.form.id = data.id;
+      this.form.name = data.name;
       this.form.nip = data.nip;
       this.form.position_id = data.position_id;
       this.form.kontak = data.kontak;
@@ -638,14 +640,18 @@ export default {
     },
     resetForm() {
       this.form = {
-        name: "",
-        email: "",
-        position_id: "",
-        kontak: "",
-        status: "",
-        username: "",
-        admin: "",
-        aktif: ""
+        name: '',
+        email: '',
+        nip: '',
+        position_id: '',
+        group: '',
+        kontak: '',
+        status: '',
+        username: '',
+        password: '',
+        admin: '',
+        aktif: '',
+        file: ''
       };
       this.isUpdate = false;
     },
@@ -680,7 +686,7 @@ export default {
               title: "Success",
               message: `Berhasil ${
                 type == "store" ? "Menambah" : "Mengubah"
-              } Company`,
+              } Employee`,
             });
             this.resetForm();
             this.tambahDialog = false;
@@ -704,7 +710,7 @@ export default {
           }
         });
     },
-    deleteCompany(id) {
+    deleteEmployee(id) {
       this.$swal({
         title: "Perhatian!",
         text: "Apakah anda yakin ingin menghapus data ini?",
@@ -749,7 +755,7 @@ export default {
     // ...mapGetters("goverment", ["getGovermentPlains"]),
     ...mapGetters("employee", [
       "getEmployees",
-      // "getLoader"
+      "getLoader"
     ]),
     ...mapGetters("option", ["getOption"]),
     ...mapGetters("position", ["getPosition"]),
