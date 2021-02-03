@@ -35,10 +35,10 @@ class CheckinExport implements FromCollection, WithHeadings, WithEvents
     }
     public function collection()
     {
-        return Checkin::join('users', 'users.company_id', '=', 'companies.id')
-        ->join('employees', 'employees.user_id', '=', 'users.id')
-        ->where('companies.id', $this->company_id)
-        ->get(['employees.name', 'checkin_time', 'checkout_time']);
+        return Checkin::join('employees as e', 'checkins.employee_id', '=', 'e.id')
+        ->join('users as u', 'e.user_id', '=', 'u.id')
+        ->where('u.company_id', $this->company_id)
+        ->get(['e.name', 'checkins.checkin_time', 'checkins.checkout_time', 'checkins.address']);
     }
 
     public function headings(): array
@@ -47,7 +47,8 @@ class CheckinExport implements FromCollection, WithHeadings, WithEvents
         'name',
         'checkin',
         'chekout',
+        'address'
         ];
-        
+
     }
 }

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Exports\CheckinExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CheckinController extends Controller
@@ -28,7 +29,7 @@ class CheckinController extends Controller
         }
     }
 
-    public function todayCheckin(Request $request)
+    public function todayAttandance(Request $request)
     {
         $todayCheckin = Checkin::join('employees', 'checkins.employee_id', '=', 'employees.id')
         ->join('users', 'employees.user_id', '=', 'users.id')
@@ -36,6 +37,15 @@ class CheckinController extends Controller
         ->whereDate('checkin_time', '=', Carbon::today())
         ->orderBy('checkins.id', 'desc');
         return $this->getPaginate($todayCheckin, $request,['employees.name']);
+    }
+
+    public function attendance(Request $request)
+    {
+        $table = Checkin::join('employees as e', 'checkins.employee_id', '=', 'e.id')
+        ->join('users as u', 'e.user_id', '=', 'u.id')
+        ->where('u.company_id', $request->company_id)
+        ->select(DB::raw('checkins.*, checkins.id as id, e.name'));
+        return $this->getPaginate($table, $request, ['e.name']);
     }
 
     public function checkin(Request $request)
@@ -101,5 +111,22 @@ class CheckinController extends Controller
             $as = \Maatwebsite\Excel\Excel::DOMPDF;
         }
         return Excel::download(new CheckinExport($request->user_id), 'attendance.' . $type, $as);
+    }
+
+    public function exportAttendance(Request $request)
+    {
+        $validator = Validator::make($request->only(['company_id']), [
+            'company_id' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
+        }
+        $as = \Maatwebsite\Excel\Excel::XLSX;
+        $type = 'xlsx';
+        if($request->as == 'pdf'){
+            $type = 'pdf';
+            $as = \Maatwebsite\Excel\Excel::DOMPDF;
+        }
+        return Excel::download(new CheckinExport($request->company_id), 'cuti_permissions.' . $type, $as);
     }
 }

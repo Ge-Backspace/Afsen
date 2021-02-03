@@ -222,7 +222,7 @@
             <label>Cuti Name</label>
             <vs-select filter placeholder="Cuti Employee" v-model="form.cuti_id">
               <vs-option
-                v-for="op in getOptionShiftEmployees.data"
+                v-for="op in getOptionCuties.data"
                 :key="op.id"
                 :label="[op.code, op.cuti_name]"
                 :value="op.id"
@@ -400,6 +400,9 @@ export default {
       company_id: this.company_id,
     });
     this.$store.dispatch("option/getOptionEmployees", {
+      company_id: this.company_id,
+    });
+    this.$store.dispatch("option/getOptionCuties", {
       company_id: this.company_id,
     });
   },
@@ -616,18 +619,13 @@ export default {
         });
       })
     },
-    optionShiftEmployees(employee_id) {
-      this.$store.dispatch('option', {
-        employee_id: employee_id
-      })
-    },
     formatDate(date) {
       return moment(date).format("DD MMMM YYYY");
     },
   },
   computed: {
     ...mapGetters("cutipermission", ["getCutiPs", "getLoader"]),
-    ...mapGetters("option", ["getOptionEmployees", "getOptionShiftEmployees"]),
+    ...mapGetters("option", ["getOptionEmployees", "getOptionCuties"]),
   },
   watch: {
     getCutiPs(newValue, oldValue) {
