@@ -6,6 +6,7 @@ use App\Models\Cuti;
 use App\Models\Position;
 use App\Models\Employee;
 use App\Models\Shift;
+use App\Models\ShiftEmployee;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -35,6 +36,14 @@ class SettingController extends Controller
     {
         $option = Cuti::where('company_id', $request->company_id)
         ->get();
+        return $this->resp($option);
+    }
+
+    public function optionShiftEmployee(Request $request)
+    {
+        $option = ShiftEmployee::join('shifts as s', 'shift_employees.shift_id', '=', 's.id')
+        ->where('shift_employees.employee_id', $request->employee_id)
+        ->get(['shift_employees.id as id', 'shift_employees.date', 's.shift_name', 's.code', 's.schedule_in', 's.schedule_out']);
         return $this->resp($option);
     }
 }

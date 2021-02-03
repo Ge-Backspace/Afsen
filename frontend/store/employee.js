@@ -16,7 +16,7 @@ export const state = () => ({
       state.employees = data
     },
     setLoader(state){
-        state.employeeLoader = state.employeeLoader
+        state.employeeLoader = !state.employeeLoader
     },
     // setPage(state, data){
     //     state.users.current_page = data
@@ -40,14 +40,15 @@ export const state = () => ({
 
   export const actions = {
     getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
-        let page = defaultPage ? 1 : context.state.employees.current_page
-        this.$axios.get(`/employees?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
-            context.commit('setEmployees', resp.data)
-        }).catch(e => {
-            console.log(e)
-        }).finally(() => {
-            context.commit("setLoader")
-        })
+      context.commit("setLoader")
+      let page = defaultPage ? 1 : context.state.employees.current_page
+      this.$axios.get(`/employees?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
+          context.commit('setEmployees', resp.data)
+      }).catch(e => {
+          console.log(e)
+      }).finally(() => {
+          context.commit("setLoader")
+      })
     },
     // getUserSummary(context){
     //     this.$axios.get(`/user-summary`).then(resp => {
