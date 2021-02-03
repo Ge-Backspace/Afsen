@@ -98,7 +98,7 @@ export const actions = {
     },
 
     getOptionShiftEmployee(context, {employee_id = ''}){
-      this.$axios.get( `/optionCuti?employee_id=${employee_id}`).
+      this.$axios.get( `/optionShiftEmployee?employee_id=${employee_id}`).
       then(resp => {
         context.commit(`setOptionShiftEmployees`, resp.data)
       }).catch(e => {

@@ -83,7 +83,7 @@
               </vs-td>
               <vs-td>
                 <span class="badge badge-primary" v-if="tr.status_id == 0">Waiting</span>
-                <span class="badge badge-success" v-if="tr.status_id == 1">Accepted</span>
+                <span class="badge badge-success" v-else-if="tr.status_id == 1">Accepted</span>
                 <span class="badge badge-warning" v-else>Rejected</span>
               </vs-td>
               <vs-td>
@@ -175,7 +175,10 @@
     <vs-dialog
       v-model="seDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
+      @close="resetForm(),
+      optionshift1 = false,
+      optionshift2 = false
+      "
     >
       <template #header>
         <h1 class="not-margin">
@@ -196,15 +199,16 @@
               filter
               placeholder="Employee"
               v-model="form.employee1_id"
+              @change="
+              getshift(form.employee1_id)
+              optionshift1 = true
+              "
             >
               <vs-option
                 v-for="op in getOptionEmployees.data"
                 :key="op.id"
                 :label="op.name"
                 :value="op.id"
-                @click="this.$store.dispatch('option/getOptionShiftEmployee', {
-                  employee_id: id
-                })"
               >
                 {{ op.name }}
               </vs-option>
@@ -222,6 +226,10 @@
               filter
               placeholder="Employee"
               v-model="form.employee2_id"
+              @change="
+              getshift(form.employee2_id)
+              optionshift2 = true
+              "
             >
               <vs-option
                 v-for="op in getOptionEmployees.data"
@@ -234,6 +242,8 @@
             </vs-select>
           </vs-col>
           <vs-col
+            v-loading="getLoader"
+            v-if="optionshift1"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -252,12 +262,14 @@
                 :label="[op.date, op.code, op.schedule_in, op.schedule_out]"
                 :value="op.id"
               >
-                {{ formatDate(op.date) }} ({{ op.code }}) 
+                {{ formatDate(op.date) }} ({{ op.code }})
                 ,{{ op.schedule_in }}-{{ op. schedule_out }}
               </vs-option>
             </vs-select>
           </vs-col>
-          <!-- <vs-col
+          <vs-col
+            v-loading="getLoader"
+            v-if="optionshift2"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -271,18 +283,18 @@
               v-model="form.shift_employee2_id"
             >
               <vs-option
-                v-for="op in getOptionShifts.data"
+                v-for="op in getOptionShiftE.data"
                 :key="op.id"
                 :label="[op.id
                 //, op.schedule_in, op. schedule_out
                 ]"
                 :value="op.id"
               >
-                {{ op.id }} -->
+                {{ op.id }}
                 <!-- ,{{ op.schedule_in }}-{{ op. schedule_out }} -->
-              <!-- </vs-option>
+              </vs-option>
             </vs-select>
-          </vs-col> -->
+          </vs-col>
         </vs-row>
       </div>
 
@@ -404,6 +416,8 @@ export default {
       table: {
         max: 10,
       },
+      optionshift1: false,
+      optionshift2: false,
       request: false,
       importDialog: false,
       active: 0,
@@ -431,6 +445,9 @@ export default {
     });
     this.$store.dispatch('option/getOptionEmployees', {
       company_id: this.company_id
+    })
+    this.$store.dispatch('option/getOptionShiftEmployee', {
+      employee_id: 0
     })
   },
   methods: {
@@ -588,10 +605,11 @@ export default {
         }
       })
     },
-    // shiftEm(id) {
-    //   console.log(id)
-      
-    // },
+    getshift(id) {
+      this.$store.dispatch('option/getOptionShiftEmployee', {
+        employee_id: id
+      })
+    },
     status(id) {
       this.$swal({
         title: 'Cormfirmation',
