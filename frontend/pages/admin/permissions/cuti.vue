@@ -89,7 +89,7 @@
                 <span class="badge badge-primary" v-if="tr.status_id == 0"
                   >Waiting</span
                 >
-                <span class="badge badge-success" v-if="tr.status_id == 1"
+                <span class="badge badge-success" v-else-if="tr.status_id == 1"
                   >Accepted</span
                 >
                 <span class="badge badge-warning" v-else>Rejected</span>
@@ -111,30 +111,38 @@
                   <el-button
                     size="mini"
                     type="primary"
-                    @click="deleteShift(tr.id)"
+                    @click="deleteCutiE(tr.id)"
                     icon="fa fa-trash"
                   >
                   </el-button>
                 </el-tooltip>
                 <el-tooltip
+                v-if="tr.status_id == 0"
                   content="Change Status"
                   placement="top-start"
                   effect="dark"
                 >
-                  <el-dropdown size="medium">
-                    <el-button type="shadow" size="mini" round>
-                      Change Status<i
-                        class="el-icon-arrow-down el-icon--right"
-                      ></i>
-                    </el-button>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item>Action 1</el-dropdown-item>
-                      <el-dropdown-item>Action 2</el-dropdown-item>
-                      <el-dropdown-item>Action 3</el-dropdown-item>
-                      <el-dropdown-item>Action 4</el-dropdown-item>
-                      <el-dropdown-item>Action 5</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                  <el-button
+                    size="mini"
+                    type="warning"
+                    @click="status(tr.id)"
+                    icon="el-icon-refresh"
+                  >
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip
+                  v-else
+                  content="Change Status"
+                  placement="top-start"
+                  effect="dark"
+                >
+                  <el-button
+                    disabled
+                    size="mini"
+                    type="warning"
+                    icon="el-icon-refresh"
+                  >
+                  </el-button>
                 </el-tooltip>
               </vs-td>
             </vs-tr>
@@ -159,7 +167,7 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Buat Shift Baru"
+      content="Buat Cuti Permission Baru"
       placement="top-start"
     >
       <a
@@ -416,8 +424,8 @@ export default {
       this.isUpdate = false;
     },
     handleCurrentChange(val) {
-      this.$store.commit("shiftemployee/setPage", val);
-      this.$store.dispatch("shiftemployee/getAll", {
+      this.$store.commit("cutipermission/setPage", val);
+      this.$store.dispatch("cutipermission/getAll", {
         company_id: this.company_id,
       });
     },
@@ -429,7 +437,7 @@ export default {
       formData.append("company_id", this.company_id);
       formData.append("file", this.file);
       this.$axios
-        .post("/shiftEmployee/import", formData, {
+        .post("/cutipermission/import", formData, {
           headers: { "content-type": "multipart/form-data" },
         })
         .then((resp) => {
@@ -440,7 +448,7 @@ export default {
             });
             this.resetForm();
             this.importDialog = false;
-            this.$store.dispatch("shiftemployee/getAll", {
+            this.$store.dispatch("cutipermission/getAll", {
               company_id: this.company_id,
             });
           }
@@ -460,7 +468,7 @@ export default {
       }
       this.$axios
         .get(
-          `/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`,
+          `/cutipermission/export?company_id=${this.company_id}&as=${this.export_as}`,
           {
             responseType: "blob",
           }
@@ -484,9 +492,9 @@ export default {
       formData.append("employee_id", this.form.employee_id);
       formData.append("shift_id", this.form.shift_id);
       formData.append("date", this.form.date);
-      let url = "/shiftEmployee";
+      let url = "/cutipermission";
       if (type == "update") {
-        url = `shiftEmployee/${this.form.id}/update`;
+        url = `cutipermission/${this.form.id}/update`;
       }
 
       this.$axios
@@ -501,7 +509,7 @@ export default {
             });
             this.resetForm();
             this.seDialog = false;
-            this.$store.dispatch("shiftemployee/getAll", {
+            this.$store.dispatch("cutipermission/getAll", {
               company_id: this.company_id,
             });
           }
@@ -521,10 +529,10 @@ export default {
           }
         });
     },
-    deleteShift(id) {
+    deleteCutiE(id) {
       this.$swal({
         title: "HEY WAIT!, HEY HOLD ON!",
-        text: "Are you serious to delete this cutie data ?",
+        text: "Are you serious to delete this data ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -534,7 +542,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`/shiftEmployee/${id}/delete`)
+            .delete(`/cutipermission/${id}/delete`)
             .then((resp) => {
               if (resp.data.success) {
                 this.$notify.success({
@@ -542,7 +550,7 @@ export default {
                   message: "Berhasil Menghapus Data",
                 });
                 this.shiftDialog = false;
-                this.$store.dispatch("shiftemployee/getAll", {
+                this.$store.dispatch("cutipermission/getAll", {
                   company_id: this.company_id,
                 });
               }
@@ -558,6 +566,50 @@ export default {
             });
         }
       });
+    },
+    status(id) {
+      this.$swal({
+        title: 'Cormfirmation',
+        text: 'Accept or Reject this Permission',
+        icon: "warning",
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonColor: "#3085d6",
+        denyButtonColor: "#d33",
+        confirmButtonText: "Accept",
+        denyButtonText: "Reject",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        let status = 0
+        if (result.isConfirmed) {
+          status = 1
+        } else if (result.isDenied) {
+          status = 2
+        }
+        if (status != 0) {
+          this.change(id, status)
+        }
+      })
+    },
+    change(id, status) {
+      this.$axios.post(`/cutipermission/${id}/change?status=${status}`)
+      .then(resp => {
+        if (resp.data.success) {
+          this.$notify.success({
+            title: "Success",
+            message: `Berhasil ${status == 1 ? "Accept" : "Reject"} Permission`,
+          });
+        }
+      }).catch((err) => {
+        this.$notify.error({
+          title: "Error",
+          message: err.response.data.message,
+        });
+      }).finally(() => {
+        this.$store.dispatch('cutipermission/getAll', {
+          company_id: this.company_id,
+        });
+      })
     },
     formatDate(date) {
       return moment(date).format("DD MMMM YYYY");

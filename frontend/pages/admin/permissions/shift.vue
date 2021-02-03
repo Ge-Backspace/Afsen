@@ -108,6 +108,34 @@
                   >
                   </el-button>
                 </el-tooltip>
+                <el-tooltip
+                v-if="tr.status_id == 0"
+                  content="Change Status"
+                  placement="top-start"
+                  effect="dark"
+                >
+                  <el-button
+                    size="mini"
+                    type="warning"
+                    @click="status(tr.id)"
+                    icon="el-icon-refresh"
+                  >
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip
+                  v-else
+                  content="Change Status"
+                  placement="top-start"
+                  effect="dark"
+                >
+                  <el-button
+                    disabled
+                    size="mini"
+                    type="warning"
+                    icon="el-icon-refresh"
+                  >
+                  </el-button>
+                </el-tooltip>
               </vs-td>
             </vs-tr>
           </template>
@@ -520,6 +548,50 @@ export default {
             })
           })
         }
+      })
+    },
+    status(id) {
+      this.$swal({
+        title: 'Cormfirmation',
+        text: 'Accept or Reject this Permission',
+        icon: "warning",
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonColor: "#3085d6",
+        denyButtonColor: "#d33",
+        confirmButtonText: "Accept",
+        denyButtonText: "Reject",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        let status = 0
+        if (result.isConfirmed) {
+          status = 1
+        } else if (result.isDenied) {
+          status = 2
+        }
+        if (status != 0) {
+          this.change(id, status)
+        }
+      })
+    },
+    change(id, status) {
+      this.$axios.post(`/cutipermission/${id}/change?status=${status}`)
+      .then(resp => {
+        if (resp.data.success) {
+          this.$notify.success({
+            title: "Success",
+            message: `Berhasil ${status == 1 ? "Accept" : "Reject"} Permission`,
+          });
+        }
+      }).catch((err) => {
+        this.$notify.error({
+          title: "Error",
+          message: err.response.data.message,
+        });
+      }).finally(() => {
+        this.$store.dispatch('cutipermission/getAll', {
+          company_id: this.company_id,
+        });
       })
     },
     formatDate(date){
