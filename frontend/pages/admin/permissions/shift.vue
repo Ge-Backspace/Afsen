@@ -200,7 +200,7 @@
               placeholder="Employee"
               v-model="form.employee1_id"
               @change="
-              getshift(form.employee1_id)
+              getshift1(form.employee1_id)
               optionshift1 = true
               "
             >
@@ -227,7 +227,7 @@
               placeholder="Employee"
               v-model="form.employee2_id"
               @change="
-              getshift(form.employee2_id)
+              getshift2(form.employee2_id)
               optionshift2 = true
               "
             >
@@ -257,9 +257,9 @@
               v-model="form.shift_employee1_id"
             >
               <vs-option
-                v-for="op in getOptionShiftE.data"
+                v-for="op in getOptionShiftE1.data"
                 :key="op.id"
-                :label="[op.date, op.code, op.schedule_in, op.schedule_out]"
+                :label="[formatDate(op.date), op.code, op.schedule_in, op.schedule_out]"
                 :value="op.id"
               >
                 {{ formatDate(op.date) }} ({{ op.code }})
@@ -283,15 +283,13 @@
               v-model="form.shift_employee2_id"
             >
               <vs-option
-                v-for="op in getOptionShiftE.data"
+                v-for="op in getOptionShiftE2.data"
                 :key="op.id"
-                :label="[op.id
-                //, op.schedule_in, op. schedule_out
-                ]"
+                :label="[[formatDate(op.date), op.code, op.schedule_in, op.schedule_out]]"
                 :value="op.id"
               >
-                {{ op.id }}
-                <!-- ,{{ op.schedule_in }}-{{ op. schedule_out }} -->
+                {{ formatDate(op.date) }} ({{ op.code }})
+                ,{{ op.schedule_in }}-{{ op. schedule_out }}
               </vs-option>
             </vs-select>
           </vs-col>
@@ -449,6 +447,7 @@ export default {
     this.$store.dispatch('option/getOptionShiftEmployee', {
       employee_id: 0
     })
+    
   },
   methods: {
     searchData(){
@@ -605,8 +604,13 @@ export default {
         }
       })
     },
-    getshift(id) {
-      this.$store.dispatch('option/getOptionShiftEmployee', {
+    getshift1(id) {
+      this.$store.dispatch('option/getOptionShiftEmployee1', {
+        employee_id: id
+      })
+    },
+    getshift2(id) {
+      this.$store.dispatch('option/getOptionShiftEmployee2', {
         employee_id: id
       })
     },
@@ -660,7 +664,7 @@ export default {
   },
   computed: {
     ...mapGetters('shiftpermission', ['getShiftPs', 'getLoader']),
-    ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees', 'getOptionShiftE']),
+    ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees', 'getOptionShiftE1', 'getOptionShiftE2' ]),
   },
   watch: {
     getShiftPs(newValue, oldValue) {

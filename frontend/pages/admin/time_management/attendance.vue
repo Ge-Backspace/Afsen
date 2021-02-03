@@ -16,7 +16,7 @@
             style="float: right"
             :loading="globalLoader"
             gradient
-            @click="downloadFile(`/lapor/download/pdf`)"
+            @click="exportData(`pdf`)"
             >Download PDF</vs-button
           >
           &nbsp;
@@ -25,7 +25,7 @@
             style="float: right"
             :loading="globalLoader"
             gradient
-            @click="downloadFile(`/lapor/download/xlsx`)"
+            @click="exportData(`excel`)"
             >Download Excel</vs-button
           >
           <el-card v-loading="getLoader" style="margin-top: 40px">
@@ -92,51 +92,37 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Employee ID</vs-th>
+                  <vs-th>No</vs-th>
                   <vs-th>Fullname</vs-th>
-                  <vs-th>Date</vs-th>
-                  <vs-th>Shift</vs-th>
-                  <vs-th>Schedule In</vs-th>
-                  <vs-th>Schedule Out</vs-th>
-                  <vs-th>Check In</vs-th>
-                  <vs-th>Check Out</vs-th>
-                  <vs-th>Over Time</vs-th>
-                  <vs-th>Attendance Code</vs-th>
-                  <vs-th>Timeoff Code</vs-th>
+                  <vs-th>Address</vs-th>
+                  <vs-th>Checkin Time</vs-th>
+                  <vs-th>Checkout Time</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
                 <vs-tr
                   :key="i"
-                  v-for="(tr, i) in getGoverments.data"
+                  v-for="(tr, i) in getAttendances.data"
                   :data="tr"
                 >
-                  <vs-td class="text-center">
-                    <img :src="tr.foto_url" alt="" height="30" width="auto" />
+                  <vs-td>
+                    {{ i + 1 }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.nama }}
+                    {{ tr.name }}
                   </vs-td>
                   <vs-td>
-                    <span class="badge badge-success" v-if="tr.aktif"
-                      >Aktif</span
-                    >
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
+                    {{ tr.address }}
                   </vs-td>
                   <vs-td>
-                    <el-tooltip
-                      content="Edit"
-                      placement="top-start"
-                      effect="dark"
-                    >
-                      <el-button
-                        size="mini"
-                        @click="edit(tr)"
-                        icon="fa fa-edit"
-                      ></el-button>
-                    </el-tooltip>
-
+                    {{ tr.checkin_time }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.checkout_time }}
+                  </vs-td>
+                  <vs-td>
+                    
                     <el-tooltip
                       content="Delete"
                       placement="top-start"
@@ -145,7 +131,7 @@
                       <el-button
                         size="mini"
                         type="primary"
-                        @click="deleteGoverment(tr.id)"
+                        @click="delete(tr.id)"
                         icon="fa fa-trash"
                       >
                       </el-button>
@@ -156,12 +142,12 @@
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{ getGoverments.total }} Data</small>
+                    <small>Total : {{ getAttendances.total }} Data</small>
                   </vs-col>
                   <vs-col w="10">
                     <vs-pagination
                       v-model="page"
-                      :length="Math.ceil(getGoverments.total / table.max)"
+                      :length="Math.ceil(getAttendances.total / table.max)"
                     />
                   </vs-col>
                 </vs-row>
@@ -172,178 +158,7 @@
       </div>
     </div>
 
-    <!-- Floating Button -->
-    <!-- <el-tooltip
-      class="item"
-      effect="dark"
-      content="Buat Pemda Baru"
-      placement="top-start"
-    >
-      <a
-        class="float"
-        @click="
-          tambahDialog = true;
-          titleDialog = 'Import Method Attendance';
-        "
-      >
-        <i class="el-icon-plus my-float"></i>
-      </a>
-    </el-tooltip> -->
-    <!-- End floating button-->
-
-    <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
-      <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Nama Kementrian">
-          <el-input v-model="form.nama"></el-input>
-        </el-form-item>
-        <el-form-item label="Logo">
-          <el-upload action="/" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="files" :limit="1">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="Aktif">
-          <el-switch v-model="form.aktif" color="danger"></el-switch>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="tambahDialog = false">Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog> -->
-
-    <vs-dialog
-      v-model="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
-    >
-      <template #header>
-        <h1 class="not-margin">
-          {{ titleDialog }}
-        </h1>
-      </template>
-      <div class="con-form">
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Import Method</label>
-          <vs-input<input type="file" id="file" ref="file"/>
-          </vs-col>
-            <vs-row>
-              <vs-col w="10">
-                <vs-switch style="width: 20px" v-model="form.aktif" />
-              </vs-col>
-            </vs-row>
-        </vs-row>
-      </div>
-
-      <template #footer>
-        <div class="footer-dialog">
-          <vs-row>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('update')"
-                v-if="isUpdate"
-                >Update</vs-button
-              >
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('store')"
-                v-else
-                >Simpan</vs-button
-              >
-            </vs-col>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                border
-                @click="
-                  tambahDialog = false;
-                  resetForm();
-                "
-                >Batal</vs-button
-              >
-            </vs-col>
-          </vs-row>
-          <div>&nbsp;</div>
-        </div>
-      </template>
-    </vs-dialog>
-
-    <vs-dialog
-      v-model="reportDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
-    >
-      <template #header>
-        <h1 class="not-margin">
-          {{ titleDialog }}
-        </h1>
-      </template>
-      <div class="con-form">
-        <vs-row>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Start Date</label>
-            <vs-input type="date" v-model="form.tgl_mulai"></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Expired Date</label>
-            <vs-input type="date" v-model="form.tgl_mulai"></vs-input>
-          </vs-col>
-            </vs-row>
-      </div>
-
-      <template #footer>
-        <div class="footer-dialog">
-          <vs-row>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('update')"
-                v-if="isUpdate"
-                >Update</vs-button
-              >
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('store')"
-                v-else
-                >Simpan</vs-button
-              >
-            </vs-col>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                border
-                @click="
-                  reportDialog = false;
-                  resetForm();
-                "
-                >Batal</vs-button
-              >
-            </vs-col>
-          </vs-row>
-          <div>&nbsp;</div>
-        </div>
-      </template>
-    </vs-dialog>
+    
   </div>
 </template>
 
@@ -358,32 +173,60 @@ export default {
   data() {
     return {
       api_url: config.baseApiUrl,
+      company_id: '',
       table: {
         max: 10,
       },
       page: 1,
-      titleDialog: "Tambah Pemda",
       search: "",
-      isUpdate: false,
       tambahDialog: false,
-      reportDialog: false,
       btnLoader: false,
-      files: [],
-      form: {
-        nama: "",
-        foto: null,
-        aktif: true,
-      },
     };
   },
   mounted() {
-    this.$store.dispatch("goverment/getAll", {});
+    this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
+    this.$store.dispatch("attendance/getAll", {
+      company_id: this.company_id
+    });
+    this.$axios.get(`/attendance?company_id=${this.company_id}`).then(resp => {
+      console.log(resp)
+    })
   },
   methods: {
     searchData() {
-      this.$store.dispatch("goverment/getAll", {
+      this.$store.dispatch("attendance/getAll", {
         search: this.search,
       });
+    },
+    exportData(type = 'excel'){
+      let as = 'excel'
+      if (type == 'pdf') {
+        as = 'pdf'
+      }
+      this.$axios.get(`/attendance/export?company_id=${this.company_id}&as=${as}`, {
+        //if u forgot this, your download will be corrupt
+        responseType: 'blob'
+      }).then((response) => {
+        //create a link in the document that we'll
+        //programmatically 'click'
+        const link = document.createElement('a');
+
+        //tell the browser to associate the response data
+        //to the URL of the link we created above.
+        link.href = window.URL.createObjectURL(
+          new Blob([response.data])
+        );
+
+
+      //tell the browset to download, not render
+      link.setAttribute('download','employee.xlsx');
+
+      //place the link in the DOM.
+      document.body.appendChild(link);
+
+      //make the magic happen!
+      link.click();
+      }); //please catch me baby!
     },
     edit(data) {
       this.form.nama = data.nama;
@@ -407,56 +250,56 @@ export default {
       this.isUpdate = false;
     },
     handleCurrentChange(val) {
-      this.$store.commit("goverment/setPage", val);
-      this.$store.dispatch("goverment/getAll", {});
+      this.$store.commit("attendance/setPage", val);
+      this.$store.dispatch("attendance/getAll", {});
     },
-    onSubmit(type = "store") {
-      this.btnLoader = true;
-      let formData = new FormData();
-      formData.append("nama", this.form.nama);
-      formData.append("aktif", this.form.aktif ? 1 : 0);
-      if (this.form.foto !== null) {
-        formData.append("foto", this.form.foto);
-      }
-      let url = "/goverment/store";
-      if (type == "update") {
-        url = `/goverment/${this.form.id}/update`;
-      }
+    // onSubmit(type = "store") {
+    //   this.btnLoader = true;
+    //   let formData = new FormData();
+    //   formData.append("nama", this.form.nama);
+    //   formData.append("aktif", this.form.aktif ? 1 : 0);
+    //   if (this.form.foto !== null) {
+    //     formData.append("foto", this.form.foto);
+    //   }
+    //   let url = "/goverment/store";
+    //   if (type == "update") {
+    //     url = `/goverment/${this.form.id}/update`;
+    //   }
 
-      this.$axios
-        .post(url, formData)
-        .then((resp) => {
-          if (resp.data.success) {
-            this.$notify.success({
-              title: "Success",
-              message: `Berhasil ${
-                type == "store" ? "Menambah" : "Mengubah"
-              } Goverment`,
-            });
-            this.resetForm();
-            this.tambahDialog = false;
-            this.$store.dispatch("goverment/getAll", {});
-          }
-        })
-        .finally(() => {
-          this.btnLoader = false;
-        })
-        .catch((err) => {
-          let error = err.response.data.data;
-          if (error) {
-            this.showErrorField(error);
-          } else {
-            this.$notify.error({
-              title: "Error",
-              message: err.response.data.message,
-            });
-          }
-        });
-    },
-    handleChangeFile(file, fileList) {
-      this.form.foto = file.raw;
-    },
-    deleteGoverment(id) {
+    //   this.$axios
+    //     .post(url, formData)
+    //     .then((resp) => {
+    //       if (resp.data.success) {
+    //         this.$notify.success({
+    //           title: "Success",
+    //           message: `Berhasil ${
+    //             type == "store" ? "Menambah" : "Mengubah"
+    //           } Goverment`,
+    //         });
+    //         this.resetForm();
+    //         this.tambahDialog = false;
+    //         this.$store.dispatch("goverment/getAll", {});
+    //       }
+    //     })
+    //     .finally(() => {
+    //       this.btnLoader = false;
+    //     })
+    //     .catch((err) => {
+    //       let error = err.response.data.data;
+    //       if (error) {
+    //         this.showErrorField(error);
+    //       } else {
+    //         this.$notify.error({
+    //           title: "Error",
+    //           message: err.response.data.message,
+    //         });
+    //       }
+    //     });
+    // },
+    // handleChangeFile(file, fileList) {
+    //   this.form.foto = file.raw;
+    // },
+    delete(id) {
       this.$swal({
         title: "Perhatian!",
         text: "Apakah anda yakin ingin menghapus data ini?",
@@ -469,7 +312,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`/goverment/${id}/delete`)
+            .delete(`/attendance/${id}/delete`)
             .then((resp) => {
               if (resp.data.success) {
                 this.$notify.success({
@@ -477,7 +320,7 @@ export default {
                   message: "Berhasil Menghapus Data",
                 });
                 this.tambahDialog = false;
-                this.$store.dispatch("goverment/getAll", {
+                this.$store.dispatch("attendance/getAll", {
                   defaultPage: true,
                 });
               }
@@ -496,18 +339,18 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("goverment", ["getGoverments", "getLoader"]),
+    ...mapGetters("attendance", ["getAttendances", "getLoader"]),
   },
   watch: {
-    getGoverments(newValue, oldValue) {},
+    getAttendance(newValue, oldValue) {},
     search(newValue, oldValue) {
       // this.$store.dispatch('goverment/getAll', {
       //   search: newValue
       // });
     },
     page(newValue, oldValue) {
-      this.$store.commit("goverment/setPage", newValue);
-      this.$store.dispatch("goverment/getAll", {});
+      this.$store.commit("attendance/setPage", newValue);
+      this.$store.dispatch("attendance/getAll", {});
     },
   },
 };

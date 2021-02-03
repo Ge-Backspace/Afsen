@@ -1,11 +1,11 @@
 export const state = () => ({
-    shift: {
+    attendance: {
       email: '',
       data: [],
       total: 0,
       current_page: 1
     },
-    shiftLoader: false,
+    attendanceLoader: false,
     // summary: {
     //     aktif: 0,
     //     non_aktif: 0
@@ -13,14 +13,14 @@ export const state = () => ({
   })
 
   export const mutations = {
-    setShifts(state, data) {
-      state.shift = data
+    setAttendances(state, data) {
+      state.attendance = data
     },
     setLoader(state){
-        state.shiftLoader = state.shiftLoader
+        state.attendanceLoader = state.attendanceLoader
     },
     setPage(state, data){
-        state.shift.current_page = data
+        state.attendance.current_page = data
     },
     // setSummary(state, data){
     //     state.summary = data
@@ -28,19 +28,19 @@ export const state = () => ({
   }
 
   export const getters = {
-    getShifts(state) {
-         return state.shift
+    getAttendances(state) {
+         return state.attendance
     },
     getLoader(state){
-        return state.shiftLoader
+        return state.attendanceLoader
     },
   };
 
   export const actions = {
     getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
-      let page = defaultPage ? 1 : context.state.shift.current_page
-      this.$axios.get(`/shifts?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
-          context.commit('setShifts', resp.data)
+      let page = defaultPage ? 1 : context.state.attendance.current_page
+      this.$axios.get(`/attendance?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
+          context.commit('setAttendances', resp.data)
       }).catch(e => {
           console.log(e)
       }).finally(() => {

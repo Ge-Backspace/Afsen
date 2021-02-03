@@ -5,7 +5,7 @@ export const state = () => ({
       total: 0,
       current_page: 1
     },
-    // userLoader: false,
+    positionLoader: false,
     // summary: {
     //     aktif: 0,
     //     non_aktif: 0

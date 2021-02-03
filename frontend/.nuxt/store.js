@@ -19,6 +19,7 @@ let store = {};
   // Enforce store modules
   store.modules = store.modules || {}
 
+  resolveStoreModules(require('..\\store\\attendance.js'), 'attendance.js')
   resolveStoreModules(require('..\\store\\berita.js'), 'berita.js')
   resolveStoreModules(require('..\\store\\checkin.js'), 'checkin.js')
   resolveStoreModules(require('..\\store\\company.js'), 'company.js')
@@ -49,6 +50,7 @@ let store = {};
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
+      '..\\store\\attendance.js',
       '..\\store\\berita.js',
       '..\\store\\checkin.js',
       '..\\store\\company.js',
