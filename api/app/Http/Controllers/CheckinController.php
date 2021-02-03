@@ -39,7 +39,7 @@ class CheckinController extends Controller
         return $this->getPaginate($todayCheckin, $request,['employees.name']);
     }
 
-    public function attandance(Request $request)
+    public function attendance(Request $request)
     {
         $table = Checkin::join('employees as e', 'checkins.employee_id', '=', 'e.id')
         ->join('users as u', 'e.user_id', '=', 'u.id')
@@ -111,5 +111,22 @@ class CheckinController extends Controller
             $as = \Maatwebsite\Excel\Excel::DOMPDF;
         }
         return Excel::download(new CheckinExport($request->user_id), 'attendance.' . $type, $as);
+    }
+
+    public function exportAttendance(Request $request)
+    {
+        $validator = Validator::make($request->only(['company_id']), [
+            'company_id' => 'required',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Export Document', false, 401);
+        }
+        $as = \Maatwebsite\Excel\Excel::XLSX;
+        $type = 'xlsx';
+        if($request->as == 'pdf'){
+            $type = 'pdf';
+            $as = \Maatwebsite\Excel\Excel::DOMPDF;
+        }
+        return Excel::download(new CheckinExport($request->company_id), 'cuti_permissions.' . $type, $as);
     }
 }
