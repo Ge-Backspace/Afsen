@@ -73,9 +73,9 @@ class CutiPermissionController extends Controller
     {
         $table = CutiPermission::find($id);
         if (!$table) {
-            return $this->resp(null, 'Permission Shift Tidak Ditemukan', false, 406);
+            return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
         } elseif ($table->status_id != 0) {
-            return $this->resp(null, 'Status Permission Shift Sudah Diubah', false, 406);
+            return $this->resp(null, 'Status Permission Cuti Sudah Diubah', false, 406);
         }
         $s['status_id'] = 2;
         if ($request->status == 1) {
@@ -115,6 +115,6 @@ class CutiPermissionController extends Controller
             $type = 'pdf';
             $as = \Maatwebsite\Excel\Excel::DOMPDF;
         }
-        return Excel::download(new CutiPermissionExport($request->company_id), 'shift_permissions.' . $type, $as);
+        return Excel::download(new CutiPermissionExport($request->company_id), 'cuti_permissions.' . $type, $as);
     }
 }

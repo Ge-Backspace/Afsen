@@ -43,28 +43,36 @@ class ShiftPermissionExport implements FromCollection, WithHeadings, WithEvents
         ->join('shifts as s2', 'se2.shift_id', '=', 's2.id')
         ->where('s1.company_id', $this->company_id)
         ->get([
-            'e1.name', 'e2.name', 'se1.date', 'se2.date', 's1.code', 's2.code',
-            's1.schedule_in', 's2.schedule_in', 's1.schedule_out', 's2.schedule_out',
+            'e1.name as name1',
+            'e2.name as name2',
+            'se1.date as date1',
+            'se2.date as date2',
+            's1.code as code1',
+            's2.code as code2',
+            's1.schedule_in as sci1',
+            's2.schedule_in as sci2',
+            's1.schedule_out as sco1',
+            's2.schedule_out as sco2',
             'shift_permissions.status_id'
         ]);
     }
-    
+
 
     public function headings(): array
     {
         return [
         'Pengaju',
         'Pengganti',
-        'Tanggal Pengaju',
-        'Tanggal Pengganti',
-        'Code Pengaju',
-        'Code Pengganti',
-        'Jadwal Masuk Pengaju',
-        'Jadwal Masuk Pengganti',
-        'Jadwal Keluar Pengaju',
-        'Jadwal Keluar Pengganti',
+        'Tanggal Shift Pengaju',
+        'Tanggal Shift Pengganti',
+        'Code Shift Pengaju',
+        'Code Shift Pengganti',
+        'Schedule In Pengaju',
+        'Schedule In Pengganti',
+        'Schedule Out Pengaju',
+        'Schedule Out Pengganti',
         'Status Perizinan'
         ];
-        
+
     }
 }

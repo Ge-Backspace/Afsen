@@ -433,7 +433,7 @@ export default {
       let formData = new FormData();
       formData.append('company_id', this.company_id);
       formData.append('file', this.file);
-      this.$axios.post('/shiftEmployee/import', formData, {
+      this.$axios.post('/shiftpermission/import', formData, {
         headers: {'content-type': 'multipart/form-data' }
       })
       .then(resp => {
@@ -458,11 +458,8 @@ export default {
         this.btnLoader = false
       })
     },
-    exportData(type = 'excel'){
-        if (type == 'pdf') {
-          this.export_as = 'pdf'
-        }
-        this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`, {
+    exportData(type){
+        this.$axios.get(`/shiftpermission/export?company_id=${this.company_id}&as=${type}`, {
           responseType: 'blob'
         }).then((response) => {
           const link = document.createElement('a');
@@ -470,9 +467,9 @@ export default {
             new Blob([response.data])
           );
           if (type == 'pdf') {
-            link.setAttribute('download','shift.pdf');
+            link.setAttribute('download','shift_permission.pdf');
           } else {
-            link.setAttribute('download','shift.xlsx');
+            link.setAttribute('download','shift_permission.xlsx');
           }
           document.body.appendChild(link);
           link.click();

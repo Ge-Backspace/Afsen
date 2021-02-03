@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\CutiPermission;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -38,7 +39,7 @@ class CutiPermissionExport implements FromCollection, WithHeadings, WithEvents
         return CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employees.id')
         ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id')
         ->where('cutis.company_id', $this->company_id)
-        ->get('employees.name', 'cutis.cuti_name', 'cutis.code', 'cuti_permissions.start_date', 'cuti_permissions.expired_date', 'cuti_permissions.status_id');
+        ->get(['employees.name', 'cutis.cuti_name', 'cutis.code', 'cuti_permissions.start_date', 'cuti_permissions.expired_date', 'cuti_permissions.status_id']);
     }
 
     public function headings(): array
@@ -51,6 +52,6 @@ class CutiPermissionExport implements FromCollection, WithHeadings, WithEvents
         'Expired Date',
         'Status'
         ];
-        
+
     }
 }

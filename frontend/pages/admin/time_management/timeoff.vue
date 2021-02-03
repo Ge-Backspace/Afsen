@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Shift Employee</h1>
+          <h1 class="heading">Cuti Employee</h1>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
               gradient
               @click="
                 importDialog = true;
-                titleDialog = 'Import Shift Employee';
+                titleDialog = 'Import Cuti Employee';
               "
               >Import Excel</vs-button
             >
@@ -101,13 +101,13 @@
                   <el-button
                     size="mini"
                     type="primary"
-                    @click="deleteShift(tr.id)"
+                    @click="deleteCuties(tr.id)"
                     icon="fa fa-trash"
                   >
                   </el-button>
-                  
+
                 </el-tooltip>
-                
+
               </vs-td>
             </vs-tr>
           </template>
@@ -131,14 +131,14 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Buat Shift Baru"
+      content="Buat Cuti Employee Baru"
       placement="top-start"
     >
       <a
         class="float"
         @click="
           toDialog = true;
-          titleDialog = 'Tambah Employee Shift';
+          titleDialog = 'Tambah Employee Cuti Employee';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -184,7 +184,7 @@
             style="padding: 5px"
           >
             <label>Cuti Name</label>
-            <vs-select filter placeholder="Shift" v-model="form.cuti_id">
+            <vs-select filter placeholder="Cuti Employee" v-model="form.cuti_id">
               <vs-option
                 v-for="op in getOptionCuties.data"
                 :key="op.id"
@@ -371,12 +371,12 @@ export default {
     });
   },
   methods: {
-    // searchData(){
-    //   this.$store.dispatch('shiftemployee/getAll', {
-    //     search: this.search,
-    //     company_id: this.company_id
-    //   });
-    // },
+    searchData(){
+      this.$store.dispatch('cutiemployee/getAll', {
+        search: this.search,
+        company_id: this.company_id
+      });
+    },
     edit(data) {
       this.form.id = data.id;
       console.log(this.form.id);
@@ -407,55 +407,52 @@ export default {
     onFileChange(e) {
       this.file = e.target.files[0];
     },
-    // importData(){
-    //   let formData = new FormData();
-    //   formData.append('company_id', this.company_id);
-    //   formData.append('file', this.file);
-    //   this.$axios.post('/shiftEmployee/import', formData, {
-    //     headers: {'content-type': 'multipart/form-data' }
-    //   })
-    //   .then(resp => {
-    //     if(resp.data.success){
-    //       this.$notify.success({
-    //         title: 'Success',
-    //         message: 'Berhasil Import Shift Employee'
-    //       })
-    //       this.resetForm()
-    //       this.importDialog = false
-    //       this.$store.dispatch('shiftemployee/getAll', {
-    //         company_id: this.company_id
-    //       });
-    //     }
-    //   })
-    //   .catch(error => {
-    //     this.uploading = false
-    //     this.error = error.resp.data
-    //     console.log('check error: ', this.error)
-    //   })
-    //   .finally(() => {
-    //     this.btnLoader = false
-    //   })
-    // },
-    // exportData(type = 'excel'){
-    //     if (type == 'pdf') {
-    //       this.export_as = 'pdf'
-    //     }
-    //     this.$axios.get(`/shiftEmployee/export?company_id=${this.company_id}&as=${this.export_as}`, {
-    //       responseType: 'blob'
-    //     }).then((response) => {
-    //       const link = document.createElement('a');
-    //       link.href = window.URL.createObjectURL(
-    //         new Blob([response.data])
-    //       );
-    //       if (type == 'pdf') {
-    //         link.setAttribute('download','shift.pdf');
-    //       } else {
-    //         link.setAttribute('download','shift.xlsx');
-    //       }
-    //       document.body.appendChild(link);
-    //       link.click();
-    //     });
-    //   },
+    importData(){
+      let formData = new FormData();
+      formData.append('company_id', this.company_id);
+      formData.append('file', this.file);
+      this.$axios.post('/cutiemployee/import', formData, {
+        headers: {'content-type': 'multipart/form-data' }
+      })
+      .then(resp => {
+        if(resp.data.success){
+          this.$notify.success({
+            title: 'Success',
+            message: 'Berhasil Import Cuti Employee'
+          })
+          this.resetForm()
+          this.importDialog = false
+          this.$store.dispatch('cutiemployee/getAll', {
+            company_id: this.company_id
+          });
+        }
+      })
+      .catch(error => {
+        this.uploading = false
+        this.error = error.resp.data
+        console.log('check error: ', this.error)
+      })
+      .finally(() => {
+        this.btnLoader = false
+      })
+    },
+    exportData(type = 'excel'){
+        this.$axios.get(`/cutiemployee/export?company_id=${this.company_id}&as=${type}`, {
+          responseType: 'blob'
+        }).then((response) => {
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          if (type == 'pdf') {
+            link.setAttribute('download','cuti_employee.pdf');
+          } else {
+            link.setAttribute('download','cuti_employee.xlsx');
+          }
+          document.body.appendChild(link);
+          link.click();
+        });
+      },
     onSubmit(type = "store") {
       this.btnLoader = true;
       let formData = new FormData();
@@ -477,11 +474,11 @@ export default {
               title: "Success",
               message: `Berhasil ${
                 type == "store" ? "Menambah" : "Mengubah"
-              } Shift Employee`,
+              } Cuti Employee`,
             });
             this.resetForm();
             this.toDialog = false;
-            this.$store.dispatch("shiftemployee/getAll", {
+            this.$store.dispatch("cutiemployee/getAll", {
               company_id: this.company_id,
             });
           }
@@ -514,15 +511,15 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`/shiftEmployee/${id}/delete`)
+            .delete(`/cutiemployee/${id}/delete`)
             .then((resp) => {
               if (resp.data.success) {
                 this.$notify.success({
                   title: "Success",
                   message: "Berhasil Menghapus Data",
                 });
-                this.shiftDialog = false;
-                this.$store.dispatch("shiftemployee/getAll", {
+                this.toDialog = false;
+                this.$store.dispatch("cutiemployee/getAll", {
                   company_id: this.company_id,
                 });
               }

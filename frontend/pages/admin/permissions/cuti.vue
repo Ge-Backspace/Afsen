@@ -462,13 +462,10 @@ export default {
           this.btnLoader = false;
         });
     },
-    exportData(type = "excel") {
-      if (type == "pdf") {
-        this.export_as = "pdf";
-      }
+    exportData(type = 'excel') {
       this.$axios
         .get(
-          `/cutipermission/export?company_id=${this.company_id}&as=${this.export_as}`,
+          `/cutipermission/export?company_id=${this.company_id}&as=${type}`,
           {
             responseType: "blob",
           }
@@ -477,9 +474,9 @@ export default {
           const link = document.createElement("a");
           link.href = window.URL.createObjectURL(new Blob([response.data]));
           if (type == "pdf") {
-            link.setAttribute("download", "shift.pdf");
+            link.setAttribute("download", "cuti_permission.pdf");
           } else {
-            link.setAttribute("download", "shift.xlsx");
+            link.setAttribute("download", "cuti_permission.xlsx");
           }
           document.body.appendChild(link);
           link.click();
