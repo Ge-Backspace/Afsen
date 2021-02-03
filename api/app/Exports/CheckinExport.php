@@ -38,7 +38,7 @@ class CheckinExport implements FromCollection, WithHeadings, WithEvents
         return Checkin::join('users', 'users.company_id', '=', 'companies.id')
         ->join('employees', 'employees.user_id', '=', 'users.id')
         ->where('companies.id', $this->company_id)
-        ->get(['employees.name', 'checkin_time', 'checkout_time']);
+        ->get(['employees.name', 'checkin_time', 'checkout_time', 'address']);
     }
 
     public function headings(): array
@@ -47,7 +47,8 @@ class CheckinExport implements FromCollection, WithHeadings, WithEvents
         'name',
         'checkin',
         'chekout',
+        'address'
         ];
-        
+
     }
 }
