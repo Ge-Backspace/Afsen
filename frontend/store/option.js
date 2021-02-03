@@ -10,6 +10,9 @@ export const state = () => ({
     },
     cutis: {
       data: [],
+    },
+    shift_employees: {
+      data: [],
     }
 })
 
@@ -25,6 +28,9 @@ export const mutations = {
     },
     setOptionCuties(state, data) {
       state.cutis = data
+    },
+    setOptionShiftEmployees(state, data) {
+      state.shift_employees = data
     }
 }
 
@@ -40,6 +46,9 @@ export const getters = {
     },
     getOptionCuties(state) {
       return state.cutis
+    },
+    getOptionShiftE(state) {
+      return state.shift_employees
     }
 };
 
@@ -76,10 +85,22 @@ export const actions = {
           // context.commit("setLoader")
       })
     },
+
     getOptionCuties(context, {company_id = ''}){
       this.$axios.get( `/optionCuti?company_id=${company_id}`).
       then(resp => {
         context.commit(`setOptionCuties`, resp.data)
+      }).catch(e => {
+        console.log(e)
+      }).finally(() => {
+        //context.commit("setLoader")
+      })
+    },
+
+    getOptionShiftEmployee(context, {employee_id = ''}){
+      this.$axios.get( `/optionCuti?employee_id=${employee_id}`).
+      then(resp => {
+        context.commit(`setOptionShiftEmployees`, resp.data)
       }).catch(e => {
         console.log(e)
       }).finally(() => {

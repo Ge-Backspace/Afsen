@@ -191,11 +191,37 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Employee</label>
+            <label>Employee pengaju</label>
             <vs-select
               filter
               placeholder="Employee"
-              v-model="form.employee_id"
+              v-model="form.employee1_id"
+            >
+              <vs-option
+                v-for="op in getOptionEmployees.data"
+                :key="op.id"
+                :label="op.name"
+                :value="op.id"
+                @click="this.$store.dispatch('option/getOptionShiftEmployee', {
+                  employee_id: id
+                })"
+              >
+                {{ op.name }}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Employee Pengganti</label>
+            <vs-select
+              filter
+              placeholder="Employee"
+              v-model="form.employee2_id"
             >
               <vs-option
                 v-for="op in getOptionEmployees.data"
@@ -214,32 +240,49 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Shift Name</label>
+            <label>Shift Pengaju</label>
             <vs-select
               filter
               placeholder="Shift"
-              v-model="form.shift_id"
+              v-model="form.shift_employee1_id"
             >
               <vs-option
-                v-for="op in getOptionShifts.data"
+                v-for="op in getOptionShiftE.data"
                 :key="op.id"
-                :label="[op.shift_name, op.schedule_in, op. schedule_out]"
+                :label="[op.date, op.code, op.schedule_in, op.schedule_out]"
                 :value="op.id"
               >
-                {{ op.shift_name }},{{ op.schedule_in }}-{{ op. schedule_out }}
+                {{ formatDate(op.date) }} ({{ op.code }}) 
+                ,{{ op.schedule_in }}-{{ op. schedule_out }}
               </vs-option>
             </vs-select>
           </vs-col>
-          <vs-col
+          <!-- <vs-col
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
             w="6"
             style="padding: 5px"
           >
-            <label>Date</label>
-            <vs-input type="date" v-model="form.date"></vs-input>
-          </vs-col>
+            <label>Shift Pengganti</label>
+            <vs-select
+              filter
+              placeholder="Shift"
+              v-model="form.shift_employee2_id"
+            >
+              <vs-option
+                v-for="op in getOptionShifts.data"
+                :key="op.id"
+                :label="[op.id
+                //, op.schedule_in, op. schedule_out
+                ]"
+                :value="op.id"
+              >
+                {{ op.id }} -->
+                <!-- ,{{ op.schedule_in }}-{{ op. schedule_out }} -->
+              <!-- </vs-option>
+            </vs-select>
+          </vs-col> -->
         </vs-row>
       </div>
 
@@ -365,7 +408,7 @@ export default {
       importDialog: false,
       active: 0,
       page: 1,
-      titleDialog: "Edit Shift Employee",
+      titleDialog: "Edit Permission Shift",
       search: '',
       company_id: '',
       isUpdate: false,
@@ -374,9 +417,10 @@ export default {
       file: '',
       form: {
         id:'',
-        employee_id: '',
-        shift_id: '',
-        date: '',
+        employee1_id: '',
+        employee2_id: '',
+        shift_employee1_id: '',
+        shift_employee2_id: '',
       },
     };
   },
@@ -386,9 +430,6 @@ export default {
       company_id: this.company_id,
     });
     this.$store.dispatch('option/getOptionEmployees', {
-      company_id: this.company_id
-    })
-    this.$store.dispatch('option/getOptionShifts', {
       company_id: this.company_id
     })
   },
@@ -401,12 +442,10 @@ export default {
     },
     edit(data) {
       this.form.id = data.id;
-      console.log(this.form.id)
-      this.form.employee_id = data.employee_id;
-      console.log(this.form.employee_id);
-      console.log(this.form.shift_id);
-      this.form.shift_id = data.shift_id;
-      this.form.date = data.date;
+      this.employee1_id = data.employee1_id;
+      this.employee2_id = data.employee2_id;
+      this.shift_employee1_id = data.shift_employee1_id;
+      this.shift_employee2_id = data.shift_employee2_id;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;
@@ -414,9 +453,10 @@ export default {
     resetForm() {
       this.form = {
         id: '',
-        employee_id: '',
-        shift_id: '',
-        date: ''
+        employee1_id: '',
+        employee2_id: '',
+        shift_employee1_id: '',
+        shift_employee2_id: '',
       };
       this.isUpdate = false;
     },
@@ -444,7 +484,7 @@ export default {
           })
           this.resetForm()
           this.importDialog = false
-          this.$store.dispatch('shiftemployee/getAll', {
+          this.$store.dispatch('shiftpermission/getAll', {
             company_id: this.company_id
           });
         }
@@ -479,12 +519,13 @@ export default {
       this.btnLoader = true
       let formData = new FormData()
       formData.append('company_id', this.company_id)
-      formData.append('employee_id', this.form.employee_id)
-      formData.append('shift_id', this.form.shift_id)
-      formData.append('date', this.form.date)
-      let url = '/shiftEmployee'
+      formData.append('employee1_id', this.form.employee1_id)
+      formData.append('employee2_id', this.form.employee2_id)
+      formData.append('shift_employee1_id', this.form.shift_employee1_id)
+      formData.append('shift_employee2_id', this.form.shift_employee2_id)
+      let url = '/shiftpermission'
       if (type == 'update') {
-        url = `shiftEmployee/${this.form.id}/update`
+        url = `shiftpermission/${this.form.id}/update`
       }
 
       this.$axios.post(url, formData).then(resp => {
@@ -495,7 +536,7 @@ export default {
           })
           this.resetForm()
           this.seDialog = false
-          this.$store.dispatch('shiftemployee/getAll', {
+          this.$store.dispatch('shiftpermission/getAll', {
             company_id: this.company_id
           });
         }
@@ -525,14 +566,14 @@ export default {
         cancelButtonText: 'Yes but actually NO!'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$axios.delete(`/shiftEmployee/${id}/delete`).then(resp => {
+          this.$axios.delete(`/shiftpermission/${id}/delete`).then(resp => {
             if (resp.data.success) {
               this.$notify.success({
                 title: 'Success',
                 message: 'Berhasil Menghapus Data'
               })
               this.shiftDialog = false
-              this.$store.dispatch('shiftemployee/getAll', {
+              this.$store.dispatch('shiftpermission/getAll', {
                 company_id: this.company_id
               });
             }
@@ -547,6 +588,10 @@ export default {
         }
       })
     },
+    // shiftEm(id) {
+    //   console.log(id)
+      
+    // },
     status(id) {
       this.$swal({
         title: 'Cormfirmation',
@@ -572,7 +617,7 @@ export default {
       })
     },
     change(id, status) {
-      this.$axios.post(`/cutipermission/${id}/change?status=${status}`)
+      this.$axios.post(`/shiftpermission/${id}/change?status=${status}`)
       .then(resp => {
         if (resp.data.success) {
           this.$notify.success({
@@ -586,7 +631,7 @@ export default {
           message: err.response.data.message,
         });
       }).finally(() => {
-        this.$store.dispatch('cutipermission/getAll', {
+        this.$store.dispatch('shiftpermission/getAll', {
           company_id: this.company_id,
         });
       })
@@ -597,20 +642,20 @@ export default {
   },
   computed: {
     ...mapGetters('shiftpermission', ['getShiftPs', 'getLoader']),
-    ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees']),
+    ...mapGetters('option', ['getOptionShifts', 'getOptionEmployees', 'getOptionShiftE']),
   },
   watch: {
     getShiftPs(newValue, oldValue) {
       //
     },
     search(newValue, oldValue) {
-      this.$store.dispatch('shiftemployee/getAll', {
+      this.$store.dispatch('shiftpermission/getAll', {
         search: newValue
       });
     },
     page(newValue, oldValue) {
-      this.$store.commit('shiftemployee/setPage', newValue)
-      this.$store.dispatch('shiftemployee/getAll', {
+      this.$store.commit('shiftpermission/setPage', newValue)
+      this.$store.dispatch('shiftpermission/getAll', {
         company_id: this.company_id
       });
     }

@@ -26,7 +26,7 @@ class CutiPermissionExport implements FromCollection, WithHeadings, WithEvents
             AfterSheet::class => function (AfterSheet $event) use ($styleArray) {
                 // $event->sheet->insertNewRowBefore(7, 2);
                 // $event->sheet->insertNewColumnBefore('A', 2);
-                $event->sheet->getStyle('A1:E1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:F1')->applyFromArray($styleArray);
             },
         ];
     }

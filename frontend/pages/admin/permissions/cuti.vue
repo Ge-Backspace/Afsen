@@ -219,15 +219,15 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Shift Name</label>
-            <vs-select filter placeholder="Shift" v-model="form.shift_id">
+            <label>Cuti Name</label>
+            <vs-select filter placeholder="Cuti Employee" v-model="form.cuti_id">
               <vs-option
-                v-for="op in getOptionShifts.data"
+                v-for="op in getOptionShiftEmployees.data"
                 :key="op.id"
-                :label="[op.shift_name, op.schedule_in, op.schedule_out]"
+                :label="[op.code, op.cuti_name]"
                 :value="op.id"
               >
-                {{ op.shift_name }},{{ op.schedule_in }}-{{ op.schedule_out }}
+                {{ op.cuti_name }},{{ op.code }}
               </vs-option>
             </vs-select>
           </vs-col>
@@ -238,8 +238,18 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Date</label>
-            <vs-input type="date" v-model="form.date"></vs-input>
+            <label>Start Date</label>
+            <vs-input type="date" v-model="form.start_date"></vs-input>
+          </vs-col>
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Expired Date</label>
+            <vs-input type="date" v-model="form.expired_date"></vs-input>
           </vs-col>
         </vs-row>
       </div>
@@ -378,8 +388,9 @@ export default {
       form: {
         id: "",
         employee_id: "",
-        shift_id: "",
-        date: "",
+        cuti_id: "",
+        start_date: "",
+        expired_date: "",
       },
     };
   },
@@ -389,9 +400,6 @@ export default {
       company_id: this.company_id,
     });
     this.$store.dispatch("option/getOptionEmployees", {
-      company_id: this.company_id,
-    });
-    this.$store.dispatch("option/getOptionShifts", {
       company_id: this.company_id,
     });
   },
@@ -404,12 +412,10 @@ export default {
     },
     edit(data) {
       this.form.id = data.id;
-      console.log(this.form.id);
       this.form.employee_id = data.employee_id;
-      console.log(this.form.employee_id);
-      console.log(this.form.shift_id);
-      this.form.shift_id = data.shift_id;
-      this.form.date = data.date;
+      this.form.cuti_id = data.cuti_id;
+      this.form.start_date = data.start_date;
+      this.form.expired_date = data.expired_date;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;
@@ -418,8 +424,9 @@ export default {
       this.form = {
         id: "",
         employee_id: "",
-        shift_id: "",
-        date: "",
+        cuti_id: "",
+        start_date: "",
+        expired_date: "",
       };
       this.isUpdate = false;
     },
@@ -487,8 +494,9 @@ export default {
       let formData = new FormData();
       formData.append("company_id", this.company_id);
       formData.append("employee_id", this.form.employee_id);
-      formData.append("shift_id", this.form.shift_id);
-      formData.append("date", this.form.date);
+      formData.append("cuti_id", this.form.cuti_id);
+      formData.append("start_date", this.form.start_date);
+      formData.append("expired_date", this.form.expired_date);
       let url = "/cutipermission";
       if (type == "update") {
         url = `cutipermission/${this.form.id}/update`;
@@ -608,13 +616,18 @@ export default {
         });
       })
     },
+    optionShiftEmployees(employee_id) {
+      this.$store.dispatch('option', {
+        employee_id: employee_id
+      })
+    },
     formatDate(date) {
       return moment(date).format("DD MMMM YYYY");
     },
   },
   computed: {
     ...mapGetters("cutipermission", ["getCutiPs", "getLoader"]),
-    ...mapGetters("option", ["getOptionShifts", "getOptionEmployees"]),
+    ...mapGetters("option", ["getOptionEmployees", "getOptionShiftEmployees"]),
   },
   watch: {
     getCutiPs(newValue, oldValue) {
@@ -626,8 +639,8 @@ export default {
       });
     },
     page(newValue, oldValue) {
-      this.$store.commit("shiftemployee/setPage", newValue);
-      this.$store.dispatch("shiftemployee/getAll", {
+      this.$store.commit("cutipermission/setPage", newValue);
+      this.$store.dispatch("cutipermission/getAll", {
         company_id: this.company_id,
       });
     },

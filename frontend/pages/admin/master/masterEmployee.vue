@@ -123,7 +123,7 @@
                     {{ i + 1 }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.id }}
+                    {{ tr.name }}
                   </vs-td>
                   <vs-td>
                     {{ tr.nip }}
