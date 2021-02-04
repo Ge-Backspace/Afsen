@@ -18,4 +18,8 @@ class Position extends Model
     {
         return $this->belongsTo('App\Models\Company');
     }
+
+    public function gaji(){
+    	return $this->hasOne('App\Model\Gaji');
+    }
 }
