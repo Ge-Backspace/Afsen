@@ -61,6 +61,7 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
+                  <vs-th>Employee</vs-th>
                   <vs-th>Position</vs-th>
                   <vs-th>Group</vs-th>
                   <vs-th>Gaji</vs-th>
@@ -69,6 +70,9 @@
               </template>
               <template #tbody>
                 <vs-tr :key="i" v-for="(tr, i) in getSalary.data" :data="tr">
+                  <vs-td>
+                    {{ tr.name }}
+                  </vs-td>
                   <vs-td>
                     {{ tr.position_name }}
                   </vs-td>
@@ -147,19 +151,19 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Position</label>
+            <label>Employee</label>
             <vs-select
               filter
               placeholder="Employee"
-              v-model="form.position_id"
+              v-model="form.employee_id"
             >
               <vs-option
-                v-for="op in getOptionPositions.data"
+                v-for="op in getOptionEmployees.data"
                 :key="op.id"
-                :label="op.position_name"
+                :label="op.name"
                 :value="op.id"
               >
-                {{ op.position_name }}
+                {{ op.name }}
               </vs-option>
             </vs-select>
           </vs-col>
@@ -298,7 +302,7 @@
         btnLoader: false,
         form: {
           id: '',
-          position_id: '',
+          employee_id: '',
           gaji: '',
         }
       }
@@ -311,6 +315,9 @@
       this.$store.dispatch('option/getOptionPositions', {
         company_id: this.company_id
       })
+      this.$store.dispatch('option/getOptionEmployees', {
+        company_id: this.company_id
+      })
     },
     methods: {
       searchData(){
@@ -321,7 +328,7 @@
       },
       edit(data) {
         this.form.id = data.id
-        this.form.position_id = data.position_id
+        this.form.employee_id = data.employee_id
         this.form.gaji = data.gaji
         this.shiftDialog = true
         this.titleDialog = 'Edit Shift Data'
@@ -330,7 +337,7 @@
       resetForm() {
         this.form = {
           id: '',
-          position_id: '',
+          employee_id: '',
           gaji: '',
         }
         this.isUpdate = false
@@ -398,7 +405,7 @@
         let formData = new FormData()
         formData.append("id", this.form.id)
         formData.append("company_id", this.company_id)
-        formData.append("position_id", this.form.position_id)
+        formData.append("employee_id", this.form.employee_id)
         formData.append("gaji", this.form.gaji)
         let url = "/gaji";
         if (type == 'update') {
@@ -473,7 +480,7 @@
         'getLoader'
       ]),
       ...mapGetters('option', [
-        'getOptionPositions'
+        'getOptionPositions', 'getOptionEmployees'
       ]),
     },
     watch: {
