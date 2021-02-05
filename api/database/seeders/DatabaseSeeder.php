@@ -13,8 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('UsersTableSeeder');
-        $this->call('CompanyTableSeeder');
-        $this->call('ShiftsTableSeeder');
+        $this->call([
+            'CompanyTableSeeder',
+            'UsersTableSeeder',
+            'ShiftTableSeeder',
+            'PositionTableSeeder',
+            'CutiTableSeeder',
+            'GajiTableSeeder',
+            'EmployeeTableSeeder',
+            'TodayShiftEmployee',
+        ]);
     }
 }

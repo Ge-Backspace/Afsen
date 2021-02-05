@@ -36,4 +36,8 @@ class Employee extends Model
     {
         return $this->hasMany('App\Models\ShiftPermission');
     }
+
+    public function gaji(){
+    	return $this->hasOne('App\Model\Gaji');
+    }
 }

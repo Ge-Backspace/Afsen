@@ -17,6 +17,9 @@ export const mutations = {
   setCompany(state, data) {
     state.company.data = data
   },
+  setCompanyR(state, data){
+    state.company = data
+  },
   setLoader(state){
     state.compLoader = !state.compLoader
   },

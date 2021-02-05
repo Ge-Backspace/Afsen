@@ -15,11 +15,11 @@ class CreateGajisTable extends Migration
     {
         Schema::create('gajis', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('position_id')->unsigned();
+            $table->integer('employee_id')->unsigned();
             $table->integer('gaji');
             $table->timestamps();
 
-            $table->foreign('position_id')->references('id')->on('positions');
+            $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
 

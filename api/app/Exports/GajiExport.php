@@ -35,9 +35,10 @@ class GajiExport implements FromCollection, WithHeadings, WithEvents
     }
     public function collection()
     {
-        return Gaji::join('positions as p', 'gajis.position_id', '=', 'p.id')
+        return Gaji::join('employees as e', 'gajis.employee_id', '=', 'e.id')
+        ->join('positions as p', 'e.position_id', '=', 'p.id')
         ->where('p.company_id', $this->company_id)
-        ->get(['p.position_name', 'p.group', 'gajis.gaji']);
+        ->get(['e.employee_name', 'p.position_name','p.group', 'gajis.gaji']);
     }
 
     public function headings(): array

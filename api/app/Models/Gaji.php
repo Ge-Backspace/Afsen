@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Gaji extends Model
 {
     protected $fillable = [
-        'position_id', 'gaji'
+        'employee_id', 'gaji'
     ];
 
-    public function position()
+    public function employee()
     {
-        return $this->belongsTo('App\Models\Positions', 'position_id');
+        return $this->belongsTo('App\Models\Employee', 'employee_id');
     }
 }

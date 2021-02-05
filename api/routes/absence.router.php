@@ -1,6 +1,6 @@
 <?php
 
-$router->get('/todayAttandance', 'CheckinController@todayAttandance');
+$router->get('/todayAttendance', 'CheckinController@todayAttendance');
 $router->post('/checkin', 'CheckinController@checkin');
 $router->get('/check', 'CheckinController@check');
 $router->get('/attendance', 'CheckinController@attendance');

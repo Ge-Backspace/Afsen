@@ -37,7 +37,7 @@ export const actions = {
   getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false},){
       context.commit("setLoader")
       let page = defaultPage ? 1 : context.state.checkin.current_page
-      this.$axios.get(`/todayCheckin?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`)
+      this.$axios.get(`/todayAttendance?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`)
       .then(resp => {
         context.commit('setCheckin', resp.data.data)
       }).catch(e => {

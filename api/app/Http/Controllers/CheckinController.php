@@ -29,7 +29,7 @@ class CheckinController extends Controller
         }
     }
 
-    public function todayAttandance(Request $request)
+    public function todayAttendance(Request $request)
     {
         $todayCheckin = Checkin::join('employees', 'checkins.employee_id', '=', 'employees.id')
         ->join('users', 'employees.user_id', '=', 'users.id')

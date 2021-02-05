@@ -11,6 +11,6 @@ class Checkin extends Model
 
     public function employees()
     {
-        $this->belongsTo('App\Models\Employee');
+        $this->belongsTo('App\Models\Employee', 'employee_id');
     }
 }

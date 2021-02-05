@@ -4,49 +4,50 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Gaji;
-use App\Models\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Imports\GajiImport;
 use App\Exports\GajiExport;
+use App\Models\Employee;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GajiController extends Controller
 {
     public function getCompanyGaji(Request $request)
     {
-        return $this->getPaginate(Gaji::join('positions as p', 'gajis.position_id', '=', 'p.id')
+        return $this->getPaginate(Gaji::join('employees as e', 'gajis.employee_id', '=', 'e.id')
+        ->join('positions as p', 'e.position_id', '=', 'p.id')
         ->where('p.company_id', $request->company_id)
-        ->select(DB::raw('gajis.*, p.*, gajis.id as id'))
+        ->select(DB::raw('gajis.*, e.*, p.position_name, p.group, gajis.id as id'))
         ->orderBy('gajis.id', 'DESC')
         ,$request,[
-            'p.position_name', 'p.group'
+            'e.name', 'gajis.gaji'
         ]);
     }
 
     public function addGaji(Request $request)
     {
-        $input = $request->only(['company_id' ,'position_id', 'gaji']);
+        $input = $request->only(['company_id' ,'employee_id', 'gaji']);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'position_id' => 'required|numeric',
+            'employee_id' => 'required|numeric',
             'gaji' => 'required|numeric',
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Gaji', false, 401);
         }
-        $position = Position::find($input['position_id']);
-        $gaji = Gaji::where('position_id', $input['position_id'])->first();
-        if (!$position) {
-            return $this->resp(null, 'Position Tidak Ditemukan', false, 406);
-        } elseif($position->company_id != $request->company_id){
-            return $this->resp(null, 'Data Position Tidak Ditemukan', false, 406);
+        $employee = Employee::find($input['employee_id'])->join('users as u', 'employees.user_id', '=', 'u.id');
+        $gaji = Gaji::where('employee_id', $input['employee_id'])->first();
+        if (!$employee) {
+            return $this->resp(null, 'Data Employee Tidak Ditemukan', false, 406);
+        } elseif($employee->company_id != $request->company_id){
+            return $this->resp(null, 'Data Employee Tidak Ditemukan', false, 406);
         } elseif ($gaji) {
-            return $this->resp(null, 'Data Gaji Sudah Ada Di Position Tersebut', false, 406);
+            return $this->resp(null, 'Data Gaji Sudah Ada Di Employee Tersebut', false, 406);
         }
         $add = Gaji::create([
-            'position_id' => $input['position_id'],
+            'employee_id' => $input['employee_id'],
             'gaji' => $input['gaji']
         ]);
         return $this->resp($add);
@@ -54,26 +55,26 @@ class GajiController extends Controller
 
     public function updateGaji(Request $request, $id)
     {
-        $input = $request->only(['company_id' ,'position_id', 'gaji']);
+        $input = $request->only(['company_id' ,'employee_id', 'gaji']);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
-            'position_id' => 'required|numeric',
+            'employee_id' => 'required|numeric',
             'gaji' => 'required|numeric',
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Gaji', false, 401);
         }
-        $position = Position::find($input['position_id']);
-        $table = Gaji::find($id);
-        if (!$position) {
-            return $this->resp(null, 'Data Position Tidak Ditemukan', false, 406);
-        } elseif($position->company_id != $request->company_id){
-            return $this->resp(null, 'Data Position Tidak Ditemukan', false, 406);
+        $employee = Employee::find($input['employee_id']);
+        $table = Gaji::find($id)->join('users as u', 'employees.user_id', '=', 'u.id');;
+        if (!$employee) {
+            return $this->resp(null, 'Data Employee Tidak Ditemukan', false, 406);
+        } elseif($employee->company_id != $request->company_id){
+            return $this->resp(null, 'Data Employee Tidak Ditemukan', false, 406);
         } elseif (!$table) {
             return $this->resp(null, 'Data Gaji Tidak Ditemukan', false, 406);
         }
         $update = $table->update([
-            'position_id' => $input['position_id'],
+            'employee_id' => $input['employee_id'],
             'gaji' => $input['gaji']
         ]);
         return $this->resp($update);

@@ -15,7 +15,7 @@ class GajiTableSeeder extends Seeder
     public function run()
     {
         return Gaji::create([
-            'position_id' => 1,
+            'employee_id' => 1,
             'gaji' => 5000000
         ]);
     }
