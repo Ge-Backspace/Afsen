@@ -35,6 +35,7 @@ let store = {};
   resolveStoreModules(require('..\\store\\lapor.js'), 'lapor.js')
   resolveStoreModules(require('..\\store\\option.js'), 'option.js')
   resolveStoreModules(require('..\\store\\position.js'), 'position.js')
+  resolveStoreModules(require('..\\store\\salary.js'), 'salary.js')
   resolveStoreModules(require('..\\store\\schedule.js'), 'schedule.js')
   resolveStoreModules(require('..\\store\\service.js'), 'service.js')
   resolveStoreModules(require('..\\store\\setting.js'), 'setting.js')
@@ -67,6 +68,7 @@ let store = {};
       '..\\store\\lapor.js',
       '..\\store\\option.js',
       '..\\store\\position.js',
+      '..\\store\\salary.js',
       '..\\store\\schedule.js',
       '..\\store\\service.js',
       '..\\store\\setting.js',
