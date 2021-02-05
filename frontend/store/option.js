@@ -16,7 +16,7 @@ export const state = () => ({
     },
     shift_employees2: {
       data: [],
-    }
+    },
 })
 
 export const mutations = {
