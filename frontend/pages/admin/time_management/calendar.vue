@@ -55,9 +55,9 @@
                 <div class="card-body">
                   <h5 class="card-title"></h5>
                     <p class="card-text">Shift :</p>
-                    <div v-for="item in getSE.data" :key="item.id">
+                    <div v-for="c in getSE.data" :key="c.id">
                       <p class="card-text">
-                        {{ item.name }} : {{item.code}} {{item.schedule_in}}-{{item.schedule_out}}
+                        - {{ c.name }} : {{c.code}} {{c.schedule_in}}-{{c.schedule_out}}
                       </p>
                     </div>
                 </div>

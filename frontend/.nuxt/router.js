@@ -46,6 +46,7 @@ const _babb409e = () => interopDefault(import('..\\pages\\admin\\master\\masterC
 const _05908a21 = () => interopDefault(import('..\\pages\\admin\\master\\MasterCuti.vue' /* webpackChunkName: "pages/admin/master/MasterCuti" */))
 const _21d651c8 = () => interopDefault(import('..\\pages\\admin\\master\\masterEmployee.vue' /* webpackChunkName: "pages/admin/master/masterEmployee" */))
 const _ea3b627a = () => interopDefault(import('..\\pages\\admin\\master\\masterPosition.vue' /* webpackChunkName: "pages/admin/master/masterPosition" */))
+const _52e93f64 = () => interopDefault(import('..\\pages\\admin\\master\\masterSalary.vue' /* webpackChunkName: "pages/admin/master/masterSalary" */))
 const _c3076450 = () => interopDefault(import('..\\pages\\admin\\master\\masterShift.vue' /* webpackChunkName: "pages/admin/master/masterShift" */))
 const _919b01ca = () => interopDefault(import('..\\pages\\admin\\master\\MasterStatusPermission.vue' /* webpackChunkName: "pages/admin/master/MasterStatusPermission" */))
 const _0c389165 = () => interopDefault(import('..\\pages\\admin\\master\\masterUser.vue' /* webpackChunkName: "pages/admin/master/masterUser" */))
@@ -243,6 +244,10 @@ export const routerOptions = {
     path: "/admin/master/masterPosition",
     component: _ea3b627a,
     name: "admin-master-masterPosition"
+  }, {
+    path: "/admin/master/masterSalary",
+    component: _52e93f64,
+    name: "admin-master-masterSalary"
   }, {
     path: "/admin/master/masterShift",
     component: _c3076450,

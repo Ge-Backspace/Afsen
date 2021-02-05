@@ -22,16 +22,19 @@ class ReportController extends Controller
             return $this->resp($request->all(), Helper::generateErrorMsg($validator->errors()
             ->getMessages()), false, 406);
         }
+        $company_id = $input['company_id'];
         $startDate = $input['startDate'];
         $endDate = $input['endDate'];
-        $e = Employee::leftJoin(
-            'checkins as c', function($join) use($startDate,$endDate) {
-                $join->on('employees.id', '=', 'c.employee_id')
-                ->whereDate('c.checkout_time', '>=', $startDate)
-                ->whereDate('c.checkout_time', '<=', $endDate);
+        $e = Employee::with([
+            'positions',
+            'checkins' => function($query) use($startDate, $endDate){
+                $query->whereDate('checkout_time', '>=', $startDate)
+                ->whereDate('checkout_time', '<=', $endDate);
             }
-        )
-        ->join('positions as p', 'employees.position_id', '=', 'p.id')
+        ])
+        ->whereHas('users', function($q) use($company_id){
+            $q->where('company_id', $company_id);
+        })
         ->get();
         return $this->resp($e);
     }

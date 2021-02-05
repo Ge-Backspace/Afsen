@@ -44,7 +44,7 @@ class ShiftEmployeeController extends Controller
             ->where('shift_employees.company_id', $request->company_id)
             ->select(DB::raw('shift_employees.*, employees.*, shifts.*, shift_employees.id as id'))
             ->orderBy('shift_employees.id', 'ASC')
-        , $request,['employees.name', 'shifts.shift_name', 'shifts.code']);
+        , $request,['employees.name', 'shifts.shift_name', 'shifts.code', 'date']);
     }
 
     public function addShiftEmployee(Request $request)

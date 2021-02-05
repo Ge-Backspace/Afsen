@@ -89,7 +89,7 @@
         this.$axios.post('/register_company', this.data)
         .then( response => {
           let data = response.data.data;
-          this.$store.commit('company/setCompany', data)
+          this.$store.commit('company/setCompanyR', data)
           this.$router.push('/register_account')
         })
         .catch(e => {
