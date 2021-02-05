@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Models\Companies;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
@@ -30,7 +31,6 @@ class CompanyController extends Controller
         $input = $request->only(['name' ,'address', 'lat', 'lng']);
         $rules = [
             'name' => 'required|string',
-            'address' => 'required|string',
             'lat' => 'required',
             'lng' => 'required'
         ];
@@ -39,6 +39,8 @@ class CompanyController extends Controller
             return $this->resp($request->all(), Helper::generateErrorMsg($validator->errors()
             ->getMessages()), false, 406);
         }
+        $address = $this->getAddress($input['lat'], $input['lng']);
+        Arr::set($input, 'address', $address['formatted_address']);
         $company = $company = Companies::find($id);
         if (!$company) {
             return $this->resp(null, 'Company Tidak Ditemukan');

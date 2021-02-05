@@ -2,13 +2,13 @@
 
 namespace App\Exports;
 
-use App\Models\Cuti;
+use App\Models\Gaji;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class CutiExport implements FromCollection, WithHeadings, WithEvents
+class GajiExport implements FromCollection, WithHeadings, WithEvents
 {
     protected $company_id;
 
@@ -25,7 +25,7 @@ class CutiExport implements FromCollection, WithHeadings, WithEvents
             AfterSheet::class => function (AfterSheet $event) use ($styleArray) {
                 // $event->sheet->insertNewRowBefore(7, 2);
                 // $event->sheet->insertNewColumnBefore('A', 2);
-                $event->sheet->getStyle('A1:B1')->applyFromArray($styleArray);
+                $event->sheet->getStyle('A1:C1')->applyFromArray($styleArray);
             },
         ];
     }
@@ -35,15 +35,17 @@ class CutiExport implements FromCollection, WithHeadings, WithEvents
     }
     public function collection()
     {
-        return Cuti::where('company_id', $this->company_id)
-        ->get(['cuti_name', 'code']);
+        return Gaji::join('positions as p', 'gajis.position_id', '=', 'p.id')
+        ->where('p.company_id', $this->company_id)
+        ->get(['p.position_name', 'p.group', 'gajis.gaji']);
     }
 
     public function headings(): array
     {
         return [
-        'Cuti Name',
-        'Code',
+        'Position Name',
+        'Group',
+        'Gaji',
         ];
 
     }

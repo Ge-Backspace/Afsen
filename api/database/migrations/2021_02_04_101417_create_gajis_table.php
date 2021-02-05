@@ -14,8 +14,12 @@ class CreateGajisTable extends Migration
     public function up()
     {
         Schema::create('gajis', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('position_id')->unsigned();
+            $table->integer('gaji');
             $table->timestamps();
+
+            $table->foreign('position_id')->references('id')->on('positions');
         });
     }
 
