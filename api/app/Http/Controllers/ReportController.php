@@ -30,7 +30,8 @@ class ReportController extends Controller
             'checkins' => function($query) use($startDate, $endDate){
                 $query->whereDate('checkout_time', '>=', $startDate)
                 ->whereDate('checkout_time', '<=', $endDate);
-            }
+            },
+            'shift_employees'
         ])
         ->whereHas('users', function($q) use($company_id){
             $q->where('company_id', $company_id);

@@ -11,33 +11,7 @@
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
-          <el-card v-loading="getLoader">
-            <div class="row" style="margin-bottom: 20px">
-              <div class="col-md-6 offset-sm-7 row">
-                <vs-button
-                  warn
-                  gradient
-                  :active="active == 3"
-                  @click="
-                  active = 3;
-                  $router.push('setting');
-                  "
-                >
-                  <i class="bx bxs-bell-ring"></i> Attendance Setting
-                </vs-button>
-                <vs-button
-                  warn
-                  gradient
-                  :active="active == 3"
-                  @click="
-                  active = 3;
-                  $router.push('setting');
-                  "
-                >
-                  <i class="bx bxs-bell-ring"></i> Attendance Setting
-                </vs-button>
-              </div>
-            </div>
+          <el-card>
             <div class="row">
               <div class="col-8">
                 <el-calendar v-model="date">
@@ -50,7 +24,7 @@
                   </template>
                 </el-calendar>
               </div>
-              <div class="col-4 card text-white bg-primary mb-3">
+              <div class="col-4 card text-white bg-primary mb-3" v-loading="getLoader">
                 <div class="card-head text-center" style="margin-top: 20px">{{ dates(date) }}</div>
                 <div class="card-body">
                   <h5 class="card-title"></h5>

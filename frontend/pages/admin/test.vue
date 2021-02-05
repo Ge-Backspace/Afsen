@@ -1,27 +1,9 @@
 <template>
    <div>
-     <vs-table striped>
-          <template #thead>
-            <vs-tr>
-              <vs-th>Name</vs-th>
-              <vs-th>Checkin Time</vs-th>
-              <vs-th>Checkout Time</vs-th>
-            </vs-tr>
-          </template>
-          <template #tbody>
-            <vs-tr :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
-              <vs-td>
-                {{ tr.name }}
-              </vs-td>
-              <vs-td>
-                {{ formatTime(tr.checkin_time) }}
-              </vs-td>
-              <vs-td>
-                {{ formatTime(tr.checkout_time) }}
-              </vs-td>
-            </vs-tr>
-          </template>
-        </vs-table>
+     <el-table :data="tableData" style="width: 100%" height="250">
+      <el-table-column fixed prop="name" label="Employee" width="150"></el-table-column>
+      <el-table-column prop="zip" :label="col.date" v-for="col in dates" :key="col.id"></el-table-column>
+    </el-table>
    </div>
 </template>
 
@@ -38,6 +20,8 @@
             table: {
               max: 10
             },
+            lastDay: '',
+            dates:[]
           }
       },
       methods: {
@@ -46,18 +30,15 @@
         }
       },
       mounted () {
-        this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
-        this.$store.dispatch('checkin/getAll', {
-          showall: 1,
-          company_id: this.company_id
-        });
+        this.lastDay = Number(moment().clone().endOf('month').format('DD'))
+        console.log(this.lastDay)
+        for (let i = 0; i <= this.lastDay; i++) {
+          this.dates.push({
+            date: i
+          })
+        }
       },
       computed: {
-        ...mapGetters("checkin", [
-          'getCheckin',
-          // 'getLoader',
-          // 'getSummary'
-        ]),
       },
       created () {
       },

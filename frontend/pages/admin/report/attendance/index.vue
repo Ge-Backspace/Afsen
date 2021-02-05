@@ -29,7 +29,7 @@
           </div>
         </div>
         <el-table :data="tableData" style="width: 100%" height="250">
-          
+
           <el-table-column fixed prop="name" label="Employee" width="150"> </el-table-column>
             <el-table-column prop="zip" :label="col.tanggal" v-for="col in data" :key="col.id"></el-table-column>
         </el-table>
