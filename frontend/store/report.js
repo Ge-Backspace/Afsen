@@ -4,28 +4,29 @@ export const state = () => ({
 		total: 0,
 		current_page: 1
 	},
-    attendanceLoader: false,
+    // attendanceLoader: false,
     
 	salary: {
 		data: [],
 		total: 0,
 		current_page: 1
 	},
-    salaryLoader: false,
+    // salaryLoader: false,
     
 	permission: {
 		data: [],
 		total: 0,
 		current_page: 1
 	},
-    permissionLoader: false,
+    // permissionLoader: false,
     
 	employee: {
 		data: [],
 		total: 0,
 		current_page: 1
 	},
-	employeeLoader: false
+    // employeeLoader: false
+    reportLoader: false
 });
 
 export const mutations = {
@@ -45,10 +46,8 @@ export const mutations = {
     
 
 	setLoader(state) {
-        state.attendanceLoader = !state.attendanceLoader;
-        state.salaryLoader = !state.salaryLoader;
-        state.permissionLoader = !state.permissionLoader;
-        state.employeeLoader = !state.employeeLoader;
+        state.reportLoader = !state.attendanceLoader;
+        
 	},
 	setPage(state, data) {
         state.attendance.current_page = data;
@@ -75,20 +74,22 @@ export const getters = {
 		return state.employee;
     },
     
-	getLoaderAttendance(state) {
-        return state.salaryLoader;
-        
-        
-    },
-    getLoaderSalary(state) {
-        return state.attendanceLoader;
-    },
-    getLoaderPermission(state) {
-        return state.permissionLoader;
-    },
-    getLoaderEmployee(state) {
-        return state.employeeLoader;
-    },
+    getLoaderReport(state) {
+        return state.reportLoader;
+    }
+    
+    // getLoaderAttendance(state) {
+    //     return state.salaryLoader;  
+    // },
+    // getLoaderSalary(state) {
+    //     return state.attendanceLoader;
+    // },
+    // getLoaderPermission(state) {
+    //     return state.permissionLoader;
+    // },
+    // getLoaderEmployee(state) {
+    //     return state.employeeLoader;
+    // },
 
 };
 
@@ -100,7 +101,7 @@ export const actions = {
       }).catch(e => {
           console.log(e)
       }).finally(() => {
-          // context.commit("setLoader")
+          context.commit("setLoader")
       })
     },
 
@@ -111,7 +112,7 @@ export const actions = {
       }).catch(e => {
           console.log(e)
       }).finally(() => {
-          // context.commit("setLoader")
+          context.commit("setLoader")
       })
     },
 
@@ -122,7 +123,7 @@ export const actions = {
       }).catch(e => {
           console.log(e)
       }).finally(() => {
-          // context.commit("setLoader")
+          context.commit("setLoader")
       })
     },
 
@@ -133,7 +134,7 @@ export const actions = {
       }).catch(e => {
         console.log(e)
       }).finally(() => {
-        //context.commit("setLoader")
+        context.commit("setLoader")
       })
     },
 }

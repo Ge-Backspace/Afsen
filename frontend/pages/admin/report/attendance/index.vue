@@ -10,28 +10,88 @@
     </div>
     <div class="container-fluid mt--6">
       <el-card v-loading="getLoader">
-        <div class="row" style="margin-bottom: 20px">
-          <div class="col-md-3 offset-md-9">
-            <el-date-picker
-              v-model="value1"
-              type="date"
-              placeholder="Pick a day"
-            >
-            </el-date-picker>
+        <div slot="header" class="clearfix">
+          <div class="row">
+            <div class="col-md-4">
+              <span class="demonstration">tanggal</span>
+              <br />
+              <el-date-picker
+                v-model="value1"
+                type="monthrange"
+                range-separator="-"
+                start-placeholder="Start month"
+                end-placeholder="End month"
+                size="mini"
+              >
+              </el-date-picker>
+            </div>
+            <div class="col-md-4">
+              <span>Select Employee</span>
+              <br />
+              <el-select
+                v-model="select"
+                slot="prepend"
+                placeholder="All"
+                size="mini"
+              >
+                <el-option label="1" value="1"></el-option>
+                <el-option label="2" value="2"></el-option>
+                <el-option label="3" value="3"></el-option>
+              </el-select>
+            </div>
+            <div class="col-md-2" style="padding-top: 50px">
+              <vs-button
+                primary
+                relief
+                size="small"
+                :active="active == 5"
+                @click="active = 5"
+                style="width: 100px"
+              >
+                <i class="bx bx-check"></i> Lihat
+              </vs-button>
+            </div>
           </div>
-          <div class="col-md-3 md-9">
-            <el-date-picker
-              v-model="value1"
-              type="date"
-              placeholder="Pick a day"
+
+          <!-- <el-button style="float: right; padding: 3px 0" type="text">Operation button</el-button> -->
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+          <div class="col-md-2">
+            <span>Limit View</span>
+            <br />
+            <el-select
+              style="width: 110px"
+              v-model="select"
+              slot="prepend"
+              placeholder="limit"
+              size="mini"
             >
-            </el-date-picker>
+              <el-option label="1" value="1"></el-option>
+              <el-option label="2" value="2"></el-option>
+              <el-option label="3" value="3"></el-option>
+            </el-select>
+          </div>
+          <div class="col-md-2" :offset="6">
+            <span>search</span>
+            <el-input
+              placeholder="Cari"
+              v-model="search"
+              @change="searchData()"
+              size="mini"
+            >
+              <i slot="prefix" class="el-input__icon el-icon-search"></i>
+            </el-input>
           </div>
         </div>
         <el-table :data="tableData" style="width: 100%" height="250">
-          
-          <el-table-column fixed prop="name" label="Employee" width="150"> </el-table-column>
-            <el-table-column prop="zip" :label="col.tanggal" v-for="col in data" :key="col.id"></el-table-column>
+          <el-table-column fixed prop="name" label="Name" width="150">
+          </el-table-column>
+          <el-table-column
+            prop="zip"
+            :label="col.tanggal"
+            v-for="col in data"
+            :key="col.id"
+          ></el-table-column>
         </el-table>
       </el-card>
     </div>
@@ -65,16 +125,16 @@ export default {
         aktif: true,
         banner: null,
       },
-      data: []
+      data: [],
     };
   },
   mounted() {
     this.$store.dispatch("berita/getAll", {});
 
-    for(let i = 0; i <= 30; i++){
+    for (let i = 0; i <= 30; i++) {
       this.data.push({
-        tanggal: i
-      })
+        tanggal: i,
+      });
     }
   },
   methods: {
