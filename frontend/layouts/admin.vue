@@ -68,8 +68,8 @@
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2020 <a href="#" class="font-weight-bold ml-1 text-primary">
-                Badan Pembinaan Ideologi Pancasila</a>
+              &copy; E <a href="#" class="font-weight-bold ml-1 text-primary">
+                EEEEEEEEEEEEEEEEEEEEEEEEEEEEE</a>
             </div>
           </div>
         </div>
