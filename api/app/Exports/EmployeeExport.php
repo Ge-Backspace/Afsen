@@ -3,57 +3,46 @@
 namespace App\Exports;
 
 use App\Models\Employee;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Events\AfterSheet;
+use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class EmployeeExport implements FromCollection, WithHeadings, WithEvents
+class EmployeeExport implements FromView
 {
-    protected $company_id;
 
-    public function registerEvents(): array
+    // protected $company_id;
+    // protected $name;
+    // protected $nip;
+    // protected $kontak;
+    // protected $status;
+    // protected $position;
+
+
+
+
+    // function __construct($company_id, $name, $nip, $kontak, $status, $position)
+    // {
+    //     ini_set('memory_limit', '-1');
+    //     ini_set('max_execution_time', 0);
+    //     $this->company_id = $company_id;
+    //     $this->name = $name;
+    //     $this->nip = $nip;
+    //     $this->kontak = $kontak;
+    //     $this->status = $status;
+    //     $this->position = $position;
+    // }
+
+    public function view(): View
     {
-        $styleArray = [
-            'font' => [
-                'bold' => true,
-            ]
-        ];
-
-        return [
-            // Handle by a closure.
-            AfterSheet::class => function (AfterSheet $event) use ($styleArray) {
-                // $event->sheet->insertNewRowBefore(7, 2);
-                // $event->sheet->insertNewColumnBefore('A', 2);
-                $event->sheet->getStyle('A1:E1')->applyFromArray($styleArray);
-            },
-        ];
+        $carbon = new Carbon();
+        return view('Employee', [
+            // 'name' => $this->tax_returns->get(),
+            // 'name' => $this->name,
+            // 'nip' => $this->nip,
+            // 'kontak' => $this->kontak,
+            // 'status' => $this->status,
+            // 'position' => $this->position,
+            // 'carbon' => $carbon,
+        ]);
     }
-
-
-    function __construct($company_id) {
-            $this->company_id = $company_id;
-    }
-    public function collection()
-    {
-        return Employee::join('positions', 'positions.id', '=', 'employees.position_id')
-        ->where('positions.company_id', $this->company_id)
-        ->get(['name', 'nip', 'kontak', 'status', 'positions.position_name']);
-    }
-
-
-    public function headings(): array
-    {
-        return [
-        'name',
-        'nip',
-        'kontak',
-        'status',
-        'position'
-        ];
-        
-    }
-
-    
 }
