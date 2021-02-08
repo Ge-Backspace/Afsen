@@ -66,7 +66,7 @@
                   <i class="bx bxs-bell-ring"></i> Attendance Setting
                 </vs-button>
 
-                <vs-button
+                <!-- <vs-button
                   color="#7d33ff"
                   relief
                   :active="active == 5"
@@ -76,7 +76,7 @@
                   "
                 >
                   <i class="bx bxs-paper-plane"></i> Absence-Timeoff Deduction
-                </vs-button>
+                </vs-button> -->
               </div>
               <div class="col-md-3 offset-md-9">
                 <el-input

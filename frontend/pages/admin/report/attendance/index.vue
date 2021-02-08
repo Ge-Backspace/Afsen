@@ -25,7 +25,7 @@
               >
               </el-date-picker>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <span>Select Employee</span>
               <br />
               <el-select
@@ -33,20 +33,21 @@
                 slot="prepend"
                 placeholder="All"
                 size="mini"
+                style="width: 180px"
               >
                 <el-option label="1" value="1"></el-option>
                 <el-option label="2" value="2"></el-option>
                 <el-option label="3" value="3"></el-option>
               </el-select>
             </div>
-            <div class="col-md-2" style="padding-top: 50px">
+            <div class="col-md-3 mt-3" style="">
               <vs-button
                 primary
                 relief
                 size="small"
                 :active="active == 5"
                 @click="active = 5"
-                style="width: 100px"
+                style="width: 150px"
               >
                 <i class="bx bx-check"></i> Lihat
               </vs-button>
@@ -71,7 +72,7 @@
               <el-option label="3" value="3"></el-option>
             </el-select>
           </div>
-          <div class="col-md-2" :offset="6">
+          <div class="col-md-3" >
             <span>search</span>
             <el-input
               placeholder="Cari"
@@ -82,8 +83,25 @@
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </div>
+          <div class="col-md-2 offset-md-4" >
+            <span>Download File</span>
+            <br>
+            <vs-button
+                success
+                relief
+                size="small"
+                :active="active == 5"
+                @click="active = 5"
+                style="width: 150px"
+              >
+                <i class="el el-icon-document"></i> Export Excel
+              </vs-button>
+          </div>
         </div>
+        <p style="font-weight: bold;" class="text-center">JANUARY</p>
+        
         <el-table :data="tableData" style="width: 100%" height="250">
+          
           <el-table-column fixed prop="name" label="Name" width="150">
           </el-table-column>
           <el-table-column
