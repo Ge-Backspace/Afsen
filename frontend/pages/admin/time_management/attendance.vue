@@ -41,7 +41,7 @@
                     <i class="bx bx-home-alt"></i> Attendance Report
                 </vs-button>
 
-                <vs-button
+                <!-- <vs-button
                   danger
                   border
                   :active="active == 2"
@@ -64,7 +64,7 @@
                   "
                 >
                   <i class="bx bxs-bell-ring"></i> Attendance Setting
-                </vs-button>
+                </vs-button> -->
 
                 <!-- <vs-button
                   color="#7d33ff"
@@ -97,7 +97,6 @@
                   <vs-th>Address</vs-th>
                   <vs-th>Checkin Time</vs-th>
                   <vs-th>Checkout Time</vs-th>
-                  <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
@@ -120,22 +119,6 @@
                   </vs-td>
                   <vs-td>
                     {{ tr.checkout_time }}
-                  </vs-td>
-                  <vs-td>
-                    
-                    <el-tooltip
-                      content="Delete"
-                      placement="top-start"
-                      effect="dark"
-                    >
-                      <el-button
-                        size="mini"
-                        type="primary"
-                        @click="delete(tr.id)"
-                        icon="fa fa-trash"
-                      >
-                      </el-button>
-                    </el-tooltip>
                   </vs-td>
                 </vs-tr>
               </template>

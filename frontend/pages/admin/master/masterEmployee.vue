@@ -67,19 +67,7 @@
                   <i class="bx bxs-purchase-tag"></i> Export Excel
                 </vs-button>
               </div>
-              <div class="col-4">
-                <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="
-                  active = 6
-                  exportData()
-                  "
-                >
-                  <i class="bx bxs-purchase-tag"></i> History Employee
-                </vs-button>
-              </div>
+              
             </div>
           </el-card>
         </div>
@@ -281,7 +269,7 @@
             <vs-input
               type="number"
               v-model="form.nip"
-              placeholder="Address"
+              placeholder="NIP"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -328,11 +316,11 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Kontak</label>
+            <label>Contact</label>
             <vs-input
               type="number"
               v-model="form.kontak"
-              placeholder="Address"
+              placeholder="Contact"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -347,7 +335,7 @@
             <vs-input
               type="text"
               v-model="form.username"
-              placeholder="Address"
+              placeholder="Username"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -362,7 +350,7 @@
             <vs-input
               type="password"
               v-model="form.password"
-              placeholder="Nama"
+              placeholder="Password"
             ></vs-input>
           </vs-col>
           <!-- <vs-col

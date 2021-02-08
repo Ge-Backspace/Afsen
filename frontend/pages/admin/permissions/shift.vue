@@ -165,7 +165,7 @@
         class="float"
         @click="
           seDialog = true;
-          titleDialog = 'Tambah Employee Shift';
+          titleDialog = 'Pengajuan Pergantian Cuti';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -259,7 +259,7 @@
               <vs-option
                 v-for="op in getOptionShiftE1.data"
                 :key="op.id"
-                :label="[formatDate(op.date), op.code, op.schedule_in, op.schedule_out]"
+                :label="[[formatDate(op.date), op.code, op.schedule_in, op.schedule_out]]"
                 :value="op.id"
               >
                 {{ formatDate(op.date) }} ({{ op.code }})

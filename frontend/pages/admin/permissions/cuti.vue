@@ -174,7 +174,7 @@
         class="float"
         @click="
           seDialog = true;
-          titleDialog = 'Tambah Employee Shift';
+          titleDialog = 'Permohonan Pergantian Shift';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -201,7 +201,7 @@
             style="padding: 5px"
           >
             <label>Employee</label>
-            <vs-select filter placeholder="Employee" v-model="form.employee_id">
+            <vs-select filter placeholder="Employee Name" v-model="form.employee_id">
               <vs-option
                 v-for="op in getOptionEmployees.data"
                 :key="op.id"
@@ -220,7 +220,7 @@
             style="padding: 5px"
           >
             <label>Cuti Name</label>
-            <vs-select filter placeholder="Cuti Employee" v-model="form.cuti_id">
+            <vs-select filter placeholder="Type" v-model="form.cuti_id">
               <vs-option
                 v-for="op in getOptionCuties.data"
                 :key="op.id"

@@ -138,11 +138,11 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Nama</label>
-            <vs-input type="text" v-model="form.position_name" placeholder="Position Name"></vs-input>
+            <vs-input type="text" v-model="form.position_name" placeholder="Name"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Code</label>
-            <vs-input type="text" v-model="form.group" placeholder="Group"></vs-input>
+            <vs-input type="text" v-model="form.group" placeholder="Code"></vs-input>
           </vs-col>
         </vs-row>
       </div>

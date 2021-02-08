@@ -271,7 +271,7 @@
                     @click="active = 0"
                     success
                   >
-                    Awesome
+                    Excelent
                   </vs-button>
                   <vs-button
                     v-else
@@ -281,7 +281,7 @@
                     @click="active = 0"
                     danger
                   >
-                    Not Awesome
+                    Late
                   </vs-button>
                 </div>
               </div>
