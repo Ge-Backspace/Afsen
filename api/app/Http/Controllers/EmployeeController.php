@@ -26,7 +26,7 @@ class EmployeeController extends Controller
     public function getEmployee(Request $request)
     {
         return $this->getPaginate(
-            Employee::join('positions', 'employees.position_id', '=', 'positions.id')
+            Employee::leftJoin('positions', 'employees.position_id', '=', 'positions.id')
             ->join('users', 'employees.user_id', '=', 'users.id')
             ->where('users.company_id', $request->company_id)
             ->select(DB::raw('employees.*, positions.*, users.*, employees.id as id'))

@@ -51,7 +51,7 @@
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
-                
+
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
@@ -89,7 +89,7 @@
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
-                
+
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
@@ -127,7 +127,7 @@
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
-                
+
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
@@ -165,7 +165,7 @@
                 >
                   <img src="../../assets/img/fingerprint.png" alt="yes">
                 </vs-button>
-                
+
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
@@ -264,14 +264,24 @@
                     {{ formatTime(tr.checkout_time) }}
                   </vs-button>
                   <vs-button
-                    v-if="tr.checkin_time <= schedule_in"
+                    v-if="tr.status == 0"
                     class="align-self-center"
                     size="xl"
                     :active="active == 0"
                     @click="active = 0"
                     success
                   >
-                    Awesome
+                    Excelent
+                  </vs-button>
+                  <vs-button
+                    v-else-if="tr.status == 1"
+                    class="align-self-center"
+                    size="xl"
+                    :active="active == 0"
+                    @click="active = 0"
+                    warning
+                  >
+                    Normal
                   </vs-button>
                   <vs-button
                     v-else
@@ -281,13 +291,13 @@
                     @click="active = 0"
                     danger
                   >
-                    Not Awesome
+                    Late
                   </vs-button>
                 </div>
               </div>
 
           </el-card>
-          
+
         </div>
       </div>
     </div>
@@ -371,7 +381,7 @@ export default {
     } else if (moment(this.schedule_out, "HH:mm:ss")  <= moment(now, "HH:mm:ss")){
       this.startCheckout = true
     }
-    
+
   },
   methods: {
     checkin(type = 'checkin') {

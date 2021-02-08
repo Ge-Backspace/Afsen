@@ -21,6 +21,7 @@ class Checkin extends Migration
             $table->string('lat');
             $table->string('lng');
             $table->string('address')->nullable();
+            $table->integer('status');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
