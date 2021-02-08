@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Berita</h1>
+          <h1 class="heading">EEEEEEEEE</h1>
         </div>
       </div>
     </div>
@@ -143,17 +143,26 @@ export default {
         aktif: true,
         banner: null,
       },
+      company_id: '',
+      lastDate: '',
+      tableData: [],
       data: [],
     };
   },
   mounted() {
-    this.$store.dispatch("berita/getAll", {});
-
-    for (let i = 0; i <= 30; i++) {
+    this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
+    this.lastDate = Number(moment().clone().endOf('month').format('DD'))
+    console.log(this.lastDate)
+    for (let i = 0; i <= this.lastDate; i++) {
       this.data.push({
         tanggal: i,
       });
     }
+    this.$store.dispatch('report/getAttendance',{
+      company_id: this.company_id,
+      startDate: moment().clone().startOf('month').format('YYYY-MM-DD'),
+      endDate: moment().clone().endOf('month').format('YYYY-MM-DD')
+    })
   },
   methods: {
     searchData() {
@@ -274,19 +283,19 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("berita", ["getBeritas", "getLoader"]),
+    ...mapGetters('report', ['getAttendance', 'getLoader']),
   },
   watch: {
-    getBeritas(newValue, oldValue) {},
-    search(newValue, oldValue) {
-      // this.$store.dispatch('berita/getAll', {
-      //   search: newValue
-      // });
-    },
-    page(newValue, oldValue) {
-      this.$store.commit("berita/setPage", newValue);
-      this.$store.dispatch("berita/getAll", {});
-    },
+    // getBeritas(newValue, oldValue) {},
+    // search(newValue, oldValue) {
+    //   // this.$store.dispatch('berita/getAll', {
+    //   //   search: newValue
+    //   // });
+    // },
+    // page(newValue, oldValue) {
+    //   this.$store.commit("berita/setPage", newValue);
+    //   this.$store.dispatch("berita/getAll", {});
+    // },
   },
 };
 </script>

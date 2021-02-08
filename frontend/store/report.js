@@ -5,21 +5,21 @@ export const state = () => ({
 		current_page: 1
 	},
     // attendanceLoader: false,
-    
+
 	salary: {
 		data: [],
 		total: 0,
 		current_page: 1
 	},
     // salaryLoader: false,
-    
+
 	permission: {
 		data: [],
 		total: 0,
 		current_page: 1
 	},
     // permissionLoader: false,
-    
+
 	employee: {
 		data: [],
 		total: 0,
@@ -43,11 +43,11 @@ export const mutations = {
     setEmployee(state, data) {
 		state.employee = data;
     },
-    
+
 
 	setLoader(state) {
         state.reportLoader = !state.attendanceLoader;
-        
+
 	},
 	setPage(state, data) {
         state.attendance.current_page = data;
@@ -56,7 +56,7 @@ export const mutations = {
         state.employee.current_page = data;
 	},
 
-	
+
 };
 
 export const getters = {
@@ -73,13 +73,13 @@ export const getters = {
     getEmployee(state) {
 		return state.employee;
     },
-    
-    getLoaderReport(state) {
+
+    getLoader(state) {
         return state.reportLoader;
     }
-    
+
     // getLoaderAttendance(state) {
-    //     return state.salaryLoader;  
+    //     return state.salaryLoader;
     // },
     // getLoaderSalary(state) {
     //     return state.attendanceLoader;
@@ -94,7 +94,8 @@ export const getters = {
 };
 
 export const actions = {
-    getAttendance(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
+    getAttendance(context, {company_id = '', startDate = '', endDate = '', showall = 1, search = '', defaultPage = false}){
+      context.commit("setLoader")
       this.$axios.get(`/reportAttendance?company_id=${company_id}&startDate=${startDate}&endDate=${endDate}`)
       .then(resp => {
           context.commit('setAttendance', resp.data)
