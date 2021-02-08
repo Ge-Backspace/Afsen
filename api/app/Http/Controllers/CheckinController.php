@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Models\Checkin;
 use Carbon\Carbon;
 use App\Exports\CheckinExport;
+use App\Models\ShiftEmployee;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +36,7 @@ class CheckinController extends Controller
         ->join('users', 'employees.user_id', '=', 'users.id')
         ->where('users.company_id', $request->company_id)
         ->whereDate('checkin_time', '=', Carbon::today())
+        ->select(DB::raw('employees.name, checkins.*, checkins.status as status'))
         ->orderBy('checkins.id', 'desc');
         return $this->getPaginate($todayCheckin, $request,['employees.name']);
     }
@@ -79,11 +81,27 @@ class CheckinController extends Controller
             if ($checkCheckin) {
                 return $this->resp(null, 'Anda Sudah Checkin Hari Ini', false, 406);
             }
+            $now = Carbon::now();
+            $shiftEmployee = ShiftEmployee::join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
+            ->where('employee_id', $employee->id)
+            ->whereDate('date', $now)
+            ->first();
+            if (!$shiftEmployee) {
+                return $this->resp(null, 'Anda Tidak Memiliki Shcedule Checkin Hari Ini', false, 406);
+            }
+            $status = 0;
+            if ($now > $shiftEmployee->schedule_in && $now <= $shiftEmployee->schedule_in) {
+                $status = 1;
+            }
+            elseif ($now > $shiftEmployee->schedule_in && $now > $shiftEmployee->schedule_in) {
+                $status = 2;
+            }
             $checkin = Checkin::create([
                 'employee_id' => $employee->id,
                 'checkin_time' => Carbon::now(),
                 'lat' => $input['lat'],
                 'lng' => $input['lng'],
+                'status' => $status,
                 'address' => $address['formatted_address']
             ]);
             return $this->resp($checkin);
