@@ -14,12 +14,6 @@ class CompanyController extends Controller
         return $this->getPaginate(Companies::where('id', $request->company_id), $request,['id']);
     }
 
-    // public function getCoorditaneCompany(Request $request)
-    // {
-    //     $coordinate = Companies::find($request->company_id);
-    //     return $this->resp(['lat' => $coordinate->lat, 'lng' => $coordinate->lng]);
-    // }
-
     public function getAllCompanies(Request $request)
     {
         return $this->getPaginate(Companies::query()->orderBy('id', 'DESC'), $request, ['name']);

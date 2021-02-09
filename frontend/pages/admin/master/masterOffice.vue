@@ -4,17 +4,17 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Master Data Employees</h1>
+          <h1 class="heading">Master Data Office</h1>
         </div>
       </div>
     </div>
-    
+
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
           <el-card v-loading="getLoader" style="margin-top: 80px">
             <div class="row" style="margin-bottom: 20px">
-              
+
               <div class="col-md-3 offset-md-9">
                 <el-input
                   placeholder="Cari"
@@ -29,7 +29,6 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>No</vs-th>
                   <vs-th>Office</vs-th>
                   <vs-th>Lang</vs-th>
                   <vs-th>Latitude</vs-th>
@@ -39,9 +38,6 @@
               </template>
               <template #tbody>
                 <vs-tr :key="i" v-for="(tr, i) in getOffices.data" :data="tr">
-                  <vs-td>
-                    {{ i + 1 }}
-                  </vs-td>
                   <vs-td>
                     {{ tr.office_name }}
                   </vs-td>
@@ -102,6 +98,24 @@
           </el-card>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <el-card v-loading="getLoader">
+            <GmapMap
+            v-bind:center="center"
+            v-bind:zoom="8"
+            map-type-id="terrain"
+            style="height: 225px"
+            >
+            <GmapMarker
+              v-bind:key="index"
+              v-for="(m, index) in markers"
+              v-bind:position="m.position"
+            />
+            </GmapMap>
+          </el-card>
+        </div>
+      </div>
     </div>
 
     <!-- Floating Button -->
@@ -124,7 +138,7 @@
     </el-tooltip>
     <!-- End floating button-->
 
-    <vs-dialog
+    <!-- <vs-dialog
       v-model="tambahDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()"
@@ -217,82 +231,61 @@
           <div>&nbsp;</div>
         </div>
       </template>
-    </vs-dialog>
-
-    <!-- <vs-dialog
-      v-model="importDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
-    >
+    </vs-dialog> -->
+    <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()">
       <template #header>
         <h1 class="not-margin">
-          {{ titleDialog }}
+          {{titleDialog}}
         </h1>
       </template>
       <div class="con-form">
-        <vs-col
-          vs-type="flex"
-          vs-justify="center"
-          vs-align="center"
-          w="6"
-          style="padding: 5px"
-        >
-          <label>Import Employee</label>
-          <vs-input<input type="file" id="file" ref="file" @change="onFileChange"/>
-        </vs-col>
-        <vs-col
-          vs-type="flex"
-          vs-justify="center"
-          vs-align="center"
-          w="6"
-          style="padding: 5px"
-        >
-          <vs-button
-            color="primary"
-            gradient
-            :active="active == 6"
-            @click="active = 6"
-          >
-            <i class="bx bx-file-blank"></i> download templates
-          </vs-button>
-        </vs-col>
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
+            <label>Nama Office</label>
+            <vs-input type="text" v-model="form.office_name" placeholder="Nama"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Latitude</label>
+            <vs-input type="number" v-model="form.lat" placeholder="Latitude"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Longitude</label>
+            <vs-input type="number" v-model="form.lng" placeholder="Longitude"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
+            <GmapMap
+            v-bind:center="{lat: Number(form.lat), lng: Number(form.lng)}"
+            v-bind:zoom="16"
+            map-type-id="terrain"
+            style="height: 250px"
+            >
+            <GmapMarker
+              v-bind:position="center"
+              v-bind:clickable="true"
+              v-bind:draggable="true"
+              @drag="updateCoordinates"
+            />
+            </GmapMap>
+          </vs-col>
+        </vs-row>
       </div>
 
       <template #footer>
         <div class="footer-dialog">
           <vs-row>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('update')"
-                v-if="isUpdate"
-                >Update</vs-button
-              >
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="importData()"
-                v-else
-                >Simpan</vs-button
-              >
+            <vs-col w="6" style="padding:5px">
+              <vs-button block :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</vs-button>
+              <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
             </vs-col>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                border
-                @click="
-                  importDialog = false;
-                  resetForm();
-                "
-                >Batal</vs-button
-              >
+            <vs-col w="6" style="padding:5px">
+              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
             </vs-col>
           </vs-row>
           <div>&nbsp;</div>
         </div>
       </template>
-    </vs-dialog> -->
+    </vs-dialog>
   </div>
 </template>
 
@@ -323,28 +316,31 @@ export default {
         office_name: '',
         lat: '',
         lng: '',
-        
+
       },
-      // active: "",
-      // searchDate: ["", ""],
-      // searchGoverment: "",
+      center: {lat: -6.2, lng: 106.816666},
+      markers: [],
     };
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
     this.$store.dispatch("office/getAll", { company_id: this.company_id });
-    this.$axios
-      .get(`/offices?company_id=${this.company_id}`)
-      .then((resp) => {});
-    // this.$axios
-    //   .get(`/optionPosition?company_id=${this.company_id}`)
-    //   .then((resp) => {
-    //     this.option = resp.data.data;
-    //   });
+    this.$axios.get(`/getCoordinate?company_id=${this.company_id}`)
+    .then(resp => {
+      let el = resp.data.data
+      let positions = []
+      this.center.lat = Number(el[0].position.lat)
+      this.center.lng = Number(el[0].position.lng)
+      el.forEach((value, index) => {
+        positions[index] = {position: {lat: Number(value.position.lat), lng: Number(value.position.lng)}}
+      });
+      this.markers = positions
+    })
   },
   methods: {
     searchData() {
-      this.$store.dispatch("employee/getAll", {
+      this.$store.dispatch("office/getAll", {
+        company_id: this.company_id,
         search: this.search,
       });
     },
@@ -413,13 +409,13 @@ export default {
         office_name: '',
         lat: '',
         lang: '',
-        
+
       };
       this.isUpdate = false;
     },
     handleCurrentChange(val) {
-      this.$store.commit("employee/setPage", val);
-      this.$store.dispatch("employee/getAll", {});
+      this.$store.commit("office/setPage", val);
+      this.$store.dispatch("office/getAll", { company_id: this.company_id });
     },
     onSubmit(type = "store") {
       this.btnLoader = true;
@@ -445,9 +441,7 @@ export default {
             });
             this.resetForm();
             this.tambahDialog = false;
-            this.$store.dispatch("employee/getAll", {
-              company_id: this.company_id,
-            });
+            this.$store.dispatch("office/getAll", { company_id: this.company_id, });
           }
         })
         .finally(() => {
@@ -487,6 +481,7 @@ export default {
                 });
                 this.tambahDialog = false;
                 this.$store.dispatch("employee/getAll", {
+                  company_id: this.company_id,
                   defaultPage: true,
                 });
               }
@@ -503,32 +498,31 @@ export default {
         }
       });
     },
+    updateCoordinates(location) {
+      this.form.lat = location.latLng.lat(),
+      this.form.lng = location.latLng.lng()
+    },
   },
   computed: {
-    // ...mapGetters("lapor", ["getLapors", "getLoader"]),
-    // ...mapGetters("setting", ["getSetting"]),
-    // ...mapGetters("goverment", ["getGovermentPlains"]),
     ...mapGetters("office", [
       "getOffices",
       "getLoader"
     ]),
-    // ...mapGetters("option", ["getOption"]),
-    // ...mapGetters("position", ["getPosition"]),
+    ...mapGetters("coordinate", [
+      "getCoordinate",
+      "getLoader"
+    ]),
   },
   watch: {
-    // getLapors(newValue, oldValue) {},
-    // getSetting(newValue, oldValue) {
-    //   console.log(newValue);
-    // },
-    // search(newValue, oldValue) {
-    //   // this.$store.dispatch('lapor/getAll', {
-    //   //   search: newValue
-    //   // });
-    // },
-    // page(newValue, oldValue) {
-    //   this.$store.commit("lapor/setPage", newValue);
-    //   this.$store.dispatch("lapor/getAll", {});
-    // },
+    getOffices(newValue, oldValue){
+      //
+    },
+    lat(newValue, oldValue) {
+      this.form.lat = newValue
+    },
+    lng(newValue, oldValue) {
+      this.form.lng = newValue
+    },
   },
 };
 </script>
