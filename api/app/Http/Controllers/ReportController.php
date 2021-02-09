@@ -7,6 +7,7 @@ use App\Models\Checkin;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller

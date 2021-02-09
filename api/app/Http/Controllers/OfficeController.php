@@ -58,7 +58,7 @@ class OfficeController extends Controller
             'lng' => 'required',
         ], Helper::messageValidation());
         if ($validator->fails()) {
-            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Office', false, 401);
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Update Office', false, 401);
         }
         $address = $this->getAddress($input['lat'], $input['lng']);
         $input = Arr::set($input, 'address', $address['formatted_address']);

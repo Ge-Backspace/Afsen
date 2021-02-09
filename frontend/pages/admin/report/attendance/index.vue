@@ -103,7 +103,7 @@
             </div>
             <p style="font-weight: bold" class="text-center">JANUARY</p>
 
-            <el-table :data="tableData" style="width: 100%" height="250">
+            <el-table :data="getAttendance.data" style="width: 100%" height="250">
               <el-table-column fixed prop="name" label="Name" width="150">
               </el-table-column>
               <el-table-column
