@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="header bg-primary pb-6" style="z-index: -1">
+    <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Data Employees</h1>
+          <h1 class="heading">Master Data Employees</h1>
         </div>
       </div>
     </div>
-    <div class="container-fluid mt--7">
+    
+    <div class="container-fluid mt--5">
       <div class="row">
-        <div class="col-xl-6">
-          <el-card style="margin-top: 20px">
-            <div class="row">
-              <div class="col-4">
-                <vs-button
+        <div class="col-md-12">
+          <el-card v-loading="getLoader" style="margin-top: 80px">
+            <div class="row" style="margin-bottom: 20px">
+              <vs-button
                   color="rgb(59,222,200)"
                   gradient
                   :active="active == 6"
@@ -26,8 +26,6 @@
                 >
                   <i class="bx bxs-purchase-tag"></i> Add Employee
                 </vs-button>
-              </div>
-              <div class="col-4">
                 <vs-button
                   color="rgb(59,222,200)"
                   gradient
@@ -40,8 +38,6 @@
                 >
                   <i class="bx bxs-purchase-tag"></i> Bulk Add Employee
                 </vs-button>
-              </div>
-              <div class="col-4">
                 <vs-button
                   color="rgb(59,222,200)"
                   gradient
@@ -53,8 +49,6 @@
                 >
                   <i class="bx bxs-purchase-tag"></i> Export PDF
                 </vs-button>
-              </div>
-              <div class="col-4">
                 <vs-button
                   color="rgb(59,222,200)"
                   gradient
@@ -66,18 +60,6 @@
                 >
                   <i class="bx bxs-purchase-tag"></i> Export Excel
                 </vs-button>
-              </div>
-              
-            </div>
-          </el-card>
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid mt--5">
-      <div class="row">
-        <div class="col-md-12">
-          <el-card v-loading="getLoader" style="margin-top: 80px">
-            <div class="row" style="margin-bottom: 20px">
               <div class="col-md-3 offset-md-9">
                 <el-input
                   placeholder="Cari"

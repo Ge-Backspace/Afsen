@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="header bg-primary pb-6" style="z-index:-1">
+    <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Master Shift</h1>
+          <h1 class="heading">Master Data Salary</h1>
         </div>
       </div>
     </div>
