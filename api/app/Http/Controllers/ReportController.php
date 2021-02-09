@@ -51,7 +51,7 @@ class ReportController extends Controller
                     'date' => $date . ' - ' . date('l', strtotime($date)),
                     'checkin_time' => $checkin ? $checkin->checkin_time->format('H:i:s') : null,
                     'checkout_time' => $checkin ? $checkin->checkout_time->format('H:i:s') : null,
-                    'status_checkin' => $checkin->status,
+                    'status_checkin' => $checkin ? $checkin->status : null,
                     'is_weekend' => Carbon::parse($date)->dayOfWeek == Carbon::SUNDAY || Carbon::parse($date)->dayOfWeek == Carbon::SATURDAY ? true : false
                 ];
                 $start_date->addDay(1);

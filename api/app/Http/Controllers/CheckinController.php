@@ -66,16 +66,17 @@ class CheckinController extends Controller
         }
         $employee = $this->getEmployeeByUser($request->user_id);
         $address = $this->getAddress($input['lat'], $input['lng']);
-        $company = $this->getCompanyByEmployee($employee->id);
-        $distcance = $this->distance($company->lat, $company->lng, $input['lat'], $input['lng']);
+        $nearestOffice = $this->getNearestOffice($employee->id, $input['lat'], $input['lng']);
+        $distcance = $this->distance($nearestOffice->lat, $nearestOffice->lng, $input['lat'], $input['lng']);
+        return $this->resp([$nearestOffice ,$distcance]);
         $checkCheckin = $this->checkCheckin($employee->id);
         $checkCheckout = $this->checkCheckout($employee->id);
-        if ($distcance > 99999) {
+        if ($distcance > 1) {
             $message = 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor';
             if ($input['request'] == 2) {
                 $message = 'Jarak untuk Checkout tidak boleh Lebih dari 1 Km dari kantor';
             }
-            return $this->resp([$distcance, $request->lat, $request->lng, $company->lat, $company->lng],
+            return $this->resp(['distance' => $distcance, 'nearest office' => $nearestOffice],
             $message, false, 406);
         } elseif ($input['request'] == 1) {
             if ($checkCheckin) {

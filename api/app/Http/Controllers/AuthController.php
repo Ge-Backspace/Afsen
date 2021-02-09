@@ -11,43 +11,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Spatie\Geocoder\Geocoder;
-
 class AuthController extends Controller
 {
     public function registerCompany (Request $request){
+        $input = $request->only(['company_name']);
         $rules = [
             'company_name' => 'required|string|min:4|max:50',
-            'lat' => 'required',
-            'lng' => 'required'
         ];
         $validator = Validator::make ($request->all(), $rules ,Helper::messageValidation());
 
         if($validator->fails()){
             return $this->resp($request->all(), Helper::generateErrorMsg($validator->errors()->getMessages()), false, 406);
         }
-
-        $company_name = $request->company_name;
-        $client = new \GuzzleHttp\Client();
-        $geocoder = new Geocoder($client);
-        $geocoder->setApiKey(config('geocoder.key'));
-        $geocoder->setCountry(config('geocoder.country', 'IN'));
-
-        $lat = $request->lat;
-        $lng = $request->lng;
-        $company_name = $request->company_name;
-        $address = $geocoder->getAddressForCoordinates($lat, $lng);
-
-        $company_check = Companies::where('name', $company_name)->first();
-
-        if($company_check){
+        $companyCheck = Companies::where('name', $input['company_name']);
+        if($companyCheck){
             return $this->resp(null, 'Nama Company Sudah Terdaftar', false, 406);
         }else{
             $register_company = Companies::create([
-                'name' => $company_name,
-                'address' => $address['formatted_address'],
-                'lat' => $lat,
-                'lng' => $lng
+                'name' => $input['company_name']
             ]);
             return $this->resp($register_company);
         }

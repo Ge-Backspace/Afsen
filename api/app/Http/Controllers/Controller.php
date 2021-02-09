@@ -7,6 +7,7 @@ use App\Helpers\Variable;
 use App\Models\Checkin;
 use App\Models\Companies;
 use App\Models\Employee;
+use App\Models\Office;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -257,5 +258,22 @@ class Controller extends BaseController
         $geocoder->setCountry(config('geocoder.country', 'IN'));
         $address = $geocoder->getAddressForCoordinates($lat, $lng);
         return $address;
+    }
+
+    public function getNearestOffice($employee_id, $lat, $lng)
+    {
+        $employee = Employee::find($employee_id);
+        $user = User::find($employee->user_id);
+        $office = Office::where('company_id', $user->company_id)->get();
+        $distance = [];
+        foreach ($office as $key => $location) {
+            $a = $lat - $location['lat'];
+            $b = $lng - $location['lng'];
+            $distance = sqrt(($a**2) + ($b**2));
+            $distances[$key] = $distance;
+        }
+        asort($distances);
+        $closest = $office[key($distances)];
+        return $closest;
     }
 }
