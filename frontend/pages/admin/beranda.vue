@@ -10,7 +10,7 @@
                 <!-- Card body -->
                 <div class="card-body">
                   <h1 class="mt-3 mb-0 text-sm">
-                    <span class="text-nowrap"
+                    <span class="text-nowrap" style="font-size: 24px"
                       ><b>Good day {{ this.name }}</b>
                     </span>
                   </h1>
@@ -30,14 +30,24 @@
       <div class="row">
         <div class="col-xl-6">
           <!-- card pre-present -->
-          <el-card style="margin-top: 20px; background-color: #0F0967;" v-if="this.status == 0 && this.startDay && this.startCheckin && !this.startCheckout">
+          <el-card
+            style="margin-top: 20px; background-color: #0f0967"
+            v-if="
+              this.status == 0 &&
+              this.startDay &&
+              this.startCheckin &&
+              !this.startCheckout
+            "
+          >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
-              <h2>Attendance</h2>
+              <h2 style="color: #ffffff">Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
-              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+              <span>{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
             </div>
             <div class="row">
               <div class="col-4">
@@ -49,9 +59,8 @@
                   :active="active == 2"
                   @click="checkin('checkin')"
                 >
-                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
                 </vs-button>
-
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
@@ -60,7 +69,10 @@
                       <h1 v-text="currentTime"></h1>
                     </tr>
                     <tr>
-                      <td>Press the left-side button <br> to make an attendance</td>
+                      <td>
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
                     </tr>
                   </table>
                 </div>
@@ -68,14 +80,24 @@
             </div>
           </el-card>
           <!-- card after present -->
-          <el-card style="margin-top: 20px; background-color: #3B31C7;" v-else-if="this.status == 0 && this.startDay && !this.startCheckin && !this.startCheckout">
+          <el-card
+            style="margin-top: 20px; background-color: #3b31c7"
+            v-else-if="
+              this.status == 0 &&
+              this.startDay &&
+              !this.startCheckin &&
+              !this.startCheckout
+            "
+          >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
-              <h2>Attendance</h2>
+              <h2 style="color: #ffffff">Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
-              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+              <span style="color: #ffffff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
             </div>
             <div class="row">
               <div class="col-4">
@@ -87,18 +109,20 @@
                   :active="active == 2"
                   @click="checkin('checkin')"
                 >
-                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
                 </vs-button>
-
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
                   <table>
                     <tr>
-                      <h1 v-text="currentTime"></h1>
+                      <h1 style="color: #ffffff" v-text="currentTime"></h1>
                     </tr>
                     <tr>
-                      <td>Press the left-side button <br> to make an attendance</td>
+                      <td style="color: #ffffff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
                     </tr>
                   </table>
                 </div>
@@ -106,14 +130,24 @@
             </div>
           </el-card>
           <!-- card present late -->
-          <el-card style="margin-top: 20px; background-color: #D01919;" v-else-if="this.status == 0 && this.startDay && !this.startCheckin && this.startCheckout">
+          <el-card
+            style="margin-top: 20px; background-color: #d01919"
+            v-else-if="
+              this.status == 0 &&
+              this.startDay &&
+              !this.startCheckin &&
+              this.startCheckout
+            "
+          >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
               <h2>Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
-              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+              <span style="color: #ffffff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
             </div>
             <div class="row">
               <div class="col-4">
@@ -125,18 +159,20 @@
                   :active="active == 2"
                   @click="checkin('checkin')"
                 >
-                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
                 </vs-button>
-
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
                   <table>
                     <tr>
-                      <h1 v-text="currentTime"></h1>
+                      <h1 v-text="currentTime" style="color: #ffffff"></h1>
                     </tr>
                     <tr>
-                      <td>Press the left-side button <br> to make an attendance</td>
+                      <td style="color: #ffffff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
                     </tr>
                   </table>
                 </div>
@@ -144,14 +180,19 @@
             </div>
           </el-card>
           <!-- card present absent -->
-          <el-card style="margin-top: 20px; background-color: #36BD2B" v-else-if="this.status == 1">
+          <el-card
+            style="margin-top: 20px; background-color: #4CB63F"
+            v-else-if="this.status == 1" shadow="always"
+          >
             <!-- Card header -->
-            <div slot="header" class="clearfix d-flex justify-content-between" >
+            <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
-              <h2>Attendance</h2>
+              <h2 style="color: #ffffff">Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
-              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+              <span style="color: #ffffff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
             </div>
             <div class="row">
               <div class="col-4">
@@ -163,18 +204,20 @@
                   :active="active == 2"
                   @click="checkin('checkout')"
                 >
-                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
                 </vs-button>
-
               </div>
               <div class="col-6 d-flex">
                 <div class="row col-12">
                   <table>
                     <tr>
-                      <h1 v-text="currentTime"></h1>
+                      <h1 v-text="currentTime" style="color: #ffffff"></h1>
                     </tr>
                     <tr>
-                      <td>Press the left-side button <br> to make an attendance</td>
+                      <td style="color: #ffffff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
                     </tr>
                   </table>
                 </div>
@@ -182,14 +225,16 @@
             </div>
           </el-card>
           <!-- card finish -->
-          <el-card style="margin-top: 20px; background-color: #909399;" v-else>
+          <el-card style="margin-top: 20px; background-color: #909399" v-else>
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
               <h2>Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
-              <span>{{ $moment(Date.now()).format("dddd, DDD MMMM YYYY") }}</span>
+              <span>{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
             </div>
             <div class="row">
               <div class="col-4">
@@ -201,7 +246,7 @@
                   :active="active == 2"
                   @click="checkout('dayoff')"
                 >
-                  <img src="../../assets/img/fingerprint.png" alt="yes">
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
                 </vs-button>
               </div>
               <div class="col-6 d-flex">
@@ -211,7 +256,10 @@
                       <h1 v-text="currentTime"></h1>
                     </tr>
                     <tr>
-                      <td>Press the left-side button <br> to make an attendance</td>
+                      <td>
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
                     </tr>
                   </table>
                 </div>
@@ -221,83 +269,57 @@
         </div>
         <div class="col-xl-6">
           <!-- left card-->
-          <el-card class="mt-10" style="margin-top: 20px; ">
+          <el-card
+            class="mt-10"
+            style="margin-top: 20px; width: 450px; height: 500px"
+          >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
-              <h2>Today Attendances</h2>
+              <h2 style="font-size: 16px">Today Attendances</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              <span>Schedule In : {{ schedule_in }}<br>Schedule Out : {{ schedule_out }}</span>
+              <span
+                >Schedule In : {{ schedule_in }}<br />Schedule Out :
+                {{ schedule_out }}</span
+              >
             </div>
-
-              <div class="row" :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
-                <div class="col-4">
-                  <img
-                    class="rounded-circle"
-                    src="https://picsum.photos/125/125/?image=58"
-                    alt="Right image"
-                  />
-                </div>
-                <div class="col-2 d-flex">
-                  <h2 class="align-self-center">
-                    {{ tr.name }}
-                  </h2>
-                </div>
-                <div class="col-6 d-flex">
-                  <vs-button
-                    v-if="!tr.checkout_time"
-                    class="align-self-center"
-                    size="xl"
-                    :active="active == 0"
-                    @click="active = 0"
-                  >
-                    {{ formatTime(tr.checkin_time) }}
-                  </vs-button>
-                  <vs-button
-                    v-else
-                    class="align-self-center"
-                    size="xl"
-                    :active="active == 0"
-                    @click="active = 0"
-                    success
-                  >
-                    {{ formatTime(tr.checkout_time) }}
-                  </vs-button>
-                  <vs-button
-                    v-if="tr.status == 0"
-                    class="align-self-center"
-                    size="xl"
-                    :active="active == 0"
-                    @click="active = 0"
-                    success
-                  >
-                    Excelent
-                  </vs-button>
-                  <vs-button
-                    v-else-if="tr.status == 1"
-                    class="align-self-center"
-                    size="xl"
-                    :active="active == 0"
-                    @click="active = 0"
-                    warning
-                  >
-                    Normal
-                  </vs-button>
-                  <vs-button
-                    v-else
-                    class="align-self-center"
-                    size="xl"
-                    :active="active == 0"
-                    @click="active = 0"
-                    danger
-                  >
-                    Late
-                  </vs-button>
-                </div>
+            <el-card shadow="always">
+            <div
+              class="row"
+              :key="i"
+              v-for="(tr, i) in getCheckin.data"
+              :data="tr"
+            >
+              <div class="col-4 d-flex">
+                <img
+                  style="width: 60%"
+                  class="rounded-circle"
+                  src="https://picsum.photos/125/125/?image=58"
+                  alt="Right image"
+                />
+                <h2 class="align-self-center" style="padding: 14px 16px; ">{{ tr.name }}</h2> 
+                  
               </div>
+              
+              <div class="col-6 d-flex">
+                <vs-avatar v-if="!tr.checkout_time" size="20" class="align-self-center" danger style="height: 30px; width: 90px; border-radius: 15px">
+                  <span style="font-weight: ">{{ formatTime(tr.checkin_time) }}</span>
+                </vs-avatar>
 
+                <vs-avatar v-else size="20" class="align-self-center" success style="height: 30px; width: 90px; border-radius: 15px">
+                  <span style="font-weight: ">{{ formatTime(tr.checkin_time) }}</span>
+                </vs-avatar>
+
+                <vs-avatar v-if="tr.status == 0" size="20" class="align-self-center" success style="height: 30px; width: 90px; border-radius: 15px; margin-left: 20px">
+                  <span style="font-weight: ">Excelent</span>
+                </vs-avatar>
+                <vs-avatar v-else size="20" class="align-self-center" danger style="height: 30px; width: 90px; border-radius: 15px; margin-left: 20px">
+                  <span style="font-weight: ">Late</span>
+                </vs-avatar>
+              </div>
+            </div>
+            </el-card>
           </el-card>
-
         </div>
       </div>
     </div>
@@ -305,134 +327,134 @@
 </template>
 
 <script>
-
-import {
-    mapMutations,
-    mapGetters
-  } from 'vuex';
-  import * as moment from 'moment';
+import { mapMutations, mapGetters } from "vuex";
+import * as moment from "moment";
 
 export default {
-  components: {
-
-  },
+  components: {},
   layout: "admin",
   data() {
     return {
       active: 0,
       status: 0,
-      company_id: '',
+      company_id: "",
       table: {
-        max: 10
+        max: 10,
       },
       startDay: false,
       startCheckin: false,
       startCheckout: false,
-      name: '',
+      name: "",
       data: {
-        user_id: '',
-        lat: '',
-        lng: '',
-        request: '',
+        user_id: "",
+        lat: "",
+        lng: "",
+        request: "",
       },
-      employee_id: '',
-      start: '06:00:00',
+      employee_id: "",
+      start: "06:00:00",
       currentTime: null,
       showLoading: false,
-      schedule_in: '',
-      schedule_out: '',
-    }
+      schedule_in: "",
+      schedule_out: "",
+    };
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
     this.data.user_id = JSON.parse(JSON.stringify(this.$auth.user.id));
-    this.$axios.get(`/getName?user_id=${this.data.user_id}`).then(resp => {
-      this.name = resp.data.data
-    })
-    this.$store.dispatch('checkin/getAll', {
-      showall: 1,
-      company_id: this.company_id
+    this.$axios.get(`/getName?user_id=${this.data.user_id}`).then((resp) => {
+      this.name = resp.data.data;
     });
-    this.$getLocation({})
-    .then(coordinates => {
+    this.$store.dispatch("checkin/getAll", {
+      showall: 1,
+      company_id: this.company_id,
+    });
+    this.$getLocation({}).then((coordinates) => {
       this.data.lat = coordinates.lat;
       // this.data.lat = -6.7615122;
       this.data.lng = coordinates.lng;
       // this.data.lng = 108.4114873;
     });
-    this.$axios.get(`/check?user_id=${this.data.user_id}`)
-    .then( response => {
+    this.$axios.get(`/check?user_id=${this.data.user_id}`).then((response) => {
       this.$notify.success({
-        title: 'Check',
-        message: response.data.message
+        title: "Check",
+        message: response.data.message,
       });
-      this.status = response.data.data.status
-    })
-    this.$axios.get(`/todayShiftEmployee?user_id=${this.data.user_id}`)
-    .then(response =>{
-      this.schedule_in = response.data.data.schedule_in
-      this.schedule_out = response.data.data.schedule_out
-    })
-    let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss")
+      this.status = response.data.data.status;
+    });
+    this.$axios
+      .get(`/todayShiftEmployee?user_id=${this.data.user_id}`)
+      .then((response) => {
+        this.schedule_in = response.data.data.schedule_in;
+        this.schedule_out = response.data.data.schedule_out;
+      });
+    let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
     if (moment(this.start, "HH:mm:ss") <= moment(now, "HH:mm:ss")) {
-      this.startDay = true
-    } else if (moment(this.schedule_in, "HH:mm:ss") <= moment(now, "HH:mm:ss")){
-      this.startCheckin = true
-    } else if (moment(this.schedule_out, "HH:mm:ss")  <= moment(now, "HH:mm:ss")){
-      this.startCheckout = true
+      this.startDay = true;
+    } else if (
+      moment(this.schedule_in, "HH:mm:ss") <= moment(now, "HH:mm:ss")
+    ) {
+      this.startCheckin = true;
+    } else if (
+      moment(this.schedule_out, "HH:mm:ss") <= moment(now, "HH:mm:ss")
+    ) {
+      this.startCheckout = true;
     }
-
   },
   methods: {
-    checkin(type = 'checkin') {
-      this.showLoading = true
-      this.data.request = 1
-      if(type == 'checkout'){
-        this.data.request = 2
+    checkin(type = "checkin") {
+      this.showLoading = true;
+      this.data.request = 1;
+      if (type == "checkout") {
+        this.data.request = 2;
       }
-      this.$axios.post('/checkin', this.data)
-      .then( response => {
-        this.$notify.success({
-          title: 'Berhasil',
-          message: response.data.message
-        });
-        // this.$router.push('/admin/beranda')
-        this.$store.dispatch('checkin/getAll', {
-          showall: 1,
-          company_id: this.company_id
-        });
-        this.$axios.get(`/check?user_id=${this.data.user_id}`)
-        .then( response => {
+      this.$axios
+        .post("/checkin", this.data)
+        .then((response) => {
           this.$notify.success({
-            title: 'Check',
-            message: response.data.message
+            title: "Berhasil",
+            message: response.data.message,
           });
-          this.status = response.data.data.status
+          // this.$router.push('/admin/beranda')
+          this.$store.dispatch("checkin/getAll", {
+            showall: 1,
+            company_id: this.company_id,
+          });
+          this.$axios
+            .get(`/check?user_id=${this.data.user_id}`)
+            .then((response) => {
+              this.$notify.success({
+                title: "Check",
+                message: response.data.message,
+              });
+              this.status = response.data.data.status;
+            });
         })
-      })
-      .catch(e => {
-        console.log(e.response.data.message);
-        this.$notify.error({
-          title: 'Error',
-          message: e.response.data.message
+        .catch((e) => {
+          console.log(e.response.data.message);
+          this.$notify.error({
+            title: "Error",
+            message: e.response.data.message,
+          });
+        })
+        .finally(() => {
+          this.showLoading = false;
         });
-      }).finally(() => {
-        this.showLoading = false;
-      });
     },
-    checkout(type = 'checkout')
-    {
+    checkout(type = "checkout") {
       this.$notify.error({
-        title: 'Gagal',
-        message: `Anda ${type == 'dayoff' ? 'Tidak ada Schedule' : 'Sudah Checkout'} Hari Ini`
-      })
+        title: "Gagal",
+        message: `Anda ${
+          type == "dayoff" ? "Tidak ada Schedule" : "Sudah Checkout"
+        } Hari Ini`,
+      });
     },
     updateCurrentTime() {
       this.currentTime = moment().format("LTS");
     },
-    formatTime(time){
-      return moment(String(time)).format('HH:mm');
-    }
+    formatTime(time) {
+      return moment(String(time)).format("HH:mm");
+    },
   },
   created() {
     this.currentTime = moment().format("LTS");
@@ -440,12 +462,11 @@ export default {
   },
   computed: {
     ...mapGetters("checkin", [
-      'getCheckin',
+      "getCheckin",
       // 'getLoader',
       // 'getSummary'
     ]),
   },
-
 };
 </script>
 

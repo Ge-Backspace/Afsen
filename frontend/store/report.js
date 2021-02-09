@@ -46,7 +46,7 @@ export const mutations = {
 
 
 	setLoader(state) {
-        state.reportLoader = !state.attendanceLoader;
+        state.reportLoader = !state.reportLoader;
 
 	},
 	setPage(state, data) {

@@ -33,6 +33,7 @@ let store = {};
   resolveStoreModules(require('..\\store\\informasi.js'), 'informasi.js')
   resolveStoreModules(require('..\\store\\kegiatan.js'), 'kegiatan.js')
   resolveStoreModules(require('..\\store\\lapor.js'), 'lapor.js')
+  resolveStoreModules(require('..\\store\\office.js'), 'office.js')
   resolveStoreModules(require('..\\store\\option.js'), 'option.js')
   resolveStoreModules(require('..\\store\\position.js'), 'position.js')
   resolveStoreModules(require('..\\store\\report.js'), 'report.js')
@@ -67,6 +68,7 @@ let store = {};
       '..\\store\\informasi.js',
       '..\\store\\kegiatan.js',
       '..\\store\\lapor.js',
+      '..\\store\\office.js',
       '..\\store\\option.js',
       '..\\store\\position.js',
       '..\\store\\report.js',

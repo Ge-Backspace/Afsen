@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-primary pb-6" style="z-index:-1">
+    <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->

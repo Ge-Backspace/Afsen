@@ -14,52 +14,7 @@
         <div class="col-md-12">
           <el-card v-loading="getLoader" style="margin-top: 80px">
             <div class="row" style="margin-bottom: 20px">
-              <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="
-                    tambahDialog = true;
-                    titleDialog = 'Add Employee';
-                    active = 6;
-                  "
-                >
-                  <i class="bx bxs-purchase-tag"></i> Add Employee
-                </vs-button>
-                <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="
-                    active = 6;
-                    importDialog = true;
-                    titleDialog = 'Bulk Add Employees';
-                  "
-                >
-                  <i class="bx bxs-purchase-tag"></i> Bulk Add Employee
-                </vs-button>
-                <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="
-                    active = 6;
-                    exportData('pdf');
-                  "
-                >
-                  <i class="bx bxs-purchase-tag"></i> Export PDF
-                </vs-button>
-                <vs-button
-                  color="rgb(59,222,200)"
-                  gradient
-                  :active="active == 6"
-                  @click="
-                    active = 6;
-                    exportData('excel');
-                  "
-                >
-                  <i class="bx bxs-purchase-tag"></i> Export Excel
-                </vs-button>
+              
               <div class="col-md-3 offset-md-9">
                 <el-input
                   placeholder="Cari"
@@ -75,58 +30,29 @@
               <template #thead>
                 <vs-tr>
                   <vs-th>No</vs-th>
-                  <vs-th>Fullname</vs-th>
-                  <vs-th>Nip</vs-th>
-                  <vs-th>Position</vs-th>
-                  <vs-th>Group</vs-th>
-                  <vs-th>Kontak</vs-th>
-                  <vs-th>Status Employee</vs-th>
-                  <vs-th>Username</vs-th>
-                  <vs-th>Admin</vs-th>
-                  <vs-th>Status User</vs-th>
+                  <vs-th>Office</vs-th>
+                  <vs-th>Lang</vs-th>
+                  <vs-th>Latitude</vs-th>
+                  <vs-th>address</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getEmployees.data" :data="tr">
+                <vs-tr :key="i" v-for="(tr, i) in getOffices.data" :data="tr">
                   <vs-td>
                     {{ i + 1 }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.name }}
+                    {{ tr.office_name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.nip }}
+                    {{ tr.address }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.position_name }}
+                    {{ tr.lat }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.group }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.kontak }}
-                  </vs-td>
-                  <vs-td>
-                    <span class="badge badge-success" v-if="tr.status"
-                      >Aktif</span
-                    >
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.username }}
-                  </vs-td>
-                  <vs-td>
-                    <span class="badge badge-success" v-if="tr.admin"
-                      >Aktif</span
-                    >
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
-                  </vs-td>
-                  <vs-td>
-                    <span class="badge badge-success" v-if="tr.aktif"
-                      >Aktif</span
-                    >
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
+                    {{ tr.lng }}
                   </vs-td>
                   <vs-td>
                     <el-tooltip
@@ -162,12 +88,12 @@
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{ getEmployees.total }} Data</small>
+                    <small>Total : {{ getOffices.total }} Data</small>
                   </vs-col>
                   <vs-col w="10">
                     <vs-pagination
                       v-model="page"
-                      :length="Math.ceil(getEmployees.total / table.max)"
+                      :length="Math.ceil(getOffices.total / table.max)"
                     />
                   </vs-col>
                 </vs-row>
@@ -190,7 +116,7 @@
         @click="
           request = true;
           tambahDialog = true;
-          titleDialog = 'Add Employee';
+          titleDialog = 'Add Office';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -218,11 +144,11 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Nama</label>
+            <label>Office Nama</label>
             <vs-input
               type="text"
-              v-model="form.name"
-              placeholder="Nama"
+              v-model="form.office_name"
+              placeholder="Office Nama"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -233,11 +159,11 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Email</label>
+            <label>Lat</label>
             <vs-input
               type="text"
-              v-model="form.email"
-              placeholder="Email"
+              v-model="form.lat"
+              placeholder="lat"
             ></vs-input>
           </vs-col>
           <vs-col
@@ -247,126 +173,13 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Nip</label>
+            <label>Lang</label>
             <vs-input
               type="number"
-              v-model="form.nip"
-              placeholder="NIP"
+              v-model="form.lng"
+              placeholder="Lang"
             ></vs-input>
           </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Position</label>
-            <vs-select
-              filter
-              placeholder="Positions"
-              v-model="form.position_id"
-            >
-              <vs-option
-                v-for="op in option"
-                :key="op.id"
-                :label="op.position_name"
-                :value="op.id"
-              >
-                {{ op.position_name }}
-              </vs-option>
-            </vs-select>
-          </vs-col>
-          <!-- <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Group</label>
-            <vs-select filter placeholder="Group" v-model="form.position_name">
-              <vs-option v-for="op in option" :key="op.id" :label="op.position_name" :value="op.id">
-                {{op.position_name}}
-              </vs-option>
-            </vs-select>
-          </vs-col> -->
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Contact</label>
-            <vs-input
-              type="number"
-              v-model="form.kontak"
-              placeholder="Contact"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            v-if="request"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Username</label>
-            <vs-input
-              type="text"
-              v-model="form.username"
-              placeholder="Username"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            v-if="request"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Password</label>
-            <vs-input
-              type="password"
-              v-model="form.password"
-              placeholder="Password"
-            ></vs-input>
-          </vs-col>
-          <!-- <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Status</label>
-            <vs-col w="10">
-              <vs-switch style="width: 20px" v-model="form.status" />
-            </vs-col>
-          </vs-col> -->
-          <vs-row>
-            <vs-col w="2">
-              <label>Status Employee</label>
-            </vs-col>
-            <vs-col w="10">
-              <vs-switch style="width: 20px" v-model="form.status" />
-            </vs-col>
-            <vs-col w="2">
-              <label>Admin</label>
-            </vs-col>
-            <vs-col w="10">
-              <vs-switch style="width: 20px" v-model="form.admin" />
-            </vs-col>
-            <vs-col w="2">
-              <label>Status User</label>
-            </vs-col>
-            <vs-col w="10">
-              <vs-switch style="width: 20px" v-model="form.aktif" />
-            </vs-col>
-          </vs-row>
         </vs-row>
       </div>
 
@@ -406,7 +219,7 @@
       </template>
     </vs-dialog>
 
-    <vs-dialog
+    <!-- <vs-dialog
       v-model="importDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()"
@@ -479,7 +292,7 @@
           <div>&nbsp;</div>
         </div>
       </template>
-    </vs-dialog>
+    </vs-dialog> -->
   </div>
 </template>
 
@@ -500,26 +313,17 @@ export default {
       option: [],
       page: 1,
       current_page: 1,
-      titleDialog: "Tambah Employee",
+      titleDialog: "Tambah office",
       tambahDialog: false,
-      importDialog: false,
       search: '',
       company_id: JSON.parse(JSON.stringify(this.$auth.user.company_id)),
       isUpdate: false,
       btnLoader: false,
       form: {
-        name: '',
-        email: '',
-        nip: '',
-        position_id: '',
-        group: '',
-        kontak: '',
-        status: '',
-        username: '',
-        password: '',
-        admin: '',
-        aktif: '',
-        file: ''
+        office_name: '',
+        lat: '',
+        lng: '',
+        
       },
       // active: "",
       // searchDate: ["", ""],
@@ -528,15 +332,15 @@ export default {
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
-    this.$store.dispatch("employee/getAll", { company_id: this.company_id });
+    this.$store.dispatch("office/getAll", { company_id: this.company_id });
     this.$axios
-      .get(`/employees?company_id=${this.company_id}`)
+      .get(`/offices?company_id=${this.company_id}`)
       .then((resp) => {});
-    this.$axios
-      .get(`/optionPosition?company_id=${this.company_id}`)
-      .then((resp) => {
-        this.option = resp.data.data;
-      });
+    // this.$axios
+    //   .get(`/optionPosition?company_id=${this.company_id}`)
+    //   .then((resp) => {
+    //     this.option = resp.data.data;
+    //   });
   },
   methods: {
     searchData() {
@@ -544,84 +348,72 @@ export default {
         search: this.search,
       });
     },
-    onFileChange(e){
-      this.file = e.target.files[0];
-    },
-    importData(){
-      let formData = new FormData();
-      formData.append("company_id", this.company_id);
-      formData.append('file', this.file);
-      this.$axios.post('/employee/import', formData, {
-        headers: {'content-type': 'multipart/form-data' }
-      })
-      .then(response => {
-        if(response.status === 200){
-          //...
-        }
-      })
-      .catch(error => {
-        this.uploading = false
-        this.error = error.response.data
-        console.log('check error: ', this.error)
-      })
-    },
-    exportData(type = 'excel'){
-      let as = 'excel'
-      if (type == 'pdf') {
-        as = 'pdf'
-      }
-      this.$axios.get(`/employee/export?company_id=${this.company_id}&as=${as}`, {
-        //if u forgot this, your download will be corrupt
-        responseType: 'blob'
-      }).then((response) => {
-        //create a link in the document that we'll
-        //programmatically 'click'
-        const link = document.createElement('a');
+    // onFileChange(e){
+    //   this.file = e.target.files[0];
+    // },
+    // importData(){
+    //   let formData = new FormData();
+    //   formData.append("company_id", this.company_id);
+    //   formData.append('file', this.file);
+    //   this.$axios.post('/employee/import', formData, {
+    //     headers: {'content-type': 'multipart/form-data' }
+    //   })
+    //   .then(response => {
+    //     if(response.status === 200){
+    //       //...
+    //     }
+    //   })
+    //   .catch(error => {
+    //     this.uploading = false
+    //     this.error = error.response.data
+    //     console.log('check error: ', this.error)
+    //   })
+    // },
+    // exportData(type = 'excel'){
+    //   let as = 'excel'
+    //   if (type == 'pdf') {
+    //     as = 'pdf'
+    //   }
+    //   this.$axios.get(`/employee/export?company_id=${this.company_id}&as=${as}`, {
+    //     //if u forgot this, your download will be corrupt
+    //     responseType: 'blob'
+    //   }).then((response) => {
+    //     //create a link in the document that we'll
+    //     //programmatically 'click'
+    //     const link = document.createElement('a');
 
-        //tell the browser to associate the response data
-        //to the URL of the link we created above.
-        link.href = window.URL.createObjectURL(
-          new Blob([response.data])
-        );
+    //     //tell the browser to associate the response data
+    //     //to the URL of the link we created above.
+    //     link.href = window.URL.createObjectURL(
+    //       new Blob([response.data])
+    //     );
 
 
-      //tell the browset to download, not render
-      link.setAttribute('download','employee.xlsx');
+    //   //tell the browset to download, not render
+    //   link.setAttribute('download','employee.xlsx');
 
-      //place the link in the DOM.
-      document.body.appendChild(link);
+    //   //place the link in the DOM.
+    //   document.body.appendChild(link);
 
-      //make the magic happen!
-      link.click();
-      }); //please catch me baby!
-    },
+    //   //make the magic happen!
+    //   link.click();
+    //   }); //please catch me baby!
+    // },
     edit(data) {
       this.form.id = data.id;
-      this.form.name = data.name;
-      this.form.nip = data.nip;
-      this.form.position_id = data.position_id;
-      this.form.kontak = data.kontak;
-      this.form.status = data.status;
-      this.form.admin = data.admin;
-      this.form.aktif = data.aktif;
+      this.form.office_name = data.office_name;
+      this.form.lat = data.lat;
+      this.form.lng = data.lng;
       this.tambahDialog = true;
-      this.titleDialog = "Edit Employee";
+      this.titleDialog = "Edit Office";
       this.isUpdate = true;
     },
     resetForm() {
       this.form = {
-        name: '',
-        email: '',
-        nip: '',
-        position_id: '',
-        group: '',
-        kontak: '',
-        status: '',
-        username: '',
-        password: '',
-        admin: '',
-        aktif: '',
-        file: ''
+        office_name: '',
+        lat: '',
+        lang: '',
+        
       };
       this.isUpdate = false;
     },
@@ -633,20 +425,13 @@ export default {
       this.btnLoader = true;
       let formData = new FormData();
       formData.append("company_id", this.company_id);
-      formData.append("name", this.form.name);
-      formData.append("email", this.form.email);
-      formData.append("nip", this.form.nip);
-      formData.append("position_id", this.form.position_id);
-      formData.append("kontak", this.form.kontak);
-      formData.append("status", this.form.status ? 1 : 0);
-      formData.append("password", this.form.password);
-      formData.append("username", this.form.username);
-      formData.append("admin", this.form.admin ? 1 : 0);
-      formData.append("aktif", this.form.aktif ? 1 : 0);
+      formData.append("office_name", this.form.office_name);
+      formData.append("lat", this.form.lang);
+      formData.append("lng", this.form.lng);
       console.log(this.form)
       let url = "/employee";
       if (type == "update") {
-        url = `/employee/${this.form.id}/update`;
+        url = `/office/${this.form.id}/update`;
       }
       this.$axios
         .post(url, formData)
@@ -656,7 +441,7 @@ export default {
               title: "Success",
               message: `Berhasil ${
                 type == "store" ? "Menambah" : "Mengubah"
-              } Employee`,
+              } Office`,
             });
             this.resetForm();
             this.tambahDialog = false;
@@ -693,7 +478,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`/employee/${id}/delete`)
+            .delete(`/office/${id}/delete`)
             .then((resp) => {
               if (resp.data.success) {
                 this.$notify.success({
@@ -723,12 +508,12 @@ export default {
     // ...mapGetters("lapor", ["getLapors", "getLoader"]),
     // ...mapGetters("setting", ["getSetting"]),
     // ...mapGetters("goverment", ["getGovermentPlains"]),
-    ...mapGetters("employee", [
-      "getEmployees",
+    ...mapGetters("office", [
+      "getOffices",
       "getLoader"
     ]),
-    ...mapGetters("option", ["getOption"]),
-    ...mapGetters("position", ["getPosition"]),
+    // ...mapGetters("option", ["getOption"]),
+    // ...mapGetters("position", ["getPosition"]),
   },
   watch: {
     // getLapors(newValue, oldValue) {},

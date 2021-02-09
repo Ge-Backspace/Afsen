@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-primary pb-6" style="z-index: -1">
+    <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
           <vs-button
@@ -28,9 +28,7 @@
             @click="exportData('excel')"
             >Download Excel</vs-button
           >
-        </div>
-      </div>
-      <el-card v-loading="getLoader">
+      <el-card v-loading="getLoader" style="margin-top: 40px">
         <div class="row" style="margin-bottom: 20px">
           <div class="col-md-2">
             <vs-button
@@ -127,7 +125,9 @@
         </vs-table>
       </el-card>
     </div>
-
+    
+        </div>
+      </div>
     <el-tooltip
       class="item"
       effect="dark"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-primary pb-6" style="z-index: -1">
+    <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -28,140 +28,148 @@
             @click="exportData('excel')"
             >Download Excel</vs-button
           >
+          <br>
+
+          <el-card v-loading="getLoader" style="margin-top: 40px">
+            <div class="row" style="margin-bottom: 20px">
+              <div class="col-md-2">
+                <vs-button
+                  success
+                  style="float: right"
+                  :loading="globalLoader"
+                  gradient
+                  @click="
+                    importDialog = true;
+                    titleDialog = 'Import Shift Employee';
+                  "
+                  >Import Excel</vs-button
+                >
+              </div>
+              <div class="col-md-3 offset-md-7">
+                <el-input
+                  placeholder="Cari"
+                  v-model="search"
+                  @change="searchData()"
+                  size="mini"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                </el-input>
+              </div>
+            </div>
+            <vs-table striped>
+              <template #thead>
+                <vs-tr>
+                  <vs-th>Employee</vs-th>
+                  <vs-th>Nama Cuti</vs-th>
+                  <vs-th>Code Cuti</vs-th>
+                  <vs-th>Start Date</vs-th>
+                  <vs-th>Expired Date</vs-th>
+                  <vs-th>Status</vs-th>
+                  <vs-th>Action</vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody>
+                <vs-tr :key="i" v-for="(tr, i) in getCutiPs.data" :data="tr">
+                  <vs-td>
+                    {{ tr.name }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.cuti_name }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.code }}
+                  </vs-td>
+                  <vs-td>
+                    {{ formatDate(tr.start_date) }}
+                  </vs-td>
+                  <vs-td>
+                    {{ formatDate(tr.expired_date) }}
+                  </vs-td>
+                  <vs-td>
+                    <span class="badge badge-primary" v-if="tr.status_id == 0"
+                      >Waiting</span
+                    >
+                    <span
+                      class="badge badge-success"
+                      v-else-if="tr.status_id == 1"
+                      >Accepted</span
+                    >
+                    <span class="badge badge-warning" v-else>Rejected</span>
+                  </vs-td>
+                  <vs-td>
+                    <el-tooltip
+                      content="Edit"
+                      placement="top-start"
+                      effect="dark"
+                    >
+                      <el-button
+                        size="mini"
+                        @click="edit(tr)"
+                        icon="fa fa-edit"
+                      ></el-button>
+                    </el-tooltip>
+
+                    <el-tooltip
+                      content="Delete"
+                      placement="top-start"
+                      effect="dark"
+                    >
+                      <el-button
+                        size="mini"
+                        type="primary"
+                        @click="deleteCutiE(tr.id)"
+                        icon="fa fa-trash"
+                      >
+                      </el-button>
+                    </el-tooltip>
+                    <el-tooltip
+                      v-if="tr.status_id == 0"
+                      content="Change Status"
+                      placement="top-start"
+                      effect="dark"
+                    >
+                      <el-button
+                        size="mini"
+                        type="warning"
+                        @click="status(tr.id)"
+                        icon="el-icon-refresh"
+                      >
+                      </el-button>
+                    </el-tooltip>
+                    <el-tooltip
+                      v-else
+                      content="Change Status"
+                      placement="top-start"
+                      effect="dark"
+                    >
+                      <el-button
+                        disabled
+                        size="mini"
+                        type="warning"
+                        icon="el-icon-refresh"
+                      >
+                      </el-button>
+                    </el-tooltip>
+                  </vs-td>
+                </vs-tr>
+              </template>
+              <template #footer>
+                <vs-row>
+                  <vs-col w="2">
+                    <small>Total : {{ getCutiPs.total }} Data</small>
+                  </vs-col>
+                  <vs-col w="10">
+                    <vs-pagination
+                      v-model="page"
+                      :length="Math.ceil(getCutiPs.total / table.max)"
+                    />
+                  </vs-col>
+                </vs-row>
+              </template>
+            </vs-table>
+          </el-card>
         </div>
       </div>
-      <el-card v-loading="getLoader">
-        <div class="row" style="margin-bottom: 20px">
-          <div class="col-md-2">
-            <vs-button
-              success
-              style="float: right"
-              :loading="globalLoader"
-              gradient
-              @click="
-                importDialog = true;
-                titleDialog = 'Import Shift Employee';
-              "
-              >Import Excel</vs-button
-            >
-          </div>
-          <div class="col-md-3 offset-md-7">
-            <el-input
-              placeholder="Cari"
-              v-model="search"
-              @change="searchData()"
-              size="mini"
-            >
-              <i slot="prefix" class="el-input__icon el-icon-search"></i>
-            </el-input>
-          </div>
-        </div>
-        <vs-table striped>
-          <template #thead>
-            <vs-tr>
-              <vs-th>Employee</vs-th>
-              <vs-th>Nama Cuti</vs-th>
-              <vs-th>Code Cuti</vs-th>
-              <vs-th>Start Date</vs-th>
-              <vs-th>Expired Date</vs-th>
-              <vs-th>Status</vs-th>
-              <vs-th>Action</vs-th>
-            </vs-tr>
-          </template>
-          <template #tbody>
-            <vs-tr :key="i" v-for="(tr, i) in getCutiPs.data" :data="tr">
-              <vs-td>
-                {{ tr.name }}
-              </vs-td>
-              <vs-td>
-                {{ tr.cuti_name }}
-              </vs-td>
-              <vs-td>
-                {{ tr.code }}
-              </vs-td>
-              <vs-td>
-                {{ formatDate(tr.start_date) }}
-              </vs-td>
-              <vs-td>
-                {{ formatDate(tr.expired_date) }}
-              </vs-td>
-              <vs-td>
-                <span class="badge badge-primary" v-if="tr.status_id == 0"
-                  >Waiting</span
-                >
-                <span class="badge badge-success" v-else-if="tr.status_id == 1"
-                  >Accepted</span
-                >
-                <span class="badge badge-warning" v-else>Rejected</span>
-              </vs-td>
-              <vs-td>
-                <el-tooltip content="Edit" placement="top-start" effect="dark">
-                  <el-button
-                    size="mini"
-                    @click="edit(tr)"
-                    icon="fa fa-edit"
-                  ></el-button>
-                </el-tooltip>
-
-                <el-tooltip
-                  content="Delete"
-                  placement="top-start"
-                  effect="dark"
-                >
-                  <el-button
-                    size="mini"
-                    type="primary"
-                    @click="deleteCutiE(tr.id)"
-                    icon="fa fa-trash"
-                  >
-                  </el-button>
-                </el-tooltip>
-                <el-tooltip
-                v-if="tr.status_id == 0"
-                  content="Change Status"
-                  placement="top-start"
-                  effect="dark"
-                >
-                  <el-button
-                    size="mini"
-                    type="warning"
-                    @click="status(tr.id)"
-                    icon="el-icon-refresh"
-                  >
-                  </el-button>
-                </el-tooltip>
-                <el-tooltip
-                  v-else
-                  content="Change Status"
-                  placement="top-start"
-                  effect="dark"
-                >
-                  <el-button
-                    disabled
-                    size="mini"
-                    type="warning"
-                    icon="el-icon-refresh"
-                  >
-                  </el-button>
-                </el-tooltip>
-              </vs-td>
-            </vs-tr>
-          </template>
-          <template #footer>
-            <vs-row>
-              <vs-col w="2">
-                <small>Total : {{ getCutiPs.total }} Data</small>
-              </vs-col>
-              <vs-col w="10">
-                <vs-pagination
-                  v-model="page"
-                  :length="Math.ceil(getCutiPs.total / table.max)"
-                />
-              </vs-col>
-            </vs-row>
-          </template>
-        </vs-table>
-      </el-card>
     </div>
 
     <el-tooltip
@@ -174,7 +182,7 @@
         class="float"
         @click="
           seDialog = true;
-          titleDialog = 'Tambah Employee Shift';
+          titleDialog = 'Permohonan Pergantian Shift';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -201,7 +209,11 @@
             style="padding: 5px"
           >
             <label>Employee</label>
-            <vs-select filter placeholder="Employee" v-model="form.employee_id">
+            <vs-select
+              filter
+              placeholder="Employee Name"
+              v-model="form.employee_id"
+            >
               <vs-option
                 v-for="op in getOptionEmployees.data"
                 :key="op.id"
@@ -220,7 +232,7 @@
             style="padding: 5px"
           >
             <label>Cuti Name</label>
-            <vs-select filter placeholder="Cuti Employee" v-model="form.cuti_id">
+            <vs-select filter placeholder="Type" v-model="form.cuti_id">
               <vs-option
                 v-for="op in getOptionCuties.data"
                 :key="op.id"
@@ -472,7 +484,7 @@ export default {
           this.btnLoader = false;
         });
     },
-    exportData(type = 'excel') {
+    exportData(type = "excel") {
       this.$axios
         .get(
           `/cutipermission/export?company_id=${this.company_id}&as=${type}`,
@@ -577,8 +589,8 @@ export default {
     },
     status(id) {
       this.$swal({
-        title: 'Cormfirmation',
-        text: 'Accept or Reject this Permission',
+        title: "Cormfirmation",
+        text: "Accept or Reject this Permission",
         icon: "warning",
         showCancelButton: true,
         showDenyButton: true,
@@ -588,36 +600,41 @@ export default {
         denyButtonText: "Reject",
         cancelButtonText: "Cancel",
       }).then((result) => {
-        let status = 0
+        let status = 0;
         if (result.isConfirmed) {
-          status = 1
+          status = 1;
         } else if (result.isDenied) {
-          status = 2
+          status = 2;
         }
         if (status != 0) {
-          this.change(id, status)
+          this.change(id, status);
         }
-      })
+      });
     },
     change(id, status) {
-      this.$axios.post(`/cutipermission/${id}/change?status=${status}`)
-      .then(resp => {
-        if (resp.data.success) {
-          this.$notify.success({
-            title: "Success",
-            message: `Berhasil ${status == 1 ? "Accept" : "Reject"} Permission`,
+      this.$axios
+        .post(`/cutipermission/${id}/change?status=${status}`)
+        .then((resp) => {
+          if (resp.data.success) {
+            this.$notify.success({
+              title: "Success",
+              message: `Berhasil ${
+                status == 1 ? "Accept" : "Reject"
+              } Permission`,
+            });
+          }
+        })
+        .catch((err) => {
+          this.$notify.error({
+            title: "Error",
+            message: err.response.data.message,
           });
-        }
-      }).catch((err) => {
-        this.$notify.error({
-          title: "Error",
-          message: err.response.data.message,
+        })
+        .finally(() => {
+          this.$store.dispatch("cutipermission/getAll", {
+            company_id: this.company_id,
+          });
         });
-      }).finally(() => {
-        this.$store.dispatch('cutipermission/getAll', {
-          company_id: this.company_id,
-        });
-      })
     },
     formatDate(date) {
       return moment(date).format("DD MMMM YYYY");

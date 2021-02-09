@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-primary pb-6" style="z-index: -1">
+    <div class="header bg-primary pb-6" >
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -28,9 +28,8 @@
             @click="exportData('excel')"
             >Download Excel</vs-button
           >
-        </div>
-      </div>
-      <el-card v-loading="getLoader">
+        
+      <el-card v-loading="getLoader" style="margin-top: 40px">
         <div class="row" style="margin-bottom: 20px">
           <div class="col-md-2">
             <vs-button
@@ -154,7 +153,8 @@
         </vs-table>
       </el-card>
     </div>
-
+    </div>
+      </div>
     <el-tooltip
       class="item"
       effect="dark"
@@ -165,7 +165,7 @@
         class="float"
         @click="
           seDialog = true;
-          titleDialog = 'Tambah Employee Shift';
+          titleDialog = 'Pengajuan Pergantian Cuti';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -259,7 +259,7 @@
               <vs-option
                 v-for="op in getOptionShiftE1.data"
                 :key="op.id"
-                :label="[formatDate(op.date), op.code, op.schedule_in, op.schedule_out]"
+                :label="[[formatDate(op.date), op.code, op.schedule_in, op.schedule_out]]"
                 :value="op.id"
               >
                 {{ formatDate(op.date) }} ({{ op.code }})
