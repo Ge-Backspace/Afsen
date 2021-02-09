@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Imports\ProductsImport;
 use App\Imports\ProductsExport;
+use App\Models\Checkin;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -48,18 +49,11 @@ class TestController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
-    public function test()
+    public function test(Request $request)
     {
-        $now = Carbon::now();
-        $time = '08:00:00';
-        $then = Carbon::parse($time);
-        $result = 'Excelent';
-        if ($now > $then && $now <= $then->addMinute(15)) {
-            $result = 'Normal';
-        }
-        elseif ($now > $then && $now > $then->addMinute(15)) {
-            $result = 'Late';
-        }
-        return $this->resp($result);
+        $checkin = Checkin::where('employee_id', $request->id)
+        ->whereDate('checkin_time', $request->date)
+        ->first();
+        return $this->resp($checkin);
     }
 }

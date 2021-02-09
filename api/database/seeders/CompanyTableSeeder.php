@@ -16,9 +16,6 @@ class CompanyTableSeeder extends Seeder
     {
         Companies::create([
             'name' => 'Test Company',
-            'address' => 'Test Company Address',
-            'lat' => -6.200000,
-            'lng' => 106.816666,
         ]);
     }
 }

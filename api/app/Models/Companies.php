@@ -9,8 +9,12 @@ class Companies extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'name', 'address', 'lat', 'lng'
+        'name'
     ];
+
+    public function offices(){
+    	return $this->hasMany('App\Model\Office');
+    }
 
     public function users(){
     	return $this->hasMany('App\Model\User');
