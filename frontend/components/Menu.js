@@ -133,6 +133,11 @@ export const  menu = () => {
                     icon: 'el-icon-money',
                     route: '/admin/master/masterSalary'
                 },
+                {
+                    text: "Master Office",
+                    icon: 'el-icon-money',
+                    route: '/admin/master/masterOffice'
+                },
             ]
         },
         // {

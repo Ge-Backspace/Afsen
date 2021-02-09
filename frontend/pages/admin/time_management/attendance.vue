@@ -156,6 +156,7 @@ export default {
   data() {
     return {
       api_url: config.baseApiUrl,
+      active: 0,
       company_id: '',
       table: {
         max: 10,

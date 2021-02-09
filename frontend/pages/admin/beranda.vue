@@ -46,7 +46,7 @@
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
               <span>{{
-                $moment(Date.now()).format("dddd, DDD MMMM YYYY")
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
               }}</span>
             </div>
             <div class="row">
@@ -233,7 +233,7 @@
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
               <span>{{
-                $moment(Date.now()).format("dddd, DDD MMMM YYYY")
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
               }}</span>
             </div>
             <div class="row">
