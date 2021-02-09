@@ -17,6 +17,16 @@ class OfficeController extends Controller
         return $this->getPaginate($table, $request, ['office_name', 'lat', 'lng', 'address']);
     }
 
+    public function getCoorditaneOffice(Request $request)
+    {
+        $office = Office::where('company_id', $request->company_id)->get();
+        $markers = [];
+        foreach ($office as $of) {
+            $markers[] = ['position' => ['lat' => $of->lat, 'lng' => $of->lng]];
+        }
+        return $this->resp($markers);
+    }
+
     public function addOffice(Request $request)
     {
         $input = $request->only(['company_id', 'office_name' ,'lat', 'lng', 'address']);
