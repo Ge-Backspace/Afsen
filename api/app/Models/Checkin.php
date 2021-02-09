@@ -18,4 +18,9 @@ class Checkin extends Model
     {
         $this->belongsTo('App\Models\Employee', 'employee_id');
     }
+
+    public function checkout()
+    {
+        $this->hasMany('App\Models\EarlyChekout');
+    }
 }

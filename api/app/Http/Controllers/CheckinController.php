@@ -6,9 +6,11 @@ use App\Helpers\Helper;
 use App\Models\Checkin;
 use Carbon\Carbon;
 use App\Exports\CheckinExport;
+use App\Models\EarlyCheckout;
 use App\Models\ShiftEmployee;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -119,11 +121,36 @@ class CheckinController extends Controller
                 return $this->resp(null, 'Anda Tidak Memiliki Shcedule Checout Hari Ini', false, 406);
             }
             if ($now < $schedule_out) {
-                return $this->resp(null, 'Anda Checout Dibawah Shift Schedule Out', false, 409);
+                return $this->resp(['checkin' => $checkCheckin->id, 'schedule_out' => $shiftEmployee->schedule_out], 'Anda Checout Dibawah Shift Schedule Out', false, 409);
             }
             $checkout = $checkCheckin->update(['checkout_time' => Carbon::now()]);
             return $this->resp($checkout);
         }
+    }
+
+    public function earlyCheckout(Request $request, $id)
+    {
+        $checkin = Checkin::find($id);
+        if(!$checkin)
+        {
+            return $this->resp(null, 'Data Checkin Tidak Ditemukan', false, 406);
+        }
+        if($checkin->checkout_time)
+        {
+            return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
+        }
+        $input = $request->only('reason');
+        $validator = Validator::make($input, [
+            'reason' => 'required|string'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Early Checkout', false, 401);
+        }
+        $input = Arr::add($input, 'checkin_id', $id);
+        $checkout = $checkin->update(['checkout_time' => Carbon::now()]);
+        $earlyC = EarlyCheckout::create($input);
+        $earlyC = Arr::add($earlyC, 'checkout', $checkout);
+        return $this->resp($earlyC);
     }
 
     public function exportCheckin(Request $request)
