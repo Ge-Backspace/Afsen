@@ -113,30 +113,7 @@
       </div>
     </div>
 
-    
 
-    <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
-      <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Nama Kementrian">
-          <el-input v-model="form.nama"></el-input>
-        </el-form-item>
-        <el-form-item label="Logo">
-          <el-upload action="/" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="files" :limit="1">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="Aktif">
-          <el-switch v-model="form.aktif" color="danger"></el-switch>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="tambahDialog = false">Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog> -->
 
     <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">

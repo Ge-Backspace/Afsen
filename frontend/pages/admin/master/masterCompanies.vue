@@ -16,9 +16,6 @@
               <template #thead>
                 <vs-tr>
                   <vs-th>Name</vs-th>
-                  <vs-th>Latitude</vs-th>
-                  <vs-th>Longitude</vs-th>
-                  <vs-th>Address</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
@@ -27,19 +24,6 @@
                   <vs-td>
                     {{ tr.name }}
                   </vs-td>
-                  <vs-td>
-                    {{ tr.lat }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.lng }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.address }}
-                  </vs-td>
-                  <!-- <vs-td>
-                    <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
-                    <span class="badge badge-warning" v-else>Non Aktif</span>
-                  </vs-td> -->
                   <vs-td>
                     <el-tooltip content="Edit" placement="top-start" effect="dark">
                       <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
@@ -56,51 +40,6 @@
           </el-card>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <el-card v-loading="getLoader">
-            <GmapMap
-            v-bind:center="center"
-            v-bind:zoom="zoom"
-            map-type-id="terrain"
-            style="height: 225px"
-            >
-            <GmapMarker
-              v-bind:key="index"
-              v-for="(m, index) in markers"
-              v-bind:position="m.position"
-            />
-            </GmapMap>
-          </el-card>
-        </div>
-      </div>
-    </div>
-
-    <!-- Floating Button -->
-    <!-- <el-tooltip class="item" effect="dark" content="Buat Pemda Baru" placement="top-start">
-      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Pemerintah Daerah'">
-        <i class="el-icon-plus my-float"></i>
-      </a>
-    </el-tooltip> -->
-    <!-- End floating button -->
-
-    <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
-      <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Nama Kementrian">
-          <el-input v-model="form.nama"></el-input>
-        </el-form-item>
-        <el-form-item label="Aktif">
-          <el-switch v-model="form.aktif" color="danger"></el-switch>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="tambahDialog = false">Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog> -->
-
     <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
       <template #header>
@@ -114,33 +53,7 @@
             <label>Nama</label>
             <vs-input type="text" v-model="form.name" placeholder="Nama"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Address</label>
-            <vs-input type="text" v-model="form.address" placeholder="Address"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Latitude</label>
-            <vs-input type="number" v-model="form.lat" placeholder="Latitude"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Longitude</label>
-            <vs-input type="number" v-model="form.lng" placeholder="Longitude"></vs-input>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
-            <GmapMap
-            v-bind:center="{lat: Number(form.lat), lng: Number(form.lng)}"
-            v-bind:zoom="16"
-            map-type-id="terrain"
-            style="height: 250px"
-            >
-            <GmapMarker
-              v-bind:position="center"
-              v-bind:clickable="true"
-              v-bind:draggable="true"
-              @drag="updateCoordinates"
-            />
-            </GmapMap>
-          </vs-col>
+          
         </vs-row>
       </div>
 
@@ -159,6 +72,7 @@
         </div>
       </template>
     </vs-dialog>
+  </div>
   </div>
 </template>
 
@@ -193,9 +107,7 @@
         form: {
           id: '',
           name: '',
-          lat:'',
-          lng:'',
-          address:'',
+
         },
         center: {lat: 0, lng: 0},
         zoom: 16,
@@ -227,12 +139,6 @@
       edit(data) {
         this.form.id = data.id
         this.form.name = data.name
-        this.form.lat = data.lat
-        this.form.lng = data.lng
-        this.form.address = data.address
-        this.center.lat = Number(this.form.lat)
-        this.center.lng = Number(this.form.lng)
-        this.positions.position = this.center
         this.tambahDialog = true
         this.titleDialog = 'Edit Company'
         this.isUpdate = true
@@ -241,9 +147,6 @@
         this.form = {
           id: '',
           name: '',
-          lat:'',
-          lng:'',
-          address: '',
         }
         this.isUpdate = false
       },
@@ -257,9 +160,6 @@
         this.btnLoader = true
         let formData = new FormData()
         formData.append("name", this.form.name)
-        formData.append("address", this.form.address)
-        formData.append("lat", this.form.lat)
-        formData.append("lng", this.form.lng)
         let url = "/company/store";
         if (type == 'update') {
           url = `/company/${this.form.id}/update`
