@@ -30,7 +30,7 @@
 
 <style>
     .bg-login {
-        background: url('../static/assets/img/bg-login2.svg') no-repeat top right/cover;
+        background: url('../static/assets/img/bg-login.svg') no-repeat top right/cover;
     }
     .hideovy {
         overflow-x: hidden;

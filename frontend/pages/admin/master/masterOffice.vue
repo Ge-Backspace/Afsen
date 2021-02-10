@@ -30,9 +30,9 @@
               <template #thead>
                 <vs-tr>
                   <vs-th>Office</vs-th>
-                  <vs-th>Lang</vs-th>
+                  <vs-th>Address</vs-th>
+                  <vs-th>Langitude</vs-th>
                   <vs-th>Latitude</vs-th>
-                  <vs-th>address</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
@@ -102,15 +102,15 @@
         <div class="col-md-12">
           <el-card v-loading="getLoader">
             <GmapMap
-            v-bind:center="center"
+            v-bind:center="getCoordinate.center"
             v-bind:zoom="8"
             map-type-id="terrain"
             style="height: 225px"
             >
             <GmapMarker
               v-bind:key="index"
-              v-for="(m, index) in markers"
-              v-bind:position="m.position"
+              v-for="(m, index) in getCoordinate.data"
+              v-bind:position="markers(m.position)"
             />
             </GmapMap>
           </el-card>
@@ -122,7 +122,7 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Buat Laporan Baru"
+      content="Tambah Office Baru"
       placement="top-start"
     >
       <a
@@ -137,101 +137,6 @@
       </a>
     </el-tooltip>
     <!-- End floating button-->
-
-    <!-- <vs-dialog
-      v-model="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
-    >
-      <template #header>
-        <h1 class="not-margin">
-          {{ titleDialog }}
-        </h1>
-      </template>
-      <div class="con-form">
-        <vs-row>
-          <vs-col
-            v-if="request"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Office Nama</label>
-            <vs-input
-              type="text"
-              v-model="form.office_name"
-              placeholder="Office Nama"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            v-if="request"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Lat</label>
-            <vs-input
-              type="text"
-              v-model="form.lat"
-              placeholder="lat"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Lang</label>
-            <vs-input
-              type="number"
-              v-model="form.lng"
-              placeholder="Lang"
-            ></vs-input>
-          </vs-col>
-        </vs-row>
-      </div>
-
-      <template #footer>
-        <div class="footer-dialog">
-          <vs-row>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('update')"
-                v-if="isUpdate"
-                >Update</vs-button
-              >
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('store')"
-                v-else
-                >Simpan</vs-button
-              >
-            </vs-col>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                border
-                @click="
-                  tambahDialog = false;
-                  resetForm();
-                "
-                >Batal</vs-button
-              >
-            </vs-col>
-          </vs-row>
-          <div>&nbsp;</div>
-        </div>
-      </template>
-    </vs-dialog> -->
     <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
       <template #header>
@@ -256,12 +161,12 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <GmapMap
             v-bind:center="center"
-            v-bind:zoom="16"
+            v-bind:zoom="10"
             map-type-id="terrain"
             style="height: 250px"
             >
             <GmapMarker
-              v-bind:position="{lat: Number(form.lat), lng: Number(form.lng)}"
+              v-bind:position="{lat: form.lat, lng: form.lng}"
               v-bind:clickable="true"
               v-bind:draggable="true"
               @drag="updateCoordinates"
@@ -319,23 +224,12 @@ export default {
 
       },
       center: {lat: -6.2, lng: 106.816666},
-      markers: [],
     };
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
     this.$store.dispatch("office/getAll", { company_id: this.company_id });
-    this.$axios.get(`/getCoordinate?company_id=${this.company_id}`)
-    .then(resp => {
-      let el = resp.data.data
-      let positions = []
-      this.center.lat = Number(el[0].position.lat)
-      this.center.lng = Number(el[0].position.lng)
-      el.forEach((value, index) => {
-        positions[index] = {position: {lat: Number(value.position.lat), lng: Number(value.position.lng)}}
-      });
-      this.markers = positions
-    })
+    this.$store.dispatch("coordinate/getLocation", { company_id: this.company_id });
   },
   methods: {
     searchData() {
@@ -344,62 +238,12 @@ export default {
         search: this.search,
       });
     },
-    // onFileChange(e){
-    //   this.file = e.target.files[0];
-    // },
-    // importData(){
-    //   let formData = new FormData();
-    //   formData.append("company_id", this.company_id);
-    //   formData.append('file', this.file);
-    //   this.$axios.post('/employee/import', formData, {
-    //     headers: {'content-type': 'multipart/form-data' }
-    //   })
-    //   .then(response => {
-    //     if(response.status === 200){
-    //       //...
-    //     }
-    //   })
-    //   .catch(error => {
-    //     this.uploading = false
-    //     this.error = error.response.data
-    //     console.log('check error: ', this.error)
-    //   })
-    // },
-    // exportData(type = 'excel'){
-    //   let as = 'excel'
-    //   if (type == 'pdf') {
-    //     as = 'pdf'
-    //   }
-    //   this.$axios.get(`/employee/export?company_id=${this.company_id}&as=${as}`, {
-    //     //if u forgot this, your download will be corrupt
-    //     responseType: 'blob'
-    //   }).then((response) => {
-    //     //create a link in the document that we'll
-    //     //programmatically 'click'
-    //     const link = document.createElement('a');
-
-    //     //tell the browser to associate the response data
-    //     //to the URL of the link we created above.
-    //     link.href = window.URL.createObjectURL(
-    //       new Blob([response.data])
-    //     );
-
-
-    //   //tell the browset to download, not render
-    //   link.setAttribute('download','employee.xlsx');
-
-    //   //place the link in the DOM.
-    //   document.body.appendChild(link);
-
-    //   //make the magic happen!
-    //   link.click();
-    //   }); //please catch me baby!
-    // },
     edit(data) {
       this.form.id = data.id;
       this.form.office_name = data.office_name;
-      this.form.lat = data.lat;
-      this.form.lng = data.lng;
+      this.form.lat = Number(data.lat);
+      this.form.lng = Number(data.lng);
+      this.center = {lat: Number(data.lat), lng: Number(data.lng)}
       this.tambahDialog = true;
       this.titleDialog = "Edit Office";
       this.isUpdate = true;
@@ -408,10 +252,10 @@ export default {
       this.form = {
         office_name: '',
         lat: '',
-        lang: '',
-
+        lng: '',
       };
       this.isUpdate = false;
+      this.center = {lat: -6.2, lng: 106.816666};
     },
     handleCurrentChange(val) {
       this.$store.commit("office/setPage", val);
@@ -422,7 +266,7 @@ export default {
       let formData = new FormData();
       formData.append("company_id", this.company_id);
       formData.append("office_name", this.form.office_name);
-      formData.append("lat", this.form.lang);
+      formData.append("lat", this.form.lat);
       formData.append("lng", this.form.lng);
       console.log(this.form)
       let url = "/employee";
@@ -442,6 +286,7 @@ export default {
             this.resetForm();
             this.tambahDialog = false;
             this.$store.dispatch("office/getAll", { company_id: this.company_id, });
+            this.$store.dispatch("coordinate/getLocation", { company_id: this.company_id });
           }
         })
         .finally(() => {
@@ -480,7 +325,7 @@ export default {
                   message: "Berhasil Menghapus Data",
                 });
                 this.tambahDialog = false;
-                this.$store.dispatch("employee/getAll", {
+                this.$store.dispatch("office/getAll", {
                   company_id: this.company_id,
                   defaultPage: true,
                 });
@@ -502,6 +347,12 @@ export default {
       this.form.lat = location.latLng.lat(),
       this.form.lng = location.latLng.lng()
     },
+    markers (location) {
+      return {lat: Number(location.lat), lng: Number(location.lng)}
+    },
+    check(test) {
+      console.log(test)
+    }
   },
   computed: {
     ...mapGetters("office", [

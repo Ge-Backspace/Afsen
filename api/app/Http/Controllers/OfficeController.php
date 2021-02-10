@@ -19,12 +19,13 @@ class OfficeController extends Controller
 
     public function getCoorditaneOffice(Request $request)
     {
-        $office = Office::where('company_id', $request->company_id)->get();
+        $office = Office::where('company_id', $request->company_id);
         $markers = [];
-        foreach ($office as $of) {
+        foreach ($office->get() as $of) {
             $markers[] = ['position' => ['lat' => $of->lat, 'lng' => $of->lng]];
         }
-        return $this->resp($markers);
+        $center = $this->getCenter($office->get(['lat', 'lng']));
+        return $this->resp(['data' => $markers, 'center' => ['lat' => $center[0], 'lng' => $center[1]]]);
     }
 
     public function addOffice(Request $request)

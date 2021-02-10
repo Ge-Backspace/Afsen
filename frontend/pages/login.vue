@@ -1,14 +1,16 @@
 <template>
   <div class="card border-0">
     <div class="card-header bg-transparent logo" style="border: none">
-      <a class="navbar-brand" style="margin-bottom: 20px">
-        <img src="../assets/img/logo-simpulkendali.png" width="auto" height="100" />
+      <a class="navbar-brand rounded mx-auto d-block" style="margin-bottom: 20px;">
+        <img src="../assets/img/logo-absen.png" width="200" height="200" />
       </a>
-      <div class="text-center text-muted mb-4">
+      
+    </div>
+    <div class="text-center text-muted mb-4">
         <small><b>AFSEN</b></small>
       </div>
-    </div>
     <div class="card-body">
+      
       <el-alert v-if="errorMessage !== ''" :title="errorMessage" type="error" class="mb-3" show-icon>
       </el-alert>
       <form role="form" @submit.prevent="login()">
@@ -34,7 +36,7 @@
           </el-button>
 
         </div>
-      </form>
+      </form>f
     </div>
   </div>
 </template>

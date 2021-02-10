@@ -17,7 +17,7 @@ export const state = () => ({
       state.office = data
     },
     setLoader(state){
-        state.officeLoader = state.officeLoader
+        state.officeLoader = !state.officeLoader
     },
     setPage(state, data){
         state.office.current_page = data
@@ -38,6 +38,7 @@ export const state = () => ({
 
   export const actions = {
     getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
+      context.commit('setLoader')
       let page = defaultPage ? 1 : context.state.office.current_page
       this.$axios.get(`/offices?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
           context.commit('setOffices', resp.data)
