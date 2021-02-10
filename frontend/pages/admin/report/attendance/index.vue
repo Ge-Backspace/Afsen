@@ -104,7 +104,7 @@
             <p style="font-weight: bold" class="text-center">{{ $moment(Date.now()).format("MMMM")}}</p>
 
             <el-table :data="tableData" style="width: 100%" height="250">
-              
+
               <el-table-column fixed prop="name" label="Name" width="150">
               </el-table-column>
               <el-table-column
@@ -160,7 +160,7 @@ export default {
         tanggal: i,
       });
     }
-    
+
     this.$store.dispatch("report/getAttendance", {
       company_id: this.company_id,
       startDate: moment().clone().startOf("month").format("YYYY-MM-DD"),

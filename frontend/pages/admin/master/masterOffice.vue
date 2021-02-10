@@ -102,15 +102,15 @@
         <div class="col-md-12">
           <el-card v-loading="getLoader">
             <GmapMap
-            v-bind:center="center"
+            v-bind:center="getCoordinate.center"
             v-bind:zoom="8"
             map-type-id="terrain"
             style="height: 225px"
             >
             <GmapMarker
               v-bind:key="index"
-              v-for="(m, index) in markers"
-              v-bind:position="m.position"
+              v-for="(m, index) in getCoordinate.data"
+              v-bind:position="markers(m.position)"
             />
             </GmapMap>
           </el-card>
@@ -122,7 +122,7 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Buat Laporan Baru"
+      content="Tambah Office Baru"
       placement="top-start"
     >
       <a
@@ -160,13 +160,13 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <GmapMap
-            v-bind:center="{lat: Number(form.lat), lng: Number(form.lng)}"
-            v-bind:zoom="16"
+            v-bind:center="center"
+            v-bind:zoom="10"
             map-type-id="terrain"
             style="height: 250px"
             >
             <GmapMarker
-              v-bind:position="center"
+              v-bind:position="{lat: form.lat, lng: form.lng}"
               v-bind:clickable="true"
               v-bind:draggable="true"
               @drag="updateCoordinates"
@@ -224,23 +224,12 @@ export default {
 
       },
       center: {lat: -6.2, lng: 106.816666},
-      markers: [],
     };
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
     this.$store.dispatch("office/getAll", { company_id: this.company_id });
-    this.$axios.get(`/getCoordinate?company_id=${this.company_id}`)
-    .then(resp => {
-      let el = resp.data.data
-      let positions = []
-      this.center.lat = Number(el[0].position.lat)
-      this.center.lng = Number(el[0].position.lng)
-      el.forEach((value, index) => {
-        positions[index] = {position: {lat: Number(value.position.lat), lng: Number(value.position.lng)}}
-      });
-      this.markers = positions
-    })
+    this.$store.dispatch("coordinate/getLocation", { company_id: this.company_id });
   },
   methods: {
     searchData() {
@@ -252,8 +241,9 @@ export default {
     edit(data) {
       this.form.id = data.id;
       this.form.office_name = data.office_name;
-      this.form.lat = data.lat;
-      this.form.lng = data.lng;
+      this.form.lat = Number(data.lat);
+      this.form.lng = Number(data.lng);
+      this.center = {lat: Number(data.lat), lng: Number(data.lng)}
       this.tambahDialog = true;
       this.titleDialog = "Edit Office";
       this.isUpdate = true;
@@ -262,10 +252,10 @@ export default {
       this.form = {
         office_name: '',
         lat: '',
-        lang: '',
-
+        lng: '',
       };
       this.isUpdate = false;
+      this.center = {lat: -6.2, lng: 106.816666};
     },
     handleCurrentChange(val) {
       this.$store.commit("office/setPage", val);
@@ -296,6 +286,7 @@ export default {
             this.resetForm();
             this.tambahDialog = false;
             this.$store.dispatch("office/getAll", { company_id: this.company_id, });
+            this.$store.dispatch("coordinate/getLocation", { company_id: this.company_id });
           }
         })
         .finally(() => {
@@ -356,6 +347,12 @@ export default {
       this.form.lat = location.latLng.lat(),
       this.form.lng = location.latLng.lng()
     },
+    markers (location) {
+      return {lat: Number(location.lat), lng: Number(location.lng)}
+    },
+    check(test) {
+      console.log(test)
+    }
   },
   computed: {
     ...mapGetters("office", [
@@ -371,12 +368,12 @@ export default {
     getOffices(newValue, oldValue){
       //
     },
-    lat(newValue, oldValue) {
-      this.form.lat = newValue
-    },
-    lng(newValue, oldValue) {
-      this.form.lng = newValue
-    },
+    // lat(newValue, oldValue) {
+    //   this.form.lat = newValue
+    // },
+    // lng(newValue, oldValue) {
+    //   this.form.lng = newValue
+    // },
   },
 };
 </script>

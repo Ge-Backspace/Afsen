@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Imports\ProductsImport;
 use App\Imports\ProductsExport;
 use App\Models\Checkin;
+use App\Models\Office;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -51,9 +52,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $checkin = Checkin::where('employee_id', $request->id)
-        ->whereDate('checkin_time', $request->date)
-        ->first();
-        return $this->resp($checkin);
+        $office = Office::where('company_id', $request->company_id)->get(['lat', 'lng']);
+        $center = $this->getCenter($office);
+        return $this->resp(['data' => $office, 'center' => $center]);
     }
 }

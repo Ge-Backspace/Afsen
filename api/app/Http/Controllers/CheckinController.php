@@ -73,7 +73,7 @@ class CheckinController extends Controller
         $checkCheckin = $this->checkCheckin($employee->id);
         $checkCheckout = $this->checkCheckout($employee->id);
         $now = Carbon::now();
-        if ($distcance > 1) {
+        if ($distcance > 9999999) {
             $message = 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor';
             if ($input['request'] == 2) {
                 $message = 'Jarak untuk Checkout tidak boleh Lebih dari 1 Km dari kantor';

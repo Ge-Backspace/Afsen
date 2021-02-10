@@ -46,10 +46,7 @@ class GajiController extends Controller
         } elseif ($gaji) {
             return $this->resp(null, 'Data Gaji Sudah Ada Di Employee Tersebut', false, 406);
         }
-        $add = Gaji::create([
-            'employee_id' => $input['employee_id'],
-            'gaji' => $input['gaji']
-        ]);
+        $add = Gaji::create($input);
         return $this->resp($add);
     }
 

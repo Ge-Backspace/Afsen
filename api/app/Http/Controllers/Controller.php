@@ -276,4 +276,31 @@ class Controller extends BaseController
         $closest = $office[key($distances)];
         return $closest;
     }
+
+    public function getCenter($coordinates)
+    {
+        $count_coords = count($coordinates);
+        $xcos=0.0;
+        $ycos=0.0;
+        $zsin=0.0;
+        foreach ($coordinates as $lnglat)
+        {
+            $lat = $lnglat['lat'] * pi() / 180;
+            $lon = $lnglat['lng'] * pi() / 180;
+            $acos = cos($lat) * cos($lon);
+            $bcos = cos($lat) * sin($lon);
+            $csin = sin($lat);
+            $xcos += $acos;
+            $ycos += $bcos;
+            $zsin += $csin;
+        }
+        $xcos /= $count_coords;
+        $ycos /= $count_coords;
+        $zsin /= $count_coords;
+        $lon = atan2($ycos, $xcos);
+        $sqrt = sqrt($xcos * $xcos + $ycos * $ycos);
+        $lat = atan2($zsin, $sqrt);
+        $center = array($lat * 180 / pi(), $lon * 180 / pi());
+        return $center;
+    }
 }
