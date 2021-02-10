@@ -255,13 +255,13 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <GmapMap
-            v-bind:center="{lat: Number(form.lat), lng: Number(form.lng)}"
+            v-bind:center="center"
             v-bind:zoom="16"
             map-type-id="terrain"
             style="height: 250px"
             >
             <GmapMarker
-              v-bind:position="center"
+              v-bind:position="{lat: Number(form.lat), lng: Number(form.lng)}"
               v-bind:clickable="true"
               v-bind:draggable="true"
               @drag="updateCoordinates"
@@ -517,12 +517,12 @@ export default {
     getOffices(newValue, oldValue){
       //
     },
-    lat(newValue, oldValue) {
-      this.form.lat = newValue
-    },
-    lng(newValue, oldValue) {
-      this.form.lng = newValue
-    },
+    // lat(newValue, oldValue) {
+    //   this.form.lat = newValue
+    // },
+    // lng(newValue, oldValue) {
+    //   this.form.lng = newValue
+    // },
   },
 };
 </script>

@@ -101,13 +101,14 @@
                 </vs-button>
               </div>
             </div>
-            <p style="font-weight: bold" class="text-center">JANUARY</p>
+            <p style="font-weight: bold" class="text-center">{{ $moment(Date.now()).format("MMMM")}}</p>
 
-            <el-table :data="getAttendance.data" style="width: 100%" height="250">
+            <el-table :data="tableData" style="width: 100%" height="250">
+
               <el-table-column fixed prop="name" label="Name" width="150">
               </el-table-column>
               <el-table-column
-                prop="zip"
+                prop="presence"
                 :label="col.tanggal"
                 v-for="col in data"
                 :key="col.id"
@@ -122,7 +123,7 @@
 
 <script>
 import { mapMutations, mapGetters } from "vuex";
-
+import * as moment from "moment";
 import { config } from "../../../../global.config";
 
 export default {
@@ -141,15 +142,12 @@ export default {
       isUpdate: false,
       btnLoader: false,
       files: [],
-      form: {
-        judul: "",
-        deskripsi: "",
-        aktif: true,
-        banner: null,
-      },
       company_id: "",
       lastDate: "",
-      tableData: [],
+      tableData: [{
+        name: 'kafabih',
+        presence: 'test',
+        }],
       data: [],
     };
   },
@@ -162,30 +160,19 @@ export default {
         tanggal: i,
       });
     }
+
     this.$store.dispatch("report/getAttendance", {
       company_id: this.company_id,
       startDate: moment().clone().startOf("month").format("YYYY-MM-DD"),
       endDate: moment().clone().endOf("month").format("YYYY-MM-DD"),
     });
+    let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
   },
   methods: {
     searchData() {
       this.$store.dispatch("berita/getAll", {
         search: this.search,
       });
-    },
-    edit(data) {
-      this.form.judul = data.judul;
-      this.form.id = data.id;
-      this.form.aktif = data.aktif;
-      this.form.deskripsi = data.deskripsi;
-      this.files.push({
-        name: "",
-        url: data.banner_url,
-      });
-      this.tambahDialog = true;
-      this.titleDialog = "Edit Berita";
-      this.isUpdate = true;
     },
     resetForm() {
       this.form = {
@@ -197,94 +184,17 @@ export default {
       this.files = [];
       this.isUpdate = false;
     },
-    handleCurrentChange(val) {
-      this.$store.commit("berita/setPage", val);
-      this.$store.dispatch("berita/getAll", {});
-    },
-    onSubmit(type = "store") {
-      this.btnLoader = true;
-      let formData = new FormData();
-      formData.append("judul", this.form.judul);
-      formData.append("deskripsi", this.form.deskripsi);
-      formData.append("aktif", this.form.aktif ? 1 : 0);
-      if (this.form.banner !== null) {
-        formData.append("banner", this.form.banner);
-      }
-      let url = "/berita/store";
-      if (type == "update") {
-        url = `/berita/${this.form.id}/update`;
-      }
-
-      this.$axios
-        .post(url, formData)
-        .then((resp) => {
-          if (resp.data.success) {
-            this.$notify.success({
-              title: "Success",
-              message: `Berhasil ${
-                type == "store" ? "Menambah" : "Mengubah"
-              } Berita`,
-            });
-            this.tambahDialog = false;
-            this.$store.dispatch("berita/getAll", {});
-            this.resetForm();
-          }
-        })
-        .finally(() => {
-          this.btnLoader = false;
-        })
-        .catch((err) => {
-          let error = err.response.data.data;
-          if (error) {
-            this.showErrorField(error);
-          } else {
-            this.$notify.error({
-              title: "Error",
-              message: err.response.data.message,
-            });
-          }
-        });
-    },
+    // handleCurrentChange(val) {
+    //   this.$store.commit("berita/setPage", val);
+    //   this.$store.dispatch("berita/getAll", {});
+    // },
     handleChangeFile(file, fileList) {
       this.form.banner = file.raw;
     },
-    deleteBerita(id) {
-      console.log("delete");
-      this.$swal({
-        title: "Perhatian!",
-        text: "Apakah anda yakin ingin menghapus data ini?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ya",
-        cancelButtonText: "Batal",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.$axios
-            .delete(`/berita/${id}/delete`)
-            .then((resp) => {
-              if (resp.data.success) {
-                this.$notify.success({
-                  title: "Success",
-                  message: "Berhasil Menghapus Data",
-                });
-                this.tambahDialog = false;
-                this.$store.dispatch("berita/getAll", { defaultPage: true });
-              }
-            })
-            .finally(() => {
-              //
-            })
-            .catch((err) => {
-              this.$notify.error({
-                title: "Error",
-                message: err.response.data.message,
-              });
-            });
-        }
-      });
-    },
+    created() {
+    this.currentTime = moment().format("LTS");
+    setInterval(() => this.updateCurrentTime(), 1 * 1000);
+  },
   },
   computed: {
     ...mapGetters("report", ["getAttendance", "getLoader"]),

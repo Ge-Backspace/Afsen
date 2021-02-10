@@ -20,30 +20,7 @@
             <input class="form-control" v-model="data.company_name" name="name" required placeholder="Company Name" type="text">
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group mb-3">
-              <label for="lat">Current Latitude</label>
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"></span>
-                </div>
-                <input class="form-control" v-model="data.lat" name="lat" required placeholder="Latitude" type="text">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group mb-3">
-              <label for="lat">Current Longitude</label>
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"></span>
-                </div>
-                <input class="form-control" v-model="data.lng" name="lng" required placeholder="Longitude" type="text">
-              </div>
-            </div>
-          </div>
-        </div>
+        
         <div class="text-center">
           <el-button type="primary" :loading="showLoading" class="my-4" round native-type="submit"> Register
           </el-button>

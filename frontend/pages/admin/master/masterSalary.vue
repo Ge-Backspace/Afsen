@@ -62,8 +62,6 @@
               <template #thead>
                 <vs-tr>
                   <vs-th>Employee</vs-th>
-                  <vs-th>Position</vs-th>
-                  <vs-th>Group</vs-th>
                   <vs-th>Gaji</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
@@ -72,12 +70,6 @@
                 <vs-tr :key="i" v-for="(tr, i) in getSalary.data" :data="tr">
                   <vs-td>
                     {{ tr.name }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.position_name }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.group }}
                   </vs-td>
                   <vs-td>
                     {{ tr.gaji }}

@@ -454,9 +454,16 @@
         <td class="tg-73oq"></td>
         <td class="tg-73oq"></td>
       </tr>
+      @foreach
+      @php
+      for (let i = 0; i <= 30; i++) {
+      this.data.push({
+        tanggal: i,
+      });
+      @endphp
       <tr>
-        <td class="tg-0thz" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">Employee</td>
-        <td class="tg-0thz" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">1</td>
+        <td class="tg-0thz" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">$i</td>
+        <!-- <td class="tg-0thz" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">1</td>
         <td class="tg-0thz" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">2</td>
         <td class="tg-0thz" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">3</td>
         <td class="tg-0thz" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">4</td>
@@ -486,9 +493,9 @@
         <td class="tg-j6zm" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">28</td>
         <td class="tg-j6zm" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">29</td>
         <td class="tg-j6zm" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">30</td>
-        <td class="tg-j6zm" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">31</td>
+        <td class="tg-j6zm" style="background-color:#e91414; border:1px solid #000000; color:#ffffff; width:15px" align="center" valgin="middle">31</td> -->
       </tr>
-      
+      @endforeach
       <tr>
         <td class="tg-0pky" style="border:1px solid #000000; color:#000000;">1</td>
         <td class="tg-0pky" style="border:1px solid #000000; color:#000000;">test</td>

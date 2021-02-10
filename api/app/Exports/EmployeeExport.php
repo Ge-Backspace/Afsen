@@ -35,7 +35,7 @@ class EmployeeExport implements FromView
     public function view(): View
     {
         $carbon = new Carbon();
-        return view('Employee', [
+        return view('attendanceReport', [
             // 'name' => $this->tax_returns->get(),
             // 'name' => $this->name,
             // 'nip' => $this->nip,
