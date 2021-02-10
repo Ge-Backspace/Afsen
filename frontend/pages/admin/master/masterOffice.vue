@@ -30,9 +30,9 @@
               <template #thead>
                 <vs-tr>
                   <vs-th>Office</vs-th>
-                  <vs-th>Lang</vs-th>
+                  <vs-th>Address</vs-th>
+                  <vs-th>Langitude</vs-th>
                   <vs-th>Latitude</vs-th>
-                  <vs-th>address</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
@@ -137,101 +137,6 @@
       </a>
     </el-tooltip>
     <!-- End floating button-->
-
-    <!-- <vs-dialog
-      v-model="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
-    >
-      <template #header>
-        <h1 class="not-margin">
-          {{ titleDialog }}
-        </h1>
-      </template>
-      <div class="con-form">
-        <vs-row>
-          <vs-col
-            v-if="request"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Office Nama</label>
-            <vs-input
-              type="text"
-              v-model="form.office_name"
-              placeholder="Office Nama"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            v-if="request"
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Lat</label>
-            <vs-input
-              type="text"
-              v-model="form.lat"
-              placeholder="lat"
-            ></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Lang</label>
-            <vs-input
-              type="number"
-              v-model="form.lng"
-              placeholder="Lang"
-            ></vs-input>
-          </vs-col>
-        </vs-row>
-      </div>
-
-      <template #footer>
-        <div class="footer-dialog">
-          <vs-row>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('update')"
-                v-if="isUpdate"
-                >Update</vs-button
-              >
-              <vs-button
-                block
-                :loading="btnLoader"
-                @click="onSubmit('store')"
-                v-else
-                >Simpan</vs-button
-              >
-            </vs-col>
-            <vs-col w="6" style="padding: 5px">
-              <vs-button
-                block
-                border
-                @click="
-                  tambahDialog = false;
-                  resetForm();
-                "
-                >Batal</vs-button
-              >
-            </vs-col>
-          </vs-row>
-          <div>&nbsp;</div>
-        </div>
-      </template>
-    </vs-dialog> -->
     <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
       <template #header>
@@ -344,57 +249,6 @@ export default {
         search: this.search,
       });
     },
-    // onFileChange(e){
-    //   this.file = e.target.files[0];
-    // },
-    // importData(){
-    //   let formData = new FormData();
-    //   formData.append("company_id", this.company_id);
-    //   formData.append('file', this.file);
-    //   this.$axios.post('/employee/import', formData, {
-    //     headers: {'content-type': 'multipart/form-data' }
-    //   })
-    //   .then(response => {
-    //     if(response.status === 200){
-    //       //...
-    //     }
-    //   })
-    //   .catch(error => {
-    //     this.uploading = false
-    //     this.error = error.response.data
-    //     console.log('check error: ', this.error)
-    //   })
-    // },
-    // exportData(type = 'excel'){
-    //   let as = 'excel'
-    //   if (type == 'pdf') {
-    //     as = 'pdf'
-    //   }
-    //   this.$axios.get(`/employee/export?company_id=${this.company_id}&as=${as}`, {
-    //     //if u forgot this, your download will be corrupt
-    //     responseType: 'blob'
-    //   }).then((response) => {
-    //     //create a link in the document that we'll
-    //     //programmatically 'click'
-    //     const link = document.createElement('a');
-
-    //     //tell the browser to associate the response data
-    //     //to the URL of the link we created above.
-    //     link.href = window.URL.createObjectURL(
-    //       new Blob([response.data])
-    //     );
-
-
-    //   //tell the browset to download, not render
-    //   link.setAttribute('download','employee.xlsx');
-
-    //   //place the link in the DOM.
-    //   document.body.appendChild(link);
-
-    //   //make the magic happen!
-    //   link.click();
-    //   }); //please catch me baby!
-    // },
     edit(data) {
       this.form.id = data.id;
       this.form.office_name = data.office_name;
@@ -422,7 +276,7 @@ export default {
       let formData = new FormData();
       formData.append("company_id", this.company_id);
       formData.append("office_name", this.form.office_name);
-      formData.append("lat", this.form.lang);
+      formData.append("lat", this.form.lat);
       formData.append("lng", this.form.lng);
       console.log(this.form)
       let url = "/employee";
@@ -480,7 +334,7 @@ export default {
                   message: "Berhasil Menghapus Data",
                 });
                 this.tambahDialog = false;
-                this.$store.dispatch("employee/getAll", {
+                this.$store.dispatch("office/getAll", {
                   company_id: this.company_id,
                   defaultPage: true,
                 });

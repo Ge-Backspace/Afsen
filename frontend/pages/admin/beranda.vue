@@ -302,6 +302,7 @@
               </div>
               
               <div class="col-6 d-flex">
+                <!-- <table></table> -->
                 <vs-avatar v-if="!tr.checkout_time" size="20" class="align-self-center" danger style="height: 30px; width: 90px; border-radius: 15px">
                   <span style="font-weight: ">{{ formatTime(tr.checkin_time) }}</span>
                 </vs-avatar>
