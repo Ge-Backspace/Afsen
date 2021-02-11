@@ -99,8 +99,14 @@
                 </vs-button>
               </div>
             </div>
-            <p style="font-weight: bold" class="text-center">{{ month(getAttendance.data[0].checkins[0].date) }}</p>
-            <el-table :data="getAttendance.data" style="width: 100%" class="table-striped">
+            <p style="font-weight: bold" class="text-center">
+              {{ month(getAttendance.data[0].checkins[0].date) }}
+            </p>
+            <el-table
+              :data="getAttendance.data"
+              style="width: 100%"
+              class="table-striped"
+            >
               <el-table-column label="Nama" width="200px">
                 <template slot-scope="scope">
                   <div>
@@ -108,10 +114,15 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column v-for="(h, i) in getAttendance.data[0].checkins" :data="h" :key="i" :label="dateLabel(h.date)" width="110px">
-                <div>
-                  {{h.checkin_time}} - {{h.checkout_time}}
-                </div>
+              <el-table-column
+                v-for="(h, i) in getAttendance.data[0].checkins"
+                :data="h"
+                :key="i"
+                :label="dateLabel(h.date)"
+                width="110px"
+              >
+                <div>{{ scope.row.checkins.checkin_time }} - {{ scope.row.checkins.checkout_time }}</div>
+                
               </el-table-column>
             </el-table>
           </el-card>
@@ -131,8 +142,8 @@ export default {
   components: {},
   data() {
     return {
-      active: '',
-      select:'',
+      active: "",
+      select: "",
       api_url: config.baseApiUrl,
       table: {
         max: 10,
@@ -146,13 +157,9 @@ export default {
       files: [],
       company_id: "",
       lastDate: "",
-      tableData: [
-        {
-          name: "kafabih",
-          presence: "test",
-        },
+      data: [
+        
       ],
-      data: [],
     };
   },
   mounted() {
@@ -166,32 +173,22 @@ export default {
   },
   methods: {
     dateLabel(date) {
-      return moment(date, "YYYY-MM-DD").format("D")
+      return moment(date, "YYYY-MM-DD").format("D");
     },
     month(date) {
-      return moment(date, "YYYY-MM-DD").format("MMMM")
+      return moment(date, "YYYY-MM-DD").format("MMMM");
     },
-    cCheckin(time) {
-      if(time == null) {
-        return 'EEE'
+    Checkin(time) {
+      if (time == null) {
+        return "EEE";
       } else {
-        return moment(time, "HH:mm:ss").format("HH:mm")
+        return moment(time, "HH:mm:ss").format("HH:mm");
       }
     },
     searchData() {
       this.$store.dispatch("berita/getAll", {
         search: this.search,
       });
-    },
-    resetForm() {
-      this.form = {
-        judul: "",
-        banner: null,
-        aktif: true,
-        deskripsi: "",
-      };
-      this.files = [];
-      this.isUpdate = false;
     },
     // handleCurrentChange(val) {
     //   this.$store.commit("berita/setPage", val);
@@ -207,6 +204,7 @@ export default {
   },
   computed: {
     ...mapGetters("report", ["getAttendance", "getLoader"]),
+    ...mapGetters("checkin", ["getCheckin", "getLoader"]),
   },
   watch: {
     // getBeritas(newValue, oldValue) {},

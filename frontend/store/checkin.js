@@ -1,6 +1,6 @@
 export const state = () => ({
   checkin: {
-    data: [],
+    checkin: [],
     current_page: 1
   },
   checkinLoader: false,

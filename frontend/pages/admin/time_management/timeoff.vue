@@ -28,106 +28,119 @@
             @click="exportData('excel')"
             >Download Excel</vs-button
           >
-      <el-card v-loading="getLoader" style="margin-top: 40px">
-        <div class="row" style="margin-bottom: 20px">
-          <div class="col-md-2">
-            <vs-button
-              success
-              style="float: right"
-              :loading="globalLoader"
-              gradient
-              @click="
-                importDialog = true;
-                titleDialog = 'Import Cuti Employee';
-              "
-              >Import Excel</vs-button
-            >
-          </div>
-          <div class="col-md-3 offset-md-7">
-            <el-input
-              placeholder="Cari"
-              v-model="search"
-              @change="searchData()"
-              size="mini"
-            >
-              <i slot="prefix" class="el-input__icon el-icon-search"></i>
-            </el-input>
-          </div>
-        </div>
-        <vs-table striped>
-          <template #thead>
-            <vs-tr>
-              <vs-th>Employee</vs-th>
-              <vs-th>Nama Cuti</vs-th>
-              <vs-th>Code Cuti</vs-th>
-              <vs-th>Start Date</vs-th>
-              <vs-th>Expired Date</vs-th>
-              <vs-th>Action</vs-th>
-            </vs-tr>
-          </template>
-          <template #tbody>
-            <vs-tr :key="i" v-for="(tr, i) in getCutiEs.data" :data="tr">
-              <vs-td>
-                {{ tr.name }}
-              </vs-td>
-              <vs-td>
-                {{ tr.cuti_name }}
-              </vs-td>
-              <vs-td>
-                {{ tr.code }}
-              </vs-td>
-              <vs-td>
-                {{ formatDate(tr.start_date) }}
-              </vs-td>
-              <vs-td>
-                {{ formatDate(tr.expired_date) }}
-              </vs-td>
-              <vs-td>
-                <el-tooltip content="Edit" placement="top-start" effect="dark">
-                  <el-button
-                    size="mini"
-                    @click="edit(tr)"
-                    icon="fa fa-edit"
-                  ></el-button>
-                </el-tooltip>
-
-                <el-tooltip
-                  content="Delete"
-                  placement="top-start"
-                  effect="dark"
+          <el-card v-loading="getLoader" style="margin-top: 40px">
+            <div class="row" style="margin-bottom: 20px">
+              <div class="col-md-2">
+                <vs-button
+                  success
+                  style="float: right"
+                  :loading="globalLoader"
+                  gradient
+                  @click="
+                    importDialog = true;
+                    titleDialog = 'Import Cuti Employee';
+                  "
+                  >Import Excel</vs-button
                 >
-                  <el-button
-                    size="mini"
-                    type="primary"
-                    @click="deleteCuties(tr.id)"
-                    icon="fa fa-trash"
-                  >
-                  </el-button>
+              </div>
+              <div class="col-md-3 offset-md-7">
+                <el-input
+                  placeholder="Cari"
+                  v-model="search"
+                  @change="searchData()"
+                  size="mini"
+                >
+                  <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                </el-input>
+              </div>
+            </div>
+            <vs-table striped>
+              <template #thead>
+                <vs-tr>
+                  <vs-th>Employee</vs-th>
+                  <vs-th>Nama Cuti</vs-th>
+                  <vs-th>Code Cuti</vs-th>
+                  <vs-th>Start Date</vs-th>
+                  <vs-th>Expired Date</vs-th>
+                  <vs-th>Action</vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody>
+                <vs-tr :key="i" v-for="(tr, i) in getCutiEs.data" :data="tr">
+                  <vs-td>
+                    {{ tr.name }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.cuti_name }}
+                  </vs-td>
+                  <vs-td>
+                    {{ tr.code }}
+                  </vs-td>
+                  <vs-td>
+                    {{ formatDate(tr.start_date) }}
+                  </vs-td>
+                  <vs-td>
+                    {{ formatDate(tr.expired_date) }}
+                  </vs-td>
+                  <vs-td>
+                    <el-tooltip
+                      content="Edit"
+                      placement="top-start"
+                      effect="dark"
+                    >
+                      <el-button
+                        size="mini"
+                        @click="edit(tr)"
+                        icon="fa fa-edit"
+                      ></el-button>
+                    </el-tooltip>
 
-                </el-tooltip>
-
-              </vs-td>
-            </vs-tr>
-          </template>
-          <template #footer>
-            <vs-row>
-              <vs-col w="2">
-                <small>Total : {{ getCutiEs.total }} Data</small>
-              </vs-col>
-              <vs-col w="10">
-                <vs-pagination
-                  v-model="page"
-                  :length="Math.ceil(getCutiEs.total / table.max)"
-                />
-              </vs-col>
-            </vs-row>
-          </template>
-        </vs-table>
-      </el-card>
-    </div>
-    
+                    <el-tooltip
+                      content="Delete"
+                      placement="top-start"
+                      effect="dark"
+                    >
+                      <el-button
+                        size="mini"
+                        type="primary"
+                        @click="deleteCuties(tr.id)"
+                        icon="fa fa-trash"
+                      >
+                      </el-button>
+                    </el-tooltip>
+                  </vs-td>
+                  <template #expand>
+                <div class="con-content">
+                  <div>
+                    <h1>Reason</h1>
+                    <p>
+                      Hashire sori yo, kaze no you ni, tsukimi hara wo, padoru
+                      padoru
+                    </p>
+                  </div>
+                </div>
+              </template>
+                </vs-tr>
+              </template>
+              
+              <template #footer>
+                <vs-row>
+                  <vs-col w="2">
+                    <small>Total : {{ getCutiEs.total }} Data</small>
+                  </vs-col>
+                  <vs-col w="10">
+                    <vs-pagination
+                      v-model="page"
+                      :length="Math.ceil(getCutiEs.total / table.max)"
+                    />
+                  </vs-col>
+                </vs-row>
+              </template>
+            </vs-table>
+          </el-card>
         </div>
       </div>
+    </div>
     <el-tooltip
       class="item"
       effect="dark"
@@ -184,7 +197,11 @@
             style="padding: 5px"
           >
             <label>Cuti Name</label>
-            <vs-select filter placeholder="Cuti Employee" v-model="form.cuti_id">
+            <vs-select
+              filter
+              placeholder="Cuti Employee"
+              v-model="form.cuti_id"
+            >
               <vs-option
                 v-for="op in getOptionCuties.data"
                 :key="op.id"
@@ -371,10 +388,10 @@ export default {
     });
   },
   methods: {
-    searchData(){
-      this.$store.dispatch('cutiemployee/getAll', {
+    searchData() {
+      this.$store.dispatch("cutiemployee/getAll", {
         search: this.search,
-        company_id: this.company_id
+        company_id: this.company_id,
       });
     },
     edit(data) {
@@ -407,52 +424,53 @@ export default {
     onFileChange(e) {
       this.file = e.target.files[0];
     },
-    importData(){
+    importData() {
       let formData = new FormData();
-      formData.append('company_id', this.company_id);
-      formData.append('file', this.file);
-      this.$axios.post('/cutiemployee/import', formData, {
-        headers: {'content-type': 'multipart/form-data' }
-      })
-      .then(resp => {
-        if(resp.data.success){
-          this.$notify.success({
-            title: 'Success',
-            message: 'Berhasil Import Cuti Employee'
-          })
-          this.resetForm()
-          this.importDialog = false
-          this.$store.dispatch('cutiemployee/getAll', {
-            company_id: this.company_id
-          });
-        }
-      })
-      .catch(error => {
-        this.uploading = false
-        this.error = error.resp.data
-        console.log('check error: ', this.error)
-      })
-      .finally(() => {
-        this.btnLoader = false
-      })
+      formData.append("company_id", this.company_id);
+      formData.append("file", this.file);
+      this.$axios
+        .post("/cutiemployee/import", formData, {
+          headers: { "content-type": "multipart/form-data" },
+        })
+        .then((resp) => {
+          if (resp.data.success) {
+            this.$notify.success({
+              title: "Success",
+              message: "Berhasil Import Cuti Employee",
+            });
+            this.resetForm();
+            this.importDialog = false;
+            this.$store.dispatch("cutiemployee/getAll", {
+              company_id: this.company_id,
+            });
+          }
+        })
+        .catch((error) => {
+          this.uploading = false;
+          this.error = error.resp.data;
+          console.log("check error: ", this.error);
+        })
+        .finally(() => {
+          this.btnLoader = false;
+        });
     },
-    exportData(type = 'excel'){
-        this.$axios.get(`/cutiemployee/export?company_id=${this.company_id}&as=${type}`, {
-          responseType: 'blob'
-        }).then((response) => {
-          const link = document.createElement('a');
-          link.href = window.URL.createObjectURL(
-            new Blob([response.data])
-          );
-          if (type == 'pdf') {
-            link.setAttribute('download','cuti_employee.pdf');
+    exportData(type = "excel") {
+      this.$axios
+        .get(`/cutiemployee/export?company_id=${this.company_id}&as=${type}`, {
+          responseType: "blob",
+        })
+        .then((response) => {
+          const link = document.createElement("a");
+          link.href = window.URL.createObjectURL(new Blob([response.data]));
+          if (type == "pdf") {
+            link.setAttribute("download", "cuti_employee.pdf");
           } else {
-            link.setAttribute('download','cuti_employee.xlsx');
+            link.setAttribute("download", "cuti_employee.xlsx");
           }
           document.body.appendChild(link);
           link.click();
         });
-      },
+    },
     onSubmit(type = "store") {
       this.btnLoader = true;
       let formData = new FormData();
