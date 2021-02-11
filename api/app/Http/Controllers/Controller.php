@@ -116,7 +116,7 @@ class Controller extends BaseController
         if(!empty($single_file)){
             $storeFile = Helper::storeFile('store', $single_file['type'], $single_file['field'], request());
             if($storeFile){
-                $input['id_file'] = $storeFile;
+                $input['file_id'] = $storeFile;
             } else {
                 return $this->resp(null, Variable::FAILED_UPLOAD, false, 400);
             }

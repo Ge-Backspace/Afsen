@@ -18,5 +18,5 @@ class Variable
     public const SUCCESS_SEND_EMAIL_RESET_PWD = 'Email Reset Password Berhasil dikirim';
     public const TOKEN_INVALID = 'Token tidak valid';
     public const SUCCESS_RESET_PASSWORD = 'Berhasil Mengubah Password, silahkan login kembali ke aplikasi.';
-
+    public const TEST = 'TEST';
 }

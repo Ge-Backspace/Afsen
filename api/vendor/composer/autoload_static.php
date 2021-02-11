@@ -817,6 +817,7 @@ class ComposerStaticInit7087f9fd2073bf929916536cea262e14
         'App\\Models\\Shift' => __DIR__ . '/../..' . '/app/Models/Shift.php',
         'App\\Models\\ShiftEmployee' => __DIR__ . '/../..' . '/app/Models/ShiftEmployee.php',
         'App\\Models\\ShiftPermission' => __DIR__ . '/../..' . '/app/Models/ShiftPermission.php',
+        'App\\Models\\Test' => __DIR__ . '/../..' . '/app/Models/Test.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

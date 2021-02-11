@@ -99,19 +99,20 @@
                 </vs-button>
               </div>
             </div>
-            <p style="font-weight: bold" class="text-center">
-              {{ $moment(Date.now()).format("MMMM") }}
-            </p>
-
-            <el-table :data="tableData" style="width: 100%" height="250">
-              <el-table-column fixed prop="name" label="Name" width="150">
+            <p style="font-weight: bold" class="text-center">{{ month(getAttendance.data[0].checkins[0].date) }}</p>
+            <el-table :data="getAttendance.data" style="width: 100%" class="table-striped">
+              <el-table-column label="Nama" width="200px">
+                <template slot-scope="scope">
+                  <div>
+                    {{ scope.row.name }}
+                  </div>
+                </template>
               </el-table-column>
-              <el-table-column
-                prop="presence"
-                :label="col.tanggal"
-                v-for="col in data"
-                :key="col.id"
-              ></el-table-column>
+              <el-table-column v-for="(h, i) in getAttendance.data[0].checkins" :data="h" :key="i" :label="dateLabel(h.date)" width="110px">
+                <div>
+                  {{h.checkin_time}} - {{h.checkout_time}}
+                </div>
+              </el-table-column>
             </el-table>
           </el-card>
         </div>
@@ -130,6 +131,8 @@ export default {
   components: {},
   data() {
     return {
+      active: '',
+      select:'',
       api_url: config.baseApiUrl,
       table: {
         max: 10,
@@ -155,21 +158,26 @@ export default {
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
     this.lastDate = Number(moment().clone().endOf("month").format("DD"));
-    console.log(this.lastDate);
-    for (let i = 0; i <= this.lastDate; i++) {
-      this.data.push({
-        tanggal: i,
-      });
-    }
-
     this.$store.dispatch("report/getAttendance", {
       company_id: this.company_id,
       startDate: moment().clone().startOf("month").format("YYYY-MM-DD"),
       endDate: moment().clone().endOf("month").format("YYYY-MM-DD"),
     });
-    let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
   },
   methods: {
+    dateLabel(date) {
+      return moment(date, "YYYY-MM-DD").format("D")
+    },
+    month(date) {
+      return moment(date, "YYYY-MM-DD").format("MMMM")
+    },
+    cCheckin(time) {
+      if(time == null) {
+        return 'EEE'
+      } else {
+        return moment(time, "HH:mm:ss").format("HH:mm")
+      }
+    },
     searchData() {
       this.$store.dispatch("berita/getAll", {
         search: this.search,
