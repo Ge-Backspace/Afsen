@@ -1,63 +1,38 @@
-export const state = () => ({
-    test: {
-    //   email: ''
-      data: [],
-      // total: 0,
-      // current_page: 1
-    },
-    // userLoader: false,
-    // summary: {
-    //     aktif: 0,
-    //     non_aktif: 0
-    // }
-})
-
-export const mutations = {
-    setTest(state, data) {
-      state.test.data = data
-    },
-    // setLoader(state){
-    //     state.userLoader = !state.userLoader
-    // },
-    // setPage(state, data){
-    //     state.users.current_page = data
-    // },
-    // setSummary(state, data){
-    //     state.summary = data
-    // }
+function upload(formData) {
+    const photos = formData.getAll('photos');
+    const promises = photos.map((x) => getImage(x)
+        .then(img => ({
+            id: img,
+            originalName: x.name,
+            fileName: x.name,
+            url: img
+        })));
+    return Promise.all(promises);
 }
 
-export const getters = {
-    getTest(state) {
-         return state.test
-    },
-    // getLoader(state){
-    //     return state.userLoader
-    // },
-    // getSummary(state){
-    //     return state.summary
-    // }
-};
+function getImage(file) {
+    return new Promise((resolve, reject) => {
+        const fReader = new FileReader();
+        const img = document.createElement('img');
 
-export const actions = {
-    getAll(context){
-        // context.commit("setLoader")
-        // let page = defaultPage ? 1 : context.state.users.current_page
-        this.$axios.get(`/tests`).then(resp => {
-            context.commit('setTest', resp.data.data)
-        }).catch(e => {
-            console.log(e)
-        }).finally(() => {
-            // context.commit("setLoader")
-        })
-    },
-    // getUserSummary(context){
-    //     this.$axios.get(`/user-summary`).then(resp => {
-    //         context.commit('setSummary', resp.data.data)
-    //     }).catch(e => {
-    //         console.log(e)
-    //     }).finally(() => {
-    //         // context.commit("setLoader")
-    //     })
-    // }
+        fReader.onload = () => {
+            img.src = fReader.result;
+            resolve(getBase64Image(img));
+        }
+
+        fReader.readAsDataURL(file);
+    })
 }
+
+function getBase64Image(img) {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const dataURL = img.src;
+    return dataURL;
+}
+
+export { upload }

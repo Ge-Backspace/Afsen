@@ -181,8 +181,9 @@
           </el-card>
           <!-- card present absent -->
           <el-card
-            style="margin-top: 20px; background-color: #4CB63F"
-            v-else-if="this.status == 1" shadow="always"
+            style="margin-top: 20px; background-color: #4cb63f"
+            v-else-if="this.status == 1"
+            shadow="always"
           >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
@@ -283,43 +284,78 @@
                 {{ schedule_out }}</span
               >
             </div>
-            <el-card shadow="always">
-            <div
-              class="row"
-              :key="i"
-              v-for="(tr, i) in getCheckin.data"
-              :data="tr"
-            >
-              <div class="col-4 d-flex">
-                <img
-                  style="width: 60%"
-                  class="rounded-circle"
-                  src="https://picsum.photos/125/125/?image=58"
-                  alt="Right image"
-                />
-                <h2 class="align-self-center" style="padding: 14px 16px; ">{{ tr.name }}</h2> 
+            <table>
+              <tr :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
+                <td>
                   
-              </div>
-              
-              <div class="col-6 d-flex">
-                <!-- <table></table> -->
-                <vs-avatar v-if="!tr.checkout_time" size="20" class="align-self-center" danger style="height: 30px; width: 90px; border-radius: 15px">
-                  <span style="font-weight: ">{{ formatTime(tr.checkin_time) }}</span>
-                </vs-avatar>
+                  <p style=" font-weight: bold; font-size: 20px">
+                    &nbsp; &nbsp;
+                  <img
+                    style=" float:left;width:42px;height:42px; "
+                    class="rounded-circle"
+                    src="https://picsum.photos/125/125/?image=58"
+                    alt="Right image" />  
+                  {{ tr.name }}</p>
+                  </td>
+                  <br><br>
+                  <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                <td>
+                  <vs-avatar
+                    v-if="!tr.checkout_time"
+                    size="10"
+                    class="align-self-center"
+                    danger
+                    style="height: 30px; width: 90px; border-radius: 15px"
+                  >
+                    <span style="font-weight: ">{{
+                      formatTime(tr.checkin_time)
+                    }}</span>
+                  </vs-avatar>
 
-                <vs-avatar v-else size="20" class="align-self-center" success style="height: 30px; width: 90px; border-radius: 15px">
-                  <span style="font-weight: ">{{ formatTime(tr.checkin_time) }}</span>
-                </vs-avatar>
-
-                <vs-avatar v-if="tr.status == 0" size="20" class="align-self-center" success style="height: 30px; width: 90px; border-radius: 15px; margin-left: 20px">
-                  <span style="font-weight: ">Excelent</span>
-                </vs-avatar>
-                <vs-avatar v-else size="20" class="align-self-center" danger style="height: 30px; width: 90px; border-radius: 15px; margin-left: 20px">
-                  <span style="font-weight: ">Late</span>
-                </vs-avatar>
-              </div>
-            </div>
-            </el-card>
+                  <vs-avatar
+                    v-else
+                    size="20"
+                    class="align-self-center"
+                    success
+                    style="height: 30px; width: 90px; border-radius: 15px"
+                  >
+                    <span style="font-weight: ">{{
+                      formatTime(tr.checkin_time)
+                    }}</span>
+                  </vs-avatar>
+                </td>
+                <td>
+                  <vs-avatar
+                    v-if="tr.status == 0"
+                    size="20"
+                    class="align-self-center"
+                    success
+                    style="
+                      height: 30px;
+                      width: 90px;
+                      border-radius: 15px;
+                      margin-left: 20px;
+                    "
+                  >
+                    <span style="font-weight: ">Excelent</span>
+                  </vs-avatar>
+                  <vs-avatar
+                    v-else
+                    size="20"
+                    class="align-self-center"
+                    danger
+                    style="
+                      height: 30px;
+                      width: 90px;
+                      border-radius: 15px;
+                      margin-left: 20px;
+                    "
+                  >
+                    <span style="font-weight: ">Late</span>
+                  </vs-avatar>
+                </td>
+              </tr>
+            </table>
           </el-card>
         </div>
       </div>
