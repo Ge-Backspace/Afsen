@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-md-12">
           <br>
-          <el-card v-loading="getLoader">
+          <el-card>
             <div slot="header" class="clearfix">
               <div class="row">
                 <div class="col-md-4">
@@ -101,8 +101,8 @@
                 </vs-button>
               </div>
             </div>
-            <p style="font-weight: bold" class="text-center">{{ month(getAttendance.data[0].checkins[0].date) }}</p>
-            <el-table :data="getAttendance.data" style="width: 100%" class="table-striped">
+            <p style="font-weight: bold" class="text-center">{{ month(getReportAttendance.data.start_date) }}</p>
+            <el-table v-loading="getLoader" :data="getReportAttendance.data.data" style="width: 100%" class="table-striped">
               <el-table-column label="Nama" width="200px">
                 <template slot-scope="scope">
                   <div>
@@ -110,10 +110,12 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column v-for="(h, i) in getAttendance.data[0].checkins" :data="h" :key="i" :label="dateLabel(h.date)" width="110px">
-                <div>
-                  {{h.checkin_time}} - {{h.checkout_time}}
-                </div>
+              <el-table-column v-for="(h, i) in getReportAttendance.data.dates" :data="h" :key="i" :label="dateLabel(h)" width="110px">
+                <template slot-scope="scope">
+                  <div>
+                    {{ cColumn(scope.row.checkins[i]) }}
+                  </div>
+                </template>
               </el-table-column>
             </el-table>
           </el-card>
@@ -148,11 +150,6 @@ export default {
       files: [],
       company_id: "",
       lastDate: "",
-      tableData: [{
-        name: 'kafabih',
-        presence: 'test',
-        }],
-      data: [],
     };
   },
   mounted() {
@@ -169,13 +166,22 @@ export default {
       return moment(date, "YYYY-MM-DD").format("D")
     },
     month(date) {
+      console.log(date)
       return moment(date, "YYYY-MM-DD").format("MMMM")
     },
-    cCheckin(time) {
-      if(time == null) {
-        return 'EEE'
-      } else {
-        return moment(time, "HH:mm:ss").format("HH:mm")
+    cColumn(data) {
+      if (data.status_checkin == 0) {
+        return 0
+      } else if (data.status_checkin == 1) {
+        return 1
+      } else if (data.status_checkin == 2) {
+        return 2
+      }
+      if (data.is_cuti) {
+        return 3
+      }
+      if (data.is_weekend) {
+        return 4
       }
     },
     searchData() {
@@ -206,7 +212,7 @@ export default {
   },
   },
   computed: {
-    ...mapGetters("report", ["getAttendance", "getLoader"]),
+    ...mapGetters('report', ['getReportAttendance', 'getLoader']),
   },
   watch: {
     // getBeritas(newValue, oldValue) {},

@@ -1,141 +1,37 @@
 export const state = () => ({
-	attendance: {
-		data: [],
-		total: 0,
-		current_page: 1
-	},
-    // attendanceLoader: false,
-
-	salary: {
-		data: [],
-		total: 0,
-		current_page: 1
-	},
-    // salaryLoader: false,
-
-	permission: {
-		data: [],
-		total: 0,
-		current_page: 1
-	},
-    // permissionLoader: false,
-
-	employee: {
-		data: [],
-		total: 0,
-		current_page: 1
-	},
-    // employeeLoader: false
-    reportLoader: false
-});
+  attendance: {
+    data: [],
+  },
+  compLoader: false,
+})
 
 export const mutations = {
-	//Attendance Mutation
-	setAttendance(state, data) {
-		state.attendance = data;
-    },
-    setSalary(state, data) {
-		state.salary = data;
-    },
-    setPermission(state, data) {
-		state.permission = data;
-    },
-    setEmployee(state, data) {
-		state.employee = data;
-    },
-
-
-	setLoader(state) {
-        state.reportLoader = !state.reportLoader;
-
-	},
-	setPage(state, data) {
-        state.attendance.current_page = data;
-        state.salary.current_page = data;
-        state.permission.current_page = data;
-        state.employee.current_page = data;
-	},
-
-
-};
+  setReportAttendance(state, data) {
+    state.attendance.data = data
+  },
+  setLoader(state){
+      state.compLoader = !state.compLoader
+  },
+}
 
 export const getters = {
-	//Attendance Getters
-	getAttendance(state) {
-		return state.attendance;
-    },
-    getSalary(state) {
-		return state.salary;
-    },
-    getPermission(state) {
-		return state.permission;
-    },
-    getEmployee(state) {
-		return state.employee;
-    },
-
-    getLoader(state) {
-        return state.reportLoader;
-    }
-
-    // getLoaderAttendance(state) {
-    //     return state.salaryLoader;
-    // },
-    // getLoaderSalary(state) {
-    //     return state.attendanceLoader;
-    // },
-    // getLoaderPermission(state) {
-    //     return state.permissionLoader;
-    // },
-    // getLoaderEmployee(state) {
-    //     return state.employeeLoader;
-    // },
-
+  getReportAttendance(state) {
+    return state.attendance
+  },
+  getLoader(state){
+    return state.compLoader
+  },
 };
 
 export const actions = {
-    getAttendance(context, {company_id = '', startDate = '', endDate = '', showall = 1, search = '', defaultPage = false}){
-      context.commit("setLoader")
-      this.$axios.get(`/reportAttendance?company_id=${company_id}&startDate=${startDate}&endDate=${endDate}`)
-      .then(resp => {
-          context.commit('setAttendance', resp.data)
-      }).catch(e => {
-          console.log(e)
-      }).finally(() => {
-          context.commit("setLoader")
-      })
-    },
-
-    getSalary(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
-      this.$axios.get(`/reportSalary?company_id=${company_id}`)
-      .then(resp => {
-          context.commit('setSalary', resp.data)
-      }).catch(e => {
-          console.log(e)
-      }).finally(() => {
-          context.commit("setLoader")
-      })
-    },
-
-    getPermission(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
-      this.$axios.get(`/reportPermission?company_id=${company_id}`)
-      .then(resp => {
-          context.commit('setPermission', resp.data)
-      }).catch(e => {
-          console.log(e)
-      }).finally(() => {
-          context.commit("setLoader")
-      })
-    },
-
-    getEmployee(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
-      this.$axios.get( `/reportEmployee?company_id=${company_id}`).
-      then(resp => {
-        context.commit(`setEmployee`, resp.data)
-      }).catch(e => {
+  getAttendance(context, {company_id = '', startDate = '', endDate = ''}){
+    context.commit('setLoader')
+    this.$axios.get(`/reportAttendance?company_id=${company_id}&startDate=${startDate}&endDate=${endDate}`).then(resp => {
+        context.commit('setReportAttendance', resp.data.data)
+    }).catch(e => {
         console.log(e)
-      }).finally(() => {
-        context.commit("setLoader")
-      })
-    },
+    }).finally(() => {
+        context.commit('setLoader')
+    })
+  },
 }

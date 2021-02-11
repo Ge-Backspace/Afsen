@@ -11,6 +11,7 @@ use App\Models\Checkin;
 use App\Models\Files\File;
 use App\Models\Office;
 use App\Models\Product;
+use App\Models\ShiftEmployee;
 use App\Models\Test;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -57,13 +58,34 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $input = $request->only(['name', 'foto']);
-        return $this->storeData(new Test,[
-            'name' => 'required|string|min:4|max:100',
-            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ], $input,[
-            'type' => Variable::TEST,
-            'field' => 'foto'
-        ]);
+        $input = $request->only(['company_id', 'employee_id', 'shift_id', 'start_date', 'end_date']);
+        $validator = Validator::make($input, [
+            'company_id' => 'required|numeric',
+            'employee_id' => 'required|numeric',
+            'shift_id' => 'required|numeric',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Shift Employee', false, 401);
+        }
+        $st = Carbon::parse($input['start_date']);
+        $ed = Carbon::parse($input['end_date']);
+        $add = [];
+        for ($st; $st <= $ed; $st->addDay(1)) {
+            $shiftEmployee = ShiftEmployee::where('employee_id', $input['employee_id'])
+            ->whereDate('date', $st->format('Y-m-d'))->first();
+            if ($shiftEmployee) {
+                return $this->resp(null, 'Jadwal Shift Employee Sudah Ada Pada Tanggal Tersebut', false, 406);
+            }
+            $add[] = [
+                'company_id' => $input['company_id'],
+                'employee_id' => $input['employee_id'],
+                'shift_id' => $input['shift_id'],
+                'date' => $st->format('Y-m-d')
+            ];
+        }
+        $addSE = ShiftEmployee::insert($add);
+        return $this->resp($addSE);
     }
 }
