@@ -39,33 +39,45 @@ class ShiftEmployeeController extends Controller
     public function getCompanyShiftEmployee(Request $request)
     {
         return $this->getPaginate(
-            ShiftEmployee::join('employees', 'employees.id', '=', 'shift_employees.employee_id')
-            ->join('shifts', 'shifts.id', '=', 'shift_employees.shift_id')
+            ShiftEmployee::join('employees as e', 'e.id', '=', 'shift_employees.employee_id')
+            ->join('shifts as s', 's.id', '=', 'shift_employees.shift_id')
             ->where('shift_employees.company_id', $request->company_id)
-            ->select(DB::raw('shift_employees.*, employees.*, shifts.*, shift_employees.id as id'))
+            ->select(DB::raw('shift_employees.*, e.*, s.*, shift_employees.id as id'))
             ->orderBy('shift_employees.id', 'ASC')
-        , $request,['employees.name', 'shifts.shift_name', 'shifts.code', 'date']);
+        , $request,['e.name', 's.shift_name', 's.code', 'date']);
     }
 
     public function addShiftEmployee(Request $request)
     {
-        $input = $request->only(['company_id', 'employee_id', 'shift_id', 'date']);
+        $input = $request->only(['company_id', 'employee_id', 'shift_id', 'start_date', 'end_date']);
         $validator = Validator::make($input, [
             'company_id' => 'required|numeric',
             'employee_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
-            'date' => 'required|date'
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Shift Employee', false, 401);
         }
-        $shiftEmployee = ShiftEmployee::where('employee_id', $input['employee_id'])
-        ->whereDate('date', $input['date'])->first();
-        if ($shiftEmployee) {
-            return $this->resp(null, 'Jadwal Shift Employee Sudah Ada Pada Tanggal Tersebut', false, 406);
+        $st = Carbon::parse($input['start_date']);
+        $ed = Carbon::parse($input['end_date']);
+        $add = [];
+        for ($st; $st <= $ed; $st->addDay(1)) {
+            $shiftEmployee = ShiftEmployee::where('employee_id', $input['employee_id'])
+            ->whereDate('date', $st->format('Y-m-d'))->first();
+            if ($shiftEmployee) {
+                return $this->resp(null, 'Jadwal Shift Employee Sudah Ada Pada Tanggal Tersebut', false, 406);
+            }
+            $add[] = [
+                'company_id' => $input['company_id'],
+                'employee_id' => $input['employee_id'],
+                'shift_id' => $input['shift_id'],
+                'date' => $st->format('Y-m-d')
+            ];
         }
-        $addShiftEmployee = ShiftEmployee::create($input);
-        return $this->resp($addShiftEmployee);
+        $addSE = ShiftEmployee::insert($add);
+        return $this->resp($addSE);
     }
 
     public function updateShiftEmployee(Request $request, $id)
