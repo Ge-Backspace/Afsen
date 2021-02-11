@@ -13,14 +13,13 @@ class CreateTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->integer('price');
-            $table->integer('stock');
+            $table->string('name');
+            $table->integer('file_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('file_id')->references('id')->on('files');
         });
     }
 
@@ -31,6 +30,6 @@ class CreateTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('tests');
     }
 }
