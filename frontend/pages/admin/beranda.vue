@@ -40,7 +40,7 @@
             "
           >
             <!-- Card header -->
-            <div slot="header" class="clearfix d-flex justify-content-between">
+            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
               <!-- Title -->
               <h2 style="color: #ffffff">Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -90,7 +90,7 @@
             "
           >
             <!-- Card header -->
-            <div slot="header" class="clearfix d-flex justify-content-between">
+            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
               <!-- Title -->
               <h2 style="color: #ffffff">Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -140,7 +140,7 @@
             "
           >
             <!-- Card header -->
-            <div slot="header" class="clearfix d-flex justify-content-between">
+            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
               <!-- Title -->
               <h2>Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -181,14 +181,14 @@
           </el-card>
           <!-- card present absent -->
           <el-card
+            
             style="margin-top: 20px; background-color: #4cb63f"
-            v-else-if="this.status == 1"
-            shadow="always"
+            v-else-if="this.status == 1" 
           >
             <!-- Card header -->
-            <div slot="header" class="clearfix d-flex justify-content-between">
+            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
               <!-- Title -->
-              <h2 style="color: #ffffff">Attendance</h2>
+              <h2 style="color: #ffffff">test</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
               <span style="color: #ffffff">{{
@@ -288,24 +288,27 @@
               <tr :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
                 <td>
                   
-                  <p style=" font-weight: bold; font-size: 20px">
+                  <p style=" font-weight: bold; font-size: 16px; justify-content:" class="clearfix">
                     &nbsp; &nbsp;
                   <img
                     style=" float:left;width:42px;height:42px; "
                     class="rounded-circle"
                     src="https://picsum.photos/125/125/?image=58"
                     alt="Right image" />  
-                  {{ tr.name }}</p>
+                  {{ tr.name }}
+                  <br> &nbsp; &nbsp; 
+                  <span style="font-weight: normal; font-size: 14px">test</span></p>
+                  
                   </td>
                   <br><br>
-                  <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+                  <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </td>
                 <td>
                   <vs-avatar
                     v-if="!tr.checkout_time"
                     size="10"
                     class="align-self-center"
                     danger
-                    style="height: 30px; width: 90px; border-radius: 15px"
+                    style="height: 20px; width: 80px; border-radius: 15px"
                   >
                     <span style="font-weight: ">{{
                       formatTime(tr.checkin_time)
@@ -314,10 +317,10 @@
 
                   <vs-avatar
                     v-else
-                    size="20"
+                    size="10"
                     class="align-self-center"
                     success
-                    style="height: 30px; width: 90px; border-radius: 15px"
+                    style="height: 20px; width: 80px; border-radius: 15px"
                   >
                     <span style="font-weight: ">{{
                       formatTime(tr.checkin_time)
@@ -331,8 +334,8 @@
                     class="align-self-center"
                     success
                     style="
-                      height: 30px;
-                      width: 90px;
+                      height: 20px;
+                      width: 80px;
                       border-radius: 15px;
                       margin-left: 20px;
                     "
@@ -341,12 +344,12 @@
                   </vs-avatar>
                   <vs-avatar
                     v-else
-                    size="20"
+                    size="10"
                     class="align-self-center"
                     danger
                     style="
-                      height: 30px;
-                      width: 90px;
+                      height: 20px;
+                      width: 80px;
                       border-radius: 15px;
                       margin-left: 20px;
                     "

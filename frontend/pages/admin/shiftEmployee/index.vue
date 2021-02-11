@@ -209,8 +209,19 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Date</label>
-            <vs-input type="date" v-model="form.date"></vs-input>
+            <label>Start Date</label>
+            <vs-input type="date" v-model="form.start_date"></vs-input>
+            
+          </vs-col>
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>End Date</label>
+            <vs-input type="date" v-model="form.end_date"></vs-input>
           </vs-col>
         </vs-row>
       </div>
@@ -350,7 +361,8 @@ export default {
         id: "",
         employee_id: "",
         shift_id: "",
-        date: "",
+        start_date: "",
+        end_date: ""
       },
     };
   },
@@ -380,7 +392,8 @@ export default {
       console.log(this.form.employee_id);
       console.log(this.form.shift_id);
       this.form.shift_id = data.shift_id;
-      this.form.date = data.date;
+      this.form.start_date = data.start_date;
+      this.form.end_date = data.end_date;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;
@@ -390,7 +403,8 @@ export default {
         id: "",
         employee_id: "",
         shift_id: "",
-        date: "",
+        start_date: "",
+        end_date: ""
       };
       this.isUpdate = false;
     },
@@ -456,7 +470,13 @@ export default {
       formData.append("company_id", this.company_id);
       formData.append("employee_id", this.form.employee_id);
       formData.append("shift_id", this.form.shift_id);
-      formData.append("date", this.form.date);
+      formData.append("start_date", this.form.start_date);
+      formData.append("end_date", this.form.end_date);
+      console.log(this.form.start_date);
+      console.log(this.form.end_date);
+      console.log(this.form.company_id);
+      console.log(this.form.employee_id);
+      console.log(this.form.shift_id);
       let url = "/shiftEmployee";
       if (type == "update") {
         url = `shiftEmployee/${this.form.id}/update`;
@@ -544,11 +564,11 @@ export default {
     getSE(newValue, oldValue) {
       //
     },
-    search(newValue, oldValue) {
-      this.$store.dispatch("shiftemployee/getAll", {
-        search: newValue,
-      });
-    },
+    // search(newValue, oldValue) {
+    //   this.$store.dispatch("shiftemployee/getAll", {
+    //     search: newValue,
+    //   });
+    // },
     page(newValue, oldValue) {
       this.$store.commit("shiftemployee/setPage", newValue);
       this.$store.dispatch("shiftemployee/getAll", {

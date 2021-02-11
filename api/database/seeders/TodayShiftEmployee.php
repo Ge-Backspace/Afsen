@@ -17,7 +17,7 @@ class TodayShiftEmployee extends Seeder
     {
         ShiftEmployee::create([
             'company_id' => 1,
-            'employee_id' => 2,
+            'employee_id' => 1,
             'shift_id' => 1,
             'date' => Carbon::today()
         ]);

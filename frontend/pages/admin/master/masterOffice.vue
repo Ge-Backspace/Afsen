@@ -131,6 +131,8 @@
           request = true;
           tambahDialog = true;
           titleDialog = 'Add Office';
+          form.lat = -6.2;
+          form.lng = 106.816666;
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -255,7 +257,6 @@ export default {
         lng: '',
       };
       this.isUpdate = false;
-      this.center = {lat: -6.2, lng: 106.816666};
     },
     handleCurrentChange(val) {
       this.$store.commit("office/setPage", val);
@@ -349,6 +350,9 @@ export default {
     },
     markers (location) {
       return {lat: Number(location.lat), lng: Number(location.lng)}
+    },
+    markersDefault(location){
+      return {lat: Number(-6.200000), lng: Number(106.816666) }
     },
     check(test) {
       console.log(test)

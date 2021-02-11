@@ -11,7 +11,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-md-12">
-          <br>
+          <br />
           <el-card v-loading="getLoader">
             <div slot="header" class="clearfix">
               <div class="row">
@@ -19,11 +19,9 @@
                   <span class="demonstration">tanggal</span>
                   <br />
                   <el-date-picker
-                    v-model="value1"
-                    type="monthrange"
-                    range-separator="-"
-                    start-placeholder="Start month"
-                    end-placeholder="End month"
+                    v-model="value2"
+                    type="month"
+                    placeholder="Pick a month"
                     size="mini"
                   >
                   </el-date-picker>
@@ -101,10 +99,11 @@
                 </vs-button>
               </div>
             </div>
-            <p style="font-weight: bold" class="text-center">{{ $moment(Date.now()).format("MMMM")}}</p>
+            <p style="font-weight: bold" class="text-center">
+              {{ $moment(Date.now()).format("MMMM") }}
+            </p>
 
             <el-table :data="tableData" style="width: 100%" height="250">
-
               <el-table-column fixed prop="name" label="Name" width="150">
               </el-table-column>
               <el-table-column
@@ -144,10 +143,12 @@ export default {
       files: [],
       company_id: "",
       lastDate: "",
-      tableData: [{
-        name: 'kafabih',
-        presence: 'test',
-        }],
+      tableData: [
+        {
+          name: "kafabih",
+          presence: "test",
+        },
+      ],
       data: [],
     };
   },
@@ -192,9 +193,9 @@ export default {
       this.form.banner = file.raw;
     },
     created() {
-    this.currentTime = moment().format("LTS");
-    setInterval(() => this.updateCurrentTime(), 1 * 1000);
-  },
+      this.currentTime = moment().format("LTS");
+      setInterval(() => this.updateCurrentTime(), 1 * 1000);
+    },
   },
   computed: {
     ...mapGetters("report", ["getAttendance", "getLoader"]),
