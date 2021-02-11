@@ -151,6 +151,17 @@
                       </el-button>
                     </el-tooltip>
                   </vs-td>
+                  <template #expand>
+              <div class="con-content">
+                <div>
+                  <h1>
+                    Reason
+                  </h1>
+                  <p>Hashire sori yo, kaze no you ni, tsukimi hara wo, padoru padoru</p>
+                </div>
+              </div>
+            </template>
+                  
                 </vs-tr>
               </template>
               <template #footer>
@@ -262,6 +273,19 @@
           >
             <label>Expired Date</label>
             <vs-input type="date" v-model="form.expired_date"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Description</label>
+            <client-only>
+              <vue-editor v-model="form.deskripsi"></vue-editor>
+            </client-only>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Upload Document</label>
+            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+            :file-list="files" :limit="1">
+            <i class="el-icon-plus"></i>
+          </el-upload>
           </vs-col>
         </vs-row>
       </div>

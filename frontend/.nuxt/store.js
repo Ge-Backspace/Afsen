@@ -46,6 +46,7 @@ let store = {};
   resolveStoreModules(require('..\\store\\shiftpermission.js'), 'shiftpermission.js')
   resolveStoreModules(require('..\\store\\statusP.js'), 'statusP.js')
   resolveStoreModules(require('..\\store\\test.js'), 'test.js')
+  resolveStoreModules(require('..\\store\\upload.js'), 'upload.js')
   resolveStoreModules(require('..\\store\\user.js'), 'user.js')
   resolveStoreModules(require('..\\store\\util.js'), 'util.js')
 
@@ -82,6 +83,7 @@ let store = {};
       '..\\store\\shiftpermission.js',
       '..\\store\\statusP.js',
       '..\\store\\test.js',
+      '..\\store\\upload.js',
       '..\\store\\user.js',
       '..\\store\\util.js',
     ], () => {

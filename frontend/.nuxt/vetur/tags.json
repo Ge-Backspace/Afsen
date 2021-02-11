@@ -17,6 +17,12 @@
   "LazySidebar": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/Sidebar.vue"
   },
+  "UploadService": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/UploadService.js"
+  },
+  "LazyUploadService": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/UploadService.js"
+  },
   "FooterAfsen": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/LandingPage/FooterAfsen.vue"
   },
