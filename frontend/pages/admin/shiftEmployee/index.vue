@@ -95,7 +95,8 @@
                     >
                       <el-button
                         size="mini"
-                        @click="edit(tr)"
+                        @click="edit(tr);
+                        requestEdit = true"
                         icon="fa fa-edit"
                       ></el-button>
                     </el-tooltip>
@@ -146,6 +147,7 @@
         @click="
           seDialog = true;
           titleDialog = 'Tambah Employee Shift';
+          requestAdd = true;
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -155,7 +157,9 @@
     <vs-dialog
       v-model="seDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
+      @close="resetForm();
+      requestAdd = false;
+      requestEdit = false;"
     >
       <template #header>
         <h1 class="not-margin">
@@ -203,6 +207,7 @@
             </vs-select>
           </vs-col>
           <vs-col
+            v-if="requestAdd"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -214,6 +219,7 @@
             
           </vs-col>
           <vs-col
+            v-if="requestAdd"
             vs-type="flex"
             vs-justify="center"
             vs-align="center"
@@ -222,6 +228,17 @@
           >
             <label>End Date</label>
             <vs-input type="date" v-model="form.end_date"></vs-input>
+          </vs-col>
+          <vs-col
+          v-if="requestAdd == false"
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Date</label>
+            <vs-input type="date" v-model="form.date"></vs-input>
           </vs-col>
         </vs-row>
       </div>
@@ -346,12 +363,13 @@ export default {
       table: {
         max: 10,
       },
-      request: false,
       importDialog: false,
       active: 0,
       page: 1,
       titleDialog: "Edit Shift Employee",
       search: "",
+      requestEdit: false,
+      requestAdd: false,
       company_id: "",
       isUpdate: false,
       seDialog: false,

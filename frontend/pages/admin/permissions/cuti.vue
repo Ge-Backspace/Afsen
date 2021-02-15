@@ -28,7 +28,7 @@
             @click="exportData('excel')"
             >Download Excel</vs-button
           >
-          <br>
+          <br />
 
           <el-card v-loading="getLoader" style="margin-top: 40px">
             <div class="row" style="margin-bottom: 20px">
@@ -152,16 +152,13 @@
                     </el-tooltip>
                   </vs-td>
                   <template #expand>
-              <div class="con-content">
-                <div>
-                  <h1>
-                    Reason
-                  </h1>
-                  <p>Hashire sori yo, kaze no you ni, tsukimi hara wo, padoru padoru</p>
-                </div>
-              </div>
-            </template>
-                  
+                    <div class="con-content">
+                      <div>
+                        <h1>Reason</h1>
+                        {{ tr.reason }}
+                      </div>
+                    </div>
+                  </template>
                 </vs-tr>
               </template>
               <template #footer>
@@ -193,7 +190,7 @@
         class="float"
         @click="
           seDialog = true;
-          titleDialog = 'Permohonan Pergantian Shift';
+          titleDialog = 'Permohonan Izin Cuti';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -274,18 +271,32 @@
             <label>Expired Date</label>
             <vs-input type="date" v-model="form.expired_date"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
             <label>Description</label>
             <client-only>
-              <vue-editor v-model="form.deskripsi"></vue-editor>
+              <vue-editor v-model="form.reason"></vue-editor>
             </client-only>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
             <label>Upload Document</label>
-            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="files" :limit="1">
-            <i class="el-icon-plus"></i>
-          </el-upload>
+            <el-upload
+              :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+            :file-list="file" :limit="1"
+            >
+              <i class="el-icon-plus"></i>
+            </el-upload>
           </vs-col>
         </vs-row>
       </div>
@@ -420,13 +431,14 @@ export default {
       isUpdate: false,
       seDialog: false,
       btnLoader: false,
-      file: "",
+      files: "",
       form: {
         id: "",
         employee_id: "",
         cuti_id: "",
         start_date: "",
         expired_date: "",
+        reason: "",
       },
     };
   },
@@ -455,6 +467,8 @@ export default {
       this.form.cuti_id = data.cuti_id;
       this.form.start_date = data.start_date;
       this.form.expired_date = data.expired_date;
+      this.form.reason = data.reason;
+      this.file = data.file;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;
@@ -475,8 +489,15 @@ export default {
         company_id: this.company_id,
       });
     },
-    onFileChange(e) {
-      this.file = e.target.files[0];
+    handleChangeFile(file, fileList) {
+      console.log(file);
+      this.form.files = file.raw;
+    },
+    handleChangeSelect(data) {
+      this.$store.dispatch("cutipermission/getAll", {
+        company_id: this.company_id,
+        showall: 0,
+      });
     },
     importData() {
       let formData = new FormData();
@@ -536,6 +557,11 @@ export default {
       formData.append("cuti_id", this.form.cuti_id);
       formData.append("start_date", this.form.start_date);
       formData.append("expired_date", this.form.expired_date);
+      formData.append("reason", this.form.reason);
+      // formData.append("file", this.file);
+      if (this.form.files) {
+          formData.append("foto", this.form.files)
+        }
       let url = "/cutipermission";
       if (type == "update") {
         url = `cutipermission/${this.form.id}/update`;

@@ -110,23 +110,6 @@
     </el-tooltip>
     <!-- End floating button -->
 
-    <!-- <el-dialog :title="titleDialog" :visible.sync="shiftDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
-      <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Hari">
-          <el-input v-model="form.hari"></el-input>
-        </el-form-item>
-        <el-form-item label="Schedule In">
-          <el-time-picker v-model="form.schedule_out"></el-time-picker>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="shiftDialog = false">Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog> -->
-
     <vs-dialog v-model="positionDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
       <template #header>
