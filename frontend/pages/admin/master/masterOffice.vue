@@ -270,7 +270,7 @@ export default {
       formData.append("lat", this.form.lat);
       formData.append("lng", this.form.lng);
       console.log(this.form)
-      let url = "/employee";
+      let url = "/office";
       if (type == "update") {
         url = `/office/${this.form.id}/update`;
       }

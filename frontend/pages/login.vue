@@ -4,13 +4,13 @@
       <a class="navbar-brand rounded mx-auto d-block" style="margin-bottom: 20px;">
         <img src="../assets/img/logo-absen.png" width="200" height="200" />
       </a>
-      
+
     </div>
     <div class="text-center text-muted mb-4">
         <small><b>AFSEN</b></small>
       </div>
     <div class="card-body">
-      
+
       <el-alert v-if="errorMessage !== ''" :title="errorMessage" type="error" class="mb-3" show-icon>
       </el-alert>
       <form role="form" @submit.prevent="login()">
@@ -36,7 +36,7 @@
           </el-button>
 
         </div>
-      </form>f
+      </form>
     </div>
   </div>
 </template>

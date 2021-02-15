@@ -11,20 +11,19 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-md-12">
-          <br>
+          <br />
           <el-card>
             <div slot="header" class="clearfix">
               <div class="row">
                 <div class="col-md-4">
-                  <span class="demonstration">tanggal</span>
+                  <span class="demonstration">bulan</span>
                   <br />
                   <el-date-picker
-                    v-model="select"
-                    type="monthrange"
-                    range-separator="-"
-                    start-placeholder="Start month"
-                    end-placeholder="End month"
+                    v-model="date"
+                    type="month"
+                    placeholder="Select Month"
                     size="mini"
+                    @change="searchData()"
                   >
                   </el-date-picker>
                 </div>
@@ -101,8 +100,15 @@
                 </vs-button>
               </div>
             </div>
-            <p style="font-weight: bold" class="text-center">{{ month(getReportAttendance.data.start_date) }}</p>
-            <el-table v-loading="getLoader" :data="getReportAttendance.data.data" style="width: 100%" class="table-striped">
+            <p style="font-weight: bold" class="text-center">
+              {{ month(getReportAttendance.data.start_date) }}
+            </p>
+            <el-table
+              v-loading="getLoader"
+              :data="getReportAttendance.data.data"
+              style="width: 100%"
+              class="table-striped"
+            >
               <el-table-column label="Nama" width="200px">
                 <template slot-scope="scope">
                   <div>
@@ -110,10 +116,61 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column v-for="(h, i) in getReportAttendance.data.dates" :data="h" :key="i" :label="dateLabel(h)" width="110px">
+              <el-table-column
+                v-for="(h, i) in getReportAttendance.data.dates"
+                :data="h"
+                :key="i"
+                :label="dateLabel(h)"
+                width="110px"
+              >
                 <template slot-scope="scope">
-                  <div>
-                    {{ cColumn(scope.row.checkins[i]) }}
+                  <div v-if="cColumn(scope.row.checkins[i]) == 0">
+                    <vs-avatar
+                      primary
+                      size="20"
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                      >Presence</vs-avatar
+                    >
+                  </div>
+                  <div v-else-if="cColumn(scope.row.checkins[i]) == 1">
+                    <vs-avatar
+                      success
+                      size="20"
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                      >Presence</vs-avatar
+                    >
+                  </div>
+                  <div v-else-if="cColumn(scope.row.checkins[i]) == 2">
+                    <vs-avatar
+                      warn
+                      size="20"
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                      >late</vs-avatar
+                    >
+                  </div>
+                  <div v-else-if="cColumn(scope.row.checkins[i]) == 3">
+                    <vs-avatar
+                      color="#31B4AC"
+                      size="20"
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                      >leave</vs-avatar
+                    >
+                  </div>
+                  <div v-else-if="cColumn(scope.row.checkins[i]) == 4">
+                    <vs-avatar
+                      size="20"
+                      info
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                      >weekend</vs-avatar
+                    >
+                  </div>
+                  <div v-else>
+                    <vs-avatar
+                      size="20"
+                      danger
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                      >absent</vs-avatar
+                    >
                   </div>
                 </template>
               </el-table-column>
@@ -149,7 +206,7 @@ export default {
       btnLoader: false,
       files: [],
       company_id: "",
-      lastDate: "",
+      date: "",
     };
   },
   mounted() {
@@ -166,43 +223,50 @@ export default {
       return moment(date, "YYYY-MM-DD").format("D");
     },
     month(date) {
-      console.log(date)
-      return moment(date, "YYYY-MM-DD").format("MMMM")
+      console.log(date);
+      return moment(date, "YYYY-MM-DD").format("MMMM");
     },
     cColumn(data) {
       if (data.status_checkin == 0) {
-        return 0
+        return 0;
       } else if (data.status_checkin == 1) {
-        return 1
+        return 1;
       } else if (data.status_checkin == 2) {
-        return 2
+        return 2;
       }
       if (data.is_cuti) {
-        return 3
+        return 3;
       }
       if (data.is_weekend) {
-        return 4
+        return 4;
       }
     },
-    searchData() {
-      this.$store.dispatch("berita/getAll", {
-        search: this.search,
-      });
-    },
+    searchData(){
+      console.log(this.date)
+        let date = '';
+        if(this.searchDate){
+          date = this.searchDate
+        }
+        this.$store.dispatch('report/getAll', {
+          search: this.search,
+          date: date,
+          goverment: this.searchGoverment
+        });
     // handleCurrentChange(val) {
     //   this.$store.commit("berita/setPage", val);
     //   this.$store.dispatch("berita/getAll", {});
     // },
+    },
     handleChangeFile(file, fileList) {
       this.form.banner = file.raw;
     },
     created() {
-    this.currentTime = moment().format("LTS");
-    setInterval(() => this.updateCurrentTime(), 1 * 1000);
-  },
+      this.currentTime = moment().format("LTS");
+      setInterval(() => this.updateCurrentTime(), 1 * 1000);
+    },
   },
   computed: {
-    ...mapGetters('report', ['getReportAttendance', 'getLoader']),
+    ...mapGetters("report", ["getReportAttendance", "getLoader"]),
   },
   watch: {
     // getBeritas(newValue, oldValue) {},

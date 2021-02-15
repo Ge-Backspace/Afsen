@@ -811,6 +811,7 @@ class ComposerStaticInit7087f9fd2073bf929916536cea262e14
         'App\\Models\\Files\\File' => __DIR__ . '/../..' . '/app/Models/Files/File.php',
         'App\\Models\\Files\\MultiFile' => __DIR__ . '/../..' . '/app/Models/Files/MultiFile.php',
         'App\\Models\\Gaji' => __DIR__ . '/../..' . '/app/Models/Gaji.php',
+        'App\\Models\\LemburPermission' => __DIR__ . '/../..' . '/app/Models/LemburPermission.php',
         'App\\Models\\Office' => __DIR__ . '/../..' . '/app/Models/Office.php',
         'App\\Models\\Position' => __DIR__ . '/../..' . '/app/Models/Position.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',

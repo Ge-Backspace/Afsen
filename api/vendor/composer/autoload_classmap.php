@@ -74,6 +74,7 @@ return array(
     'App\\Models\\Files\\File' => $baseDir . '/app/Models/Files/File.php',
     'App\\Models\\Files\\MultiFile' => $baseDir . '/app/Models/Files/MultiFile.php',
     'App\\Models\\Gaji' => $baseDir . '/app/Models/Gaji.php',
+    'App\\Models\\LemburPermission' => $baseDir . '/app/Models/LemburPermission.php',
     'App\\Models\\Office' => $baseDir . '/app/Models/Office.php',
     'App\\Models\\Position' => $baseDir . '/app/Models/Position.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
