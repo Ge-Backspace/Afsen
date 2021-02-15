@@ -16,14 +16,14 @@
             <div slot="header" class="clearfix">
               <div class="row">
                 <div class="col-md-4">
-                  <span class="demonstration">bulan</span>
+                  <span class="demonstration">Month Picker</span>
                   <br />
                   <el-date-picker
                     v-model="date"
                     type="month"
                     placeholder="Select Month"
                     size="mini"
-                    @change="searchData()"
+                    @change="searchData(date)"
                   >
                   </el-date-picker>
                 </div>
@@ -129,7 +129,8 @@
                       primary
                       size="20"
                       style="height: 20px; width: 80px; border-radius: 15px"
-                      >Presence</vs-avatar
+                      @click="detailDialog = true"
+                      >excelent</vs-avatar
                     >
                   </div>
                   <div v-else-if="cColumn(scope.row.checkins[i]) == 1">
@@ -137,7 +138,8 @@
                       success
                       size="20"
                       style="height: 20px; width: 80px; border-radius: 15px"
-                      >Presence</vs-avatar
+                      @click="detailDialog = true"
+                      >normal</vs-avatar
                     >
                   </div>
                   <div v-else-if="cColumn(scope.row.checkins[i]) == 2">
@@ -145,6 +147,7 @@
                       warn
                       size="20"
                       style="height: 20px; width: 80px; border-radius: 15px"
+                      @click="detailDialog = true"
                       >late</vs-avatar
                     >
                   </div>
@@ -153,6 +156,7 @@
                       color="#31B4AC"
                       size="20"
                       style="height: 20px; width: 80px; border-radius: 15px"
+                      @click="detailDialog = true"
                       >leave</vs-avatar
                     >
                   </div>
@@ -161,6 +165,7 @@
                       size="20"
                       info
                       style="height: 20px; width: 80px; border-radius: 15px"
+                      @click="detailDialog = true"
                       >weekend</vs-avatar
                     >
                   </div>
@@ -169,6 +174,7 @@
                       size="20"
                       danger
                       style="height: 20px; width: 80px; border-radius: 15px"
+                      @click="detailDialog = true"
                       >absent</vs-avatar
                     >
                   </div>
@@ -179,6 +185,24 @@
         </div>
       </div>
     </div>
+    <vs-dialog v-model="detailDialog">
+      <template #header>
+        <h4 class="not-margin">
+          <b>Monday</b>
+        </h4>
+      </template>
+
+      <div class="con-form">
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center"  style="padding:5px">
+            <label><b>Check-In Time</b></label>
+            <p style="font-size: 14px">yes</p>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label><b>Check-Out Time</b></label>
+            <p style="font-size: 14px">yes</p>
+          </vs-col>
+      </div>
+    </vs-dialog>
   </div>
 </template>
 
@@ -200,7 +224,7 @@ export default {
       },
       page: 1,
       titleDialog: "Tambah Berita",
-      tambahDialog: false,
+      detailDialog: false,
       search: "",
       isUpdate: false,
       btnLoader: false,
@@ -241,21 +265,22 @@ export default {
         return 4;
       }
     },
-    searchData(){
-      console.log(this.date)
-        let date = '';
-        if(this.searchDate){
-          date = this.searchDate
-        }
-        this.$store.dispatch('report/getAll', {
-          search: this.search,
-          date: date,
-          goverment: this.searchGoverment
-        });
-    // handleCurrentChange(val) {
-    //   this.$store.commit("berita/setPage", val);
-    //   this.$store.dispatch("berita/getAll", {});
-    // },
+    searchData(date) {
+      let startDate = moment(date)
+        .clone()
+        .startOf("month")
+        .format("YYYY-MM-DD");
+      let endDate = moment(date).clone().endOf("month").format("YYYY-MM-DD");
+      console.log(startDate);
+      this.$store.dispatch("report/getAttendance", {
+        company_id: this.company_id,
+        startDate: startDate,
+        endDate: endDate,
+      });
+      // handleCurrentChange(val) {
+      //   this.$store.commit("berita/setPage", val);
+      //   this.$store.dispatch("berita/getAll", {});
+      // },
     },
     handleChangeFile(file, fileList) {
       this.form.banner = file.raw;

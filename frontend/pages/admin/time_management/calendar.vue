@@ -67,7 +67,7 @@ export default {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id))
     this.$store.dispatch('shiftemployee/getAll', {
       company_id: this.company_id,
-      search: new Date()
+      search: moment().format('YYYY-MM-DD')
     })
   },
   methods: {

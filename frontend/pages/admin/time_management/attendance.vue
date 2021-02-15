@@ -334,7 +334,9 @@ export default {
     },
     page(newValue, oldValue) {
       this.$store.commit("attendance/setPage", newValue);
-      this.$store.dispatch("attendance/getAll", {});
+      this.$store.dispatch("attendance/getAll", {
+        company_id: this.company_id
+      });
     },
   },
 };

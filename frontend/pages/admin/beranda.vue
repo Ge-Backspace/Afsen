@@ -40,7 +40,10 @@
             "
           >
             <!-- Card header -->
-            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
               <!-- Title -->
               <h2 style="color: #ffffff">Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -90,7 +93,10 @@
             "
           >
             <!-- Card header -->
-            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
               <!-- Title -->
               <h2 style="color: #ffffff">Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -140,7 +146,10 @@
             "
           >
             <!-- Card header -->
-            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
               <!-- Title -->
               <h2>Attendance</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -181,12 +190,14 @@
           </el-card>
           <!-- card present absent -->
           <el-card
-            
             style="margin-top: 20px; background-color: #4cb63f"
-            v-else-if="this.status == 1" 
+            v-else-if="this.status == 1"
           >
             <!-- Card header -->
-            <div class="clearfix d-flex justify-content-between" style="margin-bottom: 20px">
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
               <!-- Title -->
               <h2 style="color: #ffffff">test</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -287,21 +298,30 @@
             <table>
               <tr :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
                 <td>
-                  
-                  <p style=" font-weight: bold; font-size: 16px; justify-content:" class="clearfix">
+                  <p
+                    style="font-weight: bold; font-size: 16px;"
+                    class="clearfix"
+                  >
+                    <img
+                      style="float: left; width: 42px; height: 42px;"
+                      class="rounded-circle"
+                      src="https://picsum.photos/125/125/?image=58"
+                      alt="left image"
+                    />
                     &nbsp; &nbsp;
-                  <img
-                    style=" float:left;width:42px;height:42px; "
-                    class="rounded-circle"
-                    src="https://picsum.photos/125/125/?image=58"
-                    alt="Right image" />  
-                  {{ tr.name }}
-                  <br> &nbsp; &nbsp; 
-                  <span style="font-weight: normal; font-size: 14px">test</span></p>
-                  
-                  </td>
-                  <br><br>
-                  <td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </td>
+                    {{ tr.name }}
+                    <br />
+                    &nbsp; &nbsp;
+                    <span style="font-weight: normal; font-size: 14px"
+                      >{{ tr.position_name }}</span
+                    >
+                  </p>
+                </td>
+                <br /><br />
+                <td>
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                  &nbsp; &nbsp; &nbsp; 
+                </td>
                 <td>
                   <vs-avatar
                     v-if="!tr.checkout_time"
@@ -428,6 +448,11 @@ export default {
         this.schedule_in = response.data.data.schedule_in;
         this.schedule_out = response.data.data.schedule_out;
       });
+    this.$axios
+      .get(`positions/?user_id=${this.data.user_id}`)
+      .then((response) => {
+        this.position_name = response.data.data.position_name;
+      });
     let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
     if (moment(this.start, "HH:mm:ss") <= moment(now, "HH:mm:ss")) {
       this.startDay = true;
@@ -503,6 +528,11 @@ export default {
   computed: {
     ...mapGetters("checkin", [
       "getCheckin",
+      // 'getLoader',
+      // 'getSummary'
+    ]),
+    ...mapGetters("position", [
+      "getPositions",
       // 'getLoader',
       // 'getSummary'
     ]),

@@ -638,11 +638,11 @@ export default {
       formData.append("nip", this.form.nip);
       formData.append("position_id", this.form.position_id);
       formData.append("kontak", this.form.kontak);
-      formData.append("status", this.form.status ? 1 : 0);
+      formData.append("status", this.form.status ? 0 : 1);
       formData.append("password", this.form.password);
       formData.append("username", this.form.username);
-      formData.append("admin", this.form.admin ? 1 : 0);
-      formData.append("aktif", this.form.aktif ? 1 : 0);
+      formData.append("admin", this.form.admin ? 0 : 1);
+      formData.append("aktif", this.form.aktif ? 0 : 1);
       console.log(this.form)
       let url = "/employee";
       if (type == "update") {

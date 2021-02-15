@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Cuti Employee</h1>
+          <h1 class="heading">Time Off</h1>
         </div>
       </div>
     </div>

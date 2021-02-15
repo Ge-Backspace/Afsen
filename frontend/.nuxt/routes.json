@@ -3,420 +3,360 @@
     "name": "company_check",
     "path": "/company_check",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\company_check.vue",
-    "chunkName": "pages/company_check",
-    "_name": "_d1506482"
+    "chunkName": "pages/company_check"
   },
   {
     "name": "LandingPage",
     "path": "/LandingPage",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\LandingPage.vue",
-    "chunkName": "pages/LandingPage",
-    "_name": "_192e645f"
+    "chunkName": "pages/LandingPage"
   },
   {
     "name": "login",
     "path": "/login",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_2fa131e2"
+    "chunkName": "pages/login"
   },
   {
     "name": "profile",
     "path": "/profile",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\profile.vue",
-    "chunkName": "pages/profile",
-    "_name": "_716dd03c"
+    "chunkName": "pages/profile"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\register.vue",
-    "chunkName": "pages/register",
-    "_name": "_75bd03ba"
+    "chunkName": "pages/register"
   },
   {
     "name": "register_account",
     "path": "/register_account",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\register_account.vue",
-    "chunkName": "pages/register_account",
-    "_name": "_535068b0"
+    "chunkName": "pages/register_account"
   },
   {
     "name": "register_company",
     "path": "/register_company",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\register_company.vue",
-    "chunkName": "pages/register_company",
-    "_name": "_f72c5410"
+    "chunkName": "pages/register_company"
   },
   {
     "name": "reset-password",
     "path": "/reset-password",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\reset-password.vue",
-    "chunkName": "pages/reset-password",
-    "_name": "_9b920fa0"
+    "chunkName": "pages/reset-password"
   },
   {
     "name": "test",
     "path": "/test",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\test.vue",
-    "chunkName": "pages/test",
-    "_name": "_a02f3cae"
+    "chunkName": "pages/test"
   },
   {
     "name": "admin-beranda",
     "path": "/admin/beranda",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\beranda.vue",
-    "chunkName": "pages/admin/beranda",
-    "_name": "_7db0123e"
+    "chunkName": "pages/admin/beranda"
   },
   {
     "name": "admin-berita",
     "path": "/admin/berita",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\berita.vue",
-    "chunkName": "pages/admin/berita",
-    "_name": "_5fa05f22"
+    "chunkName": "pages/admin/berita"
   },
   {
     "name": "admin-company",
     "path": "/admin/company",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\index.vue",
-    "chunkName": "pages/admin/company/index",
-    "_name": "_03e9f406"
+    "chunkName": "pages/admin/company/index"
   },
   {
     "name": "admin-company1",
     "path": "/admin/company1",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company1.vue",
-    "chunkName": "pages/admin/company1",
-    "_name": "_1a97bb9c"
+    "chunkName": "pages/admin/company1"
   },
   {
     "name": "admin-employees",
     "path": "/admin/employees",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\employees\\\\index.vue",
-    "chunkName": "pages/admin/employees/index",
-    "_name": "_db511c16"
+    "chunkName": "pages/admin/employees/index"
   },
   {
     "name": "admin-informasi",
     "path": "/admin/informasi",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\informasi.vue",
-    "chunkName": "pages/admin/informasi",
-    "_name": "_9fedcf54"
+    "chunkName": "pages/admin/informasi"
   },
   {
     "name": "admin-kegiatan",
     "path": "/admin/kegiatan",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\kegiatan.vue",
-    "chunkName": "pages/admin/kegiatan",
-    "_name": "_512a2cb8"
+    "chunkName": "pages/admin/kegiatan"
   },
   {
     "name": "admin-lapor",
     "path": "/admin/lapor",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\index.vue",
-    "chunkName": "pages/admin/lapor/index",
-    "_name": "_0d4491c8"
+    "chunkName": "pages/admin/lapor/index"
   },
   {
     "name": "admin-permission",
     "path": "/admin/permission",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permission.vue",
-    "chunkName": "pages/admin/permission",
-    "_name": "_7b984c97"
+    "chunkName": "pages/admin/permission"
   },
   {
     "name": "admin-report",
     "path": "/admin/report",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\report\\\\index.vue",
-    "chunkName": "pages/admin/report/index",
-    "_name": "_74c410f4"
+    "chunkName": "pages/admin/report/index"
   },
   {
     "name": "admin-salary",
     "path": "/admin/salary",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\salary.vue",
-    "chunkName": "pages/admin/salary",
-    "_name": "_c12399dc"
+    "chunkName": "pages/admin/salary"
   },
   {
     "name": "admin-shift",
     "path": "/admin/shift",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\shift.vue",
-    "chunkName": "pages/admin/shift",
-    "_name": "_1cd32c6a"
+    "chunkName": "pages/admin/shift"
   },
   {
     "name": "admin-shiftEmployee",
     "path": "/admin/shiftEmployee",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\shiftEmployee\\\\index.vue",
-    "chunkName": "pages/admin/shiftEmployee/index",
-    "_name": "_4960116c"
+    "chunkName": "pages/admin/shiftEmployee/index"
   },
   {
     "name": "admin-test",
     "path": "/admin/test",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\test.vue",
-    "chunkName": "pages/admin/test",
-    "_name": "_36aa35da"
+    "chunkName": "pages/admin/test"
   },
   {
     "name": "admin-users",
     "path": "/admin/users",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\users.vue",
-    "chunkName": "pages/admin/users",
-    "_name": "_0647ca20"
+    "chunkName": "pages/admin/users"
   },
   {
     "name": "admin-company-announcement",
     "path": "/admin/company/announcement",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\announcement\\\\index.vue",
-    "chunkName": "pages/admin/company/announcement/index",
-    "_name": "_04bf1d96"
+    "chunkName": "pages/admin/company/announcement/index"
   },
   {
     "name": "admin-company-asset",
     "path": "/admin/company/asset",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\asset\\\\index.vue",
-    "chunkName": "pages/admin/company/asset/index",
-    "_name": "_13436707"
+    "chunkName": "pages/admin/company/asset/index"
   },
   {
     "name": "admin-company-document_template",
     "path": "/admin/company/document_template",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\document_template\\\\index.vue",
-    "chunkName": "pages/admin/company/document_template/index",
-    "_name": "_3dfaa299"
+    "chunkName": "pages/admin/company/document_template/index"
   },
   {
     "name": "admin-company-files",
     "path": "/admin/company/files",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\files\\\\index.vue",
-    "chunkName": "pages/admin/company/files/index",
-    "_name": "_786f25c0"
+    "chunkName": "pages/admin/company/files/index"
   },
   {
     "name": "admin-company-onboarding",
     "path": "/admin/company/onboarding",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\onboarding\\\\index.vue",
-    "chunkName": "pages/admin/company/onboarding/index",
-    "_name": "_453ca102"
+    "chunkName": "pages/admin/company/onboarding/index"
   },
   {
     "name": "admin-company-polling",
     "path": "/admin/company/polling",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\polling\\\\index.vue",
-    "chunkName": "pages/admin/company/polling/index",
-    "_name": "_4c921d14"
+    "chunkName": "pages/admin/company/polling/index"
   },
   {
     "name": "admin-company-reprimand",
     "path": "/admin/company/reprimand",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\reprimand\\\\index.vue",
-    "chunkName": "pages/admin/company/reprimand/index",
-    "_name": "_d331da4e"
+    "chunkName": "pages/admin/company/reprimand/index"
   },
   {
     "name": "admin-company-task",
     "path": "/admin/company/task",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\task\\\\index.vue",
-    "chunkName": "pages/admin/company/task/index",
-    "_name": "_182f4598"
+    "chunkName": "pages/admin/company/task/index"
   },
   {
     "name": "admin-company-user_activity_log",
     "path": "/admin/company/user_activity_log",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\company\\\\user_activity_log\\\\index.vue",
-    "chunkName": "pages/admin/company/user_activity_log/index",
-    "_name": "_4792e16f"
+    "chunkName": "pages/admin/company/user_activity_log/index"
   },
   {
     "name": "admin-employees-detail",
     "path": "/admin/employees/detail",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\employees\\\\detail.vue",
-    "chunkName": "pages/admin/employees/detail",
-    "_name": "_50e9dc3e"
+    "chunkName": "pages/admin/employees/detail"
   },
   {
     "name": "admin-finances-cash",
     "path": "/admin/finances/cash",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\finances\\\\cash.vue",
-    "chunkName": "pages/admin/finances/cash",
-    "_name": "_7ef25414"
+    "chunkName": "pages/admin/finances/cash"
   },
   {
     "name": "admin-finances-loan",
     "path": "/admin/finances/loan",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\finances\\\\loan.vue",
-    "chunkName": "pages/admin/finances/loan",
-    "_name": "_27dd115e"
+    "chunkName": "pages/admin/finances/loan"
   },
   {
     "name": "admin-finances-reimbursement",
     "path": "/admin/finances/reimbursement",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\finances\\\\reimbursement.vue",
-    "chunkName": "pages/admin/finances/reimbursement",
-    "_name": "_2b6683b2"
+    "chunkName": "pages/admin/finances/reimbursement"
   },
   {
     "name": "admin-lapor-detail",
     "path": "/admin/lapor/detail",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\lapor\\\\detail.vue",
-    "chunkName": "pages/admin/lapor/detail",
-    "_name": "_6aa78812"
+    "chunkName": "pages/admin/lapor/detail"
   },
   {
     "name": "admin-master-masterCompanies",
     "path": "/admin/master/masterCompanies",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterCompanies.vue",
-    "chunkName": "pages/admin/master/masterCompanies",
-    "_name": "_6c40cd42"
+    "chunkName": "pages/admin/master/masterCompanies"
   },
   {
     "name": "admin-master-MasterCuti",
     "path": "/admin/master/MasterCuti",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\MasterCuti.vue",
-    "chunkName": "pages/admin/master/MasterCuti",
-    "_name": "_2835089a"
+    "chunkName": "pages/admin/master/MasterCuti"
   },
   {
     "name": "admin-master-masterEmployee",
     "path": "/admin/master/masterEmployee",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterEmployee.vue",
-    "chunkName": "pages/admin/master/masterEmployee",
-    "_name": "_0a542a5a"
+    "chunkName": "pages/admin/master/masterEmployee"
   },
   {
     "name": "admin-master-masterOffice",
     "path": "/admin/master/masterOffice",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterOffice.vue",
-    "chunkName": "pages/admin/master/masterOffice",
-    "_name": "_2930c068"
+    "chunkName": "pages/admin/master/masterOffice"
   },
   {
     "name": "admin-master-masterPosition",
     "path": "/admin/master/masterPosition",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterPosition.vue",
-    "chunkName": "pages/admin/master/masterPosition",
-    "_name": "_73602755"
+    "chunkName": "pages/admin/master/masterPosition"
   },
   {
     "name": "admin-master-masterSalary",
     "path": "/admin/master/masterSalary",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterSalary.vue",
-    "chunkName": "pages/admin/master/masterSalary",
-    "_name": "_106fd714"
+    "chunkName": "pages/admin/master/masterSalary"
   },
   {
     "name": "admin-master-masterShift",
     "path": "/admin/master/masterShift",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterShift.vue",
-    "chunkName": "pages/admin/master/masterShift",
-    "_name": "_fa74e2f4"
+    "chunkName": "pages/admin/master/masterShift"
   },
   {
     "name": "admin-master-MasterStatusPermission",
     "path": "/admin/master/MasterStatusPermission",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\MasterStatusPermission.vue",
-    "chunkName": "pages/admin/master/MasterStatusPermission",
-    "_name": "_1f5fa5ad"
+    "chunkName": "pages/admin/master/MasterStatusPermission"
   },
   {
     "name": "admin-master-masterUser",
     "path": "/admin/master/masterUser",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterUser.vue",
-    "chunkName": "pages/admin/master/masterUser",
-    "_name": "_1ae4fa12"
+    "chunkName": "pages/admin/master/masterUser"
   },
   {
     "name": "admin-permissions-cuti",
     "path": "/admin/permissions/cuti",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permissions\\\\cuti.vue",
-    "chunkName": "pages/admin/permissions/cuti",
-    "_name": "_2d5a825a"
+    "chunkName": "pages/admin/permissions/cuti"
   },
   {
     "name": "admin-permissions-shift",
     "path": "/admin/permissions/shift",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\permissions\\\\shift.vue",
-    "chunkName": "pages/admin/permissions/shift",
-    "_name": "_10d93174"
+    "chunkName": "pages/admin/permissions/shift"
   },
   {
     "name": "admin-report-attendance",
     "path": "/admin/report/attendance",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\report\\\\attendance\\\\index.vue",
-    "chunkName": "pages/admin/report/attendance/index",
-    "_name": "_d7b31906"
+    "chunkName": "pages/admin/report/attendance/index"
   },
   {
     "name": "admin-report-employee",
     "path": "/admin/report/employee",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\report\\\\employee\\\\index.vue",
-    "chunkName": "pages/admin/report/employee/index",
-    "_name": "_76402cd0"
+    "chunkName": "pages/admin/report/employee/index"
   },
   {
     "name": "admin-report-permission",
     "path": "/admin/report/permission",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\report\\\\permission\\\\index.vue",
-    "chunkName": "pages/admin/report/permission/index",
-    "_name": "_4791e4d7"
+    "chunkName": "pages/admin/report/permission/index"
   },
   {
     "name": "admin-report-salary",
     "path": "/admin/report/salary",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\report\\\\salary\\\\index.vue",
-    "chunkName": "pages/admin/report/salary/index",
-    "_name": "_758813fc"
+    "chunkName": "pages/admin/report/salary/index"
   },
   {
     "name": "admin-time_management-attendance",
     "path": "/admin/time_management/attendance",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\attendance.vue",
-    "chunkName": "pages/admin/time_management/attendance",
-    "_name": "_17fb85c6"
+    "chunkName": "pages/admin/time_management/attendance"
   },
   {
     "name": "admin-time_management-calendar",
     "path": "/admin/time_management/calendar",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\calendar.vue",
-    "chunkName": "pages/admin/time_management/calendar",
-    "_name": "_77fad8db"
+    "chunkName": "pages/admin/time_management/calendar"
   },
   {
     "name": "admin-time_management-schedule",
     "path": "/admin/time_management/schedule",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\schedule.vue",
-    "chunkName": "pages/admin/time_management/schedule",
-    "_name": "_5b75c898"
+    "chunkName": "pages/admin/time_management/schedule"
   },
   {
     "name": "admin-time_management-setting",
     "path": "/admin/time_management/setting",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\setting.vue",
-    "chunkName": "pages/admin/time_management/setting",
-    "_name": "_1e3b4a43"
+    "chunkName": "pages/admin/time_management/setting"
   },
   {
     "name": "admin-time_management-timeoff",
     "path": "/admin/time_management/timeoff",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff.vue",
-    "chunkName": "pages/admin/time_management/timeoff",
-    "_name": "_e034c316"
+    "chunkName": "pages/admin/time_management/timeoff"
   },
   {
     "name": "admin-time_management-timeoff_deduction",
     "path": "/admin/time_management/timeoff_deduction",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\admin\\\\time_management\\\\timeoff_deduction.vue",
-    "chunkName": "pages/admin/time_management/timeoff_deduction",
-    "_name": "_5a6e33ca"
+    "chunkName": "pages/admin/time_management/timeoff_deduction"
   },
   {
     "name": "index",
     "path": "/",
     "component": "F:\\\\Afedigi Coaching\\\\nuxt-app\\\\Backup\\\\Afsen\\\\frontend\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_65f98ecb"
+    "chunkName": "pages/index"
   }
 ]
