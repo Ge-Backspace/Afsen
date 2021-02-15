@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CutiPermission extends Model
 {
     protected $fillable = [
-        'employee_id', 'cuti_id', 'status_id', 'start_date', 'expired_date'
+        'employee_id', 'cuti_id', 'status_id', 'start_date', 'expired_date', 'reason', 'file_id'
     ];
 
     public function employees(){

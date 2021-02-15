@@ -117,21 +117,23 @@ class Helper {
                         return true;
                     }
                 } else {
-                    $dataFile = $parent->file()->first();
-                    if(!$dataFile){
+                    // $dataFile = $parent->file()->first();
+                    // if(!$dataFile){
                         $dataFile = File::create($newFile);
-                        $parent->id_file = $dataFile->id;
+                        $parent->file_id = $dataFile->id;
                         $parent->save();
-                    }
-                    if($dataFile){
-                        $oldFile = $basePath . '/' . $dataFile->file_name;
-                        if(file_exists($oldFile)){
-                            unlink($oldFile);
-                        }
-                        $dataFile->update($newFile);
                         $file->move($basePath, $fileName);
                         return true;
-                    }
+                    // }
+                    // if($dataFile){
+                    //     $oldFile = $basePath . '/' . $dataFile->file_name;
+                    //     if(file_exists($oldFile)){
+                    //         unlink($oldFile);
+                    //     }
+                    //     $dataFile->update($newFile);
+                    //     $file->move($basePath, $fileName);
+                    //     return true;
+                    // }
                 }
             }
         }

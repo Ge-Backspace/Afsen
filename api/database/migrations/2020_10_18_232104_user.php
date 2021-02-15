@@ -20,14 +20,14 @@ class User extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('company_id')->unsigned();
-            $table->integer('propic_id')->unsigned()->nullable();
+            $table->integer('file_id')->unsigned()->nullable();
             $table->boolean('admin')->default(false);
             $table->boolean('aktif')->default(false);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('propic_id')->references('id')->on('files')->onDelete('CASCADE');
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('CASCADE');
             $table->foreign('company_id')->references('id')->on('companies');
         });
     }

@@ -20,10 +20,13 @@ class CreateCutiPermissionsTable extends Migration
             $table->integer('status_id')->default(0);
             $table->date('start_date');
             $table->date('expired_date');
+            $table->string('reason');
+            $table->integer('file_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('cuti_id')->references('id')->on('cutis');
+            $table->foreign('file_id')->references('id')->on('files');
         });
     }
 

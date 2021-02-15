@@ -19,5 +19,16 @@ class Variable
     public const TOKEN_INVALID = 'Token tidak valid';
     public const SUCCESS_RESET_PASSWORD = 'Berhasil Mengubah Password, silahkan login kembali ke aplikasi.';
     public const TEST = 'TEST';
+    // Companies
+    public const COMP = 'COMP';
+    // Office
+    public const OFFC = 'OFFC';
+    // User (Foto Profil)
+    public const USER = 'USER';
+    // Shift Permission
+    public const SHPE = 'SHPE';
+    // Lembur Permission
     public const LEPE = 'LEPE';
+    // Cuti Permission
+    public const CTPE = 'CTPE';
 }

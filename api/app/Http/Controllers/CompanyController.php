@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helper;
+use App\Helpers\Variable;
 use App\Models\Companies;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
     public function getCompany(Request $request)
     {
-        return $this->getPaginate(Companies::where('id', $request->company_id), $request,['id']);
+        return $this->getPaginate(Companies::where('id', $request->company_id), $request);
     }
 
     public function getAllCompanies(Request $request)
@@ -22,28 +21,18 @@ class CompanyController extends Controller
     public function updateCompany(Request $request, $id)
     {
         $input = $request->only(['name']);
-        $rules = [
+        $table = Companies::find($id);
+        return $this->updateData($table, [
             'name' => 'required|string',
-        ];
-        $validator = Validator::make ($input, $rules ,Helper::messageValidation());
-        if($validator->fails()){
-            return $this->resp($request->all(), Helper::generateErrorMsg($validator->errors()
-            ->getMessages()), false, 406);
-        }
-        $company = $company = Companies::find($id);
-        if (!$company) {
-            return $this->resp(null, 'Company Tidak Ditemukan');
-        }
-        $updateCompany = $company->update($input);
-        return $this->resp($updateCompany);
+            'foto' => 'mimes:jpeg,png,jpg|max:2048'
+        ], $input, [
+            'type' => Variable::COMP,
+            'field' => 'foto'
+        ]);
     }
 
     public function deleteCompany($id){
-        $company = $company = Companies::find($id);
-        if (!$company) {
-            return $this->resp(null, 'Company Tidak Ditemukan');
-        }
-        $company->delete();
-        return $this->resp();
+        $table = Companies::find($id);
+        return $this->deleteData($table);
     }
 }

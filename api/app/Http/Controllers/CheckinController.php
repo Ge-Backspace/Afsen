@@ -36,9 +36,10 @@ class CheckinController extends Controller
     {
         $todayCheckin = Checkin::join('employees', 'checkins.employee_id', '=', 'employees.id')
         ->join('users', 'employees.user_id', '=', 'users.id')
+        ->join('positions', 'employees.position_id', '=', 'positions.id')
         ->where('users.company_id', $request->company_id)
         ->whereDate('checkin_time', '=', Carbon::today())
-        ->select(DB::raw('employees.name, checkins.*, checkins.status as status'))
+        ->select(DB::raw('employees.name, checkins.*, positions.position_name, checkins.status as status'))
         ->orderBy('checkins.id', 'desc');
         return $this->getPaginate($todayCheckin, $request,['employees.name']);
     }

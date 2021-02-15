@@ -21,7 +21,7 @@ class CreateLemburPermissionsTable extends Migration
             $table->date('date');
             $table->integer('status_id')->default(0);
             $table->string('reason');
-            $table->integer('file_id')->unsigned();
+            $table->integer('file_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LemburPermission extends Model
 {
     protected $fillable = [
-        'employee_id', 'schedule_in', 'schedule_out', 'date', 'status', 'reason', 'status'
+        'employee_id', 'schedule_in', 'schedule_out', 'date', 'status', 'reason', 'status', 'file_id'
     ];
 
     public function employees()

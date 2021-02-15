@@ -17,9 +17,11 @@ class CreateEarlyCheckoutsTable extends Migration
             $table->increments('id');
             $table->integer('checkin_id')->unsigned();
             $table->string('reason');
+            $table->integer('file_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('checkin_id')->references('id')->on('checkins');
+            $table->foreign('file_id')->references('id')->on('files');
         });
     }
 

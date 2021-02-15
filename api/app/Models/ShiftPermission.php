@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShiftPermission extends Model
 {
     protected $fillable = [
-        'employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id', 'status_id'
+        'employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id', 'status_id', 'reason', 'file_id'
     ];
 
     public function employees(){

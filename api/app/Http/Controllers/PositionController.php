@@ -14,7 +14,8 @@ class PositionController extends Controller
 {
     public function getPosition(Request $request)
     {
-        $position = Position::where('company_id', $request->company_id);
+        $position = Position::where('company_id', $request->company_id)
+        ->orderBy('id', 'ASC');
         return $this->getPaginate($position,$request,[
             'position_name'
         ]);

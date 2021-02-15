@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Exports\ShiftPermissionExport;
+use App\Helpers\Variable;
 use App\Imports\ShiftPermissionImport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -53,18 +54,18 @@ class ShiftPermissionController extends Controller
         } elseif ($se2->employee_id != $e2->id){
             return $this->resp(null, 'Employee Tidak 2 Sesuai Dengan Data Shift Employee', false, 406);
         }
-        $input = $request->only('employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id');
-        $validator = Validator::make($input, [
+        $input = $request->only('employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id', 'reason');
+        return $this->storeData(new ShiftPermission, [
             'employee1_id' => 'required|numeric',
             'employee2_id' => 'required|numeric',
             'shift_employee1_id' => 'required|numeric',
             'shift_employee2_id' => 'required|numeric',
-        ], Helper::messageValidation());
-        if ($validator->fails()) {
-            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Shift Permission', false, 401);
-        }
-        $add = ShiftPermission::create($input);
-        return $this->resp($add);
+            'reason' => 'required|min:4|max:255',
+            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
+        ], $input, [
+            'type' => Variable::SHPE,
+            'field' => 'file',
+        ]);
     }
 
     public function updateShiftPermission(Request $request, $id)
@@ -87,31 +88,24 @@ class ShiftPermissionController extends Controller
             return $this->resp(null, 'Employee Tidak 2 Sesuai Dengan Data Shift Employee', false, 406);
         }
         $table = ShiftPermission::find($id);
-        if (!$table) {
-            return $this->resp(null, 'Permission Shift Tidak Ditemukan', false, 406);
-        }
         $input = $request->only('employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id');
-        $validator = Validator::make($input, [
+        return $this->updateData($table, [
             'employee1_id' => 'required|numeric',
             'employee2_id' => 'required|numeric',
             'shift_employee1_id' => 'required|numeric',
             'shift_employee2_id' => 'required|numeric',
-        ], Helper::messageValidation());
-        if ($validator->fails()) {
-            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Shift Permission', false, 401);
-        }
-        $update = $table->update($input);
-        return $this->resp($update);
+            'reason' => 'required|min:5|max:255',
+            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
+        ], $input, [
+            'type' => Variable::SHPE,
+            'field' => 'file'
+        ]);
     }
 
     public function deleteShiftPermission($id)
     {
         $table = ShiftPermission::find($id);
-        if (!$table) {
-            return $this->resp(null, 'Permission Shift Tidak Ditemukan', false, 406);
-        }
-        $table->delete();
-        return $this->resp();
+        return $this->deleteData($table);
     }
 
     public function changeStatusShiftPermission(Request $request, $id)

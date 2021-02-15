@@ -20,9 +20,11 @@ class CreateOfficesTable extends Migration
             $table->string('lat');
             $table->string('lng');
             $table->string('address');
+            $table->integer('file_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('file_id')->references('id')->on('files');
         });
     }
 

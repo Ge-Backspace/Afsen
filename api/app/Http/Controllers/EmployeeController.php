@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\User;
 use App\Imports\EmployeeImport;
 use App\Exports\EmployeeExport;
+use App\Helpers\Variable;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -34,11 +35,6 @@ class EmployeeController extends Controller
             , $request, [
                 'employees.name', 'positions.position_name'
             ]);
-
-        // Example
-        // select * from employees left join users on employees.user_id = users.id
-        // join positions on employees.position_id = positions.id
-        // where employees.company_id = 1
     }
 
     public function addEmployee(Request $request)
@@ -55,21 +51,30 @@ class EmployeeController extends Controller
             'password' => 'required',
             'position_id' => 'required|numeric',
             'status' => 'required|boolean',
-            'nip' => 'required|string',
-            'kontak' => 'required|numeric',
+            'nip' => 'string',
+            'kontak' => 'numeric',
             'admin' => 'required|boolean',
-            'aktif' => 'required|boolean'
+            'aktif' => 'required|boolean',
+            'foto' => 'mimes:jpeg,png,jpg|max:2048'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
         }
         $companyCheck = Companies::find($input['company_id']);
         if(!$companyCheck){
-            return $this->resp(null, 'Company Tidak Ditemukan', false, 406);
+            return $this->resp(null, 'Company '.Variable::NOT_FOUND, false, 406);
         }
         $inputUser = $request->only(['company_id','username', 'email', 'password', 'admin', 'aktif']);
+        if(!empty($request->foto)){
+            $storeFile = Helper::storeFile('store', Variable::USER, $request->foto, request());
+            if($storeFile){
+                $inputUser['file_id'] = $storeFile;
+            } else {
+                return $this->resp(null, Variable::FAILED_UPLOAD, false, 400);
+            }
+        }
         $password = Hash::make($inputUser['password']);
-        Arr::set($inputUser, 'password', $password);
+        $inputUser = Arr::set($inputUser, 'password', $password);
         $inputEmployee = $request->only(['name', 'position_id', 'status', 'nip', 'kontak']);
         $user = User::Create($inputUser);
         $employee = Employee::create([
@@ -90,21 +95,25 @@ class EmployeeController extends Controller
         {
             return $this->resp(null, 'Employee Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['name', 'username', 'email', 'nip', 'position_id', 'kontak', 'status', 'admin', 'aktif']);
+        $input = $request->only(['name', 'nip', 'position_id', 'kontak', 'status', 'admin', 'aktif']);
         $validator = Validator::make($input, [
-            'company_id' => 'required|numeric',
             'name' => 'required|string|min:4|max:100',
-            'username' => 'required',
-            'email' => 'required',
-            'nip' => 'required|strxing',
+            'nip' => 'string',
             'position_id' => 'required|numeric',
-            'kontak' => 'required|numeric',
+            'kontak' => 'numeric',
             'status' => 'required|boolean',
             'admin' => 'boolean',
             'aktif' => 'boolean'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Update Employee', false, 401);
+        }
+        $user = User::find($employee->user_id);
+        $inputUser = $request->only([
+            'admin', 'aktif'
+        ]);
+        if ($inputUser['admin'] | $inputUser['aktif']) {
+            $user->update($inputUser);
         }
         $editEmployee = $employee->update($input);
         return $this->resp($editEmployee);

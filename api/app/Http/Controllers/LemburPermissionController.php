@@ -24,8 +24,9 @@ class LemburPermissionController extends Controller
         return $this->storeData(new LemburPermission, [
             'employee_id' => 'required|numeric',
             'schedule_in' => 'required',
+            'schedule_out' => 'required',
             'date' => 'required|date',
-            'reason' => 'required|min:5|max|255',
+            'reason' => 'required|min:5|max:255',
             'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
         ], $input, [
             'type' => Variable::LEPE,
@@ -41,7 +42,7 @@ class LemburPermissionController extends Controller
             'employee_id' => 'required|numeric',
             'schedule_in' => 'required',
             'date' => 'required|date',
-            'reason' => 'required|min:5|max|255',
+            'reason' => 'required|min:5|max:255',
             'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
         ], $input, [
             'type' => Variable::LEPE,
@@ -49,16 +50,16 @@ class LemburPermissionController extends Controller
         ]);
     }
 
-    public function delete($id)
+    public function deleteLemburPermission($id)
     {
         return $this->deleteData(LemburPermission::find($id));
     }
 
-    public function changeStatusPermission(Request $request, $id)
+    public function changeStatusLemburPermission(Request $request, $id)
     {
         $table = LemburPermission::find($id);
         if (!$table) {
-            return $this->resp(null, 'Permission Lembur Tidak Ditemukan', false, 406);
+            return $this->resp(null, 'Permission Lembur '.Variable::NOT_FOUND, false, 406);
         } elseif ($table->status_id != 0) {
             return $this->resp(null, 'Status Permission Lembur Sudah Diubah', false, 406);
         }
@@ -66,7 +67,7 @@ class LemburPermissionController extends Controller
         if ($request->status == 1) {
             $s['status_id'] = 1;
         }
-        $update = $table->update($s);
-        return $this->resp($update);
+        $table->status_id = $s['status_id'];
+        // return $this->resp($update);
     }
 }

@@ -14,7 +14,7 @@ class CutiController extends Controller
 {
     public function getCompanyCuti(Request $request)
     {
-        return $this->getPaginate(Cuti::where('company_id', $request->company_id), $request, ['cuti_name', 'code']);
+        return $this->getPaginate(Cuti::where('company_id', $request->company_id)->orderBy('id', 'ASC'), $request, ['cuti_name', 'code']);
     }
 
     public function addCuti(Request $request)

@@ -49,10 +49,17 @@ class ReportController extends Controller
                                 ->whereDate('checkin_time', $date)
                                 ->first();
                 $cuti = $this->checkCuti($value->id, $date);
+                $checkout_time = null;
+                if($checkin) {
+                    if ($checkin->checkout_time) {
+                        $checkout_time = $checkin->checkout_time;
+                    }
+                    $checkout_time = 'Belum Checkout';
+                }
                 $checkins[] = [
                     'date' => $date . ' - ' . date('l', strtotime($date)),
                     'checkin_time' => $checkin ? $checkin->checkin_time->format('H:i:s') : null,
-                    'checkout_time' => $checkin ? $checkin->checkout_time->format('H:i:s') : null,
+                    'checkout_time' => $checkout_time,
                     'status_checkin' => $checkin ? $checkin->status : null,
                     'is_cuti' => $cuti ? $cuti->cuti_name : null,
                     'is_weekend' => Carbon::parse($date)->dayOfWeek == Carbon::SUNDAY || Carbon::parse($date)->dayOfWeek == Carbon::SATURDAY ? true : false

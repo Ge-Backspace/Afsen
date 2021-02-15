@@ -16,12 +16,12 @@ class Companies extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->integer('logo_id')->unsigned()->nullable();
+            $table->integer('file_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('logo_id')->references('id')->on('files');
+            $table->foreign('file_id')->references('id')->on('files');
         });
     }
 
