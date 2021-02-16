@@ -109,6 +109,11 @@ export const  menu = () => {
                     route: '/admin/master/masterCompanies'
                 },
                 {
+                  text: "Master Office",
+                  icon: 'el-icon-postcard',
+                  route: '/admin/master/masterOffice'
+                },
+                {
                     text: "Master Employee",
                     icon: 'el-icon-postcard',
                     route: '/admin/master/masterEmployee'
@@ -132,11 +137,6 @@ export const  menu = () => {
                     text: "Master Salary",
                     icon: 'el-icon-money',
                     route: '/admin/master/masterSalary'
-                },
-                {
-                    text: "Master Office",
-                    icon: 'el-icon-money',
-                    route: '/admin/master/masterOffice'
                 },
             ]
         },

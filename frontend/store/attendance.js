@@ -38,7 +38,7 @@ export const state = () => ({
   export const actions = {
     getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
       let page = defaultPage ? 1 : context.state.attendance.current_page
-      this.$axios.get(`/attendance?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
+      this.$axios.get(`/attendances?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
           context.commit('setAttendances', resp.data)
       }).catch(e => {
           console.log(e)

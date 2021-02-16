@@ -75,6 +75,10 @@ class CheckinController extends Controller
         $checkCheckin = $this->checkCheckin($employee->id);
         $checkCheckout = $this->checkCheckout($employee->id);
         $now = Carbon::now();
+        $shiftEmployee = ShiftEmployee::join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
+        ->where('employee_id', $employee->id)
+        ->whereDate('date', $now)
+        ->first();
         if ($distcance > 9999999) {
             $message = 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor';
             if ($input['request'] == 2) {
@@ -86,12 +90,12 @@ class CheckinController extends Controller
             if ($checkCheckin) {
                 return $this->resp(null, 'Anda Sudah Checkin Hari Ini', false, 406);
             }
-            $shiftEmployee = ShiftEmployee::join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
-            ->where('employee_id', $employee->id)
-            ->whereDate('date', $now)
-            ->first();
+            $schedule_in = Carbon::parse($shiftEmployee->schedule_in);
             if (!$shiftEmployee) {
                 return $this->resp(null, 'Anda Tidak Memiliki Shcedule Checkin Hari Ini', false, 406);
+            }
+            if ($now > $schedule_in) {
+                return $this->resp(['status' => 0], 'Anda Checkin Diatas Shift Schedule In', false, 409);
             }
             $status = 0;
             $schedule_in = Carbon::parse($shiftEmployee->schedule_in);
@@ -114,16 +118,12 @@ class CheckinController extends Controller
             if ($checkCheckout) {
                 return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
             }
-            $shiftEmployee = ShiftEmployee::join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
-            ->where('employee_id', $employee->id)
-            ->whereDate('date', $now)
-            ->first();
             $schedule_out = Carbon::parse($shiftEmployee->schedule_out);
             if (!$shiftEmployee) {
                 return $this->resp(null, 'Anda Tidak Memiliki Shcedule Checout Hari Ini', false, 406);
             }
             if ($now < $schedule_out) {
-                return $this->resp(['checkin' => $checkCheckin->id, 'schedule_out' => $shiftEmployee->schedule_out], 'Anda Checout Dibawah Shift Schedule Out', false, 409);
+                return $this->resp(['checkin' => $checkCheckin->id, 'schedule_out' => $shiftEmployee->schedule_out, 'status' => 1], 'Anda Checout Dibawah Shift Schedule Out', false, 409);
             }
             $checkout = $checkCheckin->update(['checkout_time' => Carbon::now()]);
             return $this->resp($checkout);

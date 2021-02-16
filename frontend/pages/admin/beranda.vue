@@ -384,13 +384,16 @@
       </div>
     </div>
     <vs-dialog
-      v-model="earlyCheckout"
+      v-model="LOEdialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="earlyCheckout = false"
+      @close="
+      LOEdialog = false;
+      late = false;
+      "
     >
       <template #header>
         <h1 class="not-margin">
-          Early Checkout
+          {{ tittleLOEDialog }}
         </h1>
       </template>
       <vs-row>
@@ -413,7 +416,7 @@
           w="4"
           style="padding: 5px"
         >
-          <label>Upload Document</label>
+          <label>Upload Evidence</label>
           <el-upload
             :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
           :file-list="files" :limit="1"
@@ -427,7 +430,13 @@
           <vs-row>
             <vs-col w="6" style="padding: 5px">
               <vs-button block :loading="btnLoader"
-              @click="eCheckout()"
+              v-if="late"
+              @click="lateOrEarly('late')"
+                >Simpan</vs-button
+              >
+              <vs-button block :loading="btnLoader"
+              v-else
+              @click="lateOrEarly('early')"
                 >Simpan</vs-button
               >
             </vs-col>
@@ -436,7 +445,8 @@
                 block
                 border
                 @click="
-                  earlyCheckout = false;
+                  LOEdialog = false;
+                  late = false;
                 "
                 >Batal</vs-button
               >
@@ -465,11 +475,10 @@ export default {
       table: {
         max: 10,
       },
-      startDay: false,
-      startCheckin: false,
-      startCheckout: false,
+      buttonStatus: '',
       btnLoader: false,
-      earlyCheckout: false,
+      LOEdialog: false,
+      tittleLOEDialog: '',
       name: "",
       data: {
         user_id: "",
@@ -488,6 +497,7 @@ export default {
       showLoading: false,
       schedule_in: "",
       schedule_out: "",
+      late: false,
     };
   },
   mounted() {
@@ -526,69 +536,17 @@ export default {
       });
     let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
     if (moment(this.start, "HH:mm:ss") <= moment(now, "HH:mm:ss")) {
-      this.startDay = true;
-    } else if (
-      moment(this.schedule_in, "HH:mm:ss") <= moment(now, "HH:mm:ss")
-    ) {
-      this.startCheckin = true;
-    } else if (
-      moment(this.schedule_out, "HH:mm:ss") <= moment(now, "HH:mm:ss")
-    ) {
-      this.startCheckout = true;
+      this.buttonStatus = 1
+      // Melebihi start day (Boleh Checkin dan statusnya Excelent), Hijau
+    } else if (moment(now, "HH:mm:ss") > moment(this.schedule_in, "HH:mm:ss").add(15, 'minutes')) {
+      this.buttonStatus = 2
+      // Melebihi schedule in + 15 menit (Late), Kuning
+    } else if (moment(now, "HH:mm:ss") > moment(this.schedule_out, "HH:mm:ss")){
+      this.buttonStatus = 3
+      //Melebihi schedule out (Absent), Merah
     }
   },
   methods: {
-    onSubmit(type = "store") {
-      this.btnLoader = true;
-      let formData = new FormData();
-      formData.append("company_id", this.company_id);
-      formData.append("employee_id", this.form.employee_id);
-      formData.append("cuti_id", this.form.cuti_id);
-      formData.append("start_date", this.form.start_date);
-      formData.append("expired_date", this.form.expired_date);
-      formData.append("reason", this.form.reason);
-      // formData.append("file", this.file);
-      if (this.form.files) {
-        formData.append("file", this.form.files)
-      }
-      console.log(formData)
-      // let url = "/checkout";
-      // if (type == "update") {
-      //   url = `cutipermission/${this.form.id}/update`;
-      // }
-
-      // this.$axios
-      //   .post(url, formData)
-      //   .then((resp) => {
-      //     if (resp.data.success) {
-      //       this.$notify.success({
-      //         title: "Success",
-      //         message: `Berhasil ${
-      //           type == "store" ? "Menambah" : "Mengubah"
-      //         } Shift Employee`,
-      //       });
-      //       this.resetForm();
-      //       this.seDialog = false;
-      //       this.$store.dispatch("cutipermission/getAll", {
-      //         company_id: this.company_id,
-      //       });
-      //     }
-      //   })
-      //   .finally(() => {
-      //     this.btnLoader = false;
-      //   })
-      //   .catch((err) => {
-      //     let error = err.response.data.data;
-      //     if (error) {
-      //       this.showErrorField(error);
-      //     } else {
-      //       this.$notify.error({
-      //         title: "Error",
-      //         message: err.response.data.message,
-      //       });
-      //     }
-      //   });
-    },
     handleChangeFile(file, fileList) {
       console.log(file);
       this.form.files = file.raw;
@@ -622,10 +580,10 @@ export default {
             });
         })
         .catch((e) => {
-          if (e.response.data.code == 409) {
+          if (e.response.data.code == 409 && e.response.data.data.status == 1) {
             this.$swal({
               title: 'Perhatian!',
-              text: "Apakah anda yakin ingin checkout Lebih Awal ?",
+              text: "Apakah anda yakin ingin checkout lebih awal ?",
               icon: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
@@ -634,7 +592,29 @@ export default {
               cancelButtonText: 'Batal'
             }).then((result) => {
               if (result.isConfirmed) {
-                this.earlyCheckout = true
+                this.LOEdialog = true
+                this.tittleLOEDialog = 'Early Checkout'
+                this.late = false
+                this.form.checkin_id = e.response.data.data.checkin
+                console.log(this.form.checkin_id)
+              }
+            })
+          }
+          else if (e.response.data.code == 409 && e.response.data.data.status == 0) {
+            this.$swal({
+              title: 'Perhatian!',
+              text: "Apakah anda yakin ingin tetap checkin meskipun telat ?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya',
+              cancelButtonText: 'Batal'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.LOEdialog = true
+                this.tittleLOEDialog = 'Late Checkin'
+                this.late = true
                 this.form.checkin_id = e.response.data.data.checkin
                 console.log(this.form.checkin_id)
               }
@@ -649,23 +629,33 @@ export default {
           this.showLoading = false;
         });
     },
-    eCheckout() {
-      this.btnLoader = true;
-      let formData = new FormData();
-      formData.append("company_id", this.company_id);
-      formData.append("employee_id", this.form.employee_id);
-      formData.append("cuti_id", this.form.cuti_id);
-      formData.append("start_date", this.form.start_date);
-      formData.append("expired_date", this.form.expired_date);
-      formData.append("reason", this.form.reason);
-      // formData.append("file", this.file);
-      if (this.form.files) {
-        formData.append("file", this.form.files)
+    lateOrEarly(type = 'late') {
+      let status = 1
+      if (type == 'early') {
+        status = 2
       }
-      console.log(formData)
-    },
-    lCheckin() {
-      //
+      this.btnLoader = true;
+      console.log(status)
+      this.btnLoader = false;
+      // let formData = new FormData();
+      // formData.append("reason", this.form.reason);
+      // // formData.append("file", this.file);
+      // if (this.form.files) {
+      //   formData.append("file", this.form.files)
+      // }
+      // this.$axios.post('/checkout', formData).then(resp => {
+      //   console.log(resp)
+      // }).catch((e) => {
+      //   this.$notify.error({
+      //       title: "Error",
+      //       message: e.response.data.message,
+      //     })
+      // }).finally(() => {
+      //   this.btnLoader = false;
+      //   this.$store.dispatch("checkin/getAll", {
+      //     company_id: this.company_id,
+      //   });
+      // })
     },
     checkout(type = "checkout") {
       this.$notify.error({
