@@ -2,7 +2,7 @@
   <div class="card border-0">
     <div class="card-header bg-transparent logo" style="border: none">
       <a class="navbar-brand rounded mx-auto d-block" style="margin-bottom: 20px;">
-        <img src="../assets/img/logo-absen.png" width="200" height="200" />
+        <img src="../assets/img/Afsen-Logo.png" width="200" height="200" />
       </a>
 
     </div>

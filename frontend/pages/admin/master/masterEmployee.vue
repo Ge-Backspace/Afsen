@@ -277,20 +277,6 @@
               </vs-option>
             </vs-select>
           </vs-col>
-          <!-- <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Group</label>
-            <vs-select filter placeholder="Group" v-model="form.position_name">
-              <vs-option v-for="op in option" :key="op.id" :label="op.position_name" :value="op.id">
-                {{op.position_name}}
-              </vs-option>
-            </vs-select>
-          </vs-col> -->
           <vs-col
             vs-type="flex"
             vs-justify="center"
@@ -335,18 +321,6 @@
               placeholder="Password"
             ></vs-input>
           </vs-col>
-          <!-- <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Status</label>
-            <vs-col w="10">
-              <vs-switch style="width: 20px" v-model="form.status" />
-            </vs-col>
-          </vs-col> -->
           <vs-row>
             <vs-col w="2">
               <label>Status Employee</label>

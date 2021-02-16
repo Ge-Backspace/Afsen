@@ -129,7 +129,10 @@
                       primary
                       size="20"
                       style="height: 20px; width: 80px; border-radius: 15px"
-                      @click="detailDialog = true"
+                      @click="
+                        detailDialog = true;
+                        detil(scope.row.checkins[i]);
+                      "
                       >excelent</vs-avatar
                     >
                   </div>
@@ -147,7 +150,11 @@
                       warn
                       size="20"
                       style="height: 20px; width: 80px; border-radius: 15px"
-                      @click="detailDialog = true"
+                      @click="
+                        detailDialog = true;
+                        detil(scope.row.checkins[i]);
+                        request = true;
+                      "
                       >late</vs-avatar
                     >
                   </div>
@@ -156,7 +163,10 @@
                       color="#31B4AC"
                       size="20"
                       style="height: 20px; width: 80px; border-radius: 15px"
-                      @click="detailDialog = true"
+                      @click="
+                        detailDialog = true;
+                        requestCuti = true;
+                      "
                       >leave</vs-avatar
                     >
                   </div>
@@ -165,7 +175,6 @@
                       size="20"
                       info
                       style="height: 20px; width: 80px; border-radius: 15px"
-                      @click="detailDialog = true"
                       >weekend</vs-avatar
                     >
                   </div>
@@ -174,7 +183,7 @@
                       size="20"
                       danger
                       style="height: 20px; width: 80px; border-radius: 15px"
-                      @click="detailDialog = true"
+                      @click="detil(scope.row.checkins[i])"
                       >absent</vs-avatar
                     >
                   </div>
@@ -188,19 +197,52 @@
     <vs-dialog v-model="detailDialog">
       <template #header>
         <h4 class="not-margin">
-          <b>Monday</b>
+          <b>{{ dialog.date }}</b>
         </h4>
       </template>
 
       <div class="con-form">
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center"  style="padding:5px">
-            <label><b>Check-In Time</b></label>
-            <p style="font-size: 14px">yes</p>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label><b>Check-Out Time</b></label>
-            <p style="font-size: 14px">yes</p>
-          </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          style="padding: 5px"
+        >
+          <label><b>Check-In Time</b></label>
+          <p style="font-size: 14px">{{ dialog.checkin_time }}</p>
+        </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label><b>Check-Out Time</b></label>
+          <p style="font-size: 14px">{{ dialog.checkout_time }}</p>
+        </vs-col>
+        <vs-col
+          v-if="request"
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label><b>Reason</b></label>
+          <p style="font-size: 14px">progress</p>
+        </vs-col>
+        <vs-col
+          v-if="requestCuti"
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="6"
+          style="padding: 5px"
+        >
+          <label><b>Cuti</b></label>
+          <p style="font-size: 14px">progress</p>
+        </vs-col>
       </div>
     </vs-dialog>
   </div>
@@ -216,6 +258,8 @@ export default {
   components: {},
   data() {
     return {
+      request: false,
+      requestCuti: false,
       active: "",
       select: "",
       api_url: config.baseApiUrl,
@@ -231,6 +275,11 @@ export default {
       files: [],
       company_id: "",
       date: "",
+      dialog: {
+        checkin_time: "",
+        checkout_time: "",
+        date: "",
+      },
     };
   },
   mounted() {
@@ -243,6 +292,12 @@ export default {
     });
   },
   methods: {
+    detil(data) {
+      this.dialog.checkin_time = data.checkin_time;
+      this.dialog.checkout_time = data.checkout_time;
+      this.dialog.date = data.date;
+      console.log(data);
+    },
     dateLabel(date) {
       return moment(date, "YYYY-MM-DD").format("D");
     },
@@ -277,10 +332,6 @@ export default {
         startDate: startDate,
         endDate: endDate,
       });
-      // handleCurrentChange(val) {
-      //   this.$store.commit("berita/setPage", val);
-      //   this.$store.dispatch("berita/getAll", {});
-      // },
     },
     handleChangeFile(file, fileList) {
       this.form.banner = file.raw;
@@ -293,18 +344,7 @@ export default {
   computed: {
     ...mapGetters("report", ["getReportAttendance", "getLoader"]),
   },
-  watch: {
-    // getBeritas(newValue, oldValue) {},
-    // search(newValue, oldValue) {
-    //   // this.$store.dispatch('berita/getAll', {
-    //   //   search: newValue
-    //   // });
-    // },
-    // page(newValue, oldValue) {
-    //   this.$store.commit("berita/setPage", newValue);
-    //   this.$store.dispatch("berita/getAll", {});
-    // },
-  },
+  watch: {},
 };
 </script>
 

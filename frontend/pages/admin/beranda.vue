@@ -31,7 +31,7 @@
         <div class="col-xl-6">
           <!-- card pre-present -->
           <el-card
-            style="margin-top: 20px; background-color: #0f0967"
+            style="margin-top: 20px; background-color: #0f0967; border: none"
             v-if="
               this.status == 0 &&
               this.startDay &&
@@ -84,7 +84,7 @@
           </el-card>
           <!-- card after present -->
           <el-card
-            style="margin-top: 20px; background-color: #3b31c7"
+            style="margin-top: 20px; background-color: #3b31c7; border: none"
             v-else-if="
               this.status == 0 &&
               this.startDay &&
@@ -137,7 +137,7 @@
           </el-card>
           <!-- card present late -->
           <el-card
-            style="margin-top: 20px; background-color: #d01919"
+            style="margin-top: 20px; background-color: #d01919; border: none"
             v-else-if="
               this.status == 0 &&
               this.startDay &&
@@ -190,8 +190,8 @@
           </el-card>
           <!-- card present absent -->
           <el-card
-            style="margin-top: 20px; background-color: #4cb63f"
-            v-else-if="this.status == 1"
+            style="margin-top: 20px; background-color: #d01919; border: none"
+            v-else-if="this.status == 1" 
           >
             <!-- Card header -->
             <div
@@ -211,7 +211,7 @@
                 <vs-button
                   :loading="showLoading"
                   circle
-                  success
+                  danger
                   size="xl"
                   :active="active == 2"
                   @click="checkin('checkout')"
@@ -237,7 +237,7 @@
             </div>
           </el-card>
           <!-- card finish -->
-          <el-card style="margin-top: 20px; background-color: #909399" v-else>
+          <el-card style="margin-top: 20px; background-color: #909399; overflow-y: auto" v-else>
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
               <!-- Title -->
@@ -283,7 +283,7 @@
           <!-- left card-->
           <el-card
             class="mt-10"
-            style="margin-top: 20px; width: 450px; height: 500px"
+            style="margin-top: 20px; width: 450px; height: 500px; overflow-y: auto"
           >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
@@ -291,93 +291,93 @@
               <h2 style="font-size: 16px">Today Attendances</h2>
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               <span
-                >Schedule In : {{ schedule_in }}<br />Schedule Out :
-                {{ schedule_out }}</span
+                >Schedule In : {{ schedule(schedule_in) }}<br />Schedule Out :
+                {{ schedule(schedule_out) }}</span
               >
             </div>
-            <table>
-              <tr :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
-                <td>
-                  <p
-                    style="font-weight: bold; font-size: 16px;"
-                    class="clearfix"
-                  >
-                    <img
-                      style="float: left; width: 42px; height: 42px;"
-                      class="rounded-circle"
-                      src="https://picsum.photos/125/125/?image=58"
-                      alt="left image"
-                    />
-                    &nbsp; &nbsp;
-                    {{ tr.name }}
-                    <br />
-                    &nbsp; &nbsp;
-                    <span style="font-weight: normal; font-size: 14px"
-                      >{{ tr.position_name }}</span
+            <table >
+                <tr :key="i" v-for="(tr, i) in getCheckin.data" :data="tr">
+                  <td>
+                    <p
+                      style="font-weight: bold; font-size: 16px"
+                      class="clearfix"
                     >
-                  </p>
-                </td>
-                <br /><br />
-                <td>
-                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                  &nbsp; &nbsp; &nbsp; 
-                </td>
-                <td>
-                  <vs-avatar
-                    v-if="!tr.checkout_time"
-                    size="10"
-                    class="align-self-center"
-                    danger
-                    style="height: 20px; width: 80px; border-radius: 15px"
-                  >
-                    <span style="font-weight: ">{{
-                      formatTime(tr.checkin_time)
-                    }}</span>
-                  </vs-avatar>
+                      <img
+                        style="float: left; width: 42px; height: 42px"
+                        class="rounded-circle"
+                        src="https://picsum.photos/125/125/?image=58"
+                        alt="left image"
+                      />
+                      &nbsp; &nbsp;
+                      {{ tr.name }}
+                      <br />
+                      &nbsp; &nbsp;
+                      <span style="font-weight: normal; font-size: 14px">{{
+                        tr.position_name
+                      }}</span>
+                    </p>
+                  </td>
+                  <br /><br />
+                  <td>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                  </td>
+                  <td>
+                    <vs-avatar
+                      v-if="!tr.checkout_time"
+                      size="10"
+                      class="align-self-center"
+                      danger
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                    >
+                      <span style="font-weight: ">{{
+                        formatTime(tr.checkin_time)
+                      }}</span>
+                    </vs-avatar>
 
-                  <vs-avatar
-                    v-else
-                    size="10"
-                    class="align-self-center"
-                    success
-                    style="height: 20px; width: 80px; border-radius: 15px"
-                  >
-                    <span style="font-weight: ">{{
-                      formatTime(tr.checkin_time)
-                    }}</span>
-                  </vs-avatar>
-                </td>
-                <td>
-                  <vs-avatar
-                    v-if="tr.status == 0"
-                    size="20"
-                    class="align-self-center"
-                    success
-                    style="
-                      height: 20px;
-                      width: 80px;
-                      border-radius: 15px;
-                      margin-left: 20px;
-                    "
-                  >
-                    <span style="font-weight: ">Excelent</span>
-                  </vs-avatar>
-                  <vs-avatar
-                    v-else
-                    size="10"
-                    class="align-self-center"
-                    danger
-                    style="
-                      height: 20px;
-                      width: 80px;
-                      border-radius: 15px;
-                      margin-left: 20px;
-                    "
-                  >
-                    <span style="font-weight: ">Late</span>
-                  </vs-avatar>
-                </td>
-              </tr>
+                    <vs-avatar
+                      v-else
+                      size="10"
+                      class="align-self-center"
+                      success
+                      style="height: 20px; width: 80px; border-radius: 15px"
+                    >
+                      <span style="font-weight: ">{{
+                        formatTime(tr.checkin_time)
+                      }}</span>
+                    </vs-avatar>
+                  </td>
+                  <td>
+                    <vs-avatar
+                      v-if="tr.status == 0"
+                      size="20"
+                      class="align-self-center"
+                      success
+                      style="
+                        height: 20px;
+                        width: 80px;
+                        border-radius: 15px;
+                        margin-left: 20px;
+                      "
+                    >
+                      <span style="font-weight: ">Excelent</span>
+                    </vs-avatar>
+                    <vs-avatar
+                      v-else
+                      size="10"
+                      class="align-self-center"
+                      danger
+                      style="
+                        height: 20px;
+                        width: 80px;
+                        border-radius: 15px;
+                        margin-left: 20px;
+                      "
+                    >
+                      <span style="font-weight: ">Late</span>
+                    </vs-avatar>
+                  </td>
+                </tr>
             </table>
           </el-card>
         </div>
@@ -395,6 +395,7 @@ export default {
   layout: "admin",
   data() {
     return {
+      benched: 0,
       active: 0,
       status: 0,
       company_id: "",
@@ -467,6 +468,9 @@ export default {
     }
   },
   methods: {
+    schedule(sc) {
+      return moment(sc, 'HH:mm:ss').format('HH:mm')
+    },
     checkin(type = "checkin") {
       this.showLoading = true;
       this.data.request = 1;
