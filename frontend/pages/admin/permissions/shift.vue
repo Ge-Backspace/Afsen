@@ -152,6 +152,26 @@
                       </el-button>
                     </el-tooltip>
                   </vs-td>
+                  <template #expand>
+                    <vs-row>
+                      <div class="con-content">
+                        <h1>Reason</h1>
+                        <div v-html="tr.reason">
+                          {{ tr.reason }}
+                        </div>
+                      </div>
+                      <div >
+                        <vs-button
+                          success
+                          style="float: right; margin-left: 50px;"
+                          :loading="globalLoader"
+                          gradient
+                          @click="exportData('excel')"
+                          >Evidence</vs-button
+                        >
+                      </div>
+                    </vs-row>
+                  </template>
                 </vs-tr>
               </template>
               <template #footer>
@@ -334,6 +354,21 @@
             <client-only>
               <vue-editor v-model="form.reason"></vue-editor>
             </client-only>
+          </vs-col>
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Upload Document</label>
+            <el-upload
+               :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+             :limit="1"
+            >
+              <i class="el-icon-plus"></i>
+            </el-upload>
           </vs-col>
         </vs-row>
       </div>

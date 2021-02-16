@@ -30,11 +30,211 @@
       <div class="row">
         <div class="col-xl-6">
           <!-- card pre-present -->
+          <!-- ijo -->
           <el-card
-            style="margin-top: 20px; background-color: #0f0967; border: none"
+            style="margin-top: 20px; background-color: #4EB02F; border: none"
+            v-if="
+              buttonStatus == 1
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span>{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  success
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkin')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime"></h1>
+                    </tr>
+                    <tr>
+                      <td>
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- warning -->
+          <el-card
+            style="margin-top: 20px; background-color: #C5C727; border: none"
+            v-if="
+              buttonStatus == 2
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span style="color: #fff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  warn
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkin')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime" style="color: #fff"></h1>
+                    </tr>
+                    <tr>
+                      <td style="color: #fff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- danger -->
+          <el-card
+            style="margin-top: 20px; background-color: #A82525; border: none"
             v-if="
               status == 0 &&
-              buttonStatus == 1
+              buttonStatus == 3
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span style="color: #fff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  danger
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkin')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime" style="color: #fff"></h1>
+                    </tr>
+                    <tr>
+                      <td style="color: #fff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- biru -->
+          <el-card
+            style="margin-top: 20px; background-color: #253DE1; border: none"
+            v-if="
+              buttonStatus == 4
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span style="color: #fff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  primary
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkout')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime" style="color: #fff"></h1>
+                    </tr>
+                    <tr>
+                      <td style="color: #fff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <el-card
+            style="margin-top: 20px; background-color: #B6B3B7; border: none"
+            v-if="
+              buttonStatus == 5
             "
           >
             <!-- Card header -->
@@ -82,10 +282,10 @@
           </el-card>
         </div>
         <div class="col-xl-6">
-          <!-- left card-->
+          <!-- Right card-->
           <el-card
             class="mt-10"
-            style="margin-top: 20px; width: 450px; height: 500px; overflow-y: auto"
+            style="margin-top: 20px; overflow-y: auto"
           >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
@@ -334,29 +534,32 @@ export default {
       .then((response) => {
         this.schedule_in = response.data.data.schedule_in;
         this.schedule_out = response.data.data.schedule_out;
+        let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
+        if (this.status == 0 && moment(this.start, "HH:mm:ss") <= moment(now, "HH:mm:ss")) {
+          if (moment(now, "HH:mm:ss") > moment(this.schedule_in, "HH:mm:ss").add(15, 'minutes')) {
+            this.buttonStatus = 2
+            // Melebihi schedule in + 15 menit (Late), Kuning
+          } else if (this.status == 0 && moment(now, "HH:mm:ss") > moment(this.schedule_out, "HH:mm:ss")) {
+            this.buttonStatus = 3
+            // Melebihi schedule out (Absent), Merah  
+          } else{
+            this.buttonStatus = 1
+            // Belum checkin Melebihi start day (Boleh Checkin dan statusnya Excelent), Hijau
+          }
+        } else if (this.status == 1){
+          this.buttonStatus = 4
+          // Sudah Absensi, Biru
+        } else if (this.status == 2){
+          this.buttonStatus = 5
+          // Sudah Checkout, Pudar / Putih
+        }
+        console.log(this.buttonStatus)
       });
     this.$axios
       .get(`positions/?user_id=${this.data.user_id}`)
       .then((response) => {
         this.position_name = response.data.data.position_name;
       });
-    let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
-    if (this.status == 0 && moment(this.start, "HH:mm:ss") <= moment(now, "HH:mm:ss")) {
-      this.buttonStatus = 1
-      // Belum checkin Melebihi start day (Boleh Checkin dan statusnya Excelent), Hijau
-    } else if (this.status == 0 && moment(now, "HH:mm:ss") > moment(this.schedule_in, "HH:mm:ss").add(15, 'minutes')) {
-      this.buttonStatus = 2
-      // Melebihi schedule in + 15 menit (Late), Kuning
-    } else if (this.status == 0 && moment(now, "HH:mm:ss") > moment(this.schedule_out, "HH:mm:ss")){
-      this.buttonStatus = 3
-      // Melebihi schedule out (Absent), Merah
-    } else if (this.status == 1){
-      this.buttonStatus = 4
-      // Sudah Absensi, Biru
-    } else if (this.status == 2){
-      this.buttonStatus = 5
-      // Sudah Checkout, Pudar / Putih
-    }
   },
   methods: {
     schedule(time) {

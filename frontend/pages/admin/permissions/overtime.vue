@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Permission Cuti</h1>
+          <h1 class="heading">Overtime</h1>
         </div>
       </div>
     </div>
@@ -28,7 +28,6 @@
             @click="exportData('excel')"
             >Download Excel</vs-button
           >
-          <br />
 
           <el-card v-loading="getLoader" style="margin-top: 40px">
             <div class="row" style="margin-bottom: 20px">
@@ -60,30 +59,32 @@
               <template #thead>
                 <vs-tr>
                   <vs-th>Employee</vs-th>
-                  <vs-th>Nama Cuti</vs-th>
-                  <vs-th>Code Cuti</vs-th>
-                  <vs-th>Start Date</vs-th>
-                  <vs-th>Expired Date</vs-th>
+                  <vs-th>Schedule_in</vs-th>
+                  <vs-th>Schedule_out</vs-th>
+                  <vs-th>Date</vs-th>
                   <vs-th>Status</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in getCutiPs.data" :data="tr">
+                <vs-tr :key="i" v-for="(tr, i) in getShiftPs.data" :data="tr">
                   <vs-td>
-                    {{ tr.name }}
+                    {{ tr.name1 }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.cuti_name }}
+                    {{ tr.name2 }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.code }}
+                    {{ formatDate(tr.date1) }} {{ tr.code1 }} ({{
+                      tr.schedule_in1
+                    }}
+                    - {{ tr.schedule_out1 }})
                   </vs-td>
                   <vs-td>
-                    {{ formatDate(tr.start_date) }}
-                  </vs-td>
-                  <vs-td>
-                    {{ formatDate(tr.expired_date) }}
+                    {{ formatDate(tr.date2) }} {{ tr.code2 }} ({{
+                      tr.schedule_in2
+                    }}
+                    - {{ tr.schedule_out2 }})
                   </vs-td>
                   <vs-td>
                     <span class="badge badge-primary" v-if="tr.status_id == 0"
@@ -117,7 +118,7 @@
                       <el-button
                         size="mini"
                         type="primary"
-                        @click="deleteCutiE(tr.id)"
+                        @click="deleteShift(tr.id)"
                         icon="fa fa-trash"
                       >
                       </el-button>
@@ -176,12 +177,12 @@
               <template #footer>
                 <vs-row>
                   <vs-col w="2">
-                    <small>Total : {{ getCutiPs.total }} Data</small>
+                    <small>Total : {{ getShiftPs.total }} Data</small>
                   </vs-col>
                   <vs-col w="10">
                     <vs-pagination
                       v-model="page"
-                      :length="Math.ceil(getCutiPs.total / table.max)"
+                      :length="Math.ceil(getShiftPs.total / table.max)"
                     />
                   </vs-col>
                 </vs-row>
@@ -191,18 +192,17 @@
         </div>
       </div>
     </div>
-
     <el-tooltip
       class="item"
       effect="dark"
-      content="Buat Cuti Permission Baru"
+      content="Buat Shift Baru"
       placement="top-start"
     >
       <a
         class="float"
         @click="
           seDialog = true;
-          titleDialog = 'Permohonan Izin Cuti';
+          titleDialog = 'Pengajuan Pergantian Shift';
         "
       >
         <i class="el-icon-plus my-float"></i>
@@ -212,7 +212,7 @@
     <vs-dialog
       v-model="seDialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
-      @close="resetForm()"
+      @close="resetForm(), (optionshift1 = false), (optionshift2 = false)"
     >
       <template #header>
         <h1 class="not-margin">
@@ -228,11 +228,15 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Employee</label>
+            <label>Employee pengaju</label>
             <vs-select
               filter
-              placeholder="Employee Name"
-              v-model="form.employee_id"
+              placeholder="Employee"
+              v-model="form.employee1_id"
+              @change="
+                getshift1(form.employee1_id);
+                optionshift1 = true;
+              "
             >
               <vs-option
                 v-for="op in getOptionEmployees.data"
@@ -251,15 +255,91 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Cuti Name</label>
-            <vs-select filter placeholder="Type" v-model="form.cuti_id">
+            <label>Employee Pengganti</label>
+            <vs-select
+              filter
+              placeholder="Employee"
+              v-model="form.employee2_id"
+              @change="
+                getshift2(form.employee2_id);
+                optionshift2 = true;
+              "
+            >
               <vs-option
-                v-for="op in getOptionCuties.data"
+                v-for="op in getOptionEmployees.data"
                 :key="op.id"
-                :label="[op.code, op.cuti_name]"
+                :label="op.name"
                 :value="op.id"
               >
-                {{ op.cuti_name }},{{ op.code }}
+                {{ op.name }}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col
+            v-loading="getLoader"
+            v-if="optionshift1"
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Shift Pengaju</label>
+            <vs-select
+              filter
+              placeholder="Shift"
+              v-model="form.shift_employee1_id"
+            >
+              <vs-option
+                v-for="op in getOptionShiftE1.data"
+                :key="op.id"
+                :label="[
+                  [
+                    formatDate(op.date),
+                    op.code,
+                    op.schedule_in,
+                    op.schedule_out,
+                  ],
+                ]"
+                :value="op.id"
+              >
+                {{ formatDate(op.date) }} ({{ op.code }}) ,{{
+                  op.schedule_in
+                }}-{{ op.schedule_out }}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col
+            v-loading="getLoader"
+            v-if="optionshift2"
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Shift Pengganti</label>
+            <vs-select
+              filter
+              placeholder="Shift"
+              v-model="form.shift_employee2_id"
+            >
+              <vs-option
+                v-for="op in getOptionShiftE2.data"
+                :key="op.id"
+                :label="[
+                  [
+                    formatDate(op.date),
+                    op.code,
+                    op.schedule_in,
+                    op.schedule_out,
+                  ],
+                ]"
+                :value="op.id"
+              >
+                {{ formatDate(op.date) }} ({{ op.code }}) ,{{
+                  op.schedule_in
+                }}-{{ op.schedule_out }}
               </vs-option>
             </vs-select>
           </vs-col>
@@ -270,27 +350,7 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Start Date</label>
-            <vs-input type="date" v-model="form.start_date"></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Expired Date</label>
-            <vs-input type="date" v-model="form.expired_date"></vs-input>
-          </vs-col>
-          <vs-col
-            vs-type="flex"
-            vs-justify="center"
-            vs-align="center"
-            w="6"
-            style="padding: 5px"
-          >
-            <label>Reason</label>
+            <label>Description</label>
             <client-only>
               <vue-editor v-model="form.reason"></vue-editor>
             </client-only>
@@ -304,8 +364,8 @@
           >
             <label>Upload Document</label>
             <el-upload
-              :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="file" :limit="1"
+               :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+             :limit="1"
             >
               <i class="el-icon-plus"></i>
             </el-upload>
@@ -433,54 +493,53 @@ export default {
       table: {
         max: 10,
       },
+      optionshift1: false,
+      optionshift2: false,
       request: false,
       importDialog: false,
       active: 0,
       page: 1,
-      titleDialog: "Edit Shift Employee",
+      titleDialog: "Edit Permission Shift",
       search: "",
       company_id: "",
       isUpdate: false,
       seDialog: false,
       btnLoader: false,
-      files: "",
+      file: "",
       form: {
         id: "",
-        employee_id: "",
-        cuti_id: "",
-        start_date: "",
-        expired_date: "",
-        reason: "",
+        employee1_id: "",
+        employee2_id: "",
+        shift_employee1_id: "",
+        shift_employee2_id: "",
       },
     };
   },
   mounted() {
     this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
-    this.$store.dispatch("cutipermission/getAll", {
+    this.$store.dispatch("shiftpermission/getAll", {
       company_id: this.company_id,
     });
     this.$store.dispatch("option/getOptionEmployees", {
       company_id: this.company_id,
     });
-    this.$store.dispatch("option/getOptionCuties", {
-      company_id: this.company_id,
+    this.$store.dispatch("option/getOptionShiftEmployee", {
+      employee_id: 0,
     });
   },
   methods: {
     searchData() {
-      this.$store.dispatch("cutipermission/getAll", {
+      this.$store.dispatch("shiftemployee/getAll", {
         search: this.search,
         company_id: this.company_id,
       });
     },
     edit(data) {
       this.form.id = data.id;
-      this.form.employee_id = data.employee_id;
-      this.form.cuti_id = data.cuti_id;
-      this.form.start_date = data.start_date;
-      this.form.expired_date = data.expired_date;
-      this.form.reason = data.reason;
-      this.file = data.file;
+      this.employee1_id = data.employee1_id;
+      this.employee2_id = data.employee2_id;
+      this.shift_employee1_id = data.shift_employee1_id;
+      this.shift_employee2_id = data.shift_employee2_id;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;
@@ -488,35 +547,28 @@ export default {
     resetForm() {
       this.form = {
         id: "",
-        employee_id: "",
-        cuti_id: "",
-        start_date: "",
-        expired_date: "",
+        employee1_id: "",
+        employee2_id: "",
+        shift_employee1_id: "",
+        shift_employee2_id: "",
       };
       this.isUpdate = false;
     },
     handleCurrentChange(val) {
-      this.$store.commit("cutipermission/setPage", val);
-      this.$store.dispatch("cutipermission/getAll", {
+      this.$store.commit("shiftemployee/setPage", val);
+      this.$store.dispatch("shiftemployee/getAll", {
         company_id: this.company_id,
       });
     },
-    handleChangeFile(file, fileList) {
-      console.log(file);
-      this.form.files = file.raw;
-    },
-    handleChangeSelect(data) {
-      this.$store.dispatch("cutipermission/getAll", {
-        company_id: this.company_id,
-        showall: 0,
-      });
+    onFileChange(e) {
+      this.file = e.target.files[0];
     },
     importData() {
       let formData = new FormData();
       formData.append("company_id", this.company_id);
       formData.append("file", this.file);
       this.$axios
-        .post("/cutipermission/import", formData, {
+        .post("/shiftpermission/import", formData, {
           headers: { "content-type": "multipart/form-data" },
         })
         .then((resp) => {
@@ -527,7 +579,7 @@ export default {
             });
             this.resetForm();
             this.importDialog = false;
-            this.$store.dispatch("cutipermission/getAll", {
+            this.$store.dispatch("shiftpermission/getAll", {
               company_id: this.company_id,
             });
           }
@@ -541,10 +593,10 @@ export default {
           this.btnLoader = false;
         });
     },
-    exportData(type = "excel") {
+    exportData(type) {
       this.$axios
         .get(
-          `/cutipermission/export?company_id=${this.company_id}&as=${type}`,
+          `/shiftpermission/export?company_id=${this.company_id}&as=${type}`,
           {
             responseType: "blob",
           }
@@ -553,9 +605,9 @@ export default {
           const link = document.createElement("a");
           link.href = window.URL.createObjectURL(new Blob([response.data]));
           if (type == "pdf") {
-            link.setAttribute("download", "cuti_permission.pdf");
+            link.setAttribute("download", "shift_permission.pdf");
           } else {
-            link.setAttribute("download", "cuti_permission.xlsx");
+            link.setAttribute("download", "shift_permission.xlsx");
           }
           document.body.appendChild(link);
           link.click();
@@ -565,18 +617,14 @@ export default {
       this.btnLoader = true;
       let formData = new FormData();
       formData.append("company_id", this.company_id);
-      formData.append("employee_id", this.form.employee_id);
-      formData.append("cuti_id", this.form.cuti_id);
-      formData.append("start_date", this.form.start_date);
-      formData.append("expired_date", this.form.expired_date);
+      formData.append("employee1_id", this.form.employee1_id);
+      formData.append("employee2_id", this.form.employee2_id);
+      formData.append("shift_employee1_id", this.form.shift_employee1_id);
+      formData.append("shift_employee2_id", this.form.shift_employee2_id);
       formData.append("reason", this.form.reason);
-      // formData.append("file", this.file);
-      if (this.form.files) {
-          formData.append("foto", this.form.files)
-        }
-      let url = "/cutipermission";
+      let url = "/shiftpermission";
       if (type == "update") {
-        url = `cutipermission/${this.form.id}/update`;
+        url = `shiftpermission/${this.form.id}/update`;
       }
 
       this.$axios
@@ -591,7 +639,7 @@ export default {
             });
             this.resetForm();
             this.seDialog = false;
-            this.$store.dispatch("cutipermission/getAll", {
+            this.$store.dispatch("shiftpermission/getAll", {
               company_id: this.company_id,
             });
           }
@@ -611,10 +659,10 @@ export default {
           }
         });
     },
-    deleteCutiE(id) {
+    deleteShift(id) {
       this.$swal({
         title: "HEY WAIT!, HEY HOLD ON!",
-        text: "Are you serious to delete this data ?",
+        text: "Are you serious to delete this cutie data ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -624,7 +672,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`/cutipermission/${id}/delete`)
+            .delete(`/shiftpermission/${id}/delete`)
             .then((resp) => {
               if (resp.data.success) {
                 this.$notify.success({
@@ -632,7 +680,7 @@ export default {
                   message: "Berhasil Menghapus Data",
                 });
                 this.shiftDialog = false;
-                this.$store.dispatch("cutipermission/getAll", {
+                this.$store.dispatch("shiftpermission/getAll", {
                   company_id: this.company_id,
                 });
               }
@@ -647,6 +695,16 @@ export default {
               });
             });
         }
+      });
+    },
+    getshift1(id) {
+      this.$store.dispatch("option/getOptionShiftEmployee1", {
+        employee_id: id,
+      });
+    },
+    getshift2(id) {
+      this.$store.dispatch("option/getOptionShiftEmployee2", {
+        employee_id: id,
       });
     },
     status(id) {
@@ -675,7 +733,7 @@ export default {
     },
     change(id, status) {
       this.$axios
-        .post(`/cutipermission/${id}/change?status=${status}`)
+        .post(`/shiftpermission/${id}/change?status=${status}`)
         .then((resp) => {
           if (resp.data.success) {
             this.$notify.success({
@@ -693,7 +751,7 @@ export default {
           });
         })
         .finally(() => {
-          this.$store.dispatch("cutipermission/getAll", {
+          this.$store.dispatch("shiftpermission/getAll", {
             company_id: this.company_id,
           });
         });
@@ -703,21 +761,26 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("cutipermission", ["getCutiPs", "getLoader"]),
-    ...mapGetters("option", ["getOptionEmployees", "getOptionCuties"]),
+    ...mapGetters("shiftpermission", ["getShiftPs", "getLoader"]),
+    ...mapGetters("option", [
+      "getOptionShifts",
+      "getOptionEmployees",
+      "getOptionShiftE1",
+      "getOptionShiftE2",
+    ]),
   },
   watch: {
-    getCutiPs(newValue, oldValue) {
+    getShiftPs(newValue, oldValue) {
       //
     },
     search(newValue, oldValue) {
-      this.$store.dispatch("shiftemployee/getAll", {
+      this.$store.dispatch("shiftpermission/getAll", {
         search: newValue,
       });
     },
     page(newValue, oldValue) {
-      this.$store.commit("cutipermission/setPage", newValue);
-      this.$store.dispatch("cutipermission/getAll", {
+      this.$store.commit("shiftpermission/setPage", newValue);
+      this.$store.dispatch("shiftpermission/getAll", {
         company_id: this.company_id,
       });
     },
