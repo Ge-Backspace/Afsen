@@ -8,7 +8,6 @@
         </div>
       </div>
     </div>
-
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
@@ -103,7 +102,7 @@
           <el-card v-loading="getLoader">
             <GmapMap
             v-bind:center="getCoordinate.center"
-            v-bind:zoom="8"
+            v-bind:zoom="4"
             map-type-id="terrain"
             style="height: 225px"
             >
@@ -330,6 +329,7 @@ export default {
                   company_id: this.company_id,
                   defaultPage: true,
                 });
+                this.$store.dispatch("coordinate/getLocation", { company_id: this.company_id });
               }
             })
             .finally(() => {

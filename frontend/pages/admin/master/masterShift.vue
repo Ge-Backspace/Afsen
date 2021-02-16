@@ -32,7 +32,7 @@
               >
             </div>
           </div>
-          <el-card v-loading="getLoader">
+          <el-card v-loading="getLoader" style="margin-top: 40px">
             <div class="row" style="margin-bottom: 20px">
               <div class="col-md-2">
                 <vs-button

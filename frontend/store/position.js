@@ -1,6 +1,5 @@
 export const state = () => ({
     position: {
-      email: '',
       data: [],
       total: 0,
       current_page: 1
