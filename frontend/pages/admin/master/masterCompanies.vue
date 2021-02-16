@@ -11,7 +11,7 @@
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
-          <el-card v-loading="getLoader">
+          <el-card v-loading="getLoader" style="margin-top: 80px">
             <vs-table striped>
               <template #thead>
                 <vs-tr>
@@ -49,11 +49,11 @@
       </template>
       <div class="con-form">
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <label>Nama</label>
             <vs-input type="text" v-model="form.name" placeholder="Nama"></vs-input>
           </vs-col>
-          
+
         </vs-row>
       </div>
 

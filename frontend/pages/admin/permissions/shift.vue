@@ -29,7 +29,7 @@
             >Download Excel</vs-button
           >
 
-          <el-card v-loading="getLoader" style="margin-top: 40px">
+          <el-card v-loading="getLoader" style="margin-top: 100px">
             <div class="row" style="margin-bottom: 20px">
               <div class="col-md-2">
                 <vs-button
@@ -152,6 +152,15 @@
                       </el-button>
                     </el-tooltip>
                   </vs-td>
+                  <template #expand>
+                    <div class="con-content">
+
+                        <h3>Reason</h3>
+                        <div v-html="tr.reason">
+                        {{ tr.reason }}
+                      </div>
+                    </div>
+                  </template>
                 </vs-tr>
               </template>
               <template #footer>

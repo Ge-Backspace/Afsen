@@ -9,9 +9,8 @@
       </div>
     </div>
     <div class="container-fluid mt--7">
-      <el-card v-loading="getLoader">
-        <div class="row">
-        <div class="col-xl-3">
+      <div class="row">
+        <el-card v-loading="getLoader" class="col-xl-3">
           <router-link to="/admin/report/attendance">
             <vs-card>
               <template #title>
@@ -25,8 +24,8 @@
               </template>
             </vs-card>
           </router-link>
-        </div>
-        <div class="col-xl-3">
+        </el-card>
+        <el-card v-loading="getLoader" class="col-xl-3">
           <router-link to="">
             <vs-card>
               <template #title>
@@ -40,8 +39,8 @@
               </template>
             </vs-card>
           </router-link>
-        </div>
-        <div class="col-xl-3">
+        </el-card>
+        <el-card v-loading="getLoader" class="col-xl-3">
           <router-link to="">
             <vs-card>
               <template #title>
@@ -55,8 +54,8 @@
               </template>
             </vs-card>
           </router-link>
-        </div>
-        <div class="col-xl-3">
+        </el-card>
+        <el-card v-loading="getLoader" class="col-xl-3">
           <router-link to="">
             <vs-card>
               <template #title>
@@ -70,10 +69,8 @@
               </template>
             </vs-card>
           </router-link>
-        </div>
-        
+        </el-card>
       </div>
-      </el-card>
     </div>
   </div>
 </template>

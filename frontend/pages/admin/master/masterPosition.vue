@@ -11,28 +11,28 @@
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
-          <vs-button
-            warn
-            style="float: right"
-            :loading="globalLoader"
-            gradient
-            @click="exportData('pdf')"
-            >Download PDF</vs-button
-          >
-          &nbsp;
-          <vs-button
-            success
-            style="float: right"
-            :loading="globalLoader"
-            gradient
-            @click="exportData('excel')"
-            >Download Excel</vs-button
-          >
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <el-card v-loading="getLoader">
+          <div class="row">
+            <div class="col-md-12">
+              <vs-button
+                warn
+                style="float: right"
+                :loading="globalLoader"
+                gradient
+                @click="exportData('pdf')"
+                >Download PDF</vs-button
+              >
+              &nbsp;
+              <vs-button
+                success
+                style="float: right"
+                :loading="globalLoader"
+                gradient
+                @click="exportData('excel')"
+                >Download Excel</vs-button
+              >
+            </div>
+          </div>
+          <el-card v-loading="getLoader" style="margin-top: 40px">
             <div class="row" style="margin-bottom:20px">
               <div class="col-md-2">
                 <vs-button
@@ -42,7 +42,7 @@
                   gradient
                   @click="
                   importDialog = true
-                  titleDialog = 'Import Position'
+                  titleDialog = 'Import Master Shift'
                   "
                   >Import Excel</vs-button
                 >
@@ -124,8 +124,8 @@
             <vs-input type="text" v-model="form.position_name" placeholder="Name"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Code</label>
-            <vs-input type="text" v-model="form.group" placeholder="Code"></vs-input>
+            <label>Group</label>
+            <vs-input type="text" v-model="form.group" placeholder="Group"></vs-input>
           </vs-col>
         </vs-row>
       </div>
@@ -267,12 +267,12 @@
       });
     },
     methods: {
-      // searchData(){
-      //   this.$store.dispatch('schedule/getAll', {
-      //     search: this.search,
-      //     company_id: this.company_id
-      //   });
-      // },
+      searchData(){
+        this.$store.dispatch('position/getAll', {
+          search: this.search,
+          company_id: this.company_id
+        });
+      },
       onFileChange(e){
       this.file = e.target.files[0];
     },
