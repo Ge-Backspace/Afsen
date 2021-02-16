@@ -294,7 +294,7 @@
             <label>Upload Document</label>
             <el-upload
               :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
-            :file-list="file" :limit="1"
+            :file-list="files" :limit="1"
             >
               <i class="el-icon-plus"></i>
             </el-upload>

@@ -29,7 +29,7 @@
             >Download Excel</vs-button
           >
 
-          <el-card v-loading="getLoader" style="margin-top: 100px">
+          <el-card v-loading="getLoader" style="margin-top: 40px">
             <div class="row" style="margin-bottom: 20px">
               <div class="col-md-2">
                 <vs-button
