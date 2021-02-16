@@ -182,7 +182,7 @@
         class="float"
         @click="
           seDialog = true;
-          titleDialog = 'Pengajuan Pergantian Cuti';
+          titleDialog = 'Pengajuan Pergantian Shift';
         "
       >
         <i class="el-icon-plus my-float"></i>

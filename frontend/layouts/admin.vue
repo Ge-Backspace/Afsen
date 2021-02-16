@@ -21,7 +21,7 @@
                 </div>
               </li>
               <li class="nav-item d-md-none">
-                <h3 style="color: #fff; font-weight: bold; margin-top:10px">SIMPUL KENDALI</h3>
+                <h3 style="color: #fff; font-weight: bold; margin-top:10px">Attendance</h3>
               </li>
             </ul>
             <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">

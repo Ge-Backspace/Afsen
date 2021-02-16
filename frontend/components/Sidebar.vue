@@ -5,7 +5,7 @@
             <!-- Brand -->
             <div class="sidenav-header  d-flex  align-items-center">
                 <a class="navbar-brand">
-                    <img src="~assets/img/attendance 1.png" class="navbar-brand-img" alt="...">
+                    <img src="~assets/img/Afsen-Logo.png" class="navbar-brand-img" alt="...">
                 </a>
                 <div class=" ml-auto ">
                     <!-- Sidenav toggler -->

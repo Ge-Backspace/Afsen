@@ -111,12 +111,11 @@
                   </vs-td>
                   <template #expand>
                 <div class="con-content">
-                  <div>
+                  
                     <h1>Reason</h1>
-                    <p>
-                      Hashire sori yo, kaze no you ni, tsukimi hara wo, padoru
-                      padoru
-                    </p>
+                  <div v-html="tr.reason">  
+                      {{tr.reason}}
+                    
                   </div>
                 </div>
               </template>

@@ -153,8 +153,9 @@
                   </vs-td>
                   <template #expand>
                     <div class="con-content">
-                      <div>
+                      
                         <h1>Reason</h1>
+                        <div v-html="tr.reason">
                         {{ tr.reason }}
                       </div>
                     </div>
@@ -278,7 +279,7 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Description</label>
+            <label>Reason</label>
             <client-only>
               <vue-editor v-model="form.reason"></vue-editor>
             </client-only>
