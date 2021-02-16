@@ -31,4 +31,6 @@ class Variable
     public const LEPE = 'LEPE';
     // Cuti Permission
     public const CTPE = 'CTPE';
+    // Early Checkout
+    public const ERCO = 'ERCO';
 }

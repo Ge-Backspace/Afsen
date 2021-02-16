@@ -320,7 +320,7 @@
                 <br /><br />
                 <td>
                   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                  &nbsp; &nbsp; &nbsp; 
+                  &nbsp; &nbsp; &nbsp;
                 </td>
                 <td>
                   <vs-avatar
@@ -383,6 +383,69 @@
         </div>
       </div>
     </div>
+    <vs-dialog
+      v-model="earlyCheckout"
+      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="earlyCheckout = false"
+    >
+      <template #header>
+        <h1 class="not-margin">
+          Early Checkout
+        </h1>
+      </template>
+      <vs-row>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="8"
+          style="padding: 5px"
+        >
+          <label>Reason</label>
+          <client-only>
+            <vue-editor v-model="form.reason"></vue-editor>
+          </client-only>
+        </vs-col>
+        <vs-col
+          vs-type="flex"
+          vs-justify="center"
+          vs-align="center"
+          w="4"
+          style="padding: 5px"
+        >
+          <label>Upload Document</label>
+          <el-upload
+            :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+          :file-list="files" :limit="1"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </vs-col>
+      </vs-row>
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button block :loading="btnLoader"
+              @click="eCheckout()"
+                >Simpan</vs-button
+              >
+            </vs-col>
+            <vs-col w="6" style="padding: 5px">
+              <vs-button
+                block
+                border
+                @click="
+                  earlyCheckout = false;
+                "
+                >Batal</vs-button
+              >
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -395,6 +458,7 @@ export default {
   layout: "admin",
   data() {
     return {
+      api_url: '',
       active: 0,
       status: 0,
       company_id: "",
@@ -404,12 +468,19 @@ export default {
       startDay: false,
       startCheckin: false,
       startCheckout: false,
+      btnLoader: false,
+      earlyCheckout: false,
       name: "",
       data: {
         user_id: "",
         lat: "",
         lng: "",
         request: "",
+      },
+      form: {
+        checkin_id: "",
+        reason: "",
+        files: "",
       },
       employee_id: "",
       start: "06:00:00",
@@ -467,6 +538,61 @@ export default {
     }
   },
   methods: {
+    onSubmit(type = "store") {
+      this.btnLoader = true;
+      let formData = new FormData();
+      formData.append("company_id", this.company_id);
+      formData.append("employee_id", this.form.employee_id);
+      formData.append("cuti_id", this.form.cuti_id);
+      formData.append("start_date", this.form.start_date);
+      formData.append("expired_date", this.form.expired_date);
+      formData.append("reason", this.form.reason);
+      // formData.append("file", this.file);
+      if (this.form.files) {
+        formData.append("file", this.form.files)
+      }
+      console.log(formData)
+      // let url = "/checkout";
+      // if (type == "update") {
+      //   url = `cutipermission/${this.form.id}/update`;
+      // }
+
+      // this.$axios
+      //   .post(url, formData)
+      //   .then((resp) => {
+      //     if (resp.data.success) {
+      //       this.$notify.success({
+      //         title: "Success",
+      //         message: `Berhasil ${
+      //           type == "store" ? "Menambah" : "Mengubah"
+      //         } Shift Employee`,
+      //       });
+      //       this.resetForm();
+      //       this.seDialog = false;
+      //       this.$store.dispatch("cutipermission/getAll", {
+      //         company_id: this.company_id,
+      //       });
+      //     }
+      //   })
+      //   .finally(() => {
+      //     this.btnLoader = false;
+      //   })
+      //   .catch((err) => {
+      //     let error = err.response.data.data;
+      //     if (error) {
+      //       this.showErrorField(error);
+      //     } else {
+      //       this.$notify.error({
+      //         title: "Error",
+      //         message: err.response.data.message,
+      //       });
+      //     }
+      //   });
+    },
+    handleChangeFile(file, fileList) {
+      console.log(file);
+      this.form.files = file.raw;
+    },
     checkin(type = "checkin") {
       this.showLoading = true;
       this.data.request = 1;
@@ -496,7 +622,24 @@ export default {
             });
         })
         .catch((e) => {
-          console.log(e.response.data.message);
+          if (e.response.data.code == 409) {
+            this.$swal({
+              title: 'Perhatian!',
+              text: "Apakah anda yakin ingin checkout Lebih Awal ?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya',
+              cancelButtonText: 'Batal'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.earlyCheckout = true
+                this.form.checkin_id = e.response.data.data.checkin
+                console.log(this.form.checkin_id)
+              }
+            })
+          }
           this.$notify.error({
             title: "Error",
             message: e.response.data.message,
@@ -505,6 +648,24 @@ export default {
         .finally(() => {
           this.showLoading = false;
         });
+    },
+    eCheckout() {
+      this.btnLoader = true;
+      let formData = new FormData();
+      formData.append("company_id", this.company_id);
+      formData.append("employee_id", this.form.employee_id);
+      formData.append("cuti_id", this.form.cuti_id);
+      formData.append("start_date", this.form.start_date);
+      formData.append("expired_date", this.form.expired_date);
+      formData.append("reason", this.form.reason);
+      // formData.append("file", this.file);
+      if (this.form.files) {
+        formData.append("file", this.form.files)
+      }
+      console.log(formData)
+    },
+    lCheckin() {
+      //
     },
     checkout(type = "checkout") {
       this.$notify.error({

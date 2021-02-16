@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Models\Checkin;
 use Carbon\Carbon;
 use App\Exports\CheckinExport;
+use App\Helpers\Variable;
 use App\Models\EarlyCheckout;
 use App\Models\ShiftEmployee;
 use Maatwebsite\Excel\Facades\Excel;
@@ -132,6 +133,7 @@ class CheckinController extends Controller
     public function earlyCheckout(Request $request, $id)
     {
         $checkin = Checkin::find($id);
+        $input = $request->only(['reason', 'file']);
         if(!$checkin)
         {
             return $this->resp(null, 'Data Checkin Tidak Ditemukan', false, 406);
@@ -140,18 +142,15 @@ class CheckinController extends Controller
         {
             return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
         }
-        $input = $request->only('reason');
-        $validator = Validator::make($input, [
-            'reason' => 'required|string'
-        ], Helper::messageValidation());
-        if ($validator->fails()) {
-            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Early Checkout', false, 401);
-        }
-        $input = Arr::add($input, 'checkin_id', $id);
-        $checkout = $checkin->update(['checkout_time' => Carbon::now()]);
-        $earlyC = EarlyCheckout::create($input);
-        $earlyC = Arr::add($earlyC, 'checkout', $checkout);
-        return $this->resp($earlyC);
+        $input['checkin_id'] = $checkin->id;
+        dd($input);
+        return $this->storeData(new EarlyCheckout, [
+            'reason' => 'required',
+            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
+        ], $input, [
+            'type' => Variable::ERCO,
+            'field' => 'file'
+        ]);
     }
 
     public function exportCheckin(Request $request)
