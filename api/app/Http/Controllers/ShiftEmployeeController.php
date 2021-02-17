@@ -32,8 +32,9 @@ class ShiftEmployeeController extends Controller
 
     public function getShiftEmployee(Request $request)
     {
+        $employee = $this->getEmployeeByUser($request->user_id);
         return $this->getPaginate(ShiftEmployee::join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
-        ->where('employee_id', $request->employee_id), $request,['shifts.code']);
+        ->where('employee_id', $employee->id), $request,['shifts.code']);
     }
 
     public function getCompanyShiftEmployee(Request $request)
@@ -86,9 +87,8 @@ class ShiftEmployeeController extends Controller
         if (!$shiftEmployee) {
             return $this->resp(null, 'Shift Employee Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['company_id', 'employee_id', 'shift_id', 'date']);
+        $input = $request->only(['employee_id', 'shift_id', 'date']);
         $validator = Validator::make($input, [
-            'company_id' => 'required|numeric',
             'employee_id' => 'required|numeric',
             'shift_id' => 'required|numeric',
             'date' => 'required|date'

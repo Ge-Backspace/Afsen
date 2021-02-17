@@ -39,9 +39,8 @@ class CutiController extends Controller
         {
             return $this->resp(null, 'Cuti Tidak Ditemukan', false, 406);
         }
-        $input = $request->only('company_id', 'cuti_name', 'code');
+        $input = $request->only('cuti_name', 'code');
         $validator = Validator::make($input, [
-            'company_id' => 'required|numeric',
             'cuti_name' => 'required',
             'code' => 'required',
         ], Helper::messageValidation());

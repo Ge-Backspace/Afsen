@@ -27,12 +27,14 @@ class CutiEmployeeController extends Controller
 
     public function addCutiEmployee(Request $request)
     {
-        $input = $request->only('employee_id', 'cuti_id', 'start_date', 'expired_date', 'status_id');
+        $input = $request->only('employee_id', 'cuti_id', 'start_date', 'expired_date', 'status_id', 'reason', 'file');
         $validator = Validator::make($input, [
             'employee_id' => 'required|numeric',
             'cuti_id' => 'required|numeric',
             'start_date' => 'required|date',
             'expired_date' => 'required|date',
+            'reason' => 'required|min:5|max:255',
+            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Cuti Permission', false, 401);
@@ -48,12 +50,14 @@ class CutiEmployeeController extends Controller
         if (!$table) {
             return $this->resp(null, 'Permission Cuti Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['employee_id', 'cuti_id', 'start_date', 'expired_date']);
+        $input = $request->only(['employee_id', 'cuti_id', 'start_date', 'expired_date', 'reason', 'file']);
         $validator = Validator::make($input, [
             'employee_id' => 'required|numeric',
             'cuti_id' => 'required|numeric',
             'start_date' => 'required|date',
-            'expired_date' => 'required|date'
+            'expired_date' => 'required|date',
+            'reason' => 'required|min:5|max:255',
+            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp([$input, Helper::generateErrorMsg($validator->errors()->getMessages())], 'Failed Edit Position', false, 406);

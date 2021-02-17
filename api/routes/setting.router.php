@@ -2,7 +2,7 @@
 
 $router->group(['middleware' => 'auth'], function($router){
     $router->get('/getName', 'EmployeeController@getName');
-    $router->get('/getCoordinate', 'OfficeController@getCoorditaneOffice');
+    $router->get('/getCoordinate', 'OfficeController@getCoordinateOffice');
     $router->get('/todayShiftEmployee', 'ShiftEmployeeController@getTodayShiftEmployee');
     $router->get('/optionPosition', 'SettingController@optionPosition');
     $router->get('/optionEmployee', 'SettingController@optionEmployee');

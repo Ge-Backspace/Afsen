@@ -41,6 +41,7 @@ class LemburPermissionController extends Controller
         return $this->updateData($model, [
             'employee_id' => 'required|numeric',
             'schedule_in' => 'required',
+            'schedule_out' => 'required',
             'date' => 'required|date',
             'reason' => 'required|min:5|max:255',
             'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'

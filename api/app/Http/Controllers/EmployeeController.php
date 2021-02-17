@@ -95,7 +95,7 @@ class EmployeeController extends Controller
         {
             return $this->resp(null, 'Employee Tidak Ditemukan', false, 406);
         }
-        $input = $request->only(['name', 'nip', 'position_id', 'kontak', 'status', 'admin', 'aktif']);
+        $input = $request->only(['name', 'nip', 'position_id', 'kontak', 'status', 'admin', 'aktif', 'foto']);
         $validator = Validator::make($input, [
             'name' => 'required|string|min:4|max:100',
             'nip' => 'string',
@@ -103,7 +103,8 @@ class EmployeeController extends Controller
             'kontak' => 'numeric',
             'status' => 'required|boolean',
             'admin' => 'boolean',
-            'aktif' => 'boolean'
+            'aktif' => 'boolean',
+            'foto' => 'mimes:jpeg,png,jpg|max:2048'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Update Employee', false, 401);
@@ -112,6 +113,14 @@ class EmployeeController extends Controller
         $inputUser = $request->only([
             'admin', 'aktif'
         ]);
+        if(!empty($request->foto)){
+            $storeFile = Helper::storeFile('store', Variable::USER, $request->foto, request());
+            if($storeFile){
+                $inputUser['file_id'] = $storeFile;
+            } else {
+                return $this->resp(null, Variable::FAILED_UPLOAD, false, 400);
+            }
+        }
         if ($inputUser['admin'] | $inputUser['aktif']) {
             $user->update($inputUser);
         }

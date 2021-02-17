@@ -17,7 +17,7 @@ class OfficeController extends Controller
         return $this->getPaginate($table, $request, ['office_name', 'lat', 'lng', 'address']);
     }
 
-    public function getCoorditaneOffice(Request $request)
+    public function getCoordinateOffice(Request $request)
     {
         $office = Office::where('company_id', $request->company_id);
         $markers = [];

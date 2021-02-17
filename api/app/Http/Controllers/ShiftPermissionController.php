@@ -54,7 +54,7 @@ class ShiftPermissionController extends Controller
         } elseif ($se2->employee_id != $e2->id){
             return $this->resp(null, 'Employee Tidak 2 Sesuai Dengan Data Shift Employee', false, 406);
         }
-        $input = $request->only('employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id', 'reason');
+        $input = $request->only('employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id', 'reason', 'file');
         return $this->storeData(new ShiftPermission, [
             'employee1_id' => 'required|numeric',
             'employee2_id' => 'required|numeric',
@@ -88,7 +88,7 @@ class ShiftPermissionController extends Controller
             return $this->resp(null, 'Employee Tidak 2 Sesuai Dengan Data Shift Employee', false, 406);
         }
         $table = ShiftPermission::find($id);
-        $input = $request->only('employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id');
+        $input = $request->only('employee1_id', 'employee2_id', 'shift_employee1_id', 'shift_employee2_id', 'reason', 'file');
         return $this->updateData($table, [
             'employee1_id' => 'required|numeric',
             'employee2_id' => 'required|numeric',

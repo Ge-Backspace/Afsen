@@ -7,5 +7,4 @@ $router->group(['middleware' => 'auth'], function($router){
     $router->post('/user/store', 'UserController@storeUserEmployee');
     $router->post('/user/update/{id}', 'UserController@update');
     $router->post('/user/{id}/profile', 'UserController@profile');
-    $router->get('/user', 'UserController@user');
 });

@@ -45,9 +45,8 @@ class ShiftController extends Controller
         {
             return $this->resp(null, 'Shift Tidak Ditemukan', false, 406);
         }
-        $input = $request->only('company_id', 'shift_name', 'code', 'schedule_in', 'schedule_out');
+        $input = $request->only('shift_name', 'code', 'schedule_in', 'schedule_out');
         $validator = Validator::make($input, [
-            'company_id' => 'required|numeric',
             'shift_name' => 'required',
             'code' => 'required',
             'schedule_in' => 'required',

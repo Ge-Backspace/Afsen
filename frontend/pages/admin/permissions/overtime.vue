@@ -125,11 +125,11 @@
       ...mapGetters("overtime", ["getOverTime", "getLoader"]),
     },
     watch: {
-      getOverTime(newValue, oldValue) {
-        // this.$store.dispatch("overtime/getAll", {
-        //   company_id: this.company_id
-        // })
-      },
+      // getOverTime(newValue, oldValue) {
+      //   this.$store.dispatch("overtime/getAll", {
+      //     company_id: this.company_id
+      //   })
+      // },
       search(newValue, oldValue) {
         this.$store.dispatch("overtime/getAll", {
           company_id: this.company_id,
