@@ -23,7 +23,7 @@ class AuthController extends Controller
         if($validator->fails()){
             return $this->resp($request->all(), Helper::generateErrorMsg($validator->errors()->getMessages()), false, 406);
         }
-        $companyCheck = Companies::where('name', $input['company_name']);
+        $companyCheck = Companies::where('name', $input['company_name'])->first();
         if($companyCheck){
             return $this->resp(null, 'Nama Company Sudah Terdaftar', false, 406);
         }else{
