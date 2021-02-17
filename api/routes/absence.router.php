@@ -6,5 +6,5 @@ $router->group(['middleware' => 'auth'], function($router){
     $router->post('/checkin', 'CheckinController@checkin');
     $router->get('/check', 'CheckinController@check');
     $router->get('/attendance/export', 'CheckinController@exportAttendance');
-    $router->post('/checkout/{id}', 'CheckinController@earlyCheckout');
+    $router->post('/specialcheckin', 'CheckinController@specialCheckin');
 });

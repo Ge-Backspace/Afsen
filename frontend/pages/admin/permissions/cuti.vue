@@ -152,13 +152,24 @@
                     </el-tooltip>
                   </vs-td>
                   <template #expand>
-                    <div class="con-content">
-
-                        <h3>Reason</h3>
+                    <vs-row>
+                      <div class="con-content">
+                        <h1>Reason</h1>
                         <div v-html="tr.reason">
-                        {{ tr.reason }}
+                          {{ tr.reason }}
+                        </div>
                       </div>
-                    </div>
+                      <div >
+                        <vs-button
+                          success
+                          style="float: right; margin-left: 50px;"
+                          :loading="globalLoader"
+                          gradient
+                          @click="exportData('excel')"
+                          >Evidence</vs-button
+                        >
+                      </div>
+                    </vs-row>
                   </template>
                 </vs-tr>
               </template>

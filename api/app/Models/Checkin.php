@@ -21,6 +21,6 @@ class Checkin extends Model
 
     public function checkout()
     {
-        $this->hasMany('App\Models\EarlyChekout');
+        $this->hasMany('App\Models\SpecialCheckin');
     }
 }

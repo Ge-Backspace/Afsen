@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EarlyCheckout extends Model
+class SpecialCheckin extends Model
 {
     protected $fillable = [
-        'reason', 'checkin_id'
+        'reason', 'checkin_id', 'type', 'file_id'
     ];
 
     public function checkin()

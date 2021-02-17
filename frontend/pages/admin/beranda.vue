@@ -30,11 +30,11 @@
       <div class="row">
         <div class="col-xl-6">
           <!-- card pre-present -->
+          <!-- ijo -->
           <el-card
-            style="margin-top: 20px; background-color: #0f0967; border: none"
+            style="margin-top: 20px; background-color: #4EB02F; border: none"
             v-if="
-              status == 0 &&
-              buttonStatus == 1
+              status == 1
             "
           >
             <!-- Card header -->
@@ -55,7 +55,7 @@
                 <vs-button
                   :loading="showLoading"
                   circle
-                  info
+                  success
                   size="xl"
                   :active="active == 2"
                   @click="checkin('checkin')"
@@ -80,12 +80,213 @@
               </div>
             </div>
           </el-card>
+          <!-- warning -->
+          <el-card
+            style="margin-top: 20px; background-color: #C5C727; border: none"
+            v-if="
+              status == 2
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span style="color: #fff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  warn
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkin')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime" style="color: #fff"></h1>
+                    </tr>
+                    <tr>
+                      <td style="color: #fff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- danger -->
+          <el-card
+            style="margin-top: 20px; background-color: #A82525; border: none"
+            v-if="
+              status == 0 &&
+              status == 3
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span style="color: #fff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  danger
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkin')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime" style="color: #fff"></h1>
+                    </tr>
+                    <tr>
+                      <td style="color: #fff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <!-- biru -->
+          <el-card
+            style="margin-top: 20px; background-color: #253DE1; border: none"
+            v-if="
+              status == 4
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span style="color: #fff">{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  primary
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkin('checkout')"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime" style="color: #fff"></h1>
+                    </tr>
+                    <tr>
+                      <td style="color: #fff">
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
+          <el-card
+            style="margin-top: 20px; background-color: #B6B3B7; border: none"
+            v-if="
+              status == 5
+            "
+          >
+            <!-- Card header -->
+            <div
+              class="clearfix d-flex justify-content-between"
+              style="margin-bottom: 20px"
+            >
+              <!-- Title -->
+              <h2 style="color: #ffffff">Attendance</h2>
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp;
+              <span>{{
+                $moment(Date.now()).format("dddd, DD MMMM YYYY")
+              }}</span>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <vs-button
+                  :loading="showLoading"
+                  circle
+                  info
+                  size="xl"
+                  :active="active == 2"
+                  @click="checkout()"
+                >
+                  <img src="../../assets/img/fingerprint.png" alt="yes" />
+                </vs-button>
+              </div>
+              <div class="col-6 d-flex">
+                <div class="row col-12">
+                  <table>
+                    <tr>
+                      <h1 v-text="currentTime"></h1>
+                    </tr>
+                    <tr>
+                      <td>
+                        Press the left-side button <br />
+                        to make an attendance
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </el-card>
         </div>
         <div class="col-xl-6">
-          <!-- left card-->
+          <!-- Right card-->
           <el-card
+            v-loading="getLoader"
             class="mt-10"
-            style="margin-top: 20px; width: 450px; height: 500px; overflow-y: auto"
+            style="margin-top: 20px; overflow-y: auto"
           >
             <!-- Card header -->
             <div slot="header" class="clearfix d-flex justify-content-between">
@@ -189,6 +390,7 @@
       v-model="LOEdialog"
       :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="
+      resetForm();
       LOEdialog = false;
       late = false;
       "
@@ -208,7 +410,7 @@
         >
           <label>Reason</label>
           <client-only>
-            <vue-editor v-model="form.reason"></vue-editor>
+            <vue-editor v-model="data.reason"></vue-editor>
           </client-only>
         </vs-col>
         <vs-col
@@ -251,6 +453,7 @@
                 block
                 border
                 @click="
+                  resetForm();
                   LOEdialog = false;
                   late = false;
                 "
@@ -281,7 +484,6 @@ export default {
       table: {
         max: 10,
       },
-      buttonStatus: 0,
       btnLoader: false,
       LOEdialog: false,
       tittleLOEDialog: '',
@@ -291,14 +493,10 @@ export default {
         lat: "",
         lng: "",
         request: "",
-      },
-      form: {
-        checkin_id: "",
         reason: "",
         files: "",
       },
       employee_id: "",
-      start: "06:00:00",
       currentTime: null,
       showLoading: false,
       schedule_in: "",
@@ -335,36 +533,14 @@ export default {
         this.schedule_in = response.data.data.schedule_in;
         this.schedule_out = response.data.data.schedule_out;
       });
-    this.$axios
-      .get(`positions/?user_id=${this.data.user_id}`)
-      .then((response) => {
-        this.position_name = response.data.data.position_name;
-      });
-    let now = moment(this.currentTime, "HH:mm:ss A").format("HH:mm:ss");
-    if (this.status == 0 && moment(this.start, "HH:mm:ss") <= moment(now, "HH:mm:ss")) {
-      this.buttonStatus = 1
-      // Belum checkin Melebihi start day (Boleh Checkin dan statusnya Excelent), Hijau
-    } else if (this.status == 0 && moment(now, "HH:mm:ss") > moment(this.schedule_in, "HH:mm:ss").add(15, 'minutes')) {
-      this.buttonStatus = 2
-      // Melebihi schedule in + 15 menit (Late), Kuning
-    } else if (this.status == 0 && moment(now, "HH:mm:ss") > moment(this.schedule_out, "HH:mm:ss")){
-      this.buttonStatus = 3
-      // Melebihi schedule out (Absent), Merah
-    } else if (this.status == 1){
-      this.buttonStatus = 4
-      // Sudah Absensi, Biru
-    } else if (this.status == 2){
-      this.buttonStatus = 5
-      // Sudah Checkout, Pudar / Putih
-    }
   },
   methods: {
     schedule(time) {
       return moment(time, 'HH:mm:ss').format('HH:mm')
     },
-    handleChangeFile(file, fileList) {
-      console.log(file);
-      this.form.files = file.raw;
+    handleChangeFile(files, fileList) {
+      console.log(files);
+      this.data.files = files.raw;
     },
     checkin(type = "checkin") {
       this.showLoading = true;
@@ -445,32 +621,51 @@ export default {
         });
     },
     lateOrEarly(type = 'late') {
-      let status = 1
+      this.data.request = 1
       if (type == 'early') {
-        status = 2
+        this.data.request = 2
       }
       this.btnLoader = true;
-      console.log(status)
-      this.btnLoader = false;
-      // let formData = new FormData();
-      // formData.append("reason", this.form.reason);
-      // // formData.append("file", this.file);
-      // if (this.form.files) {
-      //   formData.append("file", this.form.files)
-      // }
-      // this.$axios.post('/checkout', formData).then(resp => {
-      //   console.log(resp)
-      // }).catch((e) => {
-      //   this.$notify.error({
-      //       title: "Error",
-      //       message: e.response.data.message,
-      //     })
-      // }).finally(() => {
-      //   this.btnLoader = false;
-      //   this.$store.dispatch("checkin/getAll", {
-      //     company_id: this.company_id,
-      //   });
-      // })
+      let formData = new FormData()
+      formData.append("user_id", this.data.user_id)
+      formData.append("reason", this.data.reason)
+      formData.append("lat", this.data.lat)
+      formData.append("lng", this.data.lng)
+      formData.append("request", this.data.request)
+      formData.append("file", this.data.files)
+      this.$axios.post('/specialcheckin', formData).then((resp) => {
+        if (resp.data.success) {
+          this.$notify.success({
+            title: "Berhasil",
+            message: response.data.message,
+          })
+        }
+      }).catch((e) => {
+        this.$notify.error({
+          title: "Error",
+          message: e.response.data.message,
+        })
+      }).finally(() => {
+        this.$store.dispatch("checkin/getAll", {
+            showall: 1,
+            company_id: this.company_id,
+          });
+        this.$axios
+          .get(`/check?user_id=${this.data.user_id}`)
+          .then((response) => {
+            this.$notify.success({
+              title: "Check",
+              message: response.data.message,
+            });
+            this.status = response.data.data.status;
+          });
+          this.btnLoader = false;
+          this.resetForm();
+      })
+    },
+    resetForm() {
+      this.data.reason = '',
+      this.data.files = ''
     },
     checkout(type = "checkout") {
       this.$notify.error({
@@ -494,13 +689,7 @@ export default {
   computed: {
     ...mapGetters("checkin", [
       "getCheckin",
-      // 'getLoader',
-      // 'getSummary'
-    ]),
-    ...mapGetters("position", [
-      "getPositions",
-      // 'getLoader',
-      // 'getSummary'
+      "getLoader"
     ]),
   },
 };

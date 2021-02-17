@@ -7,8 +7,8 @@ use App\Models\Checkin;
 use Carbon\Carbon;
 use App\Exports\CheckinExport;
 use App\Helpers\Variable;
-use App\Models\EarlyCheckout;
 use App\Models\ShiftEmployee;
+use App\Models\SpecialCheckin;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -125,11 +125,11 @@ class CheckinController extends Controller
                 return $this->resp(['status' => 0], 'Anda Checkin Diatas Shift Schedule In', false, 409);
             }
             $status = 0;
-            $schedule_in = Carbon::parse($shiftEmployee->schedule_in);
-            if ($now > $schedule_in && $now <= $schedule_in->addMinute(15)) {
+            $schedule_in = Carbon::parse($shiftEmployee->schedule_in)->addMinute(15);
+            if ($now > $schedule_in && $now <= $schedule_in) {
                 $status = 1;
             }
-            elseif ($now > $schedule_in && $now > $schedule_in->addMinute(15)) {
+            elseif ($now > $schedule_in && $now > $schedule_in) {
                 $status = 2;
             }
             $checkin = Checkin::create([
@@ -160,50 +160,104 @@ class CheckinController extends Controller
         }
     }
 
-    public function earlyCheckout(Request $request, $id)
+    public function specialCheckin(Request $request)
     {
-        $checkin = Checkin::find($id);
-        $input = $request->only(['reason', 'file']);
-        if(!$checkin)
-        {
-            return $this->resp(null, 'Data Checkin Tidak Ditemukan', false, 406);
+        $input = $request->only(['user_id', 'lat', 'lng', 'reason', 'file', 'request']);
+        $validator = Validator::make ($input, [
+            'user_id' => 'required|numeric',
+            'lat' => 'required|numeric',
+            'lng' => 'required|numeric',
+            'request' => 'required|numeric'
+        ] ,Helper::messageValidation());
+        if($validator->fails()){
+            return $this->resp($request->all(), Helper::generateErrorMsg($validator->errors()
+            ->getMessages()), false, 406);
         }
-        if($checkin->checkout_time)
-        {
-            return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
+        $employee = $this->getEmployeeByUser($request->user_id);
+        $address = $this->getAddress($input['lat'], $input['lng']);
+        $nearestOffice = $this->getNearestOffice($employee->id, $input['lat'], $input['lng']);
+        $distcance = $this->distance($nearestOffice->lat, $nearestOffice->lng, $input['lat'], $input['lng']);
+        $checkCheckin = $this->checkCheckin($employee->id);
+        $checkCheckout = $this->checkCheckout($employee->id);
+        $now = Carbon::now();
+        $shiftEmployee = ShiftEmployee::join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')
+        ->where('employee_id', $employee->id)
+        ->whereDate('date', $now)
+        ->first();
+        if ($distcance > 9999999) {
+            $message = 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor';
+            if ($input['request'] == 2) {
+                $message = 'Jarak untuk Checkout tidak boleh Lebih dari 1 Km dari kantor';
+            }
+            return $this->resp(['distance' => $distcance, 'nearest office' => $nearestOffice],
+            $message, false, 406);
         }
-        $input['checkin_id'] = $checkin->id;
-        dd($input);
-        return $this->storeData(new EarlyCheckout, [
-            'reason' => 'required',
-            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
-        ], $input, [
-            'type' => Variable::ERCO,
-            'field' => 'file'
-        ]);
-    }
+        if ($input['request'] == 1) {
+            if ($checkCheckin) {
+                return $this->resp(null, 'Anda Sudah Checkin Hari Ini', false, 406);
+            }
+            if (!$shiftEmployee) {
+                return $this->resp(null, 'Anda Tidak Memiliki Shcedule Checkin Hari Ini', false, 406);
+            }
+            $status = 0;
+            $schedule_in = Carbon::parse($shiftEmployee->schedule_in)->addMinute(15);
+            if ($now > $schedule_in && $now <= $schedule_in) {
+                $status = 1;
+            }
+            elseif ($now > $schedule_in && $now > $schedule_in) {
+                $status = 2;
+            }
+            $checkin = Checkin::create([
+                'employee_id' => $employee->id,
+                'checkin_time' => Carbon::now(),
+                'lat' => $input['lat'],
+                'lng' => $input['lng'],
+                'status' => $status,
+                'address' => $address['formatted_address']
+            ]);
+            $inputScheckin = [
+                'checkin_id' => $checkin->id,
+                'reason' => $input['reason'],
+                'file' => $request->file,
+                'type' => 1
+            ];
+            return $this->storeData(new SpecialCheckin, [
+                'checkin_id' => 'required|numeric',
+                'type' => 'required|numeric',
+                'reason' => 'required|min:5|max:255',
+                'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072',
+            ], $inputScheckin, [
+                'type' => Variable::SPCK,
+                'field' => 'file'
+            ]);
+        } elseif ($input['request'] == 2){
+            if ($checkCheckout) {
+                return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
+            }
+            if (!$checkCheckin) {
+                return $this->resp(null, 'Anda Belum Checkin Hari Ini', false, 406);
+            }
+            if (!$shiftEmployee) {
+                return $this->resp(null, 'Anda Tidak Memiliki Shcedule Checout Hari Ini', false, 406);
+            }
+            $checkCheckin->update(['checkout_time' => Carbon::now()]);
+            $inputScheckin = [
+                'checkin_id' => $checkCheckin->id,
+                'reason' => $input['reason'],
+                'file' => $request->file,
+                'type' => 2
+            ];
+            return $this->storeData(new SpecialCheckin, [
+                'checkin_id' => 'required|numeric',
+                'type' => 'required|numeric',
+                'reason' => 'required|min:5|max:255',
+                'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072',
+            ], $inputScheckin, [
+                'type' => Variable::SPCK,
+                'field' => 'file'
+            ]);
+        }
 
-    public function lateCheckin(Request $request, $id)
-    {
-        $checkin = Checkin::find($id);
-        $input = $request->only(['reason', 'file']);
-        if(!$checkin)
-        {
-            return $this->resp(null, 'Data Checkin Tidak Ditemukan', false, 406);
-        }
-        if($checkin->checkout_time)
-        {
-            return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
-        }
-        $input['checkin_id'] = $checkin->id;
-        dd($input);
-        return $this->storeData(new EarlyCheckout, [
-            'reason' => 'required',
-            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
-        ], $input, [
-            'type' => Variable::ERCO,
-            'field' => 'file'
-        ]);
     }
 
     public function exportCheckin(Request $request)

@@ -86,6 +86,11 @@ export const  menu = () => {
                 icon: 'el-icon-postcard',
                 route: '/admin/permissions/shift'
             },
+            {
+                text: "Permission Overtime",
+                icon: 'el-icon-postcard',
+                route: '/admin/permissions/overtime'
+            },
             ]
         },
         {

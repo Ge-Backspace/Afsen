@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Shift Employee</h1>
+          <h1 class="heading">Overtime</h1>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
             >Download Excel</vs-button
           >
 
-          <el-card v-loading="getLoader" style="margin-top: 100px">
+          <el-card v-loading="getLoader" style="margin-top: 40px">
             <div class="row" style="margin-bottom: 20px">
               <div class="col-md-2">
                 <vs-button
@@ -58,10 +58,10 @@
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th>Pengaju</vs-th>
-                  <vs-th>Pengganti</vs-th>
-                  <vs-th>Shift Pengaju</vs-th>
-                  <vs-th>Shift Pengganti</vs-th>
+                  <vs-th>Employee</vs-th>
+                  <vs-th>Schedule_in</vs-th>
+                  <vs-th>Schedule_out</vs-th>
+                  <vs-th>Date</vs-th>
                   <vs-th>Status</vs-th>
                   <vs-th>Action</vs-th>
                 </vs-tr>
@@ -350,7 +350,7 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Reason</label>
+            <label>Description</label>
             <client-only>
               <vue-editor v-model="form.reason"></vue-editor>
             </client-only>
