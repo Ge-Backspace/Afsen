@@ -1,6 +1,8 @@
 <?php
 
-$router->get('/offices', 'OfficeController@getCompanyOffice');
-$router->post('/office', 'OfficeController@addOffice');
-$router->post('/office/{id}/update', 'OfficeController@updateOffice');
-$router->delete('/office/{id}/delete', 'OfficeController@deleteOffice');
+$router->group(['middleware' => 'auth'], function($router){
+    $router->get('/offices', 'OfficeController@getCompanyOffice');
+    $router->post('/office', 'OfficeController@addOffice');
+    $router->post('/office/{id}/update', 'OfficeController@updateOffice');
+    $router->delete('/office/{id}/delete', 'OfficeController@deleteOffice');
+});

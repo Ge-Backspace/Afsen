@@ -11,7 +11,6 @@ use App\Models\EarlyCheckout;
 use App\Models\ShiftEmployee;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,16 +20,44 @@ class CheckinController extends Controller
         $employee = $this->getEmployeeByUser($request->user_id);
         $checkCheckin = $this->checkCheckin($employee->id);
         $checkCheckout = $this->checkCheckout($employee->id);
-        $status = ['status' => 0];
-        if (!$checkCheckin) {
-            return $this->resp($status, 'Anda Belum Check In Hari Ini');
+        $schedule = $this->getScheduleToday($employee->id);
+        $now = Carbon::now()->format('H:i:s');
+        $startday = Carbon::parse('06:00:00')->format('H:i:s');
+        $schedule_in = Carbon::parse($schedule->schedule_in)->addMinutes(15)->format('H:i:s');
+        $schedule_out = Carbon::parse($schedule->schedule_out)->format('H:i:s');
+        $result = [
+            'status' => 1,
+            'description' => 'on'
+        ];
+        $message = 'Anda Belum Checkin Hari ini';
+        if (!$checkCheckin && !$checkCheckout) {
+            if ($now >= $startday) {
+                if ($now > $schedule_in) {
+                    $result = [
+                        'status' => 2,
+                        'description' => 'late'
+                    ];
+                } elseif ($now > $schedule_out) {
+                    $result = [
+                        'status' => 3,
+                        'description' => 'absent'
+                    ];
+                }
+            }
         } elseif ($checkCheckin && !$checkCheckout) {
-            $status = ['status' => 1];
-            return $this->resp($status, 'Anda Sudah Check In Hari Ini');
-        } elseif ($checkCheckout) {
-            $status = ['status' => 2];
-            return $this->resp($status, 'Anda Sudah Check Out Hari Ini');
+            $message = "Anda Sudah Checkin Hari Ini";
+            $result = [
+                'status' => 4,
+                'description' => 'present'
+            ];
+        } elseif ($checkCheckin && $checkCheckout) {
+            $message = "Anda Sudah Checkout Hari Ini";
+            $result = [
+                'status' => 5,
+                'description' => 'present'
+            ];
         }
+        return $this->resp($result, $message);
     }
 
     public function todayAttendance(Request $request)
@@ -60,8 +87,8 @@ class CheckinController extends Controller
         $rules = [
             'request' => 'required',
             'user_id' => 'required|numeric',
-            'lat' => 'required',
-            'lng' => 'required'
+            'lat' => 'required|numeric',
+            'lng' => 'required|numeric'
         ];
         $validator = Validator::make ($input, $rules ,Helper::messageValidation());
         if($validator->fails()){
@@ -118,6 +145,9 @@ class CheckinController extends Controller
             if ($checkCheckout) {
                 return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
             }
+            if (!$checkCheckin) {
+                return $this->resp(null, 'Anda Belum Checkin Hari Ini', false, 406);
+            }
             $schedule_out = Carbon::parse($shiftEmployee->schedule_out);
             if (!$shiftEmployee) {
                 return $this->resp(null, 'Anda Tidak Memiliki Shcedule Checout Hari Ini', false, 406);
@@ -131,6 +161,29 @@ class CheckinController extends Controller
     }
 
     public function earlyCheckout(Request $request, $id)
+    {
+        $checkin = Checkin::find($id);
+        $input = $request->only(['reason', 'file']);
+        if(!$checkin)
+        {
+            return $this->resp(null, 'Data Checkin Tidak Ditemukan', false, 406);
+        }
+        if($checkin->checkout_time)
+        {
+            return $this->resp(null, 'Anda Sudah Checkout Hari Ini', false, 406);
+        }
+        $input['checkin_id'] = $checkin->id;
+        dd($input);
+        return $this->storeData(new EarlyCheckout, [
+            'reason' => 'required',
+            'file' => 'mimes:jpeg,png,jpg,pdf,doc,docx|max:3072'
+        ], $input, [
+            'type' => Variable::ERCO,
+            'field' => 'file'
+        ]);
+    }
+
+    public function lateCheckin(Request $request, $id)
     {
         $checkin = Checkin::find($id);
         $input = $request->only(['reason', 'file']);

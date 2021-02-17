@@ -8,6 +8,7 @@ use App\Models\Checkin;
 use App\Models\Companies;
 use App\Models\Employee;
 use App\Models\Office;
+use App\Models\ShiftEmployee;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -249,6 +250,13 @@ class Controller extends BaseController
         $checkChekoutToday = Checkin::where('employee_id', $employee_id)
         ->whereDate('checkout_time', '=', Carbon::today())->first();
         return $checkChekoutToday;
+    }
+
+    public function getScheduleToday($id)
+    {
+        $schedule = ShiftEmployee::where('employee_id', $id)->whereDate('date', Carbon::now())
+        ->join('shifts', 'shift_employees.shift_id', '=', 'shifts.id')->first();
+        return $schedule;
     }
 
     public function getAddress($lat, $lng){

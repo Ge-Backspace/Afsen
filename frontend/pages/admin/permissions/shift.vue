@@ -29,7 +29,7 @@
             >Download Excel</vs-button
           >
 
-          <el-card v-loading="getLoader" style="margin-top: 40px">
+          <el-card v-loading="getLoader" style="margin-top: 100px">
             <div class="row" style="margin-bottom: 20px">
               <div class="col-md-2">
                 <vs-button
@@ -339,10 +339,25 @@
             w="6"
             style="padding: 5px"
           >
-            <label>Description</label>
+            <label>Reason</label>
             <client-only>
               <vue-editor v-model="form.reason"></vue-editor>
             </client-only>
+          </vs-col>
+          <vs-col
+            vs-type="flex"
+            vs-justify="center"
+            vs-align="center"
+            w="6"
+            style="padding: 5px"
+          >
+            <label>Upload Document</label>
+            <el-upload
+              :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+            :file-list="file" :limit="1"
+            >
+              <i class="el-icon-plus"></i>
+            </el-upload>
           </vs-col>
         </vs-row>
       </div>

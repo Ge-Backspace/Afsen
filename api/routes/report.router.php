@@ -1,2 +1,5 @@
 <?php
-$router->get('/reportAttendance', 'ReportController@reportAttendance');
+
+$router->group(['middleware' => 'auth'], function($router){
+    $router->get('/reportAttendance', 'ReportController@reportAttendance');
+});
