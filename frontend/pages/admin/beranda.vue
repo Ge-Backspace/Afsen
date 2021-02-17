@@ -6,19 +6,11 @@
           <!-- Card stats -->
           <div class="row" style="padding-top: 20px">
             <div class="col-xl-12">
-              <div class="card card-stats">
-                <!-- Card body -->
-                <div class="card-body">
-                  <h1 class="mt-3 mb-0 text-sm">
-                    <span class="text-nowrap" style="font-size: 24px"
-                      ><b>Good day {{ this.name }}</b>
-                    </span>
-                  </h1>
-                  <!-- <div class="row">
-                    <div class="col"></div>
-                  </div> -->
-                </div>
-              </div>
+              <h1 class="mt-3 mb-0 text-sm">
+                <span class="text-nowrap" style="font-size: 40px; color:white"
+                  ><b>Good day Mr. {{ this.name }}</b>
+                </span>
+              </h1>
             </div>
           </div>
         </div>
@@ -27,7 +19,7 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
       <!-- popular couses -->
-      <div class="row">
+      <div class="row" style="padding-top: 20px">
         <div class="col-xl-6">
           <!-- card pre-present -->
           <!-- ijo -->

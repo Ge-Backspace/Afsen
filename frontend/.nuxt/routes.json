@@ -329,6 +329,13 @@
     "_name": "_0c389165"
   },
   {
+    "name": "admin-permissions-backupovertime",
+    "path": "/admin/permissions/backupovertime",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\permissions\\\\backupovertime.vue",
+    "chunkName": "pages/admin/permissions/backupovertime",
+    "_name": "_47a66821"
+  },
+  {
     "name": "admin-permissions-cuti",
     "path": "/admin/permissions/cuti",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\permissions\\\\cuti.vue",

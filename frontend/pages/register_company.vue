@@ -1,6 +1,6 @@
 <template>
   <div class="card border-0">
-    <div class="card-header bg-transparent logo" style="border: none">
+    <div class="bg-transparent logo" style="border: none">
       <a class="navbar-brand rounded mx-auto d-block" style="margin-bottom: 20px;">
         <img src="../assets/img/Afsen-Logo.png" width="200" height="200" />
       </a>
@@ -21,7 +21,7 @@
             <input class="form-control" v-model="data.company_name" name="name" required placeholder="Company Name" type="text">
           </div>
         </div>
-        
+
         <div class="text-center">
           <el-button type="primary" :loading="showLoading" class="my-4" round native-type="submit"> Register
           </el-button>

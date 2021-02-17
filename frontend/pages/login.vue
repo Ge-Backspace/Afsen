@@ -1,14 +1,14 @@
 <template>
-  <div class="card border-0">
-    <div class="card-header bg-transparent logo" style="border: none">
+  <div class="border-0">
+    <div class="bg-transparent logo" style="border: none">
       <a class="navbar-brand rounded mx-auto d-block" style="margin-bottom: 20px;">
         <img src="../assets/img/Afsen-Logo.png" width="200" height="200" />
       </a>
 
     </div>
     <div class="text-center text-muted mb-4">
-        <small><b>AFSEN</b></small>
-      </div>
+      <small><b>LOGIN</b></small>
+    </div>
     <div class="card-body">
 
       <el-alert v-if="errorMessage !== ''" :title="errorMessage" type="error" class="mb-3" show-icon>
@@ -34,7 +34,10 @@
         <div class="text-center">
           <el-button type="primary" :loading="showLoading" class="my-4" round native-type="submit">Login
           </el-button>
-
+          <br>
+          <router-link to="/register_company">
+            <a href="#">Belum ada account ?</a>
+          </router-link>
         </div>
       </form>
     </div>

@@ -51,6 +51,7 @@ const _52e93f64 = () => interopDefault(import('..\\pages\\admin\\master\\masterS
 const _c3076450 = () => interopDefault(import('..\\pages\\admin\\master\\masterShift.vue' /* webpackChunkName: "pages/admin/master/masterShift" */))
 const _919b01ca = () => interopDefault(import('..\\pages\\admin\\master\\MasterStatusPermission.vue' /* webpackChunkName: "pages/admin/master/MasterStatusPermission" */))
 const _0c389165 = () => interopDefault(import('..\\pages\\admin\\master\\masterUser.vue' /* webpackChunkName: "pages/admin/master/masterUser" */))
+const _47a66821 = () => interopDefault(import('..\\pages\\admin\\permissions\\backupovertime.vue' /* webpackChunkName: "pages/admin/permissions/backupovertime" */))
 const _23f52aa5 = () => interopDefault(import('..\\pages\\admin\\permissions\\cuti.vue' /* webpackChunkName: "pages/admin/permissions/cuti" */))
 const _07ed8c42 = () => interopDefault(import('..\\pages\\admin\\permissions\\overtime.vue' /* webpackChunkName: "pages/admin/permissions/overtime" */))
 const _113e75b4 = () => interopDefault(import('..\\pages\\admin\\permissions\\shift.vue' /* webpackChunkName: "pages/admin/permissions/shift" */))
@@ -270,6 +271,10 @@ export const routerOptions = {
     path: "/admin/master/masterUser",
     component: _0c389165,
     name: "admin-master-masterUser"
+  }, {
+    path: "/admin/permissions/backupovertime",
+    component: _47a66821,
+    name: "admin-permissions-backupovertime"
   }, {
     path: "/admin/permissions/cuti",
     component: _23f52aa5,
