@@ -28,6 +28,9 @@ const _dd297988 = () => interopDefault(import('..\\pages\\admin\\shift.vue' /* w
 const _36712238 = () => interopDefault(import('..\\pages\\admin\\shiftEmployee\\index.vue' /* webpackChunkName: "pages/admin/shiftEmployee/index" */))
 const _322afcc8 = () => interopDefault(import('..\\pages\\admin\\test.vue' /* webpackChunkName: "pages/admin/test" */))
 const _717431c2 = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages/admin/users" */))
+const _1c6e546c = () => interopDefault(import('..\\pages\\superadmin\\beranda.vue' /* webpackChunkName: "pages/superadmin/beranda" */))
+const _8dd3f416 = () => interopDefault(import('..\\pages\\user\\beranda.vue' /* webpackChunkName: "pages/user/beranda" */))
+const _302f06a3 = () => interopDefault(import('..\\pages\\user\\shift_employee\\index.vue' /* webpackChunkName: "pages/user/shift_employee/index" */))
 const _7e950af8 = () => interopDefault(import('..\\pages\\admin\\company\\announcement\\index.vue' /* webpackChunkName: "pages/admin/company/announcement/index" */))
 const _1c4799d9 = () => interopDefault(import('..\\pages\\admin\\company\\asset\\index.vue' /* webpackChunkName: "pages/admin/company/asset/index" */))
 const _1fbf2a6b = () => interopDefault(import('..\\pages\\admin\\company\\document_template\\index.vue' /* webpackChunkName: "pages/admin/company/document_template/index" */))
@@ -49,7 +52,6 @@ const _f75c2954 = () => interopDefault(import('..\\pages\\admin\\master\\masterO
 const _ea3b627a = () => interopDefault(import('..\\pages\\admin\\master\\masterPosition.vue' /* webpackChunkName: "pages/admin/master/masterPosition" */))
 const _52e93f64 = () => interopDefault(import('..\\pages\\admin\\master\\masterSalary.vue' /* webpackChunkName: "pages/admin/master/masterSalary" */))
 const _c3076450 = () => interopDefault(import('..\\pages\\admin\\master\\masterShift.vue' /* webpackChunkName: "pages/admin/master/masterShift" */))
-const _919b01ca = () => interopDefault(import('..\\pages\\admin\\master\\MasterStatusPermission.vue' /* webpackChunkName: "pages/admin/master/MasterStatusPermission" */))
 const _0c389165 = () => interopDefault(import('..\\pages\\admin\\master\\masterUser.vue' /* webpackChunkName: "pages/admin/master/masterUser" */))
 const _47a66821 = () => interopDefault(import('..\\pages\\admin\\permissions\\backupovertime.vue' /* webpackChunkName: "pages/admin/permissions/backupovertime" */))
 const _23f52aa5 = () => interopDefault(import('..\\pages\\admin\\permissions\\cuti.vue' /* webpackChunkName: "pages/admin/permissions/cuti" */))
@@ -180,6 +182,18 @@ export const routerOptions = {
     component: _717431c2,
     name: "admin-users"
   }, {
+    path: "/superadmin/beranda",
+    component: _1c6e546c,
+    name: "superadmin-beranda"
+  }, {
+    path: "/user/beranda",
+    component: _8dd3f416,
+    name: "user-beranda"
+  }, {
+    path: "/user/shift_employee",
+    component: _302f06a3,
+    name: "user-shift_employee"
+  }, {
     path: "/admin/company/announcement",
     component: _7e950af8,
     name: "admin-company-announcement"
@@ -263,10 +277,6 @@ export const routerOptions = {
     path: "/admin/master/masterShift",
     component: _c3076450,
     name: "admin-master-masterShift"
-  }, {
-    path: "/admin/master/MasterStatusPermission",
-    component: _919b01ca,
-    name: "admin-master-MasterStatusPermission"
   }, {
     path: "/admin/master/masterUser",
     component: _0c389165,

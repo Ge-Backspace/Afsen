@@ -216,7 +216,7 @@
           >
             <label>Start Date</label>
             <vs-input type="date" v-model="form.start_date"></vs-input>
-            
+
           </vs-col>
           <vs-col
             v-if="requestAdd"

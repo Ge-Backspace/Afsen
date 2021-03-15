@@ -103,7 +103,7 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Cuti Baru" placement="top-start">
+    <el-tooltip class="item" effect="dark" content="Add New Cuti" placement="top-start">
       <a class="float" @click="cutiDialog = true; titleDialog = 'Tambah Cuti'">
         <i class="el-icon-plus my-float"></i>
       </a>

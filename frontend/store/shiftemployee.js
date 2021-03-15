@@ -40,4 +40,15 @@ export const actions = {
         context.commit('setLoader')
     })
   },
+  getUserShift(context, {user_id = '', showall = 1, search = '', defaultPage = false}) {
+    context.commit('setLoader')
+    let page = defaultPage ? 1 : context.state.shiftE.current_page
+    this.$axios.get(`/shiftEmployees?user_id=${user_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
+        context.commit('setSE', resp.data)
+    }).catch(e => {
+        console.log(e)
+    }).finally(() => {
+        context.commit('setLoader')
+    })
+  }
 }

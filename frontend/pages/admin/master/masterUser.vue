@@ -112,7 +112,7 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Buat Schedule Baru"
+      content="Add New User"
       placement="top-start"
     >
       <a
@@ -280,7 +280,7 @@ export default {
   layout: "admin",
   components: {},
   data() {
-    
+
     return {
       api_url: config.baseApiUrl,
       company_id: "",

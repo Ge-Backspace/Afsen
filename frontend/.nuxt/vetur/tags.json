@@ -5,23 +5,53 @@
   "LazyLogo": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/Logo.vue"
   },
-  "Menu": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/Menu.js"
+  "MenuAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuAdmin.js"
   },
-  "LazyMenu": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/Menu.js"
+  "LazyMenuAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuAdmin.js"
   },
-  "Sidebar": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/Sidebar.vue"
+  "MenuUser": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuUser.js"
   },
-  "LazySidebar": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/Sidebar.vue"
+  "LazyMenuUser": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuUser.js"
+  },
+  "SidebarAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarAdmin.vue"
+  },
+  "LazySidebarAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarAdmin.vue"
+  },
+  "SidebarUser": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarUser.vue"
+  },
+  "LazySidebarUser": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarUser.vue"
   },
   "UploadService": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/UploadService.js"
   },
   "LazyUploadService": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/UploadService.js"
+  },
+  "ChartBar": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-bar.vue"
+  },
+  "LazyChartBar": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-bar.vue"
+  },
+  "ChartDoughnut": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-doughnut.vue"
+  },
+  "LazyChartDoughnut": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-doughnut.vue"
+  },
+  "ChartLine": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-line.vue"
+  },
+  "LazyChartLine": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-line.vue"
   },
   "FooterAfsen": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/LandingPage/FooterAfsen.vue"
@@ -64,23 +94,5 @@
   },
   "LazyPartnerAfsen": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/LandingPage/PartnerAfsen.vue"
-  },
-  "ChartBar": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-bar.vue"
-  },
-  "LazyChartBar": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-bar.vue"
-  },
-  "ChartDoughnut": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-doughnut.vue"
-  },
-  "LazyChartDoughnut": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-doughnut.vue"
-  },
-  "ChartLine": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-line.vue"
-  },
-  "LazyChartLine": {
-    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/chart/chart-line.vue"
   }
 }

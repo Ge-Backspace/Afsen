@@ -12,7 +12,20 @@
 <script>
 export default {
   mounted() {
-    this.$router.push("/admin/beranda");
+    let user = JSON.parse(JSON.stringify(this.$auth.user));
+    // this.$router.push("/admin/beranda");
+    if (user) {
+      let roles = user.role_id;
+      if (roles == 1) {
+        this.$router.push('/superadmin/beranda');
+      } else if (roles == 2) {
+        this.$router.push('/admin/beranda');
+      } else if (roles == 3) {
+        this.$router.push('/user/beranda');
+      }
+    } else {
+      this.$router.push('/login');
+    }
   },
 };
 </script>

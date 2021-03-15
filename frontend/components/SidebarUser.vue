@@ -77,7 +77,7 @@
 
 <script>
     import {mapMutations} from 'vuex';
-    import {menu} from "./Menu";
+    import {menu} from "./MenuUser";
 
     export default {
         data() {

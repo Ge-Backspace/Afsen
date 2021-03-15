@@ -16,7 +16,21 @@ class EmployeeTableSeeder extends Seeder
     {
         Employee::create([
             'user_id' => 1,
-            'name' => 'test',
+            'name' => 'Test Super Admin',
+            'position_id' => 1,
+            'status' => true
+        ]);
+
+        Employee::create([
+            'user_id' => 2,
+            'name' => 'Test Admin',
+            'position_id' => 1,
+            'status' => true
+        ]);
+
+        Employee::create([
+            'user_id' => 3,
+            'name' => 'Test User',
             'position_id' => 1,
             'status' => true
         ]);

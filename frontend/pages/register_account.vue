@@ -68,13 +68,9 @@
 </template>
 
 <script>
-  import {
-    mapMutations,
-    mapGetters
-  } from 'vuex';
 
   export default {
-    layout: 'auth',
+    layout: 'register',
     mounted () {
       if(this.$store.state.company.company){
         let storeCompany = this.$store.state.company.company

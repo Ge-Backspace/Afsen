@@ -121,7 +121,7 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Tambah Office Baru"
+      content="Add New Office"
       placement="top-start"
     >
       <a

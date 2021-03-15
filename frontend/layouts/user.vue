@@ -78,13 +78,13 @@
   </div>
 </template>
 <script>
-  import Sidebar from '../components/SidebarAdmin'
+  import Sidebar from '../components/SidebarUser'
   import {
     mapMutations
   } from 'vuex';
 
   export default {
-    middleware: ['auth', 'admin'],
+    middleware: 'auth',
     components: {
       'sidebar': Sidebar
     },

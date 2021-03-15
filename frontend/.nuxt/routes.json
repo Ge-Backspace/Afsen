@@ -168,6 +168,27 @@
     "_name": "_717431c2"
   },
   {
+    "name": "superadmin-beranda",
+    "path": "/superadmin/beranda",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\superadmin\\\\beranda.vue",
+    "chunkName": "pages/superadmin/beranda",
+    "_name": "_1c6e546c"
+  },
+  {
+    "name": "user-beranda",
+    "path": "/user/beranda",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\beranda.vue",
+    "chunkName": "pages/user/beranda",
+    "_name": "_8dd3f416"
+  },
+  {
+    "name": "user-shift_employee",
+    "path": "/user/shift_employee",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\shift_employee\\\\index.vue",
+    "chunkName": "pages/user/shift_employee/index",
+    "_name": "_302f06a3"
+  },
+  {
     "name": "admin-company-announcement",
     "path": "/admin/company/announcement",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\company\\\\announcement\\\\index.vue",
@@ -313,13 +334,6 @@
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\masterShift.vue",
     "chunkName": "pages/admin/master/masterShift",
     "_name": "_c3076450"
-  },
-  {
-    "name": "admin-master-MasterStatusPermission",
-    "path": "/admin/master/MasterStatusPermission",
-    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\admin\\\\master\\\\MasterStatusPermission.vue",
-    "chunkName": "pages/admin/master/MasterStatusPermission",
-    "_name": "_919b01ca"
   },
   {
     "name": "admin-master-masterUser",

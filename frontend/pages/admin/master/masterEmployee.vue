@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
@@ -182,7 +182,7 @@
     <el-tooltip
       class="item"
       effect="dark"
-      content="Buat Laporan Baru"
+      content="Tambah New Employee"
       placement="top-start"
     >
       <a

@@ -21,6 +21,12 @@ class CheckinController extends Controller
         $checkCheckin = $this->checkCheckin($employee->id);
         $checkCheckout = $this->checkCheckout($employee->id);
         $schedule = $this->getScheduleToday($employee->id);
+        if (!$schedule) {
+            return $this->resp([
+                'status' => 6,
+                'description' => 'no schedule'
+            ], "Anda Tidak Memiliki Schedule Hari Ini");
+        }
         $now = Carbon::now()->format('H:i:s');
         $startday = Carbon::parse('06:00:00')->format('H:i:s');
         $schedule_in = Carbon::parse($schedule->schedule_in)->addMinutes(15)->format('H:i:s');

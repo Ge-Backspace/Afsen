@@ -21,7 +21,7 @@ class User extends Migration
             $table->string('password');
             $table->integer('company_id')->unsigned();
             $table->integer('file_id')->unsigned()->nullable();
-            $table->boolean('admin')->default(false);
+            $table->integer('role_id')->unsigned()->default(3);
             $table->boolean('aktif')->default(false);
             $table->rememberToken();
             $table->softDeletes();
@@ -29,6 +29,8 @@ class User extends Migration
 
             $table->foreign('file_id')->references('id')->on('files')->onDelete('CASCADE');
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('role_id')->references('id')->on('roles');
+
         });
     }
 

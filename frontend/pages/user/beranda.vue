@@ -517,7 +517,7 @@ import * as moment from "moment";
 
 export default {
   components: {},
-  layout: "admin",
+  layout: "user",
   data() {
     return {
       api_url: '',

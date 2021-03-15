@@ -6,7 +6,7 @@
       </a>
 
     </div>
-    <div class="text-center text-muted mb-4">
+    <div class="text-center text-muted mb-4" style="padding-top: 40px">
       <small><b>LOGIN</b></small>
     </div>
     <div class="card-body">
@@ -31,7 +31,7 @@
               type="password">
           </div>
         </div>
-        <div class="text-center">
+        <div class="text-center" style="margin-bottom: 54px">
           <el-button type="primary" :loading="showLoading" class="my-4" round native-type="submit">Login
           </el-button>
           <br>

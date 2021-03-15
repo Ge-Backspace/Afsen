@@ -4,9 +4,9 @@
             <div class="col-md-6 bg-login">
 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5 offset-md-1">
                 <div style="text-align: center">
-                    <div style="margin-left: auto; margin-right: auto;">
+                    <div style="margin-left: auto; margin-right: auto">
                         <nuxt/>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
 
 <style>
     .bg-login {
-        background: url('../static/assets/img/bg-login2.svg') no-repeat top right/cover;
+        background: url('../static/assets/img/bg-login.svg') no-repeat top right/cover;
     }
     .hideovy {
         overflow-x: hidden;

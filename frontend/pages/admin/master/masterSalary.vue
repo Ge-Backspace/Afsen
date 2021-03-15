@@ -103,7 +103,7 @@
     </div>
 
     <!-- Floating Button -->
-    <el-tooltip class="item" effect="dark" content="Buat Schedule Baru" placement="top-start">
+    <el-tooltip class="item" effect="dark" content="Add New Data Salary" placement="top-start">
       <a class="float" @click="shiftDialog = true; titleDialog = 'Tambah Shift'">
         <i class="el-icon-plus my-float"></i>
       </a>
