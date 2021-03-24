@@ -67,6 +67,12 @@ const _f520d4f4 = () => interopDefault(import('..\\pages\\admin\\time_management
 const _5dd14e31 = () => interopDefault(import('..\\pages\\admin\\time_management\\setting.vue' /* webpackChunkName: "pages/admin/time_management/setting" */))
 const _6108bb3a = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff.vue' /* webpackChunkName: "pages/admin/time_management/timeoff" */))
 const _29955889 = () => interopDefault(import('..\\pages\\admin\\time_management\\timeoff_deduction.vue' /* webpackChunkName: "pages/admin/time_management/timeoff_deduction" */))
+const _581804e7 = () => interopDefault(import('..\\pages\\user\\permissions\\cuti.vue' /* webpackChunkName: "pages/user/permissions/cuti" */))
+const _52d12321 = () => interopDefault(import('..\\pages\\user\\permissions\\overtime.vue' /* webpackChunkName: "pages/user/permissions/overtime" */))
+const _6176e3b2 = () => interopDefault(import('..\\pages\\user\\permissions\\shift.vue' /* webpackChunkName: "pages/user/permissions/shift" */))
+const _81817a4c = () => interopDefault(import('..\\pages\\user\\time_management\\attendance.vue' /* webpackChunkName: "pages/user/time_management/attendance" */))
+const _c51a6a22 = () => interopDefault(import('..\\pages\\user\\time_management\\calendar.vue' /* webpackChunkName: "pages/user/time_management/calendar" */))
+const _cd45cc3e = () => interopDefault(import('..\\pages\\user\\time_management\\timeoff.vue' /* webpackChunkName: "pages/user/time_management/timeoff" */))
 const _279da039 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
@@ -337,6 +343,30 @@ export const routerOptions = {
     path: "/admin/time_management/timeoff_deduction",
     component: _29955889,
     name: "admin-time_management-timeoff_deduction"
+  }, {
+    path: "/user/permissions/cuti",
+    component: _581804e7,
+    name: "user-permissions-cuti"
+  }, {
+    path: "/user/permissions/overtime",
+    component: _52d12321,
+    name: "user-permissions-overtime"
+  }, {
+    path: "/user/permissions/shift",
+    component: _6176e3b2,
+    name: "user-permissions-shift"
+  }, {
+    path: "/user/time_management/attendance",
+    component: _81817a4c,
+    name: "user-time_management-attendance"
+  }, {
+    path: "/user/time_management/calendar",
+    component: _c51a6a22,
+    name: "user-time_management-calendar"
+  }, {
+    path: "/user/time_management/timeoff",
+    component: _cd45cc3e,
+    name: "user-time_management-timeoff"
   }, {
     path: "/",
     component: _279da039,

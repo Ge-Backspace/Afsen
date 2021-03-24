@@ -93,11 +93,11 @@ export const  menu = () => {
             },
             ]
         },
-        {
-            text: 'Salary',
-            icon: 'bx bx-money text-primary',
-            route: '/admin/salary'
-        },
+        // {
+        //     text: 'Salary',
+        //     icon: 'bx bx-money text-primary',
+        //     route: '/admin/salary'
+        // },
         {
             text: 'Report',
             icon: 'el-icon-document text-primary',

@@ -1,7 +1,9 @@
 export { default as Logo } from '../..\\components\\Logo.vue'
 export { default as MenuAdmin } from '../..\\components\\MenuAdmin.js'
+export { default as MenuSuperAdmin } from '../..\\components\\MenuSuperAdmin.js'
 export { default as MenuUser } from '../..\\components\\MenuUser.js'
 export { default as SidebarAdmin } from '../..\\components\\SidebarAdmin.vue'
+export { default as SidebarSuperAdmin } from '../..\\components\\SidebarSuperAdmin.vue'
 export { default as SidebarUser } from '../..\\components\\SidebarUser.vue'
 export { default as UploadService } from '../..\\components\\UploadService.js'
 export { default as ChartBar } from '../..\\components\\chart\\chart-bar.vue'
@@ -17,8 +19,10 @@ export { default as PartnerAfsen } from '../..\\components\\LandingPage\\Partner
 
 export const LazyLogo = import('../..\\components\\Logo.vue' /* webpackChunkName: "components/logo" */).then(c => c.default || c)
 export const LazyMenuAdmin = import('../..\\components\\MenuAdmin.js' /* webpackChunkName: "components/menu-admin" */).then(c => c.default || c)
+export const LazyMenuSuperAdmin = import('../..\\components\\MenuSuperAdmin.js' /* webpackChunkName: "components/menu-super-admin" */).then(c => c.default || c)
 export const LazyMenuUser = import('../..\\components\\MenuUser.js' /* webpackChunkName: "components/menu-user" */).then(c => c.default || c)
 export const LazySidebarAdmin = import('../..\\components\\SidebarAdmin.vue' /* webpackChunkName: "components/sidebar-admin" */).then(c => c.default || c)
+export const LazySidebarSuperAdmin = import('../..\\components\\SidebarSuperAdmin.vue' /* webpackChunkName: "components/sidebar-super-admin" */).then(c => c.default || c)
 export const LazySidebarUser = import('../..\\components\\SidebarUser.vue' /* webpackChunkName: "components/sidebar-user" */).then(c => c.default || c)
 export const LazyUploadService = import('../..\\components\\UploadService.js' /* webpackChunkName: "components/upload-service" */).then(c => c.default || c)
 export const LazyChartBar = import('../..\\components\\chart\\chart-bar.vue' /* webpackChunkName: "components/chart-bar" */).then(c => c.default || c)

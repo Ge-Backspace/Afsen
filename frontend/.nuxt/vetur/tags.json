@@ -11,6 +11,12 @@
   "LazyMenuAdmin": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuAdmin.js"
   },
+  "MenuSuperAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuSuperAdmin.js"
+  },
+  "LazyMenuSuperAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuSuperAdmin.js"
+  },
   "MenuUser": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/MenuUser.js"
   },
@@ -22,6 +28,12 @@
   },
   "LazySidebarAdmin": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarAdmin.vue"
+  },
+  "SidebarSuperAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarSuperAdmin.vue"
+  },
+  "LazySidebarSuperAdmin": {
+    "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarSuperAdmin.vue"
   },
   "SidebarUser": {
     "description": "Auto imported from D:/Magang/Web Absesnsi/My Git/frontend/components/SidebarUser.vue"

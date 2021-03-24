@@ -47,4 +47,16 @@ export const actions = {
         context.commit('setLoader')
     })
   },
+
+  getUser(context, {user_id = '', showall = 1, search = '', defaultPage = false}){
+    context.commit('setLoader')
+    let page = defaultPage ? 1 : context.state.cutiE.current_page
+    this.$axios.get(`/cutiemployees?user_id=${user_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
+        context.commit('setCutiEs', resp.data)
+    }).catch(e => {
+        console.log(e)
+    }).finally(() => {
+        context.commit('setLoader')
+    })
+  },
 }

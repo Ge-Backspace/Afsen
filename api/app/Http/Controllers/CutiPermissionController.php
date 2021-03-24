@@ -16,10 +16,15 @@ class CutiPermissionController extends Controller
 {
     public function getCutiPermission(Request $request)
     {
+        $table = CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employees.id')
+        ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id');
+        if ($request->user_id) {
+            $table->where('employees.id', $request->user_id);
+        } else {
+            $table->where('cutis.company_id', $request->company_id);
+        }
         return $this->getPaginate(
-            CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employees.id')
-            ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id')
-            ->where('cutis.company_id', $request->company_id)
+            $table
             ->select(DB::raw('cuti_permissions.*, employees.*, cutis.*, cuti_permissions.id as id'))
             ->orderBy('cuti_permissions.id', 'DESC'), $request, ['employees.name', 'cutis.cuti_name', 'cutis.code']);
     }
@@ -27,6 +32,9 @@ class CutiPermissionController extends Controller
     public function addCutiPermission(Request $request)
     {
         $input = $request->only('employee_id', 'cuti_id', 'start_date', 'expired_date', 'reason', 'file');
+        if ($request->user_id) {
+            $input['employee_id'] = $request->user_id;
+        }
         return $this->storeData(new CutiPermission, [
             'employee_id' => 'required|numeric',
             'cuti_id' => 'required|numeric',

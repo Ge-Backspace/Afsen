@@ -81,10 +81,13 @@ class CheckinController extends Controller
     public function attendance(Request $request)
     {
         $table = Checkin::join('employees as e', 'checkins.employee_id', '=', 'e.id')
-        ->join('users as u', 'e.user_id', '=', 'u.id')
-        ->where('u.company_id', $request->company_id)
-        ->select(DB::raw('checkins.*, checkins.id as id, e.name'));
-        return $this->getPaginate($table, $request, ['e.name']);
+        ->join('users as u', 'e.user_id', '=', 'u.id');
+        if ($request->user_id) {
+            $table->where('e.id', $request->user_id);
+        } else {
+            $table->where('u.company_id', $request->company_id);
+        }
+        return $this->getPaginate($table->select(DB::raw('checkins.*, checkins.id as id, e.name')), $request, ['e.name']);
     }
 
     public function checkin(Request $request)

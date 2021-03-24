@@ -5,10 +5,6 @@ export const state = () => ({
       current_page: 1
     },
     attendanceLoader: false,
-    // summary: {
-    //     aktif: 0,
-    //     non_aktif: 0
-    // }
   })
 
   export const mutations = {
@@ -16,7 +12,7 @@ export const state = () => ({
       state.attendance = data
     },
     setLoader(state){
-        state.attendanceLoader = state.attendanceLoader
+        state.attendanceLoader = !state.attendanceLoader
     },
     setPage(state, data){
         state.attendance.current_page = data
@@ -37,8 +33,21 @@ export const state = () => ({
 
   export const actions = {
     getAll(context, {company_id = '', showall = 1, search = '', defaultPage = false}){
+      context.commit('setLoader')
       let page = defaultPage ? 1 : context.state.attendance.current_page
       this.$axios.get(`/attendances?company_id=${company_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
+          context.commit('setAttendances', resp.data)
+      }).catch(e => {
+          console.log(e)
+      }).finally(() => {
+          context.commit('setLoader')
+      })
+    },
+
+    getUser(context, {user_id = '', showall = 1, search = '', defaultPage = false}){
+      context.commit('setLoader')
+      let page = defaultPage ? 1 : context.state.attendance.current_page
+      this.$axios.get(`/attendances?user_id=${user_id}&showall=${showall}&page=${page}&search=${search}`).then(resp => {
           context.commit('setAttendances', resp.data)
       }).catch(e => {
           console.log(e)

@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    public function getEmployee(Request $request)
+    {
+        return $this->resp($this->getEmployeeByUser($request->user_id));
+    }
     public function optionPosition(Request $request)
     {
         $option = Position::where('company_id', $request->company_id)->get();

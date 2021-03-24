@@ -16,10 +16,16 @@ class CutiEmployeeController extends Controller
 {
     public function getCutiEmployee(Request $request)
     {
+        $query = CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employees.id')
+            ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id');
+        if ($request->user_id) {
+            $employee = $this->getEmployeeByUser($request->user_id);
+            $query->where('employee_id', $employee->id);
+        } else {
+            $query->where('cutis.company_id', $request->company_id);
+        }
         return $this->getPaginate(
-            CutiPermission::join('employees', 'cuti_permissions.employee_id', '=', 'employees.id')
-            ->join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id')
-            ->where('cutis.company_id', $request->company_id)
+            $query
             ->where('cuti_permissions.status_id', 1)
             ->select(DB::raw('cuti_permissions.*, employees.*, cutis.*, cuti_permissions.id as id'))
             ->orderBy('cuti_permissions.id', 'DESC'), $request, ['employees.name', 'cutis.cuti_name', 'cutis.code']);

@@ -18,14 +18,19 @@ class ShiftPermissionController extends Controller
 {
     public function getShiftPermission(Request $request)
     {
+        $table = ShiftPermission::join('employees as e1', 'shift_permissions.employee1_id', '=', 'e1.id')
+        ->join('employees as e2', 'shift_permissions.employee2_id', '=', 'e2.id')
+        ->join('shift_employees as se1', 'shift_permissions.shift_employee1_id', '=', 'se1.id')
+        ->join('shift_employees as se2', 'shift_permissions.shift_employee2_id', '=', 'se2.id')
+        ->join('shifts as s1', 'se1.shift_id', '=', 's1.id')
+        ->join('shifts as s2', 'se2.shift_id', '=', 's2.id');
+        if ($request->user_id) {
+            $table->where('e1.id', $request->user_id);
+        } else {
+            $table->where('s1.company_id', $request->company_id);
+        }
         return $this->getPaginate(
-            ShiftPermission::join('employees as e1', 'shift_permissions.employee1_id', '=', 'e1.id')
-            ->join('employees as e2', 'shift_permissions.employee2_id', '=', 'e2.id')
-            ->join('shift_employees as se1', 'shift_permissions.shift_employee1_id', '=', 'se1.id')
-            ->join('shift_employees as se2', 'shift_permissions.shift_employee2_id', '=', 'se2.id')
-            ->join('shifts as s1', 'se1.shift_id', '=', 's1.id')
-            ->join('shifts as s2', 'se2.shift_id', '=', 's2.id')
-            ->where('s1.company_id', $request->company_id)
+            $table
             ->select(
                 DB::raw('shift_permissions.*, shift_permissions.id as id,
                 e1.name as name1, se1.date as date1, s1.code as code1, s1.schedule_in as schedule_in1, s1.schedule_out as schedule_out1,

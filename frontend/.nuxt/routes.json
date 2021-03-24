@@ -441,6 +441,48 @@
     "_name": "_29955889"
   },
   {
+    "name": "user-permissions-cuti",
+    "path": "/user/permissions/cuti",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\permissions\\\\cuti.vue",
+    "chunkName": "pages/user/permissions/cuti",
+    "_name": "_581804e7"
+  },
+  {
+    "name": "user-permissions-overtime",
+    "path": "/user/permissions/overtime",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\permissions\\\\overtime.vue",
+    "chunkName": "pages/user/permissions/overtime",
+    "_name": "_52d12321"
+  },
+  {
+    "name": "user-permissions-shift",
+    "path": "/user/permissions/shift",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\permissions\\\\shift.vue",
+    "chunkName": "pages/user/permissions/shift",
+    "_name": "_6176e3b2"
+  },
+  {
+    "name": "user-time_management-attendance",
+    "path": "/user/time_management/attendance",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\time_management\\\\attendance.vue",
+    "chunkName": "pages/user/time_management/attendance",
+    "_name": "_81817a4c"
+  },
+  {
+    "name": "user-time_management-calendar",
+    "path": "/user/time_management/calendar",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\time_management\\\\calendar.vue",
+    "chunkName": "pages/user/time_management/calendar",
+    "_name": "_c51a6a22"
+  },
+  {
+    "name": "user-time_management-timeoff",
+    "path": "/user/time_management/timeoff",
+    "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\user\\\\time_management\\\\timeoff.vue",
+    "chunkName": "pages/user/time_management/timeoff",
+    "_name": "_cd45cc3e"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "D:\\\\Magang\\\\Web Absesnsi\\\\My Git\\\\frontend\\\\pages\\\\index.vue",

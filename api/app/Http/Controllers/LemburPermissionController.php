@@ -12,15 +12,25 @@ class LemburPermissionController extends Controller
     public function getLemburPermission(Request $request)
     {
         $table = LemburPermission::join('employees as e', 'lembur_permissions.employee_id', '=', 'e.id')
-        ->join('users as u', 'e.user_id', '=', 'u.id')
-        ->where('u.company_id', $request->company_id)
-        ->select(DB::raw('lembur_permissions.*, e.name'));
-        return $this->getPaginate($table, $request, ['e.name', 'lembur_permissions.date']);
+        ->join('users as u', 'e.user_id', '=', 'u.id');
+        if ($request->user_id) {
+            $table->where('u.id', $request->user_id);
+        } else {
+            $table->where('u.company_id', $request->company_id);
+        }
+        return $this->getPaginate(
+            $table->select(DB::raw('lembur_permissions.*, e.name')),
+            $request, ['e.name', 'lembur_permissions.date']
+        );
     }
 
     public function addLemburPermission(Request $request)
     {
         $input = $request->only('employee_id', 'schedule_in', 'schedule_out', 'date', 'reason', 'file');
+        if ($request->user_id) {
+            $employee = $this->getEmployeeByUser($request->user_id);
+            $input['employee_id'] = $employee->id;
+        }
         return $this->storeData(new LemburPermission, [
             'employee_id' => 'required|numeric',
             'schedule_in' => 'required',
