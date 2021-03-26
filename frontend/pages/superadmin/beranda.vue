@@ -3,7 +3,7 @@
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
-          <el-card style="margin-top: 80px">
+          <el-card style="margin-top: 80px" v-loading="getLoader">
             <div class="row">
               <div class="col-md-6">
                   <h2 style="text-align: center">Statistic Company</h2>
