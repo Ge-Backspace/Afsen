@@ -15,16 +15,25 @@ export default {
     let user = JSON.parse(JSON.stringify(this.$auth.user));
     // this.$router.push("/admin/beranda");
     if (user) {
-      let roles = user.role_id;
-      if (roles == 1) {
-        this.$router.push('/superadmin/beranda');
-      } else if (roles == 2) {
-        this.$router.push('/admin/beranda');
-      } else if (roles == 3) {
-        this.$router.push('/user/beranda');
+      if (!user.aktif) {
+        this.$auth.logout()
+        this.$router.push('/login')
+        this.$notify.error({
+          title: "Error",
+          message: "Akun Anda Tidak Aktif"
+        })
+      }else {
+        let roles = user.role_id;
+        if (roles == 1) {
+          this.$router.push('/superadmin/beranda');
+        } else if (roles == 2) {
+          this.$router.push('/admin/beranda');
+        } else if (roles == 3) {
+          this.$router.push('/user/beranda');
+        }
       }
     } else {
-      this.$router.push('/login');
+      this.$router.push('/login')
     }
   },
 };

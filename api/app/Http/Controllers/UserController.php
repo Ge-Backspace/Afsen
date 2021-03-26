@@ -24,6 +24,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         return $this->getPaginate(Employee::rightJoin('users', 'employees.user_id', '=', 'users.id')
+        ->where('users.company_id', $request->company_id)
+        ->where('users.role_id', '!=', 1)
         ->orderBy('users.id', 'DESC')
         , $request, [
             'users.username', 'users.email', 'employees.name'
@@ -134,19 +136,24 @@ class UserController extends Controller
             return $this->resp(null, 'User Tidak Ditemukan', false, 406);
         }
         $input = $request->only([
-            'username', 'email', 'admin', 'aktif'
+            'username', 'email', 'role_id', 'aktif'
         ]);
         $validator = Validator::make($input, [
             'username' => 'required|string',
             'email' => 'required|string',
-            'admin' => 'required|numeric',
+            'role_id' => 'required|numeric',
             'aktif' => 'required|numeric'
         ], Helper::messageValidation());
         if ($validator->fails()) {
             return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Add Employee', false, 401);
         }
-        $update = $user->update($input);
-        return $this->resp($update);
+        $update = $user->update([
+            'username' => $input['username'],
+            'email' => $input['email'],
+            'aktif' => $input['aktif'],
+            'role_id' => $input['role_id']
+        ]);
+        return $this->resp(['update' => $update, 'input' => $input]);
     }
 
     /**

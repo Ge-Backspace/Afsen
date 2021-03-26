@@ -1,18 +1,12 @@
 export const state = () => ({
     chart: {
-        segmentasi: [],
-        time: {
-            week: [],
-            month: [],
-            year:[]
-        },
-        kategori: []
+        data:[]
     }
 })
-  
+
 export const mutations = {
     setChart(state, data) {
-      state.chart[data.type] = data.data
+      state.chart = data
     },
 }
 
@@ -23,10 +17,9 @@ export const getters = {
 };
 
 export const actions = {
-    getChartLaporanMasuk(context, {type, goverment = ''}){
-        this.$axios.get(`/laporan-masuk/${type}?goverment=${goverment}`).then(resp => {
+    getApiChart(context, {type = ''}){
+        this.$axios.get(`/statCompany`).then(resp => {
             context.commit('setChart', {
-                type: type,
                 data: resp.data.data
             })
         }).catch(e => {

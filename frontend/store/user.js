@@ -13,7 +13,7 @@ export const state = () => ({
 
 export const mutations = {
   setUsers(state, data) {
-    state.user.data = data
+    state.user = data
   },
   setLoader(state){
       state.userLoader = state.userLoader
@@ -43,7 +43,7 @@ export const actions = {
       context.commit("setLoader")
       let page = defaultPage ? 1 : context.state.user.current_page
       this.$axios.get(`/users?company_id=${company_id}&$showall=${showall}&page=${page}&search=${search}`).then(resp => {
-          context.commit('setUsers', resp.data.data)
+          context.commit('setUsers', resp.data)
       }).catch(e => {
           console.log(e)
       }).finally(() => {

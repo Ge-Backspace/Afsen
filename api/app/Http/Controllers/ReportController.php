@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\Checkin;
+use App\Models\Companies;
 use App\Models\CutiPermission;
 use App\Models\Employee;
 use Carbon\Carbon;
@@ -73,6 +74,14 @@ class ReportController extends Controller
         return $this->resp(['data' => $result, 'dates' => $dates, 'start_date' => $dates[0]]);
     }
 
+    public function statCompany(Request $request)
+    {
+        $result = [
+            'data' => $this->getPerMonth(new Companies)
+        ];
+        return $this->resp($result);
+    }
+
     public function checkCuti($id, $date)
     {
         $cuti = CutiPermission::join('cutis', 'cuti_permissions.cuti_id', '=', 'cutis.id')
@@ -100,5 +109,37 @@ class ReportController extends Controller
             $result = $status;
         }
         return $result;
+    }
+
+    public function newCompany()
+    {
+        return $this->resp(Companies::orderBy('created_at', 'DESC')->take(7)->get());
+    }
+
+    public function getPerMonth($model)
+    {
+        $month = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+
+        $data = [];
+        foreach($month as $k => $m){
+            $data[] = [
+                'text' => $m,
+                'data' => $model::whereMonth('created_at', $k)->whereYear('created_at', date('Y'))->count()
+            ];
+        }
+        return $data;
     }
 }

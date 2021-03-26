@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div class="header bg-primary pb-6" style="z-index: -1">
+    <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-          <h1 class="heading">Master User</h1>
+          <h1 class="heading">USER'S {{getCompany.name}}</h1>
         </div>
       </div>
     </div>
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-md-12">
-          <el-card v-loading="getLoader">
+          <el-card v-loading="getLoader" style="margin-top: 80px">
             <div class="row" style="margin-bottom: 20px">
               <div class="col-md-3 offset-md-9">
                 <el-input
@@ -126,24 +126,6 @@
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
-    <!-- End floating button -->
-
-    <!-- <el-dialog :title="titleDialog" :visible.sync="shiftDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
-      <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Hari">
-          <el-input v-model="form.hari"></el-input>
-        </el-form-item>
-        <el-form-item label="Schedule In">
-          <el-time-picker v-model="form.schedule_out"></el-time-picker>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="shiftDialog = false">Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog> -->
 
     <vs-dialog
     prevent-close
@@ -274,10 +256,10 @@
 <script>
 import { mapMutations, mapGetters } from "vuex";
 
-import { config } from "../../../global.config";
+import { config } from "../../global.config";
 
 export default {
-  layout: "admin",
+  layout: "superadmin",
   components: {},
   data() {
 
@@ -291,7 +273,7 @@ export default {
       page: 1,
       titleDialog: "Edit User",
       search: "",
-      company_id: JSON.parse(JSON.stringify(this.$auth.user.company_id)),
+      company_id: '',
       isUpdate: false,
       userDialog: false,
       btnLoader: false,
@@ -307,27 +289,27 @@ export default {
     };
   },
   mounted() {
-    this.company_id = JSON.parse(JSON.stringify(this.$auth.user.company_id));
-    this.$store.dispatch("user/getAll", {
-      company_id: this.company_id,
-    });
-    this.$axios.get(`/users?company_id=${this.company_id}`).then((resp) => {
-      console.log(resp);
-    });
+
   },
   methods: {
-    // searchData(){
-    //   this.$store.dispatch('schedule/getAll', {
-    //     search: this.search,
-    //     company_id: this.company_id
-    //   });
-    // },
+    test(){
+      console.log(this.company_id)
+    },
+    searchData(){
+      this.$store.dispatch('user/getAll', {
+        search: this.search,
+        company_id: this.company_id
+      });
+    },
     edit(data) {
-      // console.log(moment(data.schedule_in,"HH:mm:ss").format("HH:mm"))
       this.form.id = data.id;
       this.form.username = data.username;
       this.form.email = data.email;
-      this.form.admin = data.admin;
+      if (data.role_id == 2) {
+        this.form.admin = true
+      } else {
+        this.form.admin = false
+      }
       this.form.aktif = data.aktif;
       this.userDialog = true;
       this.titleDialog = "Edit User Data";
@@ -340,8 +322,8 @@ export default {
         email: "",
         name: "",
         password: "",
-        admin: "aktif",
-        aktif: "aktif"
+        admin: false,
+        aktif: false
       };
       this.isUpdate = false;
     },
@@ -361,8 +343,13 @@ export default {
       formData.append("username", this.form.username);
       formData.append("name", this.form.name);
       formData.append("email", this.form.email);
-      formData.append("admin", this.form.admin ? 1 : 0);
+      let role_id = 3;
+      if (this.form.admin) {
+        role_id = 2;
+      }
+      formData.append("role_id", role_id);
       formData.append("aktif", this.form.aktif ? 1 : 0);
+      console.log(role_id);
       let url = "/user/store";
       if (type == "update") {
         url = `/user/update/${this.form.id}`;
@@ -402,14 +389,14 @@ export default {
     },
     deleteUser(id) {
       this.$swal({
-        title: "HEY WAIT!, HEY HOLD ON!",
-        text: "Are you serious to delete this cutie data ?",
+        title: "Warning",
+        text: "Are you serious to delete this data ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes Yes Yes",
-        cancelButtonText: "Yes but actually NO!",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
@@ -445,21 +432,24 @@ export default {
   },
   computed: {
     ...mapGetters("user", ["getUsers", "getLoader"]),
+    ...mapGetters("company", {getCompany: "getCompany"}),
+
   },
   watch: {
-    // getSchedule(newValue, oldValue) {
-    // },
-    // search(newValue, oldValue) {
-    // this.$store.dispatch('goverment/getAll', {
-    //   search: newValue
-    // });
-    // },
-    // page(newValue, oldValue) {
-    //   this.$store.commit('schedule/setPage', newValue)
-    //   this.$store.dispatch('schedule/getAll', {
-    //     company_id: this.company_id
-    //   });
-    // }
+    getCompany: {
+      handler(company) {
+        if (company) {
+          this.company_id = company.id
+        }
+      },
+      immediate: true
+    },
+    page(newValue, oldValue) {
+      this.$store.commit('user/setPage', newValue)
+      this.$store.dispatch('user/getAll', {
+        company_id: this.company_id
+      });
+    }
   },
 };
 </script>

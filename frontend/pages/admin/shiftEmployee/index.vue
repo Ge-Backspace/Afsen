@@ -380,7 +380,8 @@ export default {
         employee_id: "",
         shift_id: "",
         start_date: "",
-        end_date: ""
+        end_date: "",
+        date: ''
       },
     };
   },
@@ -407,11 +408,8 @@ export default {
       this.form.id = data.id;
       console.log(this.form.id);
       this.form.employee_id = data.employee_id;
-      console.log(this.form.employee_id);
-      console.log(this.form.shift_id);
       this.form.shift_id = data.shift_id;
-      this.form.start_date = data.start_date;
-      this.form.end_date = data.end_date;
+      this.form.date = data.date;
       this.seDialog = true;
       this.titleDialog = "Edit";
       this.isUpdate = true;

@@ -29,6 +29,8 @@ const _36712238 = () => interopDefault(import('..\\pages\\admin\\shiftEmployee\\
 const _322afcc8 = () => interopDefault(import('..\\pages\\admin\\test.vue' /* webpackChunkName: "pages/admin/test" */))
 const _717431c2 = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages/admin/users" */))
 const _1c6e546c = () => interopDefault(import('..\\pages\\superadmin\\beranda.vue' /* webpackChunkName: "pages/superadmin/beranda" */))
+const _6082df20 = () => interopDefault(import('..\\pages\\superadmin\\company.vue' /* webpackChunkName: "pages/superadmin/company" */))
+const _2ea5c230 = () => interopDefault(import('..\\pages\\superadmin\\user.vue' /* webpackChunkName: "pages/superadmin/user" */))
 const _8dd3f416 = () => interopDefault(import('..\\pages\\user\\beranda.vue' /* webpackChunkName: "pages/user/beranda" */))
 const _302f06a3 = () => interopDefault(import('..\\pages\\user\\shift_employee\\index.vue' /* webpackChunkName: "pages/user/shift_employee/index" */))
 const _7e950af8 = () => interopDefault(import('..\\pages\\admin\\company\\announcement\\index.vue' /* webpackChunkName: "pages/admin/company/announcement/index" */))
@@ -191,6 +193,14 @@ export const routerOptions = {
     path: "/superadmin/beranda",
     component: _1c6e546c,
     name: "superadmin-beranda"
+  }, {
+    path: "/superadmin/company",
+    component: _6082df20,
+    name: "superadmin-company"
+  }, {
+    path: "/superadmin/user",
+    component: _2ea5c230,
+    name: "superadmin-user"
   }, {
     path: "/user/beranda",
     component: _8dd3f416,

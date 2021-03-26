@@ -15,7 +15,7 @@ class CompanyController extends Controller
 
     public function getAllCompanies(Request $request)
     {
-        return $this->getPaginate(Companies::query()->orderBy('id', 'DESC'), $request, ['name']);
+        return $this->getPaginate(Companies::query()->orderBy('created_at', 'DESC'), $request, ['name']);
     }
 
     public function updateCompany(Request $request, $id)

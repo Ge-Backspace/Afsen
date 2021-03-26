@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\Validator;
 class CheckinController extends Controller
 {
     public function check(Request $request){
+        $input = $request->only('user_id');
+        $validator = Validator::make($input, [
+            'user_id' => 'required|numeric',
+        ], Helper::messageValidation());
+        if ($validator->fails()) {
+            return $this->resp(Helper::generateErrorMsg($validator->errors()->getMessages()), 'Failed Check', false, 401);
+        }
         $employee = $this->getEmployeeByUser($request->user_id);
         $checkCheckin = $this->checkCheckin($employee->id);
         $checkCheckout = $this->checkCheckout($employee->id);
@@ -193,7 +200,7 @@ class CheckinController extends Controller
         ->where('employee_id', $employee->id)
         ->whereDate('date', $now)
         ->first();
-        if ($distcance > 9999999) {
+        if ($distcance > 1) {
             $message = 'Jarak untuk Checkin tidak boleh Lebih dari 1 Km dari kantor';
             if ($input['request'] == 2) {
                 $message = 'Jarak untuk Checkout tidak boleh Lebih dari 1 Km dari kantor';

@@ -6,6 +6,11 @@ export const  menu = () => {
           icon: 'ni ni-shop text-primary',
           route: '/superadmin/beranda',
       },
+      {
+        text: 'Company',
+        icon: 'el-icon-postcard text-primary',
+        route: '/superadmin/company',
+    },
       // {
       //     text: 'Employees',
       //     icon: 'el-icon-notebook-1 text-primary',

@@ -28,6 +28,12 @@ export const mutations = {
   },
   setCompanyPlains(state, data){
       state.companyPlains = data
+  },
+  setId(state, data) {
+    state.company.id = data
+  },
+  setName(state, data) {
+    state.company.name = data
   }
 }
 
@@ -37,13 +43,13 @@ export const getters = {
   },
   getCompany(state) {
     return state.company
-},
+  },
   getLoader(state){
     return state.compLoader
   },
   getCompanyPlains(state){
       return state.companyPlains
-  }
+  },
 };
 
 export const actions = {
@@ -69,4 +75,16 @@ export const actions = {
         context.commit("setLoader")
     })
   },
+
+  getNewCompany(context, {}) {
+    context.commit("setLoader")
+    this.$axios.get(`/newCompany`).then(resp => {
+        context.commit('setCompany', resp.data)
+    }).catch(e => {
+        console.log(e)
+    }).finally(() => {
+        context.commit("setLoader")
+    })
+  },
+
 }
