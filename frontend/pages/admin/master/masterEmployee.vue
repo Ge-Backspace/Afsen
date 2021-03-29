@@ -117,7 +117,7 @@
                     {{ tr.username }}
                   </vs-td>
                   <vs-td>
-                    <span class="badge badge-success" v-if="tr.admin"
+                    <span class="badge badge-success" v-if="tr.role_id == 2"
                       >Aktif</span
                     >
                     <span class="badge badge-warning" v-else>Non Aktif</span>

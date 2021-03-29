@@ -27,9 +27,10 @@ class EmployeeController extends Controller
     public function getEmployee(Request $request)
     {
         return $this->getPaginate(
-            Employee::leftJoin('positions', 'employees.position_id', '=', 'positions.id')
+            Employee::join('positions', 'employees.position_id', '=', 'positions.id')
             ->join('users', 'employees.user_id', '=', 'users.id')
             ->where('users.company_id', $request->company_id)
+            ->where('users.role_id', '!=', 1)
             ->select(DB::raw('employees.*, positions.*, users.*, employees.id as id'))
             ->orderBy('employees.id', 'DESC')
             , $request, [
@@ -64,7 +65,10 @@ class EmployeeController extends Controller
         if(!$companyCheck){
             return $this->resp(null, 'Company '.Variable::NOT_FOUND, false, 406);
         }
-        $inputUser = $request->only(['company_id','username', 'email', 'password', 'admin', 'aktif']);
+        $inputUser = $request->only(['company_id','username', 'email', 'password', 'aktif']);
+        if ($request->admin == true) {
+            $inputUser = Arr::add($inputUser, 'role_id', 2);
+        }
         if(!empty($request->foto)){
             $storeFile = Helper::storeFile('store', Variable::USER, $request->foto, request());
             if($storeFile){

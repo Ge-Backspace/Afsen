@@ -13,7 +13,11 @@ class SettingController extends Controller
 {
     public function getEmployee(Request $request)
     {
-        return $this->resp($this->getEmployeeByUser($request->user_id));
+        $company_id = $request->company_id;
+        return $this->resp($this->getEmployeeByUser($request->user_id)->whereHas('users', function($q) use($company_id){
+            $q->where('role_id', '!=', 1)
+            ->where('company_id', $company_id);
+        }));
     }
     public function optionPosition(Request $request)
     {
